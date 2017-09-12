@@ -1,0 +1,257 @@
+﻿@model AltoRendimiento.Models.Beneficiario
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Beneficiario</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    @Html.RadioButtonFor(model => model.benEsdeportista, "0", new { @id = "rdbDeportista", @class = "col-md-1", @checked = "true", @onchange = "showDisciplina();" }) @Html.Label("Deportista", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benEsdeportista, "1", new { @id = "rdbNoDeportista", @class = "col-md-1 col-md-offset-3", @onchange = "hideDisciplina();" })@Html.Label("No Deportista", new { @class = "col-md-4", @style = "font-weight: normal" })
+                </div>
+            </div>
+
+            <div class="form-group" id="divDisciplina">
+                <label for="inputEmail3" class="col-sm-4 control-label">Disciplina</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idDisciplina, (IEnumerable<SelectListItem>)ViewBag.ListaDisciplinas, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idDisciplina)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    @Html.RadioButtonFor(model => model.benExtranjero, false, new { @class = "col-md-1", @checked = "true", @onchange = "activarRut(); return false;", @id = "rdbNacional", @for = "rdbNacional" }) @Html.Label("Nacional", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benExtranjero, true, new { @class = "col-md-1 col-md-offset-3", @onchange = "desactivarRut(); return false;" })@Html.Label("Extranjero", new { @class = "col-md-4", @style = "font-weight: normal" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label id="lblRutPasaporte" for="lblRutPasaporte" class="col-sm-4 control-label">Rut</label>
+                <div class="col-md-6">
+                    @Html.TextBox("benRutBeneficiario", "", new { @class = "form-control", @onchange = "return verifica_rut(this); return false;", @onkeypress = "return permite(event, 'rut'); return false;", @placeholder = "12345678K", @rel = "tooltip", @title = "Rut sin puntos ni guión" })
+                    <button id="btnValidar" type="button" class="btn btn-sm btn-success" onclick="validaRutWS();">Validar</button>
+
+                    <label for="formatoRut" id="formatoRut" style="font-size:x-small">(Rut sin puntos ni guión, más dígito verificador)</label><br />
+                    <label for="msgError" id="msgError" style="font-size:x-small; color:red;"></label>
+                    @Html.ValidationMessageFor(model => model.benRutBeneficiario)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Nombre</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benNombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.benNombre)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Apellido Paterno</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benApellidoPaterno, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.benApellidoPaterno)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Apellido Materno</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benApellidoMaterno, new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.benApellidoMaterno)*@
+                </div>
+            </div>
+            <div class="form-group" id="divNacionalidad">
+                <label for="inputEmail3" class="col-sm-4 control-label">Nacionalidad</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idNacionalidad, (IEnumerable<SelectListItem>)ViewBag.ListaNacionalidades, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idNacionalidad)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Correo Electrónico</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benCorreo, new { @class = "form-control", @onkeypress = "return permite(event, 'email'); return false;" })
+                    @Html.ValidationMessageFor(model => model.benCorreo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Género</label>
+                <div class="col-md-8">
+                    @Html.RadioButtonFor(model => model.benGenero, "1", new { @id = "rdbFemenino", @class = "col-md-1" }) @Html.Label("Femenino", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benGenero, "2", new { @id = "rdbMasculino", @class = "col-md-1 col-md-offset-3", @checked = "true" })@Html.Label("Masculino", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    <br /><br />
+                    @Html.ValidationMessageFor(model => model.benGenero)
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group" id="divFechaFin">
+                @Html.LabelFor(model => model.benFechaNacimiento, "Fecha de Nacimiento", new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    <div class="input-group input-append date" id="benFechaNacimiento1" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.benFechaNacimiento, new { @class = "form-control", @id = "benFechaNacimiento" })
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.benFechaNacimiento)
+                </div>
+            </div>
+
+            <script>
+
+                var checkin = $('#benFechaNacimiento1').datepicker({
+                    language: 'es'
+                }).on('changeDate', function (ev) {
+                    checkin.hide();
+                }).data('datepicker');
+
+            </script>
+
+
+
+        </div>
+        <div class="text-danger col-md-offset-2 ">@ViewData["errorBeneficiario"]</div><br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+
+            @Html.TextBox("validadoRC", "", new { @style = "display:none;" })
+
+
+            <button id="Guardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+    //Validar por cada request si existe genero, si existe marcar los radios correspondientes.
+    var genero = '@ViewBag.genero';
+
+    if (genero == '1') {
+        $("#rdbFemenino").prop('checked', true);
+        $("#rdbMasculino").prop('checked', false);
+    } else {
+        $("#rdbMasculino").prop('checked', true);
+        $("#rdbFemenino").prop('checked', false);
+    }
+
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+    var Validado = '@ViewBag.Validado';
+    if (Validado == 1) {
+        $("#benNombre").attr("readonly", "true");
+        $("#benApellidoPaterno").attr("readonly", "true");
+        $("#benApellidoMaterno").attr("readonly", "true");
+        $("#benFechaNacimiento").attr("readonly", "true");
+        $("#rdbFemenino").attr("disabled", "disabled");
+        $("#rdbMasculino").attr("disabled", "disabled");
+        $("#benFechaNacimiento1").datepicker('remove');
+        $("#benFechaNacimiento").datepicker('remove');
+    }
+    function hideDisciplina() {
+        $("#divDisciplina").hide();
+    }
+
+    function showDisciplina() {
+        $("#divDisciplina").show();
+    }
+
+    if ($('#rdbNoDeportista').is(':checked')) {
+        $("#divDisciplina").hide();
+    }
+
+    if ($('#rdbNacional').is(':checked')) {
+        $("#divNacionalidad").hide();
+    }
+    else {
+        $("label[for = formatoRut]").text("");
+        $("#btnValidar").hide();
+    }
+
+
+    $('#Guardar').click(function () {
+        rdbFemenino.disabled = false;
+        rdbMasculino.disabled = false;
+    });
+
+
+    function validaRutWS() {
+
+        rut = $("#benRutBeneficiario").val();
+        $.ajax({
+            url: '@Url.Action("getValidaRut")' + "?rut=" + rut,
+            type: "POST",
+            success: function (data) {
+                console.log(data);
+                //alert(data);
+                var json_obj = $.parseJSON(data);//parse JSON
+                for (var i in json_obj) {
+
+                    if (json_obj[i].datosPersona.run.numero.length > 2) {
+
+                        document.getElementById('msgError').innerHTML = '';
+                        $("#benNombre").val(json_obj[i].datosPersona.nombre.nombres);
+                        $("#benApellidoPaterno").val(json_obj[i].datosPersona.nombre.apellidoPaterno);
+                        $("#benApellidoMaterno").val(json_obj[i].datosPersona.nombre.apellidoMaterno);
+                        //alert(json_obj[i].datosPersona.fechaNacimiento.fechaValida);
+
+                        var cadena = json_obj[i].datosPersona.fechaNacimiento.fechaValida;
+                        var nombres = cadena.split("-");
+
+                        $("#benFechaNacimiento").val(nombres[2] + "-" + nombres[1] + "-" + nombres[0]);
+
+                        if (json_obj[i].datosPersona.sexo == 'M') {
+                            $("#rdbFemenino").prop('checked', false);
+                            $("#rdbMasculino").prop('checked', true);
+                        } else {
+                            $("#rdbMasculino").prop('checked', false);
+                            $("#rdbFemenino").prop('checked', true);
+                        }
+                        $("#benNombre").attr("readonly", "true");
+                        $("#benApellidoPaterno").attr("readonly", "true");
+                        $("#benApellidoMaterno").attr("readonly", "true");
+                        $("#benFechaNacimiento").attr("readonly", "true");
+                        $("#rdbFemenino").attr("disabled", "disabled");
+                        $("#rdbMasculino").attr("disabled", "disabled");
+                        $("#benFechaNacimiento1").datepicker('remove');
+                        $("#benFechaNacimiento").datepicker('remove');
+                        $("#validadoRC").val("1");
+                    }
+                    else {
+                        document.getElementById('msgError').innerHTML = "Error Web Services: " + json_obj[i].datosPersona.nombre.nombres;
+                    }
+                }
+            },
+            error: function () {
+            }
+        });
+    };
+</script>

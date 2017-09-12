@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "DisenoPlurianual";
+}
+
+ 
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Diseño Plurianual</li>
+        </ol>
+    </div>
+</div>
+<h3>Diseño Plurianual</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-sm btn-primary text-right"> Guardar Datos Definitivos </button>
+            <button class="btn btn-sm btn-primary text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Area Técnica</th>
+                    <th>Área Competitiva</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2016</td>
+                    <td>Jockey</td>
+                    <td>Jockey Patin</td>
+                    <td>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2017</td>
+                    <td>Jockey</td>
+                    <td>Jockey Patin</td>
+                    <td>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2018</td>
+                    <td>Jockey</td>
+                    <td>Jockey Patin</td>
+                    <td>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Diseño Plurianual</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Nombre Recinto</label>
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                                <option value="1">2016</option>
+                                <option value="2">2017</option>
+                                <option value="3">2018</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Área Técnica</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="txtDescripcion" maxlength="500" cols="40" rows="5" id="txtDescripcion" placeholder="Área Técnica"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Área Competitiva</label>
+                        <div class="col-sm-9">
+                            <textarea name="txtDescripcion" class="form-control" maxlength="500" cols="40" rows="5" id="txtDescripcion" placeholder="Área Competitiva"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+

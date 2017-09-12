@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "Producto";
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Productos</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    @* ng-show="user">*@
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info  pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Nuevo Producto </button>
+        </div><br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Nombre</th>
+                    <th>Nivel</th>
+                    <th>Lugar/Pais</th>
+                    <th>Ciudad</th>
+                    <th>Mes Inicio</th>
+                    <th>Mes Fin</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @* Incorporar NG Repeater *@
+                    @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                    @*<td>{{repo.name}}</td>
+                        <td>{{repo.stargazers_count}}</td>
+                        <td>{{repo.language}}</td>*@
+                    <td>Capacitación</td>
+                    <td>Baloncesto</td>
+                    <td>Basico</td>
+                    <td>Chile</td>
+                    <td>Santiago</td>
+                    <td>Enero</td>
+                    <td>Marzo</td>
+                    <td>
+                        <a href='@Url.Action("AsignacionBeneficiario", "Home")' data-toggle="tooltip" title="Asignación Beneficiario"><img src='@Url.Content("~/Images/Persona.png")' /></a>
+                        <a href='@Url.Action("GastoAdministracion", "Home")' data-toggle="tooltip" title="Gasto en Bienes y Servicios"><img src='@Url.Content("~/Images/Gasto_Administrativo.png")' /></a>
+                        <a href='@Url.Action("ProgramacionGasto", "Home")' data-toggle="tooltip" title="Programación Gasto"><img src='@Url.Content("~/Images/programacion_Gasto.png")' /></a>
+                        <a href='@Url.Action("SolicitudCambio", "Home")' data-toggle="tooltip" title="Solicitud de Cambio"><img src='@Url.Content("~/Images/Solicitud_Cambio.png")' /></a>
+                        <a data-toggle="modal" data-target="#myModal" data-toggle="tooltip" title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a data-toggle="tooltip" title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    @* Incorporar NG Repeater *@
+                    @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                    @*<td>{{repo.name}}</td>
+                        <td>{{repo.stargazers_count}}</td>
+                        <td>{{repo.language}}</td>*@
+                    <td>Capacitación</td>
+                    <td>Baloncesto</td>
+                    <td>Medio</td>
+                    <td>Chile</td>
+                    <td>Santiago</td>
+                    <td>Enero</td>
+                    <td>Marzo</td>
+                    <td>
+                        <a href='@Url.Action("AsignacionBeneficiario", "Home")' data-toggle="tooltip" title="Asignación Beneficiario"><img src='@Url.Content("~/Images/Persona.png")' /></a>
+                        <a href='@Url.Action("GastoAdministracion", "Home")' data-toggle="tooltip" title="Gasto en Bienes y Servicios"><img src='@Url.Content("~/Images/Gasto_Administrativo.png")' /></a>
+                        <a href='@Url.Action("ProgramacionGasto", "Home")' data-toggle="tooltip" title="Programación Gasto"><img src='@Url.Content("~/Images/programacion_Gasto.png")' /></a>
+                        <a href='@Url.Action("SolicitudCambio", "Home")' data-toggle="tooltip" title="Solicitud de Cambio"><img src='@Url.Content("~/Images/Solicitud_Cambio.png")' /></a>                        
+                        <a data-toggle="modal" data-target="#myModal" data-toggle="tooltip" title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a data-toggle="tooltip" title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Ingreso Producto</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Tipo Producto</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="cars">
+                                <option value="1">Administración</option>
+                                <option value="2">Capacitación</option>
+                                <option value="3">Entrenamiento y Concentraciones</option>
+                                <option value="4">Organización de Competencias</option>
+                                <option value="5">Participación de Competencias</option>
+                                <option value="6">RRHH Técnico</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Categoria</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="cars">
+                                <option value="1">Alto Rendimiento</option>
+                                <option value="2">Bajo Rendimiento</option> 
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Nombre</label>
+                        <div class="col-sm-9">
+                            <input  class="form-control" id="inputPassword3" placeholder="Nombre">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Mes Inicio</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="meses">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Mes Fin</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="meses">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Descripción Producto</label>
+                        <div class="col-sm-9">
+                            <textarea name="txtDescripcion" maxlength="500" cols="40" rows="5" class="form-control" id="txtDescripcion" placeholder="Descripción"></textarea>
+                        </div>
+                    </div>
+
+
+                     
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

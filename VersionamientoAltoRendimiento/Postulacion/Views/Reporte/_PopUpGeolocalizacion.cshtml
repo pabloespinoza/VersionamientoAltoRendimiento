@@ -1,0 +1,275 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Create";
+    //Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Ver Geolocalización</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+
+    if (@ViewBag.EstadoGeo == true)
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+                @Html.HiddenFor(model => model.idGeolocalizacion)
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-md-3 control-label">Recinto</label>
+                    <div class="col-md-8">
+                        @Html.DropDownList("idRecinto", null, String.Empty, new { @id = "Recintos-DropdownID", @class = "form-control", @Disabled = "true" })
+
+                        @Html.ValidationMessageFor(model => model.idRecinto)
+                    </div>
+                </div>
+
+                <script src="//maps.google.com/maps/api/js?sensor=false&callback=initialize" type="text/javascript"></script>
+                <div id="map_canvas" style="width: auto; height: 300px;">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-md-3 control-label">Dirección</label>
+                    <div class="col-md-8">
+                        @Html.TextBox("valorDireccion", (string)@ViewBag.DireccionRecinto, new { @class = "form-control" })
+                    </div>
+                </div>
+                <!--Pablo Espinoza 17-02-2016-->
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-md-3 control-label">Descripción</label>
+                    <div class="col-md-8">
+                        @Html.TextArea("valorDescripcion", Model.geoDescripcion, new { @class = "form-control" })
+                    </div>
+                </div>
+                <!--Pablo Espinoza 17-02-2016-->
+                @*<div class="form-group">
+                        <label for="inputPassword3" class="col-md-3 control-label">Coordenadas</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.geoCoordenadaX, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.geoCoordenadaY, new { @class = "form-control" })
+                        </div>
+                    </div>*@
+                <!--Pablo Espinoza 17-02-2016-->
+                <div class="form-group">
+                    <label for="inputPassword3" style="text-align: left;" class="col-md-7 control-label">Horarios de la Geolocalización</label>
+                    <div class="col-md-5">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-bordered table-hover">
+                            <tr>
+                                <th>
+                                    Fecha Inicio
+                                </th>
+                                <th>
+                                    Fecha Fin
+                                </th>
+                                <th>
+                                    Hora Inicio
+                                </th>
+                                <th>
+                                    Hora Fin
+                                </th>
+                                <th>
+                                    Dias
+                                </th>
+                            </tr>
+                            @if (((List<AltoRendimiento.Models.Geolocalizacion_Horario>)ViewBag.HorariosGeo).Count > 0)
+                            {
+                                foreach (var row in ((List<AltoRendimiento.Models.Geolocalizacion_Horario>)ViewBag.HorariosGeo))
+                                {
+                                    <tr>
+                                        <td>
+                                            @row.ghoFechaInicio.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @row.ghoFechaFin.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @row.ghoHoraInicio
+                                        </td>
+                                        <td>
+                                            @row.ghoHoraFin
+                                        </td>
+                                        <td>
+                                            @{
+                                                string dias = row.ghoDias.Replace("|", ", ").Replace("1", "Lunes").Replace("2", "Martes").Replace("3", "Miércoles").Replace("4", "Jueves").Replace("5", "Viernes").Replace("6", "Sábado").Replace("7", "Domingo");
+                                                dias = dias.Substring(0, dias.Length - 2);
+                                            }
+                                            @dias
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;" colspan="7">
+                                            Descripción
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">
+                                            @row.ghoObservacion
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5">
+                                        No existen horarios para la Geolocalización.
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <!--Pablo Espinoza 17-02-2016-->
+                <label class="text-danger" id="resultadoMapa"></label>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+            @*<button type="submit" class="btn btn-sm btn-success ">Guardar</button>*@
+        </div>
+
+    }
+    else
+    {
+        <h4>Sin Geolocalización Asociada</h4>
+        <br />
+
+        @*<script src="//maps.google.com/maps/api/js?sensor=false&callback=initialize" type="text/javascript"></script>*@
+
+        <div id="map_canvas" style="width: auto; height: 300px;">
+            <img src="~/Images/map.jpg" />
+        </div>
+        <br />
+
+    }
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+    $("#Recintos-DropdownID").change(function () {
+        idSelected = $(this).val();
+        $.ajax({
+            url: '@Url.Action("getDireccionRecinto")' + "?idRecinto=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    codeAddress(value.nombre)
+                    $("#valorDireccion").val(value.nombre);
+                });
+            },
+            error: function () {
+            }
+        });
+    });
+
+    $('#geoCoordenadaX').attr('readonly', true);
+    $('#geoCoordenadaY').attr('readonly', true);
+    $('#valorDireccion').attr('readonly', true);
+    //Pablo Espinoza 17-02-2016
+    $('#valorDescripcion').attr('readonly', true);
+    //Pablo Espinoza 17-02-2016
+    var geocoder;
+    var map;
+    var marker;
+    function initialize() {
+        // Creating map object
+        geocoder = new google.maps.Geocoder();
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 15,
+            center: new google.maps.LatLng(@Model.Coordenadas),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creates a draggable marker to the given coords
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(@Model.Coordenadas),
+            //Pablo Espinoza 17-02-2016
+            draggable: false
+            //Pablo Espinoza 17-02-2016
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        //Pablo Espinoza 17-02-2016
+        /*google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#geoCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#geoCoordenadaY").val(evt.latLng.lng().toFixed(6));
+
+            map.panTo(evt.latLng);
+        });*/
+        //Pablo Espinoza 17-02-2016
+
+        // centers the map on markers coords
+        map.setCenter(marker.position);
+
+        // adds the marker on the map
+        marker.setMap(map);
+
+
+    }
+
+
+
+    function codeAddress(direccion) {
+        var address = direccion;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker.setPosition(results[0].geometry.location);
+                $("#geoCoordenadaX").val(marker.getPosition().lat());
+                $("#geoCoordenadaY").val(marker.getPosition().lng());
+                $("#resultadoMapa").text(" ");
+
+            } else {
+                $("#resultadoMapa").text("Error no se logro geolocalizar la dirección registrada");
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+
+    $('#btnSave').click(function (e) {
+        e.preventDefault();
+
+        $('#frmEditProyecto').submit();
+    });
+
+    $('#frmEditProyecto').submit(function () {
+        $(this).ajaxSubmit({
+            target: '#myModalContent',
+            success: function (responseText, statusText, xhr, $form) {
+                $('#myModal').modal('hide');
+                //location.reload(true);
+                return false;
+            }
+        });
+        return false;
+    })
+
+</script>

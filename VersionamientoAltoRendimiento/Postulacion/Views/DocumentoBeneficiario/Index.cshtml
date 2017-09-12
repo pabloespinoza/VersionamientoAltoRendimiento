@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AltoRendimiento.Models.Documento_Beneficiario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>Beneficiario</li>
+            <li><b>Documentos Adjuntos</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Documentos</h3>
+
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre Beneficiario</label>
+        <div class="col-md-5">
+            @ViewBag.Beneficiario
+        </div>
+    </div>
+</div>
+
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <!--Pablo Espinoza-->
+            @if (TempData["idProducto"] != null)
+            {
+                @Html.ActionLink("Volver", "URLAsignarBeneficiarios", "Producto", new { id = TempData["idProducto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            }
+            else
+            {
+                @Html.ActionLink("Volver", "Index", "Beneficiario", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            }
+            <!--Pablo Espinoza-->
+
+            @* <button type="button" onclick="volver()" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>*@
+            @*<button class="btn btn-primary text-right"> Guardar Datos Definitivos </button>*@
+
+
+            @Html.ActionLink("Nuevo", "Create", "DocumentoBeneficiario", new { id = TempData["IdBeneficiarioDocumento"], prod = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+
+        </div>
+        <div class="text-danger"><label id="error" name="error"> @ViewBag.sessionErrorDocumento</label></div><br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>
+                        Tipo Documento
+                    </th>
+                    <th>
+                        Nombre Documento
+                    </th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tipo_Documento_Beneficiario.tdbNombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dbeNombreDocumento)
+                        </td>
+
+                        <td>
+                            <a href='@Url.Action("Download", "DocumentoBeneficiario", new { id = item.idDocumentoBeneficiario })' title="Adjuntos"><img width="20" data-toggle='tooltip' title='Descargar' src='@Url.Content("~/Images/download.png")' /></a>
+
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idDocumentoBeneficiario, prod = TempData["idProducto"] }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

@@ -1,0 +1,195 @@
+﻿@model AltoRendimiento.Models.Documentos_Proyecto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<!--<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Documento</h4>
+</div>-->
+@using (Html.BeginForm("Create", "DocumentosProyecto", FormMethod.Post, new { @id = "envio", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="text-left">Subir Archivo</label>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+                @*if (TempData["IdBeneficiarioDocumento"] != null)
+                    {
+                        @Html.Hidden("idBeneficiario", TempData["IdBeneficiarioDocumento"])
+                    }*@
+
+                @if (TempData["idProyecto"] != null)
+                {
+                    @Html.Hidden("proy", TempData["idProyecto"])
+                }
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Nombre Documento</label>
+                    <div class="col-md-8">
+
+                        @Html.TextBoxFor(model => model.dopNombreIdentificacion, new { @class = "form-control", @maxLength = "150" })
+                        @*Html.ValidationMessageFor(model => model.dopNombreIdentificacion)*@
+                        <span id="dopNombreIdentificacionMensaje" class="field-validation-valid" data-valmsg-for="dopNombreIdentificacion" data-valmsg-replace="true"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Tipo Documento</label>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.idTipoDocumentoProyecto, (IEnumerable<SelectListItem>)ViewBag.idTipoDocumentoProyecto, "--Seleccione--", new { @class = "form-control" })
+                        <span id="idTipoDocumentoProyectoMensaje" class="field-validation-valid" data-valmsg-for="dopNombreIdentificacion" data-valmsg-replace="true"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Adjuntar Archivo</label>
+                    <div class="col-md-8">
+                        @*Html.TextBox("Documento", "", new { @class = "form-control", @type = "file", @name = "Documento"})*@
+                        <input id="Documento" type="file" name="Documento" style="font-size:14px;" />
+                        <span id="fileMensaje" class="field-validation-valid" data-valmsg-for="dopNombreIdentificacion" data-valmsg-replace="true"></span>
+                        <br />
+                        <span>Espacio limite de Archivo 25MB.</span>
+                        <div class="err" style="padding-top:7px;">
+                            @ViewBag.error
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <!--<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>-->
+                    @*    @Html.Raw(@Html.ActionLink("Cancelar", "Index", "DocumentoBeneficiario", new { id = @ViewBag.idBen }, new { @class = "btn btn-danger text-right", @style = "color:White" }).ToHtmlString())*@
+
+                    <!--<input type="submit" id="btnSubmit" name="btnSubmit" onclick="enviar(); return false;" class="btn btn-sm btn-success" value="Guardar" />-->
+                    <!--<input type="submit" id="btnSubmit" name="btnSubmit" onclick="enviar(this);" class="btn btn-sm btn-success" value="Guardar" />-->
+                    <button id="btnSubmit" name="btnSubmit" onclick="enviar(); return false;" class="btn btn-sm center-block btn-success">Guardar</button>
+                    <!--<button id="btnSubmit" name="btnSubmit" onclick="javascript: enviar(this); return false;" class="btn btn-sm btn-success">Guardar</button>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script>
+    $(":file").filestyle({ buttonText: "Seleccionar Archivo", buttonName: "btn-primary" });
+
+    function enviar() {
+        //alert($("#idTipoDocumentoProyecto :selected").val().trim());
+        //console.log(document.getElementById("Documento").files)
+        //alert(document.getElementById("Documento").files)
+        var faltaInfo = false;
+        if ($("#dopNombreIdentificacion").val().trim() == "") {
+            $("#dopNombreIdentificacion").addClass("input-validation-error");
+            $("#dopNombreIdentificacionMensaje").text("El Nombre Documento es obligatorio");
+            $("#dopNombreIdentificacionMensaje").removeClass("field-validation-valid");
+            $("#dopNombreIdentificacionMensaje").addClass("field-validation-error");
+            faltaInfo = true;
+        } else {
+            $("#dopNombreIdentificacion").removeClass("input-validation-error");
+            $("#dopNombreIdentificacionMensaje").text("");
+            $("#dopNombreIdentificacionMensaje").removeClass("field-validation-error");
+            $("#dopNombreIdentificacionMensaje").addClass("field-validation-valid");
+        }
+
+        if ($("#idTipoDocumentoProyecto :selected").val().trim() == "" || $("#idTipoDocumentoProyecto :selected").val().trim() == "0") {
+            $("#idTipoDocumentoProyecto").addClass("input-validation-error");
+            $("#idTipoDocumentoProyectoMensaje").text("El Tipo Documento es obligatorio");
+            $("#idTipoDocumentoProyectoMensaje").removeClass("field-validation-valid");
+            $("#idTipoDocumentoProyectoMensaje").addClass("field-validation-error");
+            faltaInfo = true;
+        } else {
+            $("#idTipoDocumentoProyecto").removeClass("input-validation-error");
+            $("#idTipoDocumentoProyectoMensaje").text("");
+            $("#idTipoDocumentoProyectoMensaje").removeClass("field-validation-error");
+            $("#idTipoDocumentoProyectoMensaje").addClass("field-validation-valid");
+        }
+
+        if ($("#Documento").val().trim() == "") {
+            $("#Documento").addClass("input-validation-error");
+            $("#fileMensaje").text("Adjuntar Archivo es obligatorio");
+            $("#fileMensaje").removeClass("field-validation-valid");
+            $("#fileMensaje").addClass("field-validation-error");
+            faltaInfo = true;
+        } else {
+            $("#Documento").removeClass("input-validation-error");
+            $("#fileMensaje").text("");
+            $("#fileMensaje").removeClass("field-validation-error");
+            $("#fileMensaje").addClass("field-validation-valid");
+
+            if (('#Documento').files[0].size <= 26214400) {
+                $('#btnSubmit').removeAttr("disabled");
+                $("#fileMensaje").text("");
+                $("#fileMensaje").removeClass("field-validation-error");
+                $("#fileMensaje").addClass("field-validation-valid");
+            } else {
+                $('#btnSubmit').attr("disabled", "true");
+                $("#fileMensaje").text("El tamaño del archivo a excedido el limite de 25MB.");
+                $("#fileMensaje").removeClass("field-validation-valid");
+                $("#fileMensaje").addClass("field-validation-error");
+                faltaInfo = true;
+            }
+        }
+
+        //alert($("#file").val());
+
+        if (faltaInfo) {
+            return false;
+        } /*else {
+
+            //alert("entro")
+            /*e.preventDefault = true;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function (e) {
+                if (4 == this.readyState) {
+                    console.log(['xhr upload complete', e]);
+                }
+            };
+            xhr.open('post', '/DocumentosProyecto/Create', true);
+            xhr.setRequestHeader("Content-Type", "multipart/form-data");
+            var formData = new FormData();
+            formData.append("Documento", document.getElementById("Documento").files);
+            formData.append("dopNombreIdentificacion", $("#dopNombreIdentificacion").val())
+            formData.append("idTipoDocumentoProyecto", $("#idTipoDocumentoProyecto").val())
+            // etc
+            xhr.send(formData);*/
+
+        //alert($("input[type=file]").files[0].mozFullPath)
+        //document.envio.Documento = document.getElementById("Documento").files;
+        //$("#envio").append(document.getElementById("Documento").files)
+        $("#envio").submit();
+        //document. envio.submit();
+        //}
+    }
+
+    $('#Documento').bind('change', function () {
+        if (this.files[0].size <= 26214400)
+        {
+            $('#btnSubmit').removeAttr("disabled");
+            $("#fileMensaje").text("");
+            $("#fileMensaje").removeClass("field-validation-error");
+            $("#fileMensaje").addClass("field-validation-valid");
+        } else
+        {
+            $('#btnSubmit').attr("disabled", "true");
+            $("#fileMensaje").text("El tamaño del archivo a excedido el limite de 25MB.");
+            $("#fileMensaje").removeClass("field-validation-valid");
+            $("#fileMensaje").addClass("field-validation-error");
+        }
+    });
+</script>
+

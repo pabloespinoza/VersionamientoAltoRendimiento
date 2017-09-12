@@ -1,0 +1,71 @@
+﻿@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Eliminar Proyecto";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Eliminar Proyecto</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idProyecto)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idOrganizacionLinea)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proNombreProyecto)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proCodigoRegion)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proMesInicio)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proMesTermino)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proJustificacionProyecto)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idWorkflow)
+
+            <dl class="dl-horizontal">
+
+                <dt>
+                    Nombre Proyecto:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.proNombreProyecto)
+                </dd>
+
+            </dl>
+
+            <div class="form-group">
+                @*<div class="col-md-offset-2 col-md-9">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>*@
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-success ">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+}
+
+

@@ -1,0 +1,47 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Producto_Cargo
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
+</div>
+
+
+<div class="modal-body">
+
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario.NombreCompleto) 
+        </dd>
+
+        <dt>
+            Rut
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario.RutCompleto)
+        </dd>
+        <dt>
+            Cargo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo.carNombre)
+        </dd>
+    </dl>
+
+    <div class="text-danger"> Nota: Recuerde que al eliminar este registro, esta eliminando todos los gastos asociados.</div><br />
+
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success">Aceptar</button>
+    </div>
+}

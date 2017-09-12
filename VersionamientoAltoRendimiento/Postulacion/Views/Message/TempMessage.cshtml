@@ -1,0 +1,18 @@
+﻿@{
+    if (TempData["MensajeController"] != null)
+    {
+        string message = TempData["MensajeController"] as string;
+
+        if (!message.ToUpper().Contains("SUCCESS"))
+        {
+            if (!String.IsNullOrEmpty(message))
+            {
+                <script type="text/javascript">
+                    $(window).load(function () {
+                        $('#modalMensaje').modal('show');
+                    });
+                </script>
+            } 
+        }
+    }
+}

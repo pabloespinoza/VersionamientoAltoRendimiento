@@ -1,0 +1,87 @@
+﻿@model AltoRendimiento.Models.Documento_Beneficiario
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Documento</h4>
+</div>
+
+
+@using (Html.BeginForm("Create", "DocumentoBeneficiario", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            
+            @if (TempData["IdBeneficiarioDocumento"] != null)
+            {
+                @Html.Hidden("idBeneficiario", TempData["IdBeneficiarioDocumento"])
+            }
+
+            @if (TempData["idProducto"] != null)
+            {
+                @Html.Hidden("prod", TempData["idProducto"])
+            }
+            
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Tipo Documento</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idTipoDocumentoBeneficiario, (IEnumerable<SelectListItem>)ViewBag.idTipoDocumentoBeneficiario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idTipoDocumentoBeneficiario)
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Adjuntar Archivo</label>
+                <div class="col-md-8">
+                    <input id="file" type="file" name="file" style="font-size:14px;" />
+                    <div class="err" style="padding-top:7px;">
+                        @ViewBag.error
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal" onclick="limpiarError();">Cancelar</button>
+                @*    @Html.Raw(@Html.ActionLink("Cancelar", "Index", "DocumentoBeneficiario", new { id = @ViewBag.idBen }, new { @class = "btn btn-danger text-right", @style = "color:White" }).ToHtmlString())*@
+
+                <button id="btnSubmit" type="button" name="btnSubmit" onclick="submit()" class="btn btn-sm btn-success">Guardar</button>
+            </div>
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script>
+    $(":file").filestyle({ buttonText: "Seleccionar Archivo", buttonName: "btn-primary" });
+
+    function submit(e) {
+        e.preventDefault = true;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function (e) {
+            if (4 == this.readyState) {
+                console.log(['xhr upload complete', e]);
+            }
+        };
+        xhr.open('post', 'DocumentoBeneficiario/Create', true);
+        xhr.setRequestHeader("Content-Type", "multipart/form-data");
+        var formData = new FormData();
+        formData.append("file", $("#file").files[0]);
+        // etc
+        xhr.send(formData);
+
+        return false;
+    };
+</script>
+

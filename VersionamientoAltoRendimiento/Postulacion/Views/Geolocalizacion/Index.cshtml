@@ -1,0 +1,234 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Geolocalizacion>
+
+@{
+    ViewBag.Title = "Geolocalizacion";
+}
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <!--Pablo Espinoza 23-2-2016-->
+            @if (TempData["pendientes"].ToString() != "1")
+            {
+                <!--Pablo Espinoza 23-2-2016-->
+                <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+                <li>@Html.ActionLink("Producto " + (string)@ViewBag.NombreProducto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+                if (@ViewBag.TipoGasto == 1)
+                {
+                    if (@ViewBag.NombreBeneficiario.Cargo.carDescripcion == "DEPORTISTA")
+                    {
+                        <li>@Html.ActionLink("Actividades", "URLGastoPersonal", "AsignarBeneficiarios", new { idBeneficiario = ViewBag.NombreBeneficiario.idBeneficiario, idBPC = ViewBag.NombreBeneficiario.idBeneficiarioProductoCargo }, null) </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Gastos Personales", "URLGastoPersonal", "AsignarBeneficiarios", new { idBeneficiario = ViewBag.NombreBeneficiario.idBeneficiario, idBPC = ViewBag.NombreBeneficiario.idBeneficiarioProductoCargo }, null) </li>
+                    }
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Gastos Administración", "URLGastoAdministracion", "Producto", new { id = TempData["idProducto"] }, null) </li>
+                }
+                <!--Pablo Espinoza 23-2-2016-->
+            }
+            else
+            {
+                <li>@Html.ActionLink("Verificar y Postular", "URLVerificaProyecto", "AntecedenteGeneralProyecto", new { id = ViewBag.proyecto.idProyecto }, null)</li>
+                <li>@Html.ActionLink("Geolocalizaciones Pendientes", "BeneficiarioSinGeolocalizacion", "Proyecto", new { idProyecto = ViewBag.proyecto.idProyecto }, null)</li>
+            }
+            <!--Pablo Espinoza 23-2-2016-->
+            <li><b>Geolocalización</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Geolocalización</h3>
+
+
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Organización</label>
+        <div class="col-md-5">
+            @ViewBag.NombreOrganizacion
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre Beneficiario</label>
+        <div class="col-md-5">
+            @if (@ViewBag.Beneficiario == "2")
+            {
+                @ViewBag.NombreBeneficiario
+            }
+            else
+            {
+
+                @ViewBag.NombreBeneficiario.Beneficiario.NombreCompleto
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Producto</label>
+        <div class="col-md-5">
+            @ViewBag.NombreProducto
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <!--Pablo Espinoza 23-2-2016-->
+            @if (TempData["pendientes"].ToString() != "1")
+            {
+                <!--Pablo Espinoza 23-2-2016-->
+                if (@ViewBag.TipoGasto == 1)
+                {
+                    @Html.ActionLink("Volver", "URLGastoPersonal", "AsignarBeneficiarios", new { idBeneficiario = ViewBag.NombreBeneficiario.idBeneficiario, idBPC = ViewBag.NombreBeneficiario.idBeneficiarioProductoCargo }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+                }
+                else
+                {
+                    @Html.ActionLink("Volver", "URLGastoAdministracion", "Producto", new { id = TempData["idProducto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+                }
+                <!--Pablo Espinoza 23-2-2016-->
+            }
+            else
+            {
+                @Html.ActionLink("Volver", "BeneficiarioSinGeolocalizacion", "Proyecto", new { idProyecto = ViewBag.proyecto.idProyecto }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            }
+            <!--Pablo Espinoza 23-2-2016-->
+            @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.Raw("&nbsp;&nbsp;")
+                @Html.ActionLink("Nueva Geolocalización", "Create", "Geolocalizacion", new { id = TempData["idProducto"], tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                @Html.Raw("&nbsp;&nbsp;")
+
+                if (ViewBag.listadoGeos >= 1)
+                {
+
+                    @Html.ActionLink("Asignar Geolocalización", "AsignarGeolocalizacion", "Geolocalizacion", new { id = TempData["idProducto"], tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnAsignarGeo", @class = "btn btn-sm btn-warning text-right", @style = "color:White" })
+                }
+
+            }
+            else if (@ViewBag.Solicitud != null)
+            {
+                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                {
+                    @Html.ActionLink("Nuevo Recinto", "CreateRecinto", "Geolocalizacion", new { tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnCreateRecinto", @class = "btn btn-sm btn-success text-right", @style = "color:White" })
+                    @Html.Raw("&nbsp;&nbsp;")
+                    @Html.ActionLink("Nueva Geolocalización", "Create", "Geolocalizacion", new { id = TempData["idProducto"], tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                    @Html.Raw("&nbsp;&nbsp;")
+
+                    if (ViewBag.listadoGeos >= 1)
+                    {
+
+                        @Html.ActionLink("Asignar Geolocalización", "AsignarGeolocalizacion", "Geolocalizacion", new { id = TempData["idProducto"], tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnAsignarGeo", @class = "btn btn-sm btn-warning text-right", @style = "color:White" })
+                    }
+                }
+            }
+            else
+            {
+                <br /> <br />
+            }
+        </div>
+        <div id="divResultado" hidden="hidden" class="alert alert-success" role="alert">...</div>
+        <table class="table table-condensed table-bordered   table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre Recinto
+                    </th>
+                    <th>
+                        Tipo Recinto
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    @*<th>
+                            Latitud
+                        </th>
+                        <th>
+                            Longitud
+                        </th>*@
+                    <th>
+                        Acción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recinto.recNombre)
+                        </td>
+                        <td>
+                            @if (item.Recinto.recPublico == true)
+                            {
+                                @Html.DisplayName("Publico")
+                            }
+                            @if (item.Recinto.recPublico == false)
+                            {
+                                @Html.DisplayName("Privado")
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.geoDescripcion)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.geoCoordenadaX)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.geoCoordenadaY)
+                            </td>*@
+                        <td>
+
+                            <a href='@Url.Action("URLGeolocalizacionHorario", "Geolocalizacion", new { id = item.idGeolocalizacion, idTipoGasto = ViewBag.tipoGasto, idBenGasto = ViewBag.idBenGasto, pendientes = TempData["pendientes"] })' data-toggle="tooltip" title="Horarios"><img width="20" src='@Url.Content("~/Images/Timetable.png")' /></a>
+
+                            @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                            {
+                                <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion, tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
+
+                                @*@Html.Raw(@Html.ActionLink("[replacetext]", "ListadoEdit", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))*@
+
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacion, tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+
+                            }
+                            @if (@ViewBag.Solicitud != null)
+                            {
+                                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                {
+                                    <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion, tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
+                                    @*@Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacion, tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))*@
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

@@ -1,0 +1,182 @@
+﻿@model PagedList.IPagedList<AltoRendimiento.Models.Beneficiario>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@Html.Action(actionName: "TempMessage", controllerName: "Message")
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal PopUp -->
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> Gasto en Administración ingresado correctamente.</label>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-sm btn-primary text-right" data-dismiss="modal">Aceptar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li><b>Registro Beneficiarios</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Registro Beneficiarios</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            @*<button class="btn btn-primary text-right"> Guardar Datos Definitivos </button>*@
+            @Html.ActionLink("Nuevo", "Create", "Beneficiario", null, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+        </div>
+        <br />
+        @using (Html.BeginForm("Index", "Beneficiario", FormMethod.Get))
+        {
+            //Pablo Espinoza 17-02-2016
+            <div class="row">
+                <div class="col-md-4">
+                    Buscar por Nombre: @Html.TextBox("SearchNombre", ViewBag.SearchNombre as string, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    Buscar por Apellido Paterno: @Html.TextBox("SearchApellidoP", ViewBag.SearchApellidoP as string, new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    Buscar por Apellido Materno: @Html.TextBox("SearchApellidoM", ViewBag.SearchApellidoM as string, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-sm btn-success text-right" value="Search">Buscar</button>
+                    @Html.ActionLink("Limpiar", "Index", null, new { @class = "btn btn-sm btn-default text-right" })
+                </div>
+            </div>
+            //Pablo Espinoza 17-02-2016
+        }
+
+        <div id="divResultado" hidden="hidden" class="alert alert-success" role="alert">...</div>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered  table-hover">
+
+                @* <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word">*@
+                <thead>
+                    <tr>
+                        <th>
+                            Rut/Pasaporte
+                        </th>
+                        <th>
+                            <!--Pablo Espinoza 17-02-2016-->
+                            @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NombreSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            <!--Pablo Espinoza 17-02-2016-->
+                        </th>
+                        <th>
+                            <!--Pablo Espinoza 17-02-2016-->
+                            @Html.ActionLink("Ap. Paterno", "Index", new { sortOrder = ViewBag.ApellidoSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            <!--Pablo Espinoza 17-02-2016-->
+                        </th>
+                        <th>
+                            Ap. Materno
+                        </th>
+                        <th>
+                            <!--Pablo Espinoza 17-02-2016-->
+                            @Html.ActionLink("Fecha Nacimiento  ", "Index", new { sortOrder = ViewBag.DateSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            <!--Pablo Espinoza 17-02-2016-->
+                        </th>
+                        <th>
+                            Género
+                        </th>
+                        <th>
+                            Nacionalidad
+                        </th>
+                        <th>
+                            Acción
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RutCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.benNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.benApellidoPaterno)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.benApellidoMaterno)
+                            </td>
+
+                            <td>
+
+                                @Html.DisplayName(item.benFechaNacimiento.ToShortDateString())
+                            </td>
+                            <td>
+                                @if (item.benGenero == 1)
+                                {
+                                    @Html.DisplayName("Femenino")
+                                }
+                                @if (item.benGenero == 2)
+                                {
+                                    @Html.DisplayName("Masculino")
+                                }
+                            </td>
+                            <td>
+                                @item.Nacionalidad.nacDescripcion
+                            </td>
+                            <td>
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idBeneficiario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "URLDocumentoBeneficiario", new { id = item.idBeneficiario }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Documentos Adjuntos' src=\"../Images/Reporte.png\" ... />"))
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idBeneficiario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+             new { page, sortOrder = ViewBag.CurrentSort, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM }))
+        @*@Html.Raw(Html.Paginator<AltoRendimiento.Models.Beneficiario>())
+            <div class="panel-footer">@Model.Count() Registro(s)</div>*@
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker-es.js")
+}

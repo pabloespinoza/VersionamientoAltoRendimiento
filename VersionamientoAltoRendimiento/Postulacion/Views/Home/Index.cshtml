@@ -1,0 +1,178 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>Bandeja de Proyectos</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    @* ng-show="user">*@
+    <div class="col-md-12">
+        <div class="text-right">
+            <button class="btn btn-primary "  data-toggle="modal" data-target="#myModal"> Nuevo Proyecto </button>
+        </div><br />
+        @* INCORPORAR NG REPEATER PARA CADA PANEL *@
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div id="demo" class="panel-heading">
+                    <h4 class="panel-title">
+                        PDE &nbsp;
+                        <a data-toggle="collapse" href="#collapse1"><span class="glyphicon glyphicon-collapse-down"></span></a>
+                        <a class="pull-right"> $100.000.000</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Proyecto</th>
+                                <th>Nombre</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Estado</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @* Incorporar NG Repeater *@
+                                @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                                @*<td>{{repo.name}}</td>
+                                    <td>{{repo.stargazers_count}}</td>
+                                    <td>{{repo.language}}</td>*@
+                                <td>15000030046</td>
+                                <td>LIGA DEPORTIVA NACIONAL DE BALONMANO DAMAS Y VARONES</td>
+                                <td>Enero</td>
+                                <td>Marzo</td>
+                                <td>Incompleto</td>
+                                <td>
+                                    <a href='@Url.Action("Index", "Producto")' title="Producto"><img src='@Url.Content("~/Images/List.png")' /></a>
+                                    <a href='@Url.Action("AntecedenteGeneralProyecto", "Home")' title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    <a href='@Url.Action("VerificarPostularProyecto", "Home")' title="Verificar y Postular a Proyecto"><img src='@Url.Content("~/Images/Proyecto.png")' /></a>
+                                    <a href='@Url.Action("Reporte", "Home")' title="Reporte"><img src='@Url.Content("~/Images/Reporte.png")' /></a>
+                                    <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>15000030048</td>
+                                <td>NACIONAL BEACH VOLEY 2015</td>
+                                <td>Abril</td>
+                                <td>Diciembre</td>
+                                <td>Ingresado</td>
+                                <td>
+                                    <a href='@Url.Action("Producto", "Home")' title="Producto"><img src='@Url.Content("~/Images/List.png")' /></a>
+                                    <a href='@Url.Action("AntecedenteGeneralProyecto", "Home")' title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    <a href='@Url.Action("VerificarPostularProyecto", "Home")' title="Verificar y Postular a Proyecto"><img src='@Url.Content("~/Images/Proyecto.png")' /></a>
+                                    <a href='@Url.Action("Reporte", "Home")' title="Reporte"><img src='@Url.Content("~/Images/Reporte.png")' /></a>
+                                    <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @* SOLO PARA VISUALIZACION DOBLE *@
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div id="demo" class="panel-heading">
+                    <h4 class="panel-title">
+                        PDEA &nbsp;
+                        <a data-toggle="collapse" href="#collapse2"><span class="glyphicon glyphicon-collapse-down"></span></a>
+                        <a class="pull-right"> $100.000.000</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Proyecto</th>
+                                <th>Nombre</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Estado</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @* Incorporar NG Repeater *@
+                                @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                                @*<td>{{repo.name}}</td>
+                                <td>{{repo.stargazers_count}}</td>
+                                <td>{{repo.language}}</td>*@
+                                <td>15000030046</td>
+                                <td>LIGA DEPORTIVA NACIONAL DE BALONMANO DAMAS Y VARONES</td>
+                                <td>Enero</td>
+                                <td>Marzo</td>
+                                <td>Incompleto</td>
+                                <td>
+                                    <a href='@Url.Action("Producto", "Home")' title="Producto"><img src='@Url.Content("~/Images/List.png")' /></a>
+                                    <a href='@Url.Action("AntecedenteGeneralProyecto", "Home")' title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    <a href='@Url.Action("VerificarPostularProyecto", "Home")' title="Verificar y Postular a Proyecto"><img src='@Url.Content("~/Images/Proyecto.png")' /></a>
+                                    <a href='@Url.Action("Reporte", "Home")' title="Reporte"><img src='@Url.Content("~/Images/Reporte.png")' /></a>
+                                    <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>15000030048</td>
+                                <td>NACIONAL BEACH VOLEY 2015</td>
+                                <td>Abril</td>
+                                <td>Diciembre</td>
+                                <td>Ingresado</td>
+                                <td>
+                                    <a href='@Url.Action("Producto", "Home")' title="Producto"><img src='@Url.Content("~/Images/List.png")' /></a>
+                                    <a href='@Url.Action("AntecedenteGeneralProyecto", "Home")' title="Editar"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    <a href='@Url.Action("VerificarPostularProyecto", "Home")' title="Verificar y Postular a Proyecto"><img src='@Url.Content("~/Images/Proyecto.png")' /></a>
+                                    <a href='@Url.Action("Reporte", "Home")' title="Reporte"><img src='@Url.Content("~/Images/Reporte.png")' /></a>
+                                    <a title="Eliminar"> <img src="~/Images/Trash.png" /> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nuevo Proyecto</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Línea Financiamiento</label>
+                        <div class="col-sm-9">
+                            <select name="cars" class="form-control">
+                                <option value="1">(421) PLANES DE DESARROLLO ESTRATEGICO</option>
+                                <option value="2">(422) PLANES DE DESARROLLO GLOBAL</option>
+                                <option value="3">(423) PLANES DE DESARROLLO MARKETING</option>
+                                <option value="4">(424) PLANES DE DESARROLLO ESTATAL</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
+                <a href='@Url.Action("AntecedenteGeneralProyecto", "Home")'><button type="button" class="btn btn-success" >Guardar</button></a>
+</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

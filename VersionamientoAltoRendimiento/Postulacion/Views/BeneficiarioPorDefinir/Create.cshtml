@@ -1,0 +1,98 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Producto_Cargo
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Beneficiario_Producto_Cargo</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idBeneficiario, "idBeneficiario", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idBeneficiario", String.Empty)
+                @Html.ValidationMessageFor(model => model.idBeneficiario)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProducto, "idProducto", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idProducto", String.Empty)
+                @Html.ValidationMessageFor(model => model.idProducto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCargo, "idCargo", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idCargo", String.Empty)
+                @Html.ValidationMessageFor(model => model.idCargo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bpcEstado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bpcEstado)
+                @Html.ValidationMessageFor(model => model.bpcEstado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bpcFechaCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bpcFechaCreacion)
+                @Html.ValidationMessageFor(model => model.bpcFechaCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bpcUsuarioCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bpcUsuarioCreacion)
+                @Html.ValidationMessageFor(model => model.bpcUsuarioCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bpcFechaModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bpcFechaModificacion)
+                @Html.ValidationMessageFor(model => model.bpcFechaModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bpcUsuarioModificador, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bpcUsuarioModificador)
+                @Html.ValidationMessageFor(model => model.bpcUsuarioModificador)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

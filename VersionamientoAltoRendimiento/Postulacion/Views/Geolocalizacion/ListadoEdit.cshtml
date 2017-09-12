@@ -1,0 +1,205 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion
+
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Editar Geolocalización";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+<div class="modal-header"> 
+    <h4 class="modal-title" id="myModalLabel">Editar Geolocalización</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-6">
+        <div class="modal-body">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+                @Html.HiddenFor(model => model.idGeolocalizacion)
+                @Html.Hidden("tipoGasto", TempData["idTipoGasto"])
+                @Html.Hidden("beneficiarioGP", TempData["idBeneficiarioGastoPersonal"])
+                @Html.Hidden("pendientes", TempData["pendientes"])
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-md-3 control-label">Recinto</label>
+                    <div class="col-md-8">
+                        @Html.DropDownList("idRecinto", null, String.Empty, new { @id = "Recintos-DropdownID", @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.idRecinto)
+                    </div>
+                </div>
+
+                <script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=false" type="text/javascript"></script>
+                <div id="map_canvas" style="width: auto; height: 300px;">
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-md-3 control-label"> Descripción</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(r => r.geoDescripcion, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.geoDescripcion)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-md-3 control-label">Dirección</label>
+                    <div class="col-md-8">
+                        @Html.TextBox("valorDireccion", (string)@ViewBag.DireccionRecinto, new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+                <div class="form-group" id="divCoords"> 
+                    <label for="inputPassword3" class="col-md-3 control-label"> Coordenadas</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.geoCoordenadaX, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.geoCoordenadaY, new { @class = "form-control" })
+                    </div>
+                </div>
+                <label class="text-danger" id="resultadoMapa"></label>
+
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="volver()" class="btn btn-sm btn-danger pull-left" data-dismiss=" modal">Cancelar</button> 
+            @*@Html.ActionLink("Volver", "ListadoGeolocalizaciones", "Geolocalizacion", null, new { @class = "btn btn-sm btn-danger pull-left", @style = "color:White" })*@
+
+
+            <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <br />
+        <iframe id="frameHorario" class="col-md-12" style="border:none" height="600" src=""></iframe>
+    </div>
+}
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/modalform")
+}
+<script>
+    
+    $("#divCoords").hide();
+    var id = @Model.idGeolocalizacion.ToString();
+    var URL_PATH = '@Url.Content("~")';
+    var url = URL_PATH + "Geolocalizacion/ListadoBeneficiarios?id=";  
+    $("#frameHorario").attr('src', url + id);
+
+
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+    //Pablo Espinoza
+    $("#Recintos-DropdownID").change(function () {
+        idSelected = $(this).val();
+        $.ajax({
+            dataType: "json",
+            url: '@Url.Action("getDireccionRecinto")' + "?idRecinto=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    if (index == "recDireccion") {
+                        $("#valorDireccion").val(value);
+                    }
+                    if (index == "recCoordenadaX")
+                    {
+                        $('#geoCoordenadaX').val(value);
+                    }
+                    if (index == "recCoordenadaY") {
+                        $('#geoCoordenadaY').val(value);
+                    }
+                    centrarGeo();
+                });
+            },
+            error: function () {
+            }
+        });
+    });
+    //Pablo Espinoza
+
+    $('#geoCoordenadaX').attr('readonly', true);
+    $('#geoCoordenadaY').attr('readonly', true);
+    $('#valorDireccion').attr('readonly', true);
+    var geocoder;
+    var map;
+    var marker;
+    function initialize() {
+        // Creating map object
+        geocoder = new google.maps.Geocoder();
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 15,
+            center: new google.maps.LatLng(@Model.Coordenadas),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creates a draggable marker to the given coords
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(@Model.Coordenadas),
+            draggable: true
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#geoCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#geoCoordenadaY").val(evt.latLng.lng().toFixed(6));
+
+            map.panTo(evt.latLng);
+        });
+
+        // centers the map on markers coords
+        map.setCenter(marker.position);
+
+        // adds the marker on the map
+        marker.setMap(map);
+
+
+    }
+
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    //Pablo Espinoza
+    function centrarGeo() {
+        var X = $('#geoCoordenadaX').val();
+        var Y = $('#geoCoordenadaY').val();
+        if (X.length > 0 && Y.length > 0) {
+
+
+            map = new google.maps.Map(document.getElementById('map_canvas'), {
+                zoom: 14,
+                center: new google.maps.LatLng(X, Y),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            
+            // creates a draggable marker to the given coords
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(X, Y),
+                draggable: true
+            });
+
+            // adds a listener to the marker
+            // gets the coords when drag event ends
+            // then updates the input with the new coords
+            google.maps.event.addListener(marker, 'dragend', function (evt) {
+                $("#geoCoordenadaX").val(evt.latLng.lat().toFixed(6));
+                $("#geoCoordenadaY").val(evt.latLng.lng().toFixed(6));
+                geocoder.geocode({ 'latLng': evt.latLng }, function (results) {
+                });
+                map.panTo(evt.latLng);
+            });
+
+            // adds the marker on the map
+            marker.setMap(map);
+        }
+    }
+    //Pablo Espinoza
+</script>

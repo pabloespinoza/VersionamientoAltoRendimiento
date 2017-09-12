@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d555f8db7d2e4361b42d8c464970cbb9" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="AltoRendimiento.Auditoria" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario" Width="1.5" PointX="8.25" PointY="55.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Personal" Width="1.5" PointX="13.5" PointY="44.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Personal_Copia" Width="1.5" PointX="12.75" PointY="56.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Personal_Historial" Width="1.5" PointX="15.75" PointY="48.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Producto_Cargo" Width="1.5" PointX="10.5" PointY="49.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Producto_Cargo_Copia" Width="1.5" PointX="15.75" PointY="58.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Producto_Cargo_Historial" Width="1.5" PointX="12.75" PointY="29" />
+        <EntityTypeShape EntityType="AltoRendimiento.Cargo" Width="1.5" PointX="0.75" PointY="47.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Cargo_Producto" Width="1.5" PointX="3" PointY="43" />
+        <EntityTypeShape EntityType="AltoRendimiento.Categoria" Width="1.5" PointX="1.5" PointY="82" />
+        <EntityTypeShape EntityType="AltoRendimiento.Ciudad" Width="1.5" PointX="6" PointY="51.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Comuna" Width="1.5" PointX="6" PointY="29.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Concurso" Width="1.5" PointX="1.5" PointY="85.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Concurso_categoria" Width="1.5" PointX="1.5" PointY="78" />
+        <EntityTypeShape EntityType="AltoRendimiento.Cuenta" Width="1.5" PointX="1.5" PointY="90.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Detalle_Programacion_Gasto" Width="1.5" PointX="12.75" PointY="68.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Detalle_Programacion_Gasto_Historial" Width="1.5" PointX="15" PointY="68.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Disciplina" Width="1.5" PointX="6" PointY="55.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Disciplina_Organizacion" Width="1.5" PointX="8.25" PointY="51.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.DistribucionConverge" Width="1.5" PointX="1.5" PointY="34.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Documento_Beneficiario" Width="1.5" PointX="20.5" PointY="53.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Estado_Proyecto" Width="1.5" PointX="1.5" PointY="24.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Evaluacion_Proyecto" Width="1.5" PointX="14.25" PointY="24.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion" Width="1.5" PointX="10.5" PointY="44.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Copia" Width="1.5" PointX="18.75" PointY="63" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Administracion" Width="1.5" PointX="15.75" PointY="42" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Administracion_Copia" Width="1.5" PointX="24" PointY="63.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Administracion_Historial" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Personal" Width="1.5" PointX="18.75" PointY="45" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Personal_Copia" Width="1.5" PointX="21" PointY="58.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Gasto_Personal_Historial" Width="1.5" PointX="21" PointY="45.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Historial" Width="1.5" PointX="12.75" PointY="50.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Horario" Width="1.5" PointX="12.75" PointY="33.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Horario_Copia" Width="1.5" PointX="21" PointY="62.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Geolocalizacion_Horario_Historial" Width="1.5" PointX="15" PointY="33.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.HDA_PROYECTO" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Asignacion_Linea" Width="1.5" PointX="6" PointY="66.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Evaluacion_Proyecto" Width="1.5" PointX="16.5" PointY="24.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Programa" Width="1.5" PointX="3.75" PointY="71.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Proyecto" Width="1.5" PointX="8.25" PointY="26.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Workflow" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Linea_Clasificacion" Width="1.5" PointX="1.5" PointY="68.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Linea_Cuenta" Width="1.5" PointX="3.75" PointY="65.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.LogError" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Montos_Organizacion_Linea" Width="1.5" PointX="6" PointY="63" />
+        <EntityTypeShape EntityType="AltoRendimiento.Nacionalidad" Width="1.5" PointX="6" PointY="59" />
+        <EntityTypeShape EntityType="AltoRendimiento.Nivel" Width="1.5" PointX="0.75" PointY="20.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Notificacion" Width="1.5" PointX="11" PointY="18.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Notificacion_Destinatario" Width="1.5" PointX="16.25" PointY="19.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Notificacion_Enviada" Width="1.5" PointX="19.25" PointY="22.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Notificacion_Enviada_Usuario" Width="1.5" PointX="21.5" PointY="22.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Objeto" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="AltoRendimiento.Observaciones_Proyecto" Width="1.5" PointX="8.25" PointY="22" />
+        <EntityTypeShape EntityType="AltoRendimiento.Organizacion" Width="1.5" PointX="1.5" PointY="51.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Organizacion_Linea" Width="1.5" PointX="3.75" PointY="59.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Organizacion_Linea_Tipo_Producto" Width="1.5" PointX="6" PointY="43" />
+        <EntityTypeShape EntityType="AltoRendimiento.Pais" Width="1.5" PointX="3.75" PointY="51.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Pais_Region" Width="1.5" PointX="6" PointY="47.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Parametro" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Perfil_IND" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Permiso" Width="1.5" PointX="16.25" PointY="7.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Plan_Plurianual" Width="1.5" PointX="3.75" PointY="76.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Plantilla_Email" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_Historial" Width="1.5" PointX="10.5" PointY="76" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_Nivel" Width="1.5" PointX="3" PointY="47" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_Tipo_Gasto_administracion" Width="1.5" PointX="3" PointY="39.125" />
+        <EntityTypeShape EntityType="AltoRendimiento.Programacion_Gasto_Producto" Width="1.5" PointX="10.5" PointY="70.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Programacion_Gasto_Producto_Historial" Width="1.5" PointX="12.75" PointY="72.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Provincia" Width="1.5" PointX="3.75" PointY="30" />
+        <EntityTypeShape EntityType="AltoRendimiento.Recinto" Width="1.5" PointX="8.25" PointY="38.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Recinto_Organizacion" Width="1.5" PointX="18.5" PointY="49" />
+        <EntityTypeShape EntityType="AltoRendimiento.Region" Width="1.5" PointX="1.5" PointY="30" />
+        <EntityTypeShape EntityType="AltoRendimiento.Reporting_Services" Width="1.5" PointX="8.75" PointY="17.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Resolucion" Width="1.5" PointX="8.25" PointY="31.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Resolucion_Proyecto" Width="1.5" PointX="16.5" PointY="28.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Rol" Width="1.5" PointX="14" PointY="14.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Anulacion" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Archivo_Solicitud_Cambio" Width="1.5" PointX="15.75" PointY="54.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Documento_Beneficiario" Width="1.5" PointX="18.25" PointY="54.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Gasto_Administracion" Width="1.5" PointX="0.75" PointY="37.625" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Gasto_Personal" Width="1.5" PointX="11.25" PointY="23.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Notificacion" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Objeto" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Organizacion" Width="1.5" PointX="1.5" PointY="57.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Producto" Width="1.5" PointX="0.75" PointY="42.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Solicitud_Cambio" Width="1.5" PointX="10.5" PointY="58.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Workflow" Width="1.5" PointX="3.75" PointY="23.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Workflow_Ruta" Width="1.5" PointX="6" PointY="38" />
+        <EntityTypeShape EntityType="AltoRendimiento.Zona" Width="1.5" PointX="1.75" PointY="16.25" />
+        <EntityTypeShape EntityType="AltoRendimiento.Zona_Pais" Width="1.5" PointX="18" PointY="33.875" />
+        <EntityTypeShape EntityType="AltoRendimiento.Zona_Tipo_Gasto_Administracion" Width="1.5" PointX="4" PointY="34" />
+        <EntityTypeShape EntityType="AltoRendimiento.EstadoWebServiceRegistroCivil" Width="1.5" PointX="9.75" PointY="8.75" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Disciplina" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Nacionalidad" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Beneficiario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Cargo_Copia_Beneficiario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Documento_Beneficiario_Beneficiario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Historial_Beneficiario_Gasto_Personal" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Tipo_Gasto_Personal" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Beneficiario_Gasto_Personal_Beneficiario_Gasto_Personal" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Copia_Beneficiario_Producto_Cargo_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Copia_Tipo_Gasto_Personal" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Personal_Copia_Beneficiario_Gasto_Personal_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Cargo_Historial_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Cargo_producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Cargo_producto_Tipo_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Categoría" />
+        <AssociationConnector Association="AltoRendimiento.FK_Ciudad_Pais" />
+        <AssociationConnector Association="AltoRendimiento.FK_Comuna_Provincia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Concurso" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Concurso_categoria" />
+        <AssociationConnector Association="AltoRendimiento.FK_Linea_Cuenta_Cuenta" />
+        <AssociationConnector Association="AltoRendimiento.FK_Detalle_Programacion_Gasto_Historial_Detalle_Programacion_Gasto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Programacion_detalle_Programacion_gasto_producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Disciplina_Organizacion_Disciplina" />
+        <AssociationConnector Association="AltoRendimiento.FK_Disciplina_Organizacion_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Tipo_Gasto_Administracion_Tipo_Gasto_Administracion_distribucionConverge" />
+        <AssociationConnector Association="AltoRendimiento.FK_Tipo_Gasto_Personal_Tipo_Gasto_Personal_distribucion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Documento_Beneficiario_Tipo_Documento_Beneficiario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Workflow_EstadoProyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Evaluacion_Proyecto_Workflow" />
+        <AssociationConnector Association="AltoRendimiento.FK_Historial_Evaluacion_Proyecto_Evaluacion_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Beneficiario_Gasto_Personal_Geolocalizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Geolocalizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Historial_Geolocalizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Horario_Geolocalizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Recintos" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Copia_Recinto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Copia_Geolocalizacion_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Personal_Copia_Geolocalizacion_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Horario_Copia_Geolocalizacion_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK__Geolocali__idGeo__3004F00B" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Horario_Historial_Geolocalizacion_Horario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Historial_Asignacion_Linea_Organizacion_Linea" />
+        <AssociationConnector Association="AltoRendimiento.FK_Montos_Organizacion_Linea_Organizacion_Linea" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Nivel_Nivel" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correo_Destinatario_Correo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correo_Reporting_Services" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correo_Workflow" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correo_Workflow_02" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correos_Enviados_Correo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Correo_Destinatario_Rol" />
+        <AssociationConnector Association="AltoRendimiento.FK_Notificacion_Enviada_Usuario_Notificacion_Enviada" />
+        <AssociationConnector Association="AltoRendimiento.FK_Objeto_Objeto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Objeto_Tipo_Objeto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Permiso_Objeto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Observaciones_Proyecto_Workflow" />
+        <AssociationConnector Association="AltoRendimiento.FK_Observaciones_Proyecto_Workflow_02" />
+        <AssociationConnector Association="AltoRendimiento.FK__Recinto_O__idOrg__4D9552F2" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Tipo_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Plan_PluriAnual_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Tipo_Producto_Organizacion_Linea" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Tipo_Producto_Tipo_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Pais_Region_Pais" />
+        <AssociationConnector Association="AltoRendimiento.FK_Zona_Pais_Pais" />
+        <AssociationConnector Association="AltoRendimiento.FK_Pais_Region_Region" />
+        <AssociationConnector Association="AltoRendimiento.FK_Permiso_Rol" />
+        <AssociationConnector Association="AltoRendimiento.FK_Tipo_Notificacion_Plantilla_Email" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Nivel_Tipo_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Tipo_Gasto_administracion_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Tipo_Gasto_administracion_Tipo_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Programacion_Gasto_Producto_Historial_Programacion_Gasto_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Provincia_Region" />
+        <AssociationConnector Association="AltoRendimiento.FK__Recinto_O__idRec__4CA12EB9" />
+        <AssociationConnector Association="AltoRendimiento.FK_Resolucion_Proyecto_Resolucion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Zona_Tipo_Gasto_Administracion_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Workflow_Ruta_Workflow" />
+        <AssociationConnector Association="AltoRendimiento.FK_Zona_Pais_Zona" />
+        <AssociationConnector Association="AltoRendimiento.FK_Zona_Tipo_Gasto_Administracion_Zona" />
+        <EntityTypeShape EntityType="AltoRendimiento.Excepcion_Solicitud_Cambio" Width="1.5" PointX="10.5" PointY="54.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Correo_Distribucion" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Dispacher" Width="1.5" PointX="19.5" PointY="28.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Historial_Cuenta" Width="1.5" PointX="3.75" PointY="90.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_Historial_Cuenta_Cuenta" />
+        <EntityTypeShape EntityType="AltoRendimiento.Excepcion_Tiempo_Ejecucion" Width="1.5" PointX="22.5" PointY="31.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.LogInicializacionFolio" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Programa" Width="1.5" PointX="0.75" PointY="66.75" />
+        <AssociationConnector Association="AltoRendimiento.FK_Historial_Programa_Programa" />
+        <EntityTypeShape EntityType="AltoRendimiento.Archivo_Solicitud_Cambio" Width="1.5" PointX="23" PointY="49" />
+        <AssociationConnector Association="AltoRendimiento.FK_Archivo_Solicitud_Cambio_Tipo_Archivo_Solicitud_Cambio" />
+        <EntityTypeShape EntityType="AltoRendimiento.Usuario" Width="1.5" PointX="21.25" PointY="36.625" />
+        <AssociationConnector Association="AltoRendimiento.FK_Excepcion_Solicitud_Cambio_Usuario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Excepcion_Tiempo_Ejecucion_Usuario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Notificacion_Enviada_Usuario_Usuario" />
+        <AssociationConnector Association="AltoRendimiento.FK_Usuario_Organizacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Usuario_Rol" />
+        <EntityTypeShape EntityType="AltoRendimiento.Documentos_Proyecto" Width="1.5" PointX="16.625" PointY="13.25" />
+        <AssociationConnector Association="AltoRendimiento.FK_Resolucion_Proyecto_Documentos_Proyecto" />
+        <EntityTypeShape EntityType="AltoRendimiento.Tipo_Documento_Proyecto" Width="1.5" PointX="12.375" PointY="8" />
+        <AssociationConnector Association="AltoRendimiento.FK_Documentos_Proyecto_Tipo_Documento_Proyecto" />
+        <EntityTypeShape EntityType="AltoRendimiento.Categoria_Deporte" Width="1.5" PointX="22" PointY="27.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.CategoriaDeporte_Producto" Width="1.5" PointX="26.5" PointY="33.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_CategoriaDeporte" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion" Width="1.5" PointX="26.5" PointY="42.375" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Beneficiario_Gasto_Administracion" />
+        <EntityTypeShape EntityType="AltoRendimiento.CategoriaDeporte_Producto_Historial" Width="1.5" PointX="10.375" PointY="12.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Copia" Width="1.5" PointX="24" PointY="54.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Historial" Width="1.5" PointX="28.75" PointY="43" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Historial_Beneficiario_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Beneficiario_Producto_Cargo_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Copia_Beneficiario_Gasto_Administracion_Copia" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto" Width="1.5" PointX="24.25" PointY="36" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Ciudad" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Comuna" />
+        <AssociationConnector Association="AltoRendimiento.FK_Excepcion_Solicitud_Cambio_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Excepcion_Tiempo_Ejecucion_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Organizacion_Linea_Tipo_Producto" />
+        <AssociationConnector Association="AltoRendimiento.fk_dispacher_producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Historial_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Producto_Nivel" />
+        <AssociationConnector Association="AltoRendimiento.FK_Programacion_gasto_producto_Producto" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_Copia" Width="1.5" PointX="26.5" PointY="26.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_ProductoCopia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Copia_ProductoCopia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Cargo_Copia_ProductoCopia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Copia_Producto_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Copia_Producto" />
+        <EntityTypeShape EntityType="AltoRendimiento.Proyecto" Width="1.5" PointX="6" PointY="22.625" />
+        <AssociationConnector Association="AltoRendimiento.FK_Documentos_Proyecto_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Evaluacion_Proyecto_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Historial_Proyecto_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Notificacion_Enviada_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Observaciones_Proyecto_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Proyecto_Organizacion_Linea" />
+        <AssociationConnector Association="AltoRendimiento.FK_Producto_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.fk_dispacher_proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Proyecto_Workflow" />
+        <AssociationConnector Association="AltoRendimiento.FK_Resolucion_Proyecto" />
+        <EntityTypeShape EntityType="AltoRendimiento.CategoriaDeporte_Producto_Copia" Width="1.5" PointX="28.75" PointY="28.125" />
+        <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_Copia_CategoriaDeporte" />
+        <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_ProductoCopia" />
+        <EntityTypeShape EntityType="AltoRendimiento.Solicitud_Cambio" Width="1.5" PointX="28.75" PointY="36.25" />
+        <AssociationConnector Association="AltoRendimiento.FK_Archivo_Solicitud_Cambio_Solicitud_Cambio" />
+        <AssociationConnector Association="AltoRendimiento.FK_Solicitud_Cambio_Producto_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Solicitud_Cambio_Proyecto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Solicitud_Cambio_Tipo_Solicitud_Cambio" />
+        <EntityTypeShape EntityType="AltoRendimiento.Linea" Width="1.5" PointX="6.75" PointY="70.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_Linea_Cuenta_Linea" />
+        <AssociationConnector Association="AltoRendimiento.FK_Linea_Linea_Clasificacion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Linea_Programa" />
+        <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Linea" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

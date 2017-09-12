@@ -1,0 +1,122 @@
+﻿@model AltoRendimiento.Models.Documentos_Proyecto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Documentos_Proyecto</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dopObservacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopObservacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopNombreArchivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopNombreArchivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopExtensionArchivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopExtensionArchivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopContentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopContentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dopFechaDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopFechaDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proyecto.proNombreProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proyecto.proNombreProyecto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Documento_Proyecto.tdpNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Documento_Proyecto.tdpNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idDocumentoProyecto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

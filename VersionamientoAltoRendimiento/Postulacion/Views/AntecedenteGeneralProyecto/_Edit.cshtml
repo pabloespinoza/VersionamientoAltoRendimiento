@@ -1,0 +1,181 @@
+﻿@using AltoRendimiento.App_Code
+@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Editar Proyecto";
+}
+
+@using (Html.BeginForm("Edit", "AntecedenteGeneralProyecto", FormMethod.Post, new { ID = "frmEditProyecto" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Editar Proyecto</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idProyecto)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.proFolioProyecto)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idOrganizacionLinea)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idWorkflow)
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Código Proyecto</label>
+                <div class="col-sm-9">
+                    <span class="form-control" disabled="false">@ViewBag.IdProyecto</span>
+                </div>
+            </div>
+
+            @{
+    var workFlow = Model.idWorkflow;
+    if (workFlow != (int)EnumEstados.Incompleto && workFlow != (int)EnumEstados.Objetada && Model.estadoIngresado != 1 && Model.estadoIngresado != 2)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.proNombreProyecto, "Nombre Proyecto", new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.proNombreProyecto, new { @class = "form-control", @Disabled = "true", @maxLength = "150" })
+                @Html.ValidationMessageFor(model => model.proNombreProyecto)
+            </div>
+        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proCodigoRegion, "Región", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.proCodigoRegion, (IEnumerable<SelectListItem>)ViewBag.Regiones, "--Seleccione--", new { @class = "form-control", @Disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.proCodigoRegion)
+                    </div>
+                </div>
+
+                <div class="form-group">    
+                    @Html.LabelFor(model => model.proMesInicio, "Mes Inicio", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.proMesInicio, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @class = "form-control", @Disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.proMesInicio)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proMesTermino, "Mes Termino", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @*@if (@ViewBag.NombreLinea == "Apoyo Especial a Deportistas" || @ViewBag.NombreLinea == "Apoyo Especial a deportistas paralímpicos")
+                        {
+                            @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control" })
+                        }
+                        else
+                        {*@
+                            @*@Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, new { @class = "form-control", @Disabled = "true" })*@
+                        @*}*@
+                        @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control", @Disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.proMesTermino)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proJustificacionProyecto, "Justificación y Objetivo del Proyecto", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(model => model.proJustificacionProyecto, new { @class = "form-control", @rows = 4, @style = "resize:none;", @Disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.proJustificacionProyecto)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.proNombreProyecto, "Nombre Proyecto", new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.proNombreProyecto, new { @class = "form-control", @maxLength = "150" })
+                @Html.ValidationMessageFor(model => model.proNombreProyecto)
+            </div>
+        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proCodigoRegion, "Región", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.proCodigoRegion, (IEnumerable<SelectListItem>)ViewBag.Regiones, "--Seleccione--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.proCodigoRegion)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proMesInicio, "Mes Inicio", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.proMesInicio, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.proMesInicio)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proMesTermino, "Mes Termino", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @*@if (@ViewBag.NombreLinea == "Apoyo Especial a Deportistas" || @ViewBag.NombreLinea == "Apoyo Especial a deportistas paralímpicos")
+    {
+        @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control" })
+    }
+    else
+    {*@
+@*@Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, new { @class = "form-control", @Disabled = "true" })*@
+@*}*@
+@Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control" })
+@Html.ValidationMessageFor(model => model.proMesTermino)
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proJustificacionProyecto, "Justificación y Objetivo del Proyecto", new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(model => model.proJustificacionProyecto, new { @class = "form-control", @rows = 4, @style = "resize:none;" })
+                        @Html.ValidationMessageFor(model => model.proJustificacionProyecto)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-sm btn-success" id="btnSave">Guardar</button>
+                    </div>
+                </div>
+    }
+            }
+
+
+
+
+        </div>
+    </div>
+}
+@Scripts.Render("~/Scripts/FuncionesKibernum.js")
+@*<script type="text/javascript">
+
+        $('#btnSave').click(function (e) {
+            e.preventDefault();
+
+            $('#frmEditProyecto').submit();
+        });
+
+        $('#frmEditProyecto').submit(function () {
+            $(this).ajaxSubmit({
+                target: '#myModalContent',
+                success: function (responseText, statusText, xhr, $form) {
+                    $('#myModal').modal('hide');
+                    location.reload(true);
+                    return false;
+                }
+            });
+            return false;
+        })
+
+    </script>*@
+<script src="~/Scripts/AntecedenteProyecto.js" type="text/javascript"></script>

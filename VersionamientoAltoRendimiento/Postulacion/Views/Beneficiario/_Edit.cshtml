@@ -1,0 +1,152 @@
+﻿@model AltoRendimiento.Models.Beneficiario
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Editar Beneficiario</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idBeneficiario)
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    @Html.RadioButtonFor(model => model.benEsdeportista, "0", new { @id = "rdbDeportista", @class = "col-md-1", @checked = "true", @onchange = "showDisciplina();" }) @Html.Label("Deportista", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benEsdeportista, "1", new { @id = "rdbNoDeportista", @class = "col-md-1 col-md-offset-3", @onchange = "hideDisciplina();" })@Html.Label("No Deportista", new { @class = "col-md-4", @style = "font-weight: normal" })
+                </div>
+            </div>
+            <div class="form-group" id="divDisciplina">
+                <label for="inputEmail3" class="col-sm-4 control-label">Disciplina</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idDisciplina, (IEnumerable<SelectListItem>)ViewBag.ListaDisciplinas, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idDisciplina)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    @Html.RadioButtonFor(model => model.benExtranjero, false, new { @class = "col-md-1", @checked = "true",  @disabled = "disabled", @onchange = "activarRut(); return false;", @id = "rdbNacional", @for = "rdbNacional" }) @Html.Label("Nacional", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benExtranjero, true, new { @class = "col-md-1 col-md-offset-3", @disabled = "disabled", @onchange = "desactivarRut(); return false;", @id = "rdbExtranjero", @for = "rdbExtranjero" })@Html.Label("Extranjero", new { @class = "col-md-4", @style = "font-weight: normal" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label id="lblRutPasaporte" for="lblRutPasaporte" class="col-sm-4 control-label">Rut</label>  
+                <div class="col-md-6"> 
+                    @if((bool)ViewBag.Extranjero ==true)
+                    {
+                         @Html.TextBox("benRutBeneficiario", Model.RutCompleto, new { @readonly = "true", @class = "form-control" }) 
+                    }
+                    else
+                    {
+                        @Html.TextBox("benRutBeneficiario", Model.RutCompleto, new { @class = "form-control", @readonly = "true", @onchange = "return verifica_rut(this); return false;", @onkeypress = "return permite(event, 'rut'); return false;", @placeholder = "12345678K", @rel = "tooltip", @title = "Rut sin puntos ni guión" })
+
+                    }
+                    <label for="formatoRut" id="formatoRut" style="font-size:x-small">(Rut sin puntos ni guión)</label><br />
+                     @Html.ValidationMessageFor(model => model.benRutBeneficiario)
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Nombre</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benNombre, new { @readonly = "true", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.benNombre)
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Apellido Paterno</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benApellidoPaterno, new { @readonly = "true", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.benApellidoPaterno)
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Apellido Materno</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benApellidoMaterno, new { @readonly = "true", @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.benApellidoMaterno)*@
+                </div>
+            </div> 
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Correo Electrónico</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.benCorreo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.benCorreo)
+                </div>
+            </div>
+
+            <div class="form-group" id="divNacionalidad">
+                <label for="inputEmail3" class="col-sm-4 control-label">Nacionalidad</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idNacionalidad, (IEnumerable<SelectListItem>)ViewBag.ListaNacionalidades, "--Seleccione--", new { @readonly = "true", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idNacionalidad)
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Género</label>
+                <div class="col-md-8">
+                    @Html.RadioButtonFor(model => model.benGenero, "1", new { @id = "rdbFemenino", @disabled = "disabled", @class = "col-md-1" }) @Html.Label("Femenino", new { @class = "col-md-4", @style = "font-weight: normal" })
+                    @Html.RadioButtonFor(model => model.benGenero, "2", new { @id = "rdbMasculino", @disabled = "disabled", @class = "col-md-1 col-md-offset-3" })@Html.Label("Masculino", new { @class = "col-md-4", @style = "font-weight: normal" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Fecha de Nacimiento</label>
+                <div class="col-md-6">
+                    @Html.TextBox("benFechaNacimiento", @ViewBag.FechaNac as string, new { @readonly = "true", @class = "form-control" }) 
+                    @Html.ValidationMessageFor(model => model.benFechaNacimiento)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger col-md-offset-2 ">@ViewData["errorBeneficiario"]</div><br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button id="Guardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+<script>
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+
+    $('#Guardar').click(function () {
+        rdbNacional.disabled = false;
+        rdbExtranjero.disabled = false;
+        rdbFemenino.disabled = false;
+        rdbMasculino.disabled = false;
+    });
+
+    function hideDisciplina() {
+        $("#divDisciplina").hide();
+    }
+
+    function showDisciplina() {
+        $("#divDisciplina").show();
+    }
+
+    if ($('#rdbNoDeportista').is(':checked')) {
+        $("#divDisciplina").hide();
+    }
+
+    if ($('#rdbNacional').is(':checked')) {
+        $("#divNacionalidad").hide();
+    } if ($('#rdbExtranjero').is(':checked')) {
+        $("label[for = formatoRut]").text(""); 
+        $("label[for = lblRutPasaporte]").text("Pasaporte");
+    }
+
+
+
+</script>

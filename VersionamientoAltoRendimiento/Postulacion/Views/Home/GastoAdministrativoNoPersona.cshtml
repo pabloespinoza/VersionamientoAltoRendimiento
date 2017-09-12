@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "GastoAdministrativoNoPersona";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Gastos Administrativos</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    @* ng-show="user">*@
+    <div class="col-md-12">
+        <div class="text-right">
+            <button class="button small blue" data-toggle="modal" data-target="#myModal"> Nuevo Producto </button>
+        </div><br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Tipo Gasto</th>
+                    <th>Descripción del Gasto</th>
+                    <th>$</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @* Incorporar NG Repeater *@
+                    @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                    @*<td>{{repo.name}}</td>
+                        <td>{{repo.stargazers_count}}</td>
+                        <td>{{repo.language}}</td>*@
+                    <td>Gastos Generales</td>
+                    <td>Breve Desc del Gasto  (500 caracteres)</td>
+                    <td>10000</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        @*  @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                        <a> <img src="~/Images/Trash.png" /> </a>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    @* Incorporar NG Repeater *@
+                    @* ng-repeat="repo in repos | orderBy: ordenBusqueda">*@
+                    @*<td>{{repo.name}}</td>
+                        <td>{{repo.stargazers_count}}</td>
+                        <td>{{repo.language}}</td>*@
+                    <td>Gastos Generales</td>
+                    <td>Breve Desc del Gasto  (500 caracteres)</td>
+                    <td>10000</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        @*  @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                        <a> <img src="~/Images/Trash.png" /> </a>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">  
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>              
+                <h4 class="modal-title">Gasto Administrativo del Producto</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Tipo Gasto</label>
+                        <div class="col-sm-10">
+                            <select>
+                                <option value="1">Materiales de Oficina</option>
+                                <option value="2">Gastos Generales</option>
+                                <option value="3">Articulos de Limpieza</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Descripción</label>
+                        <div class="col-sm-10">
+                            <textarea name="txtDescripcion" maxlength="500" cols="40" rows="5" id="txtDescripcion" placeholder="Descripción"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Total</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-addon">$</div>
+                                <input type="text" id="exampleInputAmount" placeholder="Total">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn-primary">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

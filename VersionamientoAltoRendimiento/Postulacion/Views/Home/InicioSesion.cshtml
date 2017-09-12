@@ -1,0 +1,380 @@
+﻿@{
+    Layout = null;
+}
+
+<html lang="es" style="min-height: 100%; background-color:white; position: relative; ">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+
+    <link rel="shortcut icon" href="logo.ico">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Instituto Nacional del Deporte</title>
+    @Styles.Render("~/css/icons-fonts.css")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap-theme.css")
+    @Styles.Render("~/Content/bootstrap-theme.css.map")
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap.css.map")
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery.min.js")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/FuncionesKibernum.js")
+    <!--ESTILOS -->
+    @Styles.Render("~/css/style.css")
+    @*@Styles.Render("~/css/colors/deporte-chile.css")
+        @Styles.Render("~/css/layout/boxed.css")
+        @Styles.Render("~/css/animate.min.css")*@
+
+    <!--GOOGLE FONT-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,700,300,400' rel='stylesheet' type='text/css'>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</head>
+<body style=" margin: 0; margin-bottom: 40px; ">
+    @* Pre LOADER*@
+    <div id="preloader" class="se-pre-con">
+        <div class="preloader-container">
+            <div id="fountainG">
+                <div id="fountainG_1" class="fountainG">
+                </div>
+                <div id="fountainG_2" class="fountainG">
+                </div>
+                <div id="fountainG_3" class="fountainG">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrap" class="boxed ">
+        <div class="grey-bg">
+            <!-- HEADER-->
+            <header class="header header-2 header-not-sticky">
+                <div class="header-wrapper">
+                    <div class="container">
+                        <div class="logo-row">
+                            <!-- LOGO -->
+                            <div class="logo-container-2">
+                                <div class="logo-2">
+                                    <img src='@Url.Content("~/Images/logo-alt.png")' class="logo-img" alt="Logo" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- header-wrapper -->
+            </header><!-- header -->
+
+            <div id="body">
+                <div class="f-box4-container">
+                    <div class="container">
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="~/Images/flexslider/slider-1.jpg" />
+                                </div>
+
+                                <div class="item">
+                                    <img src="~/Images/flexslider/slider-2.jpg" />
+                                </div>
+
+                                <div class="item">
+                                    <img src="~/Images/flexslider/slider-3.jpg" />
+                                </div>
+                            </div>
+
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="jumbotron" style="padding-bottom: 30px; padding-top: 30px; margin-bottom:0; ">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true)
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <h3>Ingreso  de Usuarios</h3>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputEmail3" class="col-md-2 control-label">Usuario</label>
+                                                @Html.TextBox("RutUsuario", "", new { @class = "form-control", @placeholder = "Rut sin dígito verificador", @onkeypress = "return permite(event, 'numeros'); return false;" })
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputEmail3" class="col-md-2 control-label">Contraseña</label>
+                                                @Html.Password("Password", "", new { @class = "form-control", @placeholder = "Contraseña" })
+                                            </div>
+                                            <div class="col-md-1 text-center">
+                                                <br />
+                                                <button class="btn btn-lg btn-primary" type="submit">Ingresar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-danger col-md-offset-4 ">@ViewData["errorLogin"]</div><br />
+                                    <div class="col-md-offset-4 ">@Html.ActionLink("Recuperar Contraseña", "RecuperarContrasena", "Home")</div>
+                                </div>
+
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3">
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                            </div>
+                            <div class=" col-sm-12 col-md-3">
+                                <div>
+                                    <a href="http://www.mindep.cl/zona-de-contacto/" taget="_blank">
+                                        <span aria-hidden="true" class=" icon_lifesaver f-box4-icon"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <h2>Mesa de Ayuda</h2>
+                                    <div>Estimado usuario, para obtener ayuda o resolver cualquier duda del proceso de postulación. Ejemplo: bases de postulación, aplicación web u otro.<br /><br /> <a href="http://www.mindep.cl/zona-de-contacto/" taget="_blank">Más información</a></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div>
+                                    <a href="http://www.proyectosdeportivos.cl/SPP/secORG/ppalOrgDeportivas.aspx">
+                                        <span aria-hidden="true" class="icon_building f-box4-icon"></span>
+                                    </a>
+                                </div>
+                                <div>
+                                    <h2>Registro Nacional de Organizaciones</h2>
+                                    <div>
+                                        En esta sección se podrá formalizar una organización como una entidad que le permita percibir recursos fiscales para fines deportivos.<br /><br />
+                                        <br />
+                                        <a href="http://www.proyectosdeportivos.cl/SPP/secORG/ppalOrgDeportivas.aspx">Más información</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="container" style="width: 100%; bottom: 0; position: fixed; height: 80px; ">
+                    <div class="row" style="background: rgb(239,65,68); margin-bottom: 0px; ">
+                        <div class="col-md-12 coil-sx-12">
+                            <div class="row" style="margin-bottom: 20px; margin-top: 10px; font-weight: 300; color: #fff;">
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="col-md-3 col-xs-3">
+                                        <div style="text-align:center">
+                                            <table class="col-md-12">
+                                                <tr>
+                                                    <td class="col-md-2" style="text-align:right">
+                                                        <i class="fa fa-map-marker fa-3x" style="color:#fff">
+                                                        </i>
+                                                    </td>
+                                                    <td class="col-md-10" style="text-align:left">
+                                                        <span>Fidel Oteiza N°1956, piso 3, <br />Providencia. Santiago - Chile</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <div style="text-align:center">
+                                            <table class="col-md-12">
+                                                <tr>
+                                                    <td class="col-md-5" style="text-align:right">
+                                                        <i class="fa fa-phone fa-3x" style="color:#fff">
+                                                        </i>
+                                                    </td>
+                                                    <td class="col-md-6" style="text-align:left">
+                                                        <span>(56 2 ) 2754 02 00</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <div style="text-align:center">
+                                            <table class="col-md-12">
+                                                <tr>
+                                                    <td class="col-md-5" style="text-align:right">
+                                                        <i class="fa fa-envelope-o fa-3x" style="color:#fff"></i>
+                                                    </td>
+                                                    <td class="col-md-5" style="text-align:left">
+                                                        <a class="a-invert" href="mailto:indatiende@ind.cl">indatiende@ind.cl</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3">
+                                        <div style="text-align:center">
+                                            <table class="col-md-12">
+                                                <tr>
+                                                    <td class="col-md-5" style="text-align:right">
+                                                        <i class="fa fa-youtube fa-3x" style="color:#fff"></i>
+                                                    </td>
+                                                    <td class="col-md-5" style="text-align:left">
+                                                        <a class="a-invert" target="_blank" href="https://www.youtube.com/channel/UCEjQNcRSo6AKSvnx4U6NaZg/videos">Tutoriales</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <br />
+            <br />
+            <footer class="footer1 text-center" style="background: rgb(239,65,68); color: white; font-size: small; bottom: 0; position: absolute; width: 100%; height: auto; ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- row -->
+                        <div class=" col-lg-3 col-md-3">
+                            <!-- widgets column left -->
+                            <ul class="list-unstyled clear-margins" style="display:inline-block;">
+                                <!-- widgets -->
+                                <li class="widget-container">
+                                    <!-- widgets list -->
+                                    <ul class="list-unstyled ">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td class="col-lg-3 col-md-3 ">
+                                                        <i class="fa fa-map-marker fa-3x" style="color:#fff">
+                                                        </i>
+                                                    </td>
+                                                    <td class="col-lg-9 col-md-9 text-left">
+                                                        <span>Fidel Oteiza N°1956, piso 3, <br />Providencia. Santiago - Chile</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- widgets column left end -->
+
+
+
+                        <div class="col-lg-3 col-md-3">
+                            <!-- widgets column left -->
+                            <ul class="list-unstyled clear-margins" style="display:inline-block;">
+                                <!-- widgets -->
+                                <li class="widget-container">
+                                    <!-- widgets list -->
+                                    <ul class="list-unstyled ">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td class="col-lg-3 col-md-3 ">
+                                                        <i class="fa fa-phone fa-3x" style="color:#fff">
+                                                        </i>
+                                                    </td>
+                                                    <td class="col-lg-9 col-md-9 text-left">
+                                                        <span>(56 2 ) 2754 02 00</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+
+                        </div><!-- widgets column left end -->
+
+
+
+                        <div class="col-lg-3 col-md-3">
+                            <!-- widgets column left -->
+                            <ul class="list-unstyled clear-margins" style="display:inline-block;">
+                                <!-- widgets -->
+                                <li class="widget-container">
+                                    <!-- widgets list -->
+                                    <ul class="list-unstyled ">
+                                        <li>
+                                            <table>
+                                                <tr>
+                                                    <td class="col-lg-3 col-md-3 ">
+                                                        <i class="fa fa-envelope-o fa-3x" style="color:#fff"></i>
+                                                    </td>
+                                                    <td class="col-lg-9 col-md-9 text-left">
+                                                        <a class="a-invert" href="mailto:indatiende@ind.cl">indatiende@ind.cl</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+
+                        </div><!-- widgets column left end -->
+
+
+                        <div class="col-lg-3 col-md-3">
+                            <!-- widgets column center -->
+                            <ul class="list-unstyled clear-margins" style="display:inline-block;">
+                                <!-- widgets -->
+                                <li class="widget-container">
+                                    <!-- widgets list -->
+                                    <ul class="list-unstyled ">
+                                        <li>
+
+                                            <table>
+                                                <tr>
+                                                    <td class="col-lg-3 col-md-3 ">
+                                                        <i class="fa fa-youtube fa-3x" style="color:#fff"></i>
+                                                    </td>
+                                                    <td class="col-lg-9 col-md-9 text-left">
+                                                        <a class="a-invert" target="_blank" href="https://www.youtube.com/playlist?list=PL1CR3Bw63HKITi9nfvyVLWvwNGHMnwgc7">Tutoriales</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/Scripts/FuncionesKibernum.js")
+            <script>
+                window.onload = function () {
+                    document.body.removeChild(document.getElementById('preloader'));
+                    $('body').removeClass('preloader-overflow');
+                }
+                if ('@TempData["codError"]' == '10') {
+                    window.parent.location.reload(true);
+                }
+            </script>
+
+        </div>
+    </div>
+</body>
+
+
+</html>

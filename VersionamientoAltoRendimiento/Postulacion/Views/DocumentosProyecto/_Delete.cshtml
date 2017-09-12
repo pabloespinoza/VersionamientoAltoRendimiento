@@ -1,0 +1,49 @@
+﻿@model AltoRendimiento.Models.Documentos_Proyecto
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
+</div>
+
+
+<div class="modal-body">
+
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre Documento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dopNombreIdentificacion)
+        </dd>
+
+        <dt>
+            Tipo Documento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Documento_Proyecto.tdpNombre)
+        </dd>
+
+    </dl>
+
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(modelo => modelo.idDocumentoProyecto)
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success" id="btnCreate">Aceptar</button>
+    </div>
+}
+

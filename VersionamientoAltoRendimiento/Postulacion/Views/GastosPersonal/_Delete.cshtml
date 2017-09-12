@@ -1,0 +1,172 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Gasto_Personal
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
+</div>
+
+<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt class="text-info">Beneficiario: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario_Producto_Cargo.Beneficiario.NombreCompleto)
+        </dd>
+        <dt class="text-info">Mes Inicio: </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.bgpMesInicio)*@
+            @{switch (Model.bgpMesInicio)
+            {
+                case 1:
+                    <text>
+                        Enero
+                    </text>
+                    break;
+                case 2:
+                <text>
+                    Febrero
+                </text>
+                    break;
+                case 3:
+                <text>
+                    Marzo
+                </text>
+                    break;
+                case 4:
+                <text>
+                    Abril
+                </text>
+                    break;
+                case 5:
+                <text>
+                    Mayo
+                </text>
+                    break;
+                case 6:
+                <text>
+                    Junio
+                </text>
+                    break;
+                case 7:
+                <text>
+                    Julio
+                </text>
+                    break;
+                case 8:
+                <text>
+                    Agosto
+                </text>
+                    break;
+                case 9:
+                <text>
+                    Septiembre
+                </text>
+                    break;
+                case 10:
+                <text>
+                    Octubre
+                </text>
+                    break;
+                case 11:
+                <text>
+                    Noviembre
+                </text>
+                    break;
+                case 12:
+                <text>
+                    Diciembre
+                </text>
+                    break;
+            }
+            }
+        </dd>
+        <dt class="text-info">Mes Fin: </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.bgpMesFin)*@
+            @{switch (Model.bgpMesFin)
+            {
+                case 1:
+                    <text>
+                        Enero
+                    </text>
+                    break;
+                case 2:
+                <text>
+                    Febrero
+                </text>
+                    break;
+                case 3:
+                <text>
+                    Marzo
+                </text>
+                    break;
+                case 4:
+                <text>
+                    Abril
+                </text>
+                    break;
+                case 5:
+                <text>
+                    Mayo
+                </text>
+                    break;
+                case 6:
+                <text>
+                    Junio
+                </text>
+                    break;
+                case 7:
+                <text>
+                    Julio
+                </text>
+                    break;
+                case 8:
+                <text>
+                    Agosto
+                </text>
+                    break;
+                case 9:
+                <text>
+                    Septiembre
+                </text>
+                    break;
+                case 10:
+                <text>
+                    Octubre
+                </text>
+                    break;
+                case 11:
+                <text>
+                    Noviembre
+                </text>
+                    break;
+                case 12:
+                <text>
+                    Diciembre
+                </text>
+                    break;
+            }
+            }
+        </dd>
+        @*<dt class="text-info">Costo Total: </dt>
+        <dd>            
+            @String.Format("{0:C0}", Model.bgpCostoTotal) 
+        </dd>*@
+    </dl>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Aceptar</button>
+    </div>
+
+}
+

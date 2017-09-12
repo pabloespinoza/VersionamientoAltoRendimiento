@@ -1,0 +1,97 @@
+﻿@model AltoRendimiento.Models.Producto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Producto</h4>
+</div>
+
+
+<div>
+    <h4>prdducto</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.prdMonto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdMonto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdDescripcion)
+        </dd>
+          
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prdUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prdUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ciudad.ciuNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ciudad.ciuNombre)
+        </dd>
+         
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idProducto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

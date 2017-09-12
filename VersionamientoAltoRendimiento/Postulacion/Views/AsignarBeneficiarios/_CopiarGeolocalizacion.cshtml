@@ -1,0 +1,150 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Producto_Cargo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Copiar Geolocalizacion</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+
+                <label for="inputEmail3" class="col-sm-4 control-label">Beneficiario Origen</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idBeneficiario, (IEnumerable<SelectListItem>)ViewBag.idBeneficiario, "--Seleccione--", new { @id = "Beneficiario-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idBeneficiario)
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="inputEmail3" class="col-sm-4 control-label">Geolocalizacion</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idCargo, Enumerable.Empty<SelectListItem>(), "--Seleccione Beneficiario--", new { @id = "Geolocalizacion-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idCargo)
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label for="inputEmail3" class="col-sm-4 control-label" style="padding-top:15px">Beneficiario Destino</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.idBeneficiario, (IEnumerable<SelectListItem>)ViewBag.idBeneficiario, null, new { @id = "my-select", @name="character",@multiple="multiple" })
+                    @Html.ValidationMessageFor(model => model.idBeneficiario)
+                </div>
+            </div>
+            <div class="form-group"> 
+                <div class="col-md-6 col-md-offset-3" id="divContenedor" > 
+                </div>
+            </div>
+            <div class="text-danger col-md-offset-2 ">@ViewData["Mensaje"]</div><br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")   
+}
+<script>
+
+    $(function () {
+        // initialize sol
+       
+        $('#my-select').searchableOptionList({
+            maxHeight: '200px',
+            scrollTarget: $('#idBeneficiario'),    // change the scrollTarget if neccessary
+            events: {
+
+                // override the default onScroll positioning event if neccessary
+                onScroll: function () {
+                    // gets called when the contents of the
+                    // my-content-area container are scrolled
+
+                    // now you need to position sol popup
+                    // below is the default implementation to
+                    // give you a hint how to position the popup
+                    // adapt it to your needs
+                    // 
+                    // you have access to all internal SOL attributes via "this."
+
+                    var posY = this.$input.offset().top - this.config.scrollTarget.scrollTop() + this.$input.outerHeight(),
+                        selectionContainerWidth = this.$innerContainer.outerWidth(false) - parseInt(this.$selectionContainer.css('border-left-width'), 10) - parseInt(this.$selectionContainer.css('border-right-width'), 10);
+
+                    if (this.$innerContainer.css('display') !== 'block') {
+                        // container has a certain width
+                        // make selection container a bit wider
+                        selectionContainerWidth = Math.ceil(selectionContainerWidth * 1.2);
+                    } else {
+                        // no border radius on top
+                        this.$selectionContainer
+                            .css('border-top-right-radius', 'initial');
+
+                        if (this.$actionButtons) {
+                            this.$actionButtons
+                                .css('border-top-right-radius', 'initial');
+                        }
+                    }
+
+                    this.$selectionContainer
+                        .css('top', Math.floor(posY))
+                        .css('left', Math.floor(this.$container.offset().left))
+                        .css('width', selectionContainerWidth);
+                }
+            }
+        });
+    });
+
+
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+
+    $("#Beneficiario-DropdownID").change(function () {
+        idSelected = $(this).val();
+        $.ajax({
+            url: '@Url.Action("getGeolocalizaciones")' + "?idBeneficiario=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                var options = "";
+                options += ' <option value="">-- Seleccione Geolocalizacion -- </option>';
+                $.each(data, function (index, value) {
+
+                    options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                });
+                $("#Geolocalizacion-DropdownID").html(options);
+            },
+            error: function () {
+            }
+        });
+    });
+
+
+</script>
+<style>
+    .sol-container {
+        z-index: 999999;
+    }
+    .sol-active {
+        z-index: 999999;
+    } 
+    .sol-selection-top  {
+        z-index: 999999;
+    }
+</style>

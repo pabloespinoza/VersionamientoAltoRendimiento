@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "AntecedenteGeneralProyecto";
+}
+
+<h2 class="text-center">Antecedente General Proyecto</h2>
+<br />
+<form class="form-horizontal">
+    @*<div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Código Proyecto</label>
+        <div class="col-sm-9">
+            IND-0001-2015-XXX
+        </div>
+    </div>*@
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-3 control-label">Categoría</label>
+        <div class="col-sm-9">
+            <select class="form-control">
+                <option value="1">Alto Rendimiento</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Nombre</label>
+        <div class="col-sm-9">
+            <input id="inputPassword3" placeholder="Nombre" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-3 control-label">Mes Inicio</label>
+        <div class="col-sm-9">
+            <select class="form-control">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-3 control-label">Mes Fin</label>
+        <div class="col-sm-9">
+            <select class="form-control">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">Justificación</label>
+        <div class="col-sm-9">
+            <textarea class="form-control" name="txtDescripcion" maxlength="500" cols="40" rows="5" id="txtDescripcion" placeholder="Justificación"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label"></label>
+        <div class="col-sm-9 text-right">
+            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+            <a href='@Url.Action("Index", "Home")'><button type="button" class="btn btn-success text-right">Guardar</button></a>
+</div>        
+    </div>
+    
+    
+</form>

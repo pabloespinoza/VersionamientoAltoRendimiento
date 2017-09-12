@@ -1,0 +1,114 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion_Horario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Geolocalizacion_Horario</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoDiaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoDiaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoDiaFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoDiaFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoPeriodico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoPeriodico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoHoraInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoHoraInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoHoraFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoHoraFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoObservacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoObservacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ghoUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ghoUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Geolocalizacion.geoCoordenadaX)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Geolocalizacion.geoCoordenadaX)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idGeolocalizacionHorario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

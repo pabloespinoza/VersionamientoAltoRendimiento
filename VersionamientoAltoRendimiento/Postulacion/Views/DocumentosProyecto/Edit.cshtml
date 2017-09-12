@@ -1,0 +1,138 @@
+﻿@model AltoRendimiento.Models.Documentos_Proyecto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Documentos_Proyecto</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idDocumentoProyecto)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProyecto, "idProyecto", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idProyecto", String.Empty)
+                @Html.ValidationMessageFor(model => model.idProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idTipoDocumentoProyecto, "idTipoDocumentoProyecto", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idTipoDocumentoProyecto", String.Empty)
+                @Html.ValidationMessageFor(model => model.idTipoDocumentoProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopObservacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopObservacion)
+                @Html.ValidationMessageFor(model => model.dopObservacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopDocumento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopDocumento)
+                @Html.ValidationMessageFor(model => model.dopDocumento)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopNombreArchivo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopNombreArchivo)
+                @Html.ValidationMessageFor(model => model.dopNombreArchivo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopExtensionArchivo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopExtensionArchivo)
+                @Html.ValidationMessageFor(model => model.dopExtensionArchivo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopEstado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopEstado)
+                @Html.ValidationMessageFor(model => model.dopEstado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopUsuarioCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopUsuarioCreacion)
+                @Html.ValidationMessageFor(model => model.dopUsuarioCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopFechaCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopFechaCreacion)
+                @Html.ValidationMessageFor(model => model.dopFechaCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopUsuarioModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopUsuarioModificacion)
+                @Html.ValidationMessageFor(model => model.dopUsuarioModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopFechaModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopFechaModificacion)
+                @Html.ValidationMessageFor(model => model.dopFechaModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopContentType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopContentType)
+                @Html.ValidationMessageFor(model => model.dopContentType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dopFechaDocumento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dopFechaDocumento)
+                @Html.ValidationMessageFor(model => model.dopFechaDocumento)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

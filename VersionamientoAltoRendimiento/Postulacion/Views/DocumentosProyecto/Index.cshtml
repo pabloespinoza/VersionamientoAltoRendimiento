@@ -1,0 +1,132 @@
+﻿@model IEnumerable<AltoRendimiento.Models.Documentos_Proyecto>
+
+@{
+    ViewBag.Title = "Index";
+    string folio = ((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).proFolioProyecto.ToString();
+    if(folio == "0")
+    {
+        folio = "Sin Código";
+    }else
+    {
+        folio = folio.Substring(2, folio.Length - 2);
+    }
+}
+
+
+<script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li><b>Documentos Adjuntos del Proyecto @(folio) - 
+                @(((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).proNombreProyecto)</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Documentos</h3>
+
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre Proyecto</label>
+        <div class="col-md-5">
+            @(((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).proNombreProyecto)
+        </div>
+    </div>
+</div>
+
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <!--Pablo Espinoza-->
+            @*if (TempData["idProducto"] != null)
+    {
+        @Html.ActionLink("Volver", "URLAsignarBeneficiarios", "Producto", new { id = TempData["idProducto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    }
+    else
+    {
+        @Html.ActionLink("Volver", "Index", "Beneficiario", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    }*@
+            <!--Pablo Espinoza-->
+            @* <button type="button" onclick="volver()" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>*@
+            @*<button class="btn btn-primary text-right"> Guardar Datos Definitivos </button>*@
+            @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null , new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @*Html.ActionLink("Nuevo", "Create", "DocumentosProyecto", new { id = ViewBag.Proyecto.idProyecto}, new {  id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })*@
+
+        </div>
+        @Html.Partial("_Create", new AltoRendimiento.Models.Documentos_Proyecto())
+        
+        <div class="text-danger"><label id="error" name="error"> @ViewBag.sessionErrorDocumento</label></div><br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>
+                        Tipo Documento
+                    </th>
+                    <th>
+                        Nombre Documento
+                    </th>
+                    <th>
+                        Nombre Archivo
+                    </th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                { 
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tipo_Documento_Proyecto.tdpNombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dopNombreIdentificacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dopNombreArchivo)
+                        </td>
+
+                        <td>
+                            <a href='@Url.Action("Download", "DocumentosProyecto", new { id = item.idDocumentoProyecto })' title="Adjuntos"><img width="20" data-toggle='tooltip' title='Descargar' src='@Url.Content("~/Images/download.png")' /></a>
+
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idDocumentoProyecto}, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+
+                        </td>
+                    </tr>
+                }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">
+                            El proyecto no cuenta con documentos.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

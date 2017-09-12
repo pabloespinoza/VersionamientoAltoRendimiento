@@ -1,0 +1,499 @@
+﻿@using AltoRendimiento.App_Code
+@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Resumen General";
+}
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>Proyecto @Model.proNombreProyecto</li>
+            <li><b>Verificar y Postular</b></li>
+        </ol>
+    </div>
+</div>
+@Html.Action(actionName: "TempMessage", controllerName: "Message")
+
+
+@Html.Hidden("IdWorkFlow", Model.idWorkflow)
+
+<!--Pablo Espinoza 22-02-2016-->
+@Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+<!--Pablo Espinoza 22-02-2016-->
+<br />
+<h3>Resumen General</h3>
+
+@Model.proNombreProyecto
+
+
+@{
+    var validoPlurianual = ViewBag.ValidoPlurianual;
+    //var validoBeneficiarios = ViewBag.ValidoBeneficiarios;
+    var ValidoGastoPersonal = ViewBag.ValidoGastoPersonal;
+    var ValidoGastoAdministrativo = ViewBag.ValidoGastoAdministrativo;
+    var ValidarGeolocalizacion = ViewBag.ValidarGeolocalizacion;
+    var PresupuestoProyecto = ViewBag.PresupuestoProyecto;
+    //Solicitud de Cambio
+    var valido5porciento = false;
+    var validoEsGastoAdmin = false;
+
+    if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+    {
+        valido5porciento = ViewBag.ValidaGastos.sePasa;
+        validoEsGastoAdmin = ViewBag.ValidaGastos.esGastoAdmin;
+    }
+}
+
+@if (Model.estadoIngresado == 2 && Model.Observaciones_Proyecto.Count() > 0)
+{
+    <br />
+    <br />
+    <div class="panel panel-info">
+        <div class="panel-heading">Observaciones</div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="col-lg-12 bold"> @Model.Observaciones_Proyecto.OrderByDescending(op => op.oprFechaCreacion).First().oprObservacion</label>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="table-responsive">
+
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Items / Etapa</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Diseño Plurianual
+                    @if (!validoPlurianual)
+                    {
+                        <br />
+                        <label style="font-size:small">Falta ingresar diseño plurianual para el año en curso.</label>
+                    }
+                </td>
+                <td>
+                    @{
+                        if (validoPlurianual)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+            @*
+                <tr>
+                    <td>Antecedentes Generales del Proyecto</td>
+                    <td>
+                        @{
+                        var validoAntecedentes = true;
+                        if (validoAntecedentes)
+                        {
+                        <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                        <img src="../Images/False.png" />
+                        }
+                        }
+                    </td>
+                </tr>*@
+            @*
+                <tr>
+                    <td>
+                        Beneficiarios al Producto
+                        @if (!validoBeneficiarios)
+                        {
+                        <br />
+                        <label style="font-size:small">Existen productos que no poseen beneficiarios asignados</label>
+                        }
+                    </td>
+                    <td>
+                        @{
+                        if (validoBeneficiarios)
+                        {
+                        <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                        <img src="../Images/False.png" />
+                        }
+                        }
+                    </td>
+                </tr>*@
+            <tr>
+                <td>
+                    Gastos en Personal y Bienes y Servicios
+                    @if (!ValidoGastoPersonal)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen gastos asignados</label>
+
+                        using (Html.BeginForm("BeneficiarioSinGastos", "Proyecto", FormMethod.Post, new { @style = "float:right;" }))
+                        {
+                            @Html.Hidden("idProyecto", TempData["idProyecto"])
+                            <button type="submit" class="btn btn-xs btn-danger pull-right">Ver Detalle +</button>
+                        }
+                    }
+                    @*@if (!validoBeneficiarios)
+                        {
+                        <br />
+                        <label style="font-size:small">Existen productos que no poseen beneficiarios con gastos asignados</label>
+                        }*@
+                </td>
+                <td>
+                    @{
+                        if (ValidoGastoPersonal)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Geolocalización
+                    @if (!ValidarGeolocalizacion)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen al menos una geolocalización</label>
+                        <!--Pablo Espinoza 22-02-2016-->
+                        //if (ValidoGastoPersonal)
+                        //{
+                        using (Html.BeginForm("BeneficiarioSinGeolocalizacion", "Proyecto", FormMethod.Post, new { @style = "float:right;" }))
+                        {
+                            @Html.Hidden("idProyecto", TempData["idProyecto"])
+                            <button type="submit" class="btn btn-xs btn-danger pull-right">Ver Detalle +</button>
+                        }
+                        //}
+                        <!--Pablo Espinoza 22-02-2016-->
+                    }
+                    @*@if (!validoBeneficiarios)
+                        {
+                        <br />
+                        <label style="font-size:small">Existen productos que no poseen beneficiarios con gastos asignados a una geolocalización</label>
+                        }*@
+                    @if (!ValidoGastoPersonal)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen gastos asignados a una geolocalización</label>
+                    }
+                </td>
+                <td>
+                    @{
+                        if (ValidarGeolocalizacion && ValidoGastoPersonal)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+            @*<tr>
+                    <td>
+                        Gastos Administrativos
+                        @if (!ValidoGastoAdministrativo)
+                        {
+                            <br />
+                            <label style="font-size:small">Existen productos que no poseen gastos administrativos asignados</label>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (ValidoGastoAdministrativo)
+                            {
+                                <img src="../Images/True.png" />
+                            }
+                            else
+                            {
+                                <img src="../Images/False.png" />
+                            }
+                        }
+                    </td>
+                </tr>*@
+            @*<tr id="trGACincoporciento" style="visibility:hidden">*@
+            @*<td>
+                    Gasto Administrativo
+                    @{
+                        if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+                        {
+                            <br />
+                            <label style="font-size:small">"No" traspasa 5% del total del Proyecto</label>
+                        }
+                    }
+                </td>*@
+            @*<td>
+                @{
+                    if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+                    {
+                        if (valido5porciento && validoEsGastoAdmin @*ViewBag.ValidaGastos.sePasa == true && ViewBag.ValidaGastos.esGastoAdmin == true)*@
+            @*{
+                                <img src="../Images/False.png" />
+                            }
+                            else
+                            {
+                                <img src="../Images/True.png" />
+                            }
+                        }
+                    }
+                </td>*@
+            @*</tr>*@
+            @*<tr id="trGPCincoporciento" style="visibility:hidden">
+                @*<td>
+                    Gasto Personal
+                    @{
+                        if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+                        {
+                            <br />
+                            <label style="font-size:small"> "No" traspasa 5% del total del Proyecto</label>
+                        }
+                    }
+                </td>*@
+            @*<td>
+                        @{
+                            if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+                            {
+                                if (ViewBag.ValidaGastos.sePasa == true && ViewBag.ValidaGastos.esGastoPerso == true)
+                                {
+                                    <img src="../Images/False.png" />
+                                }
+                                else
+                                {
+                                    <img src="../Images/True.png" />
+                                }
+                            }
+                        }
+                    </td>
+                </tr>*@
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Item de Gasto</th>
+                <th>Enero</th>
+                <th>Febrero</th>
+                <th>Marzo</th>
+                <th>Abril</th>
+                <th>Mayo</th>
+                <th>Junio</th>
+                <th>Julio</th>
+                <th>Agosto</th>
+                <th>Septiembre</th>
+                <th>Octubre</th>
+                <th>Noviembre</th>
+                <th>Diciembre</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Gastos Personal</td>
+                @foreach (var item in ViewBag.MontoMesesGastoPersonal)
+                {
+                    <td>
+                        @{
+                    string itemFormatted = item.ToString("#,##");
+                    <p class="text-right">@itemFormatted</p>
+                        }
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>Gastos Bienes y Servicios</td>
+                @foreach (var item in ViewBag.MontoMesesGastoaAdministrativo)
+                {
+                    <td>
+                        @{
+                    string itemFormatted = item.ToString("#,##");
+                    <p class="text-right">@itemFormatted</p>
+                        }
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td colspan="13">Total Proyecto</td>
+                <td>
+                    @{
+                        string totalProyecto = ViewBag.MontoTotalProyecto.ToString("#,##");
+                        <p class="text-right">@totalProyecto</p>
+                    }
+                </td>
+            </tr>
+            @if (!PresupuestoProyecto)
+            {
+                <tr>
+                    <td colspan="14"> <img src="../Images/False.png" /> El costo total del proyecto excede al monto asignado a la línea</td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <div class="table-responsive">
+        <div class="form-group pull-right">
+            @if (Model.idWorkflow == (int)EnumEstados.Incompleto || Model.idWorkflow == (int)EnumEstados.Objetada || Model.idWorkflow == (int)EnumEstados.Ingresada)
+            {
+                <div class="col-md-6">
+                    @using (Html.BeginForm("Ingresar", "Proyecto", FormMethod.Post))
+                    {
+                        @Html.Hidden("idProyecto", TempData["idProyecto"])
+                        if (Model.estadoIngresado != 1 && Model.estadoIngresado != 3)
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Ingresar" onclick="javascript: validarIngresar(this); this.disabled = true;">Ingresar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Ingresar" disabled="disabled">Ingresar</button>
+                        }
+                    }
+                </div>
+                <div class="col-md-6">
+                    @using (Html.BeginForm("Postular", "Proyecto", FormMethod.Post))
+                    {
+                        @Html.Hidden("idProyecto", TempData["idProyecto"])
+                        if (Model.estadoIngresado == 3)
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Postular" onclick="javascript: validar(this); this.disabled = true;">Postular</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Postular" disabled="disabled">Postular</button>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+
+    @*@if (Model.idWorkflow == (int)EnumEstados.AprobadoSC)
+        {
+            if (validoPlurianual && ValidoGastoPersonal  && ValidarGeolocalizacion && PresupuestoProyecto && ViewBag.ValidaGastos.sePasa == false)
+            {
+                using (Html.BeginForm("Postular", "Proyecto", FormMethod.Post))
+                {
+                    @Html.Hidden("idProyecto", TempData["idProyecto"])
+                    <button type="submit" class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Postular" onclick="javascript:this.form.submit();this.disabled= true;">Enviar Solicitud</button>
+                }
+            }
+        }*@
+    <br />
+    <br />
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> @TempData["MensajeController"] </label>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalErrorPostular" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label id="txtMensaje"></label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-primary pull-right text-right" style="color:White" value="Postular" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+
+    //    var idWkF = $('#IdWorkFlow').val();
+
+    //    if (idWkF == 11) {
+    //        document.getElementById("trGPCincoporciento").style.visibility = "visible";
+    //        document.getElementById("trGACincoporciento").style.visibility = "visible";
+    //    }
+
+    //});
+
+    function validarIngresar(input) {
+        var Plurianual = '@validoPlurianual';
+        var GastoPersonal = '@ValidoGastoPersonal';
+        var Geolocalizacion = '@ValidarGeolocalizacion';
+        var Presupuesto = '@PresupuestoProyecto';
+
+        if (Plurianual.toLowerCase() == 'true' && GastoPersonal.toLowerCase() == 'true' && Geolocalizacion.toLowerCase() == 'true' && Presupuesto.toLowerCase() == 'true') {
+            return input.form.submit();
+        } else {
+
+            $("#txtMensaje").text("No es posible ingresar, favor revisar Resumen General");
+
+            $('#modalErrorPostular').modal({
+                /*backdrop: 'static',*/
+                keyboard: true
+            }, 'show');
+        }
+    }
+
+    function validar(input) {
+        var Plurianual = '@validoPlurianual';
+        var GastoPersonal = '@ValidoGastoPersonal';
+        var Geolocalizacion = '@ValidarGeolocalizacion';
+        var Presupuesto = '@PresupuestoProyecto';
+
+        if (Plurianual.toLowerCase() == 'true' && GastoPersonal.toLowerCase() == 'true' && Geolocalizacion.toLowerCase() == 'true' && Presupuesto.toLowerCase() == 'true') {
+            return input.form.submit();
+        } else {
+            $("#txtMensaje").text("No es posible postular, favor revisar Resumen General");
+
+            $('#modalErrorPostular').modal({
+                /*backdrop: 'static',*/
+                keyboard: true
+            }, 'show');
+        }
+    }
+</script>

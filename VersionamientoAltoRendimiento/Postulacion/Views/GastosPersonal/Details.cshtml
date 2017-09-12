@@ -1,0 +1,123 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Gasto_Personal
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Beneficiario_Gasto_Personal</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpMesInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpMesInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpMesFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpMesFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpCosto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpCosto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpCostoTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpCostoTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpObjetivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpObjetivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgpUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgpUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Beneficiario_Producto_Cargo.idBeneficiarioProductoCargo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario_Producto_Cargo.idBeneficiarioProductoCargo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Producto.proNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Producto.proNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Gasto_Personal.tgpNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Gasto_Personal.tgpNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idBeneficiarioGastoPersonal }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

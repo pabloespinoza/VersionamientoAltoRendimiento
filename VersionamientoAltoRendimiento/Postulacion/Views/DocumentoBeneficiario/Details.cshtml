@@ -1,0 +1,114 @@
+﻿@model AltoRendimiento.Models.Documento_Beneficiario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Documento_Beneficiario</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeNombreDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeNombreDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeArchivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeArchivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeArchivoExtension)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeArchivoExtension)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeArchivoPeso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeArchivoPeso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dbeUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dbeUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Beneficiario.benDv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario.benDv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Documento_Beneficiario.tdbNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Documento_Beneficiario.tdbNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idDocumentoBeneficiario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

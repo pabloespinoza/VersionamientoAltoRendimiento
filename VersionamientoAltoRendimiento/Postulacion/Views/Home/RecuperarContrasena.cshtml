@@ -1,0 +1,223 @@
+﻿@{
+    Layout = null;
+}
+@using reCAPTCHA.MVC
+
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+
+    <link rel="shortcut icon" href="logo.ico">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Instituto Nacional del Deporte</title>
+
+    @Styles.Render("~/css/icons-fonts.css")
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap-theme.css")
+    @Styles.Render("~/Content/bootstrap-theme.css.map")
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap.css.map")
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery.min.js")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/FuncionesKibernum.js")
+     
+    <!--ESTILOS -->
+    @Styles.Render("~/css/style.css") 
+
+    <!--GOOGLE FONT-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,700,300,400' rel='stylesheet' type='text/css'>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+
+</head>
+<body>
+    @* Pre LOADER*@
+    <div id="preloader" class="se-pre-con">
+        <div class="preloader-container">
+            <div id="fountainG">
+                <div id="fountainG_1" class="fountainG">
+                </div>
+                <div id="fountainG_2" class="fountainG">
+                </div>
+                <div id="fountainG_3" class="fountainG">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrap" class="boxed ">
+        <div class="grey-bg">
+            <!-- HEADER-->
+            <header class="header header-2 header-not-sticky">
+                <div class="header-wrapper">
+                    <div class="container">
+                        <div class="logo-row">
+                            <!-- LOGO -->
+                            <div class="logo-container-2"> 
+                                    <div class="logo-2">
+
+                                        <img src='@Url.Content("~/Images/logo-alt.png")' class="logo-img" alt="Logo" /> 
+
+                                    </div> 
+                            </div>
+                        </div>
+                    </div> 
+                </div><!-- header-wrapper -->
+            </header><!-- header -->
+
+            <div id="body">
+                <div class="f-box4-container">
+                    <div class="container">
+                        <br />
+
+                        <div class="row">
+                            @*<script type="text/javascript">
+                                var RecaptchaOptions = {
+                                    theme: 'custom',
+                                    custom_theme_widget: 'recaptcha_widget'
+                                };
+                            </script> 
+                            <script type="text/javascript">
+                                var RecaptchaOptions = {
+                                    theme: 'custom',
+                                    custom_theme_widget: 'recaptcha_widget'
+                                };
+                            </script>*@
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ol class="breadcrumb">
+                                        <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+                                        <li>Recuperar Contraseña</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <h3>Recuperar Contraseña</h3>
+                            <br />
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true)
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Rut</label>
+                                                    <div class="col-sm-3">
+                                                        @Html.TextBox("RutUsuario", "", new { @class = "form-control", @placeholder = "Rut sin dígito verificador", @onchange = "return verifica_largo_rut(this)", @maxlength = "8" })
+
+                                                        <div class="text-danger">@ViewData["errorUsuario"]</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="controls"> 
+                                                            @Html.Recaptcha()
+                                                            @Html.ValidationMessage("ReCaptcha")
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    @Html.ActionLink("Cancelar", "InicioSesion", "Home", null, new { @class = "btn btn-sm btn-danger pull-left", @style = "color:White" })
+                                                    <button class="btn btn-sm btn-success" type="submit">Recuperar</button>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                </div>                                                                }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <!-- FOOTER 3-->
+                <div class="footer3-bg">
+                    <div class="container">
+                        <div class="row">
+                            <!-- ICON CONTAINER  -->
+                            <div class="col-md-4 footer3-icon-container">
+                                <div class="footer3-icon">
+                                    <span aria-hidden="true" class="icon_pin_alt"></span>
+                                </div>
+                                <h3 class="footer3-title-container">
+                                    UBICACIÓN
+                                </h3>
+                                <div class="footer3-text-container">
+                                    Fidel Oteiza N°1956, piso 3, Providencia. Santiago - Chile
+                                </div>
+                            </div>
+                            <div class="col-md-4 footer3-icon-container">
+                                <div class="footer3-icon">
+                                    <span aria-hidden="true" class="icon_phone"></span>
+                                </div>
+                                <h3 class="footer3-title-container">
+                                    TELÉFONO
+                                </h3>
+                                <div class="footer3-text-container">
+                                    (56 2 ) 2754 02 00
+                                </div>
+                            </div>
+                            <div class="col-md-4 footer3-icon-container">
+                                <div class="footer3-icon">
+                                    <span aria-hidden="true" class="icon_comment"></span>
+                                </div>
+                                <h3 class="footer3-title-container">
+                                    IND ATIENDE
+                                </h3>
+                                <div class="footer3-text-container">
+                                    <a class="a-invert" href="mailto:indatiende@ind.cl">indatiende@ind.cl</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- COPYRIGHT  -->
+                <div class="footer3-copyright-container title-lines-container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="footer-copyright-container">
+                                    <div class="footer3-copyright-text">
+                                        @*<a class="author" href="politicas.html">Política de Privacidad</a>*@
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- COPYRIGHT -->
+                <p id="back-top" class="footer3-copyright-container title-lines-container">
+                    <a href="#top" title="Back to Top"><span></span></a>
+                </p>
+            </footer>
+
+            @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap","~/Scripts/FuncionesKibernum.js")
+            <script>
+                window.onload = function () {
+                    document.body.removeChild(document.getElementById('preloader'));
+                    $('body').removeClass('preloader-overflow');
+                }
+            </script>
+
+        </div>
+    </div>
+</body>
+
+
+</html>

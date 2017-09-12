@@ -1,0 +1,249 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Beneficiario_Gasto_Administracion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+            <li>@Html.ActionLink("Producto " + (string)@ViewBag.ProductoNombre, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null)</li>
+            <li><b>Gasto en Bienes y Servicios</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Listado de Gasto de Administración</h3>
+
+<p>
+    <div class="text-right">
+        @Html.ActionLink("Volver", "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+
+        @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+        {
+            @Html.ActionLink("Nuevo", "Create", "BeneficiarioGastoAdministracion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+        }
+        else if (@ViewBag.Solicitud != null)
+        {
+            if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+            {
+                @Html.ActionLink("Nuevo", "Create", "BeneficiarioGastoAdministracion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+        }
+        else
+        {
+
+            <br />
+        }
+
+    </div>
+</p>
+<table class="table table-condensed table-bordered table-striped table-hover">
+    <tr>
+        <th>
+            Fecha Inicio
+        </th>
+        <th>
+            Fecha Fin
+        </th>
+        <th>
+            Tipo Gasto
+        </th>
+        <th>
+            Beneficiario
+        </th>
+        <th>
+            Días
+        </th>
+        <th>
+            Valor Beneficiario
+        </th>
+        <th>
+            Descripción del Gasto
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Acción
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*Pablo Espinoza 12-12-2016*@
+            <td>
+                @{
+        if (item.Tipo_Gasto_Administracion.tgaNumeroGastoAdministracion != "2")
+        {
+            if (item.idTipoGastoAdministracion == 18)
+            {
+                var dt = new DateTime(item.bgaFechaInicio.Year, item.bgaFechaInicio.Month, item.bgaFechaInicio.Day);
+                var monthAbbr = dt.ToString("MMMM");
+                @monthAbbr
+            }
+            else
+            {
+                @String.Format("{0:d}", item.bgaFechaInicio)
+            }
+
+        }
+                }
+
+            </td>
+            <td>
+                @{
+
+        if (item.Tipo_Gasto_Administracion.tgaNumeroGastoAdministracion != "2")
+        {
+            if (item.idTipoGastoAdministracion == 18)
+            {
+                var dt = new DateTime(item.bgaFechaFin.Year, item.bgaFechaFin.Month, item.bgaFechaFin.Day);
+                var monthAbbr = dt.ToString("MMMM");
+                @monthAbbr
+            }
+            else
+            {
+                @String.Format("{0:d}", item.bgaFechaFin)
+            }
+
+
+        }
+                }
+            </td>
+            @*Pablo Espinoza 12-12-2016*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo_Gasto_Administracion.tgaNombre)
+            </td>
+            @*Pablo Espinoza 12-12-2016*@
+            <td>
+                @if (((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).Organizacion_Linea.Concurso_categoria.Concurso.conAno != 2016)
+                {
+                    @Html.DisplayFor(modelItem => item.cantBeneficiarios)
+                    @(" Beneficiarios");
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Beneficiario_Producto_Cargo.Beneficiario.benNombre)
+                    @Html.DisplayFor(modelItem => item.Beneficiario_Producto_Cargo.Beneficiario.benApellidoPaterno)
+                }
+            </td>
+            @*Pablo Espinoza 12-12-2016*@
+            <td>
+                @Html.DisplayFor(modelItem => item.bgaDias)
+            </td>
+            @*Pablo Espinoza 12-12-2016*@
+            <td width="130">
+                @*@string.Format("{0:c}", (item.bgaTotal / item.bgaDias))*@
+                @if (((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).Organizacion_Linea.Concurso_categoria.Concurso.conAno != 2016)
+                {
+                    if (item.idTipoGastoAdministracion == 18)
+                    {
+                        <p style="text-align:right">---</p>
+                    }
+                    else
+                    {
+                        if (item.bgaDias > 0)
+                        {
+                            if (int.Parse(item.cantBeneficiarios) > 0)
+                            {
+                                <p class="text-right">@String.Format("{0:C0}", ((item.bgaTotal / item.bgaDias) / int.Parse(item.cantBeneficiarios)))</p>
+                            }
+                            else
+                            {
+                                <p class="text-right">@String.Format("{0:C0}", ((item.bgaTotal / item.bgaDias) / 1))</p>
+                            }
+                        }
+                        else
+                        {
+                            if (int.Parse(item.cantBeneficiarios) > 0)
+                            {
+                                <p class="text-right">@String.Format("{0:C0}", ((item.bgaTotal / 1) / int.Parse(item.cantBeneficiarios)))</p>
+                            }
+                            else
+                            {
+                                <p class="text-right">@String.Format("{0:C0}", ((item.bgaTotal / 1) / 1))</p>
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    if (item.bgaDias != 0)
+                    {
+                        <p class="text-right">@String.Format("{0:C0}", (item.bgaTotal / item.bgaDias))</p>
+                    }
+                    else
+                    {
+                        <p class="text-right">@String.Format("{0:C0}", (item.bgaTotal / 1))</p>
+                    }
+                }
+            </td>
+            @*Pablo Espinoza 12-12-2016*@
+            <td>
+                @Html.DisplayFor(modelItem => item.bgaDescripcion)
+            </td>
+            <td width="130">
+                <p class="text-right">@string.Format("{0:C0}", item.bgaTotal)</p>
+            </td>
+            <td>
+                @Html.Raw(@Html.ActionLink("[replacetext]", "URLGeolocalizacion", new { id = item.idBeneficiarioGastoAdministracion, pendientes = 0 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Geolocalización' src=\"../Images/Mundo.png\" ... />"))
+                @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                {
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idBeneficiarioGastoAdministracion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idBeneficiarioGastoAdministracion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                }
+                @if (@ViewBag.Solicitud != null)
+                {
+                    if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                    {
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idBeneficiarioGastoAdministracion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                        //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
+                        @*@Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idBeneficiarioGastoAdministracion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))*@
+                    }
+                }
+            </td>
+        </tr>
+    }
+    <tr>
+        @*<td></td>
+            <td></td>
+            <td></td>
+            <td></td>*@
+        <td colspan="5">
+            <b>Total</b>
+        </td>
+        <td>
+            <p class="text-right"><b>@string.Format("{0:C0}", @ViewBag.TotalSumaGastoBeneficiario)</b></p>
+        </td>
+        @*<td></td>*@
+    </tr>
+
+</table>
+<div class="panel-footer">@Model.Count() Registro(s)</div>
+<br />
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker-es.js")
+    @*<script src="~/Scripts/jquery.form.min.js"></script>*@
+    <!--Pablo Espinoza 09-02-2016-->
+    @Styles.Render("~/Content/searchableOptionList.css")
+    @Scripts.Render("~/Scripts/sol.js")
+    <!--Pablo Espinoza 09-02-2016-->
+}

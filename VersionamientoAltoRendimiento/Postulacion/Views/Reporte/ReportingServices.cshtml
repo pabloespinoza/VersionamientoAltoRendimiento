@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "ReportingServices";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.proNombreProyecto, "Index", "AntecedenteGeneralProyecto") </li>
+            <li>Reporte</li>
+        </ol>
+    </div>
+</div>
+
+<p>
+    <div class="text-right">
+        <button type="button" onclick="volver()" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+        <br /><br /></div>
+
+
+</p>
+<iframe src="@ViewBag.UrlReporte/IndReportes/Default.aspx?idreporte=1&idproyecto=@ViewBag.idProyecto" width="100%" height="600" frameborder="1" transparency="transparency"></iframe>

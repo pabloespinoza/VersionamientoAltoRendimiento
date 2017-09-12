@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "ProgramacionGasto";
+}
+ 
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Distribución del Gasto</li>
+        </ol>
+    </div>
+</div>
+<h3>Distribución del Gasto</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info pull-left" data-dismiss="modal">Volver</button>  
+            <button class="btn btn-primary text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Item de Gasto</th>
+                        <th>Enero</th>
+                        <th>Febrero</th>
+                        <th>Marzo</th>
+                        <th>Abril</th>
+                        <th>Mayo</th>
+                        <th>Junio</th>
+                        <th>Julio</th>
+                        <th>Agosto</th>
+                        <th>Septiembre</th>
+                        <th>Octubre</th>
+                        <th>Noviembre</th>
+                        <th>Diciembre</th>
+                        <th>Total Item</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gastos Personal</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>3.600.000</td>
+                    </tr>
+                    <tr>
+                        <td>Gastos Bienes y Servicios</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>300.000</td>
+                        <td>3.600.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="13">Total Proyecto</td>
+                        <td>7.200.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            <br />
+    </div>
+</div>
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Distribución del Gasto</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Tipo Gasto</label>
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                                <option value="1">Gastos Personal</option>
+                                <option value="2">Gastos Bienes y Servicios</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Enero</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Febrero</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Marzo</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Abril</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Mayo</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Junio</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Julio</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Agosto</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Septiembre</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Octubre</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Noviembre</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Diciembre</label>
+                        <div class="col-sm-9">
+                            <input class="form-control">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

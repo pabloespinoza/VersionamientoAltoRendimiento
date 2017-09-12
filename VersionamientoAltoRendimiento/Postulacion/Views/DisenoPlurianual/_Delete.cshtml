@@ -1,0 +1,51 @@
+﻿@model AltoRendimiento.Models.Plan_Plurianual
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar este registro?</h4>
+</div>
+
+
+@*<div class="modal-body">
+
+        <dl class="dl-horizontal">
+            <dt>
+               Año
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.pplAno)
+            </dd>
+
+            <dt>
+                Area Competitiva
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.pplAreaCompetitiva)
+            </dd>
+
+            <dt>
+               Area Tecnica
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.pplAreaTecnica)
+            </dd>
+        </dl>
+
+
+    </div>*@
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <button type="submit" class="btn btn-sm btn-success" id="btnCreate">&nbsp;&nbsp;&nbsp;&nbsp;Si&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    </div>
+}
+
+ 

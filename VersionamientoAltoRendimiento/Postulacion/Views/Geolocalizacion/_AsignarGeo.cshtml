@@ -1,0 +1,179 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Create";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Geolocalizaciones</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body" style="margin-bottom:0; padding-bottom:0">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            @Html.Hidden("tipoGasto", TempData["idTipoGasto"])
+            @Html.Hidden("beneficiarioGP", TempData["idBeneficiarioGastoPersonal"])
+            @Html.Hidden("idProducto", TempData["idProducto"])
+            @Html.Hidden("pendientes", TempData["pendientes"])
+            <div class="form-group">
+                <label for="inputEmail3" class="col-md-3 control-label">Recinto</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.idGeolocalizacion, (IEnumerable<SelectListItem>)ViewBag.Geolocalizacion, "-Seleccione-", new { @id = "Geolocalizaciones-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idGeolocalizacion)
+                </div>
+            </div>
+
+            <script src="//maps.google.com/maps/api/js?sensor=false&callback=initialize" type="text/javascript"></script>
+            <div id="map_canvas" style="width: auto; height: 130px;">
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="inputPassword3" class="col-md-3 control-label">Descripción</label>
+                <div class="col-md-8">
+                    @Html.TextBox("descGeo", "", new { @id = "descGeo", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-md-3 control-label">Dirección</label>
+                <div class="col-md-8">
+                    @Html.TextBox("valorDireccion", "", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="text-danger col-md-offset-1 ">@ViewData["Mensaje"]</div> 
+            <div class="form-group" style="margin-bottom:0">
+                &nbsp; Horarios
+                <iframe id="frameHorario" class="col-md-12" style="border:none" height="200" src=""></iframe>
+
+            </div>
+            <label class="text-danger" id="resultadoMapa"></label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+
+    var URL_PATH = '@Url.Content("~")';
+    var url = URL_PATH + "GeolocalizacionHorario/ListadoHorarios?id=";
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+
+
+
+    $("#Geolocalizaciones-DropdownID").change(function () {
+        idSelected = $(this).val();
+        $.ajax({
+            url: '@Url.Action("getDatosGeolocalizacion")' + "?idGeolocalizacion=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    codeAddress(value.coordenadas)
+                    $("#descGeo").val(value.descripcion);
+                    $("#valorDireccion").val(value.direccion);
+                    $("#frameHorario").attr('src', url + value.id);
+                });
+            },
+            error: function () {
+            }
+        });
+    });
+
+    $('#geoCoordenadaX').attr('readonly', true);
+    $('#geoCoordenadaY').attr('readonly', true);
+    $('#valorDireccion').attr('readonly', true);
+    $('#descGeo').attr('readonly', true);
+    var geocoder;
+    var map;
+    var marker;
+    function initialize() {
+        // Creating map object
+        geocoder = new google.maps.Geocoder();
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 14,
+            center: new google.maps.LatLng(-33.447641, -70.667227),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creates a draggable marker to the given coords
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(-33.447641, -70.667227),
+            draggable: false
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#geoCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#geoCoordenadaY").val(evt.latLng.lng().toFixed(6));
+
+            map.panTo(evt.latLng);
+        });
+
+        mantenerDatos();
+
+        // centers the map on markers coords
+        map.setCenter(marker.position);
+
+        // adds the marker on the map
+        marker.setMap(map);
+
+    }
+
+
+    function codeAddress(direccion) {
+        var address = direccion;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker.setPosition(results[0].geometry.location);
+                $("#geoCoordenadaX").val(marker.getPosition().lat());
+                $("#geoCoordenadaY").val(marker.getPosition().lng());
+                $("#resultadoMapa").text(" ");
+
+            } else {
+                $("#resultadoMapa").text("Error no se logro geolocalizar la dirección registrada");
+            }
+        });
+    }
+
+
+
+    function mantenerDatos() {
+        var idOld = '@ViewBag.idGeo';
+        var coords;
+        if (idOld > 0) {
+            $.ajax({
+                url: '@Url.Action("getDatosGeolocalizacion")' + "?idGeolocalizacion=" + idOld,
+                type: "POST",
+                success: function (data) {
+                    $.each(data, function (index, value) { 
+                        codeAddress(value.coordenadas) 
+                        $("#descGeo").val(value.descripcion);
+                        $("#valorDireccion").val(value.direccion);
+                        $("#frameHorario").attr('src', url + value.id); 
+                         
+                    });
+                },
+                error: function () {
+                }
+            }); 
+            }
+        }
+     
+</script>

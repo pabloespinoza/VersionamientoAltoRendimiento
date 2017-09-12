@@ -1,0 +1,215 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion_Horario
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Create";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Editar Horario</h4>
+</div>
+<script>
+    $.fn.datepicker.dates['es'] = {
+        days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado'],
+        daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sab'],
+        daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        today: "Hoy",
+        clear: "Limpiar",
+        format: "mm/dd/yyyy",
+        titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+        weekStart: 0
+    };
+</script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.Hidden("idTipoGasto", TempData["idTipoGasto"])
+            @Html.Hidden("idBeneficiarioGastoPersonal", TempData["idBeneficiarioGastoPersonal"])
+            @Html.Hidden("pendientes", TempData["pendientes"])
+            @Html.HiddenFor(model => model.idGeolocalizacionHorario)
+            @Html.Hidden("aceptarTope", null, new { id = "aceptarTope" })
+             
+                @*<script src="//maps.google.com/maps/api/js?sensor=false&callback=initialize" type="text/javascript"></script>
+                <script type="text/javascript">
+                    function initialize() {
+                        var map = new google.maps.Map(document.getElementById("map"), { zoom: 15, center: new google.maps.LatLng(@Html.Raw(Model.Geolocalizacion.Coordenadas)), mapTypeId: google.maps.MapTypeId['ROADMAP'] });
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(@Html.Raw(Model.Geolocalizacion.Coordenadas)),
+                            title: "@Html.Raw(Model.Geolocalizacion.Recinto.recNombre)"
+                        }); 
+                        marker.setMap(map);
+                    }
+                </script>
+                <div class="map" id="map" style="width:550px; height:100px; margin-bottom:5px;"></div>*@
+           
+
+
+            <div class="form-group" id="divFechaInicio">
+                @Html.LabelFor(model => model.ghoFechaInicio, "Fecha Inicio", new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <div class="input-group input-append date" id="ghoFechaInicio1" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.ghoFechaInicio, new { @class = "form-control", @id = "ghoFechaInicio" })
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.ghoFechaInicio)
+
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group" id="divFechaFin">
+                @Html.LabelFor(model => model.ghoFechaFin, "Fecha Fin", new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <div class="input-group input-append date" id="ghoFechaFin1" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.ghoFechaFin, new { @class = "form-control", @id = "ghoFechaFin" })
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.ghoFechaFin)
+                </div>
+            </div>
+
+
+            <script>
+
+                var checkin = $('#ghoFechaInicio1').datepicker({
+                    language: 'es'
+                }).on('changeDate', function (ev) {
+                    checkin.hide();
+                }).data('datepicker');
+
+                var checkout = $('#ghoFechaFin1').datepicker({
+                    language: 'es'
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
+
+            </script>
+             
+            <label for="InfoProd" id="InfoProd" class="col-md-9 col-md-offset-3" style="font-size:x-small">Información: El producto comienza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesDesde) y finaliza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesHasta)</label><br />
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Dias </label>
+                <div class="col-md-7">
+
+                    <table style="width:100%">
+                        <tr>
+                            <th>L</th>
+                            <th>M</th>
+                            <th>X</th>
+                            <th>J</th>
+                            <th>V</th>
+                            <th>S</th>
+                            <th>D</th>
+                        </tr>
+                        <tr>
+                            <td>@Html.CheckBox("chkLunes", Model.ghoDias.Contains("1") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkMartes", Model.ghoDias.Contains("2") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkMiercoles", Model.ghoDias.Contains("3") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkJueves", Model.ghoDias.Contains("4") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkViernes", Model.ghoDias.Contains("5") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkSabado", Model.ghoDias.Contains("6") ? true : false, new { })</td>
+                            <td>@Html.CheckBox("chkDomingo", Model.ghoDias.Contains("7") ? true : false, new { })</td>
+                        </tr>
+                    </table>
+                    @Html.ValidationMessage("Dias")
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-md-3 control-label">Hora Inicio</label>
+                <div class="col-md-7">
+                    <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                        @Html.TextBoxFor(model => model.ghoHoraInicio, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ghoHoraInicio)
+                    <script type="text/javascript">
+                        $('.clockpicker').clockpicker();
+                    </script>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Hora Fin</label>
+                <div class="col-md-7">
+                    <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                        @Html.TextBoxFor(model => model.ghoHoraFin, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ghoHoraFin)
+                    <script type="text/javascript">
+                        $('.clockpicker').clockpicker();
+                    </script>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Periódico</label>
+                <div class="col-md-7">
+                    @Html.CheckBox("ghoPeriodico",Model.ghoPeriodico==1?true:false, new { @class = "form-control" }) 
+                    @Html.ValidationMessageFor(model => model.ghoPeriodico)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Observación</label>
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.ghoObservacion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(model => model.ghoObservacion)
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="text-danger col-md-offset-1 ">@ViewData["Mensaje"]</div><br />
+     <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+ <script> 
+     $(document).ready(function () {
+          
+         $("#ghoFechaInicio").val('@ViewBag.FechaInicio');
+         $("#ghoFechaFin").val('@ViewBag.FechaFin');
+     });
+
+     var codError = '@TempData["codError"]';
+     if (codError == '11') {
+         var aceptaTopeHorario = confirm('@TempData["mensaje"]' + ", ¿Desea Continuar?")
+         if (aceptaTopeHorario) {
+             $("#aceptarTope").val(1);
+             $("form").submit();
+         } else {
+             false;
+         }
+     }
+ </script>
+   
+<style>
+
+    .popover {
+        z-index: 999999;
+    }
+
+    .clockpicker-popover {
+        z-index: 999999;
+    }
+</style>

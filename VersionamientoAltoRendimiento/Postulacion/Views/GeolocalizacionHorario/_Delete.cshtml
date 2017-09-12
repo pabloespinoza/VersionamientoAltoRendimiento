@@ -1,0 +1,45 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion_Horario
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
+</div>
+
+
+<div class="modal-body">
+
+    <dl class="dl-horizontal">
+        <dt>
+            Fecha Inicio
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ghoFechaInicio)
+        </dd>
+        <dt>
+            Fecha Inicio
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ghoFechaFin)
+        </dd>
+        <dt>
+            Horario
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ghoHoraInicio) - @Html.DisplayFor(model => model.ghoHoraFin)
+        </dd>
+
+    </dl>
+
+
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("idTipoGasto", TempData["idTipoGasto"])
+    @Html.Hidden("idBeneficiarioGastoPersonal", TempData["idBeneficiarioGastoPersonal"])
+    @Html.Hidden("pendientes", TempData["pendientes"])
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success" id="btnCreate">Aceptar</button>
+    </div>
+}

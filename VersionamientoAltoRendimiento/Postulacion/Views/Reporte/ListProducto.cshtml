@@ -1,0 +1,625 @@
+﻿@model IEnumerable<AltoRendimiento.Models.Producto>
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+</style>
+
+<br />
+<div class="panel panel-default">
+    <div class="panel-heading">Información Producto</div>
+    <div class="panel-body">
+        <table class="table table-condensed table-bordered table-hover">
+            <tr>
+                <th>
+                    Nombre Producto
+                </th>
+                <!--Pablo Espinoza 12-02-2016-->
+                <th>
+                    Tipo de Producto
+                </th>
+                <!--Pablo Espinoza 12-02-2016-->
+                <th>
+                    Nivel
+                </th>
+                <th>
+                    País
+                </th>
+                <th>
+                    Ciudad
+                </th>
+                <th>
+                    Mes Inicio
+                </th>
+                <th>
+                    Mes Fin
+                </th>
+            </tr>
+
+            @foreach (var row in ViewBag.Producto)
+            {
+                <tr>
+                    <td>
+                        @row.prdNombre
+                    </td>
+                    <!--Pablo Espinoza 12-02-2016-->
+                    <td>
+                        @row.prdTipo
+                    </td>
+                    <!--Pablo Espinoza 12-02-2016-->
+                    <td>
+                        @row.nivNombre
+                    </td>
+                    <td>
+                        @row.paiNombre
+                    </td>
+                    <td>
+                        @if (row.nivInternacional)
+                        {
+                            @row.ciuNombre
+                        }
+                        else
+                        {
+                            @row.comNombre
+                        }
+                    </td>
+                    <td>
+                        @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@row.prdMesDesde)
+                    </td>
+                    <td>
+                        @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@row.prdMesHasta)
+                    </td>
+                </tr>
+                <!--Pablo Espinoza 12-02-2016-->
+                <tr>
+                    <th style="text-align:center;" colspan="7">
+                        Descripción y Objetivos del Producto
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        @row.prdDescripcion
+                    </td>
+                </tr>
+                <!--Pablo Espinoza 12-02-2016-->
+
+            }
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Total beneficiarios por Género</div>
+    <div class="panel-body">
+        <!--Pablo Espinoza 12-02-2016-->
+        <table class="table table-condensed table-bordered table-hover">
+            <tr>
+                <th colspan="2">
+                    Beneficiarios No Deportistas Hombres
+                </th>
+                <th colspan="2">
+                    Beneficiarios No Deportistas Mujeres
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="border-style: hidden" class="table">
+                        @foreach (var beneficiario in ViewBag.HombreNoDeportista)
+                        {
+                            <tr>
+                                <td style="border-style: hidden">
+                                    @if (beneficiario.benExtranjero)
+                                    {
+                                        @beneficiario.benRutBeneficiario
+                                    }
+                                    else
+                                    {
+                                        @(beneficiario.benRutBeneficiario.ToString() + "-" + beneficiario.benDv.ToString())
+                                    }
+                                </td>
+                                <td style="border-style: hidden">
+                                    @beneficiario.Nombre
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td colspan="2">
+                    <table style="border-style: hidden" class="table">
+                        @foreach (var beneficiario in ViewBag.MujerNoDeportista)
+                        {
+                            <tr>
+                                <td style="border-style: hidden">
+                                    @if (beneficiario.benExtranjero)
+                                    {
+                                        @beneficiario.benRutBeneficiario
+                                    }
+                                    else
+                                    {
+                                        @(beneficiario.benRutBeneficiario.ToString() + "-" + beneficiario.benDv.ToString())
+                                    }
+                                </td>
+                                <td style="border-style: hidden">
+                                    @beneficiario.Nombre
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Total
+                </th>
+                <th>
+                    @ViewBag.HombreNoDeportista.Count
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    @ViewBag.MujerNoDeportista.Count
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    Beneficiarios Deportistas Hombres
+                </th>
+                <th colspan="2">
+                    Beneficiarios Deportistas Mujeres
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="border-style: hidden" class="table">
+                        @foreach (var beneficiario in ViewBag.HombreDeportista)
+                        {
+                            <tr>
+                                <td style="border-style: hidden">
+                                    @if (beneficiario.benExtranjero)
+                                    {
+                                        @beneficiario.benRutBeneficiario
+                                    }
+                                    else
+                                    {
+                                        @(beneficiario.benRutBeneficiario.ToString() + "-" + beneficiario.benDv.ToString())
+                                    }
+                                </td>
+                                <td style="border-style: hidden">
+                                    @beneficiario.Nombre
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td colspan="2">
+                    <table style="border-style: hidden" class="table">
+                        @foreach (var beneficiario in ViewBag.MujerDeportista)
+                        {
+                            <tr>
+                                <td style="border-style: hidden">
+                                    @if (beneficiario.benExtranjero)
+                                    {
+                                        @beneficiario.benRutBeneficiario
+                                    }
+                                    else
+                                    {
+                                        @(beneficiario.benRutBeneficiario.ToString() + "-" + beneficiario.benDv.ToString())
+                                    }
+                                </td>
+                                <td style="border-style: hidden">
+                                    @beneficiario.Nombre
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Total
+                </th>
+                <th>
+                    @ViewBag.HombreDeportista.Count
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    @ViewBag.MujerDeportista.Count
+                </th>
+            </tr>
+        </table>
+        <!--Pablo Espinoza 12-02-2016-->
+    </div>
+</div>
+
+@if (((List<AltoRendimiento.Clases.BeneficiariosTotales>)ViewBag.totalGastoPersonal).Count > 0)
+{
+    <div class="panel panel-danger">
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-heading">Gasto Personal Por tipo</div>
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <th>
+                        Tipo Gasto
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                </tr>
+
+                @foreach (var row in ViewBag.totalGastoPersonal)
+                {
+                    <tr>
+
+                        <td>
+                            @row.NombreTipo
+                        </td>
+                        <td>
+                            <p class="text-right">@string.Format("{0:N0}", @row.Total)</p>
+                        </td>
+                    </tr>
+
+
+                }
+                <tr>
+                    <!--Pablo Espinoza 12-02-2016-->
+                    <th>
+                        Total Gasto Personal por Tipo
+                    </th>
+                    <th class="text-right">
+                        @string.Format("{0:N0}", ((List<AltoRendimiento.Clases.BeneficiariosTotales>)ViewBag.totalGastoPersonal).Sum(r => r.Total))
+                    </th>
+                    <!--Pablo Espinoza 12-02-2016-->
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="panel panel-danger">
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-heading">Gasto Personal por Tipo (Detalle)</div>
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <th>
+                        Rut
+                    </th>
+                    <th>
+                        <!--Pablo Espinoza 12-02-2016-->
+                        Beneficiario
+                        <!--Pablo Espinoza 12-02-2016-->
+                    </th>
+                    <th>
+                        Cargo / Disciplina
+                    </th>
+                    <th>
+                        Tipo Gasto
+                    </th>
+                    <!--Pablo Espinoza 12-02-2016-->
+                    <th>
+                        Mes Inicio
+                    </th>
+                    <th>
+                        Mes Fin
+                    </th>
+                    <th>
+                        Costo Mensual
+                    </th>
+                    <!--Pablo Espinoza 12-02-2016-->
+                    <th>
+                        Total
+                    </th>
+                    <th>Acción</th>
+                </tr>
+
+                @foreach (var row in ViewBag.ListBenGastoPersonal)
+                {
+                    <tr>
+                        <td>
+                            @{
+                    if (@row.benExtranjero == false)
+                    {
+                        @row.benRutBeneficiario
+                                @("-")
+                                @row.benDv
+
+                    }
+                    else
+                    {
+                        @row.benRutBeneficiario
+                    }
+                            }
+
+                        </td>
+                        <td>
+                            @row.benNombre @row.benApellidoPaterno @row.benApellidoMaterno
+                        </td>
+                        <td>
+                            @row.carNombre
+                        </td>
+                        <td>
+                            @row.tgpNombre
+                        </td>
+                        <!--Pablo Espinoza 12-02-2016-->
+                        <td>
+                            @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@row.mesInicio)
+                        </td>
+                        <td>
+                            @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@row.mesFin)
+                        </td>
+                        <td>
+                            @String.Format("{0:N0}", @row.costoMensual)
+                        </td>
+                        <!--Pablo Espinoza 12-02-2016-->
+                        <td>
+                            <p class="text-right">@String.Format("{0:N0}", @row.bgpCostoTotal)</p>
+                        </td>
+
+                        <td>
+                            @{
+                    var idBeneficiarioGastoPersonal = string.Format("{0:G}", @row.idBeneficiarioGastoPersonal);
+                    if (idBeneficiarioGastoPersonal != "0" || idBeneficiarioGastoPersonal != "")
+                    {
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "PopUpGeolocalizacionPersonal", new { id = idBeneficiarioGastoPersonal }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Geolocalización' src=\"../../Images/Mundo.png\" ... />"))
+                    }
+                            }
+                        </td>
+                    </tr>
+                <!--Pablo Espinoza 17-02-2016-->
+                    <tr>
+                        <th style="text-align:center;" colspan="9">
+                            Descripción
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            @row.descripcion
+                        </td>
+                    </tr>
+            <!--Pablo Espinoza 17-02-2016-->
+
+                }
+            </table>
+        </div>
+    </div>
+}
+
+@if (((List<AltoRendimiento.Clases.BeneficiariosTotales>)ViewBag.totalGastoAdministracion).Count > 0)
+{
+    <div class="panel panel-warning">
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-heading">Gastos de Bienes y Servicios por Tipo</div>
+        <!--Pablo Espinoza 12-02-2016-->
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <th>
+                        Tipo Gasto
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                </tr>
+
+                @foreach (var row in ViewBag.totalGastoAdministracion)
+                {
+                    <tr>
+
+                        <td>
+                            @row.NombreTipo
+                        </td>
+                        <td>
+                            <p class="text-right">@string.Format("{0:N0}", @row.Total)</p>
+                        </td>
+                    </tr>
+
+
+                }
+                <tr>
+                    <!--Pablo Espinoza 16-02-2016-->
+                    <th>
+                        Total Gasto de Bienes y Servicios por Tipo
+                    </th>
+                    <th class="text-right">
+                        @string.Format("{0:N0}", ((List<AltoRendimiento.Clases.BeneficiariosTotales>)ViewBag.totalGastoAdministracion).Sum(r => r.Total))
+                    </th>
+                    <!--Pablo Espinoza 16-02-2016-->
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="panel panel-warning">
+        <!--Pablo Espinoza 17-02-2016-->
+        <div class="panel-heading">Gastos de Bienes y Servicios por Tipo (Detalle)</div>
+        <!--Pablo Espinoza 17-02-2016-->
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <!--Pablo Espinoza 17-02-2016-->
+                    <th>
+                        Tipo Gasto
+                    </th>
+                    <th>
+                        Detalle / Beneficiario
+                    </th>
+                    <th>
+                        Cargo / Disciplina
+                    </th>
+                    <th>
+                        Fecha Inicio
+                    </th>
+                    <th>
+                        Fecha Fin
+                    </th>
+                    <!--Pablo Espinoza 17-02-2016-->
+                    <th>
+                        Total
+                    </th>
+                    <th>Acción</th>
+                </tr>
+
+                @foreach (var row in ViewBag.ListBenGastoAdministracion)
+                {
+                <!--Pablo Espinoza 17-02-2016-->
+                    <tr>
+                        <td>
+                            @row.tgaNombre
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(@row.benRutBeneficiario))
+                            {
+                                if (@row.benExtranjero == false)
+                                {
+                                    @row.benRutBeneficiario
+                                    @("-")
+                                    @row.benDv
+
+                                }
+                                else
+                                {
+                                    @row.benRutBeneficiario
+                                }
+                                @(" | ")
+                                @row.benNombre @row.benApellidoPaterno @row.benApellidoMaterno
+                            }
+                            else
+                            {
+                                @row.descripcion
+                            }
+                        </td>
+                        <td>
+                            @row.carNombre
+                        </td>
+                        <td>
+                            @row.fechaInicio.ToShortDateString()
+                        </td>
+                        <td>
+                            @row.fechaFin.ToShortDateString()
+                        </td>
+                        <td>
+                            <p class="text-right">@String.Format("{0:N0}", @row.bgaTotal)</p>
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(@row.benRutBeneficiario))
+                            {
+                                var idBeneficiarioGastoAdministracion = string.Format("{0:G}", @row.idBeneficiarioGastoAdministracion);
+                                if (idBeneficiarioGastoAdministracion != "0" || idBeneficiarioGastoAdministracion != "")
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "PopUpGeolocalizacionAdministracion", new { id = idBeneficiarioGastoAdministracion }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Geolocalización' src=\"../../Images/Mundo.png\" ... />"))
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:center;" colspan="7">
+                            Descripción
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="7">
+                            @row.descripcion
+                        </td>
+                    </tr>
+            <!--Pablo Espinoza 17-02-2016-->
+
+                }
+            </table>
+        </div>
+    </div>
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">Distribución del Gasto (expresado en M$)</div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Item de Gasto</th>
+                        <th>Ene</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Abr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Ago</th>
+                        <th>Sep</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dic</th>
+                        <th>Total Item</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gastos Personal</td>
+                        @foreach (var item in ViewBag.MontoMesesGastoPersonal)
+                        {
+                            <td>
+                                @{
+                            string itemFormatted = (item / 1000).ToString("#,##");
+                            <p class="text-right">@itemFormatted</p>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>Gastos Bienes y Servicios</td>
+                        @foreach (var item in ViewBag.MontoMesesGastoaAdministrativo)
+                        {
+                            <td>
+                                @{
+                            string itemFormatted = (item / 1000).ToString("#,##");
+                            <p class="text-right">@itemFormatted</p>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td colspan="13">Total Producto</td>
+                        <td>
+                            @{
+                                <p class="text-right">@string.Format("{0:N0}", ViewBag.MontoTotalProyecto)</p>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+
+
+
+<script type="text/javascript">
+    $('.anchor-edit').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $.get(url, null, function (response) {
+            $('#myModalContent').html(response);
+            $('#myModal').modal('show');
+        });
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>

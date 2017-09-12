@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AltoRendimiento.Models.Auditoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.audFechaHoraConexion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.audFechaHoraDesconexion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.audTipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.audNumeroIP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.audFechaHoraConexion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.audFechaHoraDesconexion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.audTipo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.audNumeroIP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idAuditoria }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idAuditoria }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idAuditoria })
+        </td>
+    </tr>
+}
+
+</table>

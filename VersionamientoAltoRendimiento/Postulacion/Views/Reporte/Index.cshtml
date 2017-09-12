@@ -1,0 +1,422 @@
+﻿@model IEnumerable<AltoRendimiento.Models.Proyecto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.proNombreProyecto, "Index", "AntecedenteGeneralProyecto") </li>
+            <li><b>Reporte</b></li>
+        </ol>
+    </div>
+</div>
+
+<p>
+    <div class="text-right">
+        <button type="button" onclick="volver()" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+        @Html.ActionLink("Exportar PDF", "ReportingServices", "Reporte", new { id = ViewBag.idProyecto }, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+    </div>
+
+
+</p>
+<h4>Antecedentes del Proyecto</h4>
+
+<table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
+    <tbody>
+        <tr>
+            <td>
+                Código
+            </td>
+            <td>
+                @ViewBag.proFolioProyecto
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nombre
+            </td>
+            <td>
+                @ViewBag.proNombreProyecto
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mes Inicio
+            </td>
+            <td>
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.proMesInicio)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Mes Fin
+            </td>
+            <td>
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.proMesTermino)
+            </td>
+        </tr>
+        <!--Pablo Espinoza 12-02-2016-->
+        <tr>
+            <td>
+                Concurso
+            </td>
+            <td>
+                @ViewBag.concurso
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Region
+            </td>
+            <td>
+                @ViewBag.region
+            </td>
+        </tr>
+        <!--Pablo Espinoza 12-02-2016-->
+        <tr>
+            <td>
+                Estado
+            </td>
+            <td>
+                @System.Enum.GetName(typeof(AltoRendimiento.App_Code.EnumEstados), ViewBag.proEstado)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Linea de Financiamiento
+            </td>
+            <td>
+                @ViewBag.linNombre
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Costo Total
+            </td>
+            <td>
+                @string.Format("{0:N0}", @ViewBag.CostoTotal)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Antecedentes del Postulante</h4>
+
+<table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
+    <tbody>
+        <tr>
+            <td>
+                Rut Organización
+            </td>
+            <td>
+                @ViewBag.RutOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nombre
+            </td>
+            <td>
+                @ViewBag.NombreOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Domicilio
+            </td>
+            <td>
+                @ViewBag.DireccionOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Comuna
+            </td>
+            <td>
+                @ViewBag.ComunaOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Región
+            </td>
+            <td>
+                @ViewBag.RegionOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email
+            </td>
+            <td>
+                @ViewBag.EmailOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Teléfono
+            </td>
+            <td>
+                @ViewBag.FonoOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Fax
+            </td>
+            <td>
+                @ViewBag.FaxOrganizacion
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Justificación y Objetivo del Proyecto</h4>
+<table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
+    <tbody>
+        <tr>
+            <td>
+                @ViewBag.Justificacion
+                @*<textarea class="form-control" name="txtMotivo" maxlength="500" cols="40" rows="5" id="txtMotivo" placeholder="Motivo">@ViewBag.Justificacion</textarea>*@
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h4>Productos</h4>
+
+<div class="col-md-12">
+
+    @foreach (var row in ViewBag.Prod)
+    {
+        <div class="panel panel-default">
+            <div id="demo" class="panel-heading">
+                <h1 class="panel-title">
+                    @row.prdNombre &nbsp;
+                    <a data-toggle="collapse" class="table-trigger" href="#table_@row.idProducto" target-id="@row.idProducto"><span class="glyphicon glyphicon-collapse-down"></span></a>
+                    <a class="pull-right">@String.Format("{0:C0}", @row.Total)</a>
+                </h1>
+            </div>
+            <div id="table_@row.idProducto" class="panel-collapse collapse">
+
+            </div>
+        </div>
+    }
+
+</div>
+
+<h4>Totales del Proyecto</h4>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Item de Gasto</th>
+                <th>Ene</th>
+                <th>Feb</th>
+                <th>Mar</th>
+                <th>Abr</th>
+                <th>May</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Ago</th>
+                <th>Sep</th>
+                <th>Oct</th>
+                <th>Nov</th>
+                <th>Dic</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Gastos Personal</td>
+                @foreach (var item in ViewBag.MontoMesesGastoPersonal)
+                {
+                    <td>
+                        @{
+                    string itemFormatted = item.ToString("#,##");
+                    <p class="text-right">@itemFormatted</p>
+                        }
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td>Gastos Bienes y Servicios</td>
+                @foreach (var item in ViewBag.MontoMesesGastoaAdministrativo)
+                {
+                    <td>
+                        @{
+                    string itemFormatted = item.ToString("#,##");
+                    <p class="text-right">@itemFormatted</p>
+                        }
+                    </td>
+                }
+            </tr>
+            <tr>
+                <td colspan="13">Total Proyecto</td>
+                <td>
+                    @{
+                        string totalProyecto = ViewBag.MontoTotalProyecto.ToString("#,##");
+                        <p class="text-right">@totalProyecto</p>
+                    }
+                </td>
+            </tr>
+            @*@if (!PresupuestoProyecto)
+                {
+                    <tr>
+                        <td colspan="14"> <img data-toggle='tooltip' title='Eliminar' src="../Images/False.png" /> El costo total del proyecto excede al monto asignado a la línea</td>
+
+                    </tr>
+
+                }*@
+        </tbody>
+    </table>
+    <br />
+    <br />
+</div>
+<!--Pablo Espinoza 17-02-2016-->
+<h4>Resumen del Proyecto</h4>
+
+<table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
+    <tbody>
+        <tr>
+            <th>
+                Entidad
+            </th>
+            <td>
+                @ViewBag.NombreOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Rut
+            </th>
+            <td>
+                @ViewBag.RutOrganizacion
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <td>
+                @ViewBag.proNombreProyecto
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Código
+            </th>
+            <td>
+                @ViewBag.proFolioProyecto
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Linea de Financiamiento
+            </th>
+            <td>
+                @ViewBag.linNombre
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Costo Total
+            </th>
+            <td>
+                @string.Format("{0:N0}", @ViewBag.CostoTotal)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Mes Inicio
+            </th>
+            <td>
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.proMesInicio)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Mes Fin
+            </th>
+            <td>
+                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.proMesTermino)
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table class="table table-condensed table-bordered table-hover text-center">
+    <tr>
+        <th>
+            Producto N°
+        </th>
+        <th>
+            Tipo de Producto
+        </th>
+        <th>
+            Total Gasto Personal
+        </th>
+        <th>
+            Total Bienes y Servicios
+        </th>
+    </tr>
+    @{int numeroProyecto = 1;}
+    @foreach (var row in ((List<AltoRendimiento.Clases.ProductoTotal>)ViewBag.Prod))
+    {
+        <tr>
+            <td>
+                @numeroProyecto
+            </td>            
+            <td>
+                @row.tipoProducto
+            </td>
+            <td>
+                @string.Format("{0:N0}", @row.montoGastoPersonal)
+            </td>
+            <td>
+                @string.Format("{0:N0}", @row.montoGastoAdministracion)
+            </td>
+        </tr>
+        {numeroProyecto++;}
+    }
+    <tr>
+        <th>
+            Total Proyecto
+        </th>
+        <td colspan="4">
+            @string.Format("{0:N0}", @ViewBag.CostoTotal)
+        </td>
+    </tr>
+</table>
+<!--Pablo Espinoza 17-02-2016-->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script src="~/Scripts/jquery.form.min.js"></script>
+    <script type="text/javascript">
+        $('.table-trigger').click(function () {
+            var id = $(this).attr("target-id");
+
+            var URL_PATH = '@Url.Content("~")';
+            var url = URL_PATH + "Reporte/ListProducto?id=" + id;
+            $.get(url, function (response) {
+                var tableId = "#table_" + id;
+                $(tableId).html(response);
+            });
+        });
+    </script>
+
+}

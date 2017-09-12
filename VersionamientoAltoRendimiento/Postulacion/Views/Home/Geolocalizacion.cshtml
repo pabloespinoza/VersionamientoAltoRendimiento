@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Geolocalizacion";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Geolocalización</li>
+        </ol>
+    </div>
+</div>
+<h3>Geolocalización</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info  pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-primary  text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombres</th>
+                    <th>Tipo Recinto</th>
+                    <th>Nombre Recinto</th>
+                    <th>Dirección</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Día</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12.345.678-9</td>
+                    <td>Sara Gómez</td>
+                    <td>Público</td>
+                    <td>Estadio Nacional</td>
+                    <td>Grecia 2001, Ñuñoa</td>
+                    <td>12-10-2015</td>
+                    <td>16-10-2015</td>
+                    <td>Lunes</td>
+                    <td>08:00:00</td>
+                    <td>16:00:00</td>
+                    <td>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"><img src="~/Images/Trash.png" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>11.873.938-7</td>
+                    <td>Tere Briones</td>
+                    <td>Público</td>
+                    <td>Estadio Nacional</td>
+                    <td>Grecia 2001, Ñuñoa</td>
+                    <td>12-10-2015</td>
+                    <td>16-10-2015</td>
+                    <td>Lunes</td>
+                    <td>08:00:00</td>
+                    <td>16:00:00</td>
+                    <td>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"><img src="~/Images/Trash.png" /></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>       
+    </div>
+</div>
+
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Geolocalización</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">                    
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Nombre Recinto</label>
+                        <div class="col-sm-9">
+                            <select name="cars" class="form-control">
+                                <option value="1">Estadio Nacional</option>
+                                <option value="2">Estadio Regional de Temuco</option>
+                                <option value="3">Piscina Nacional</option>
+                            </select>
+
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Dirección</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" placeholder="Dirección">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <img  width="100%" src="~/Images/map.jpg" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Fecha Inicio</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" placeholder="Fecha Inicio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Fecha Fin</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" placeholder="Apellido Materno">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Día</label>
+                        <div class="col-sm-9">
+                            <select name="cars" class="form-control">
+                                <option value="1">Lunes</option>
+                                <option value="2">Martes</option>
+                                <option value="3">Miércoles</option>
+                                <option value="4">Jueves</option>
+                                <option value="5">Viernes</option>
+                                <option value="6">Sábado</option>
+                                <option value="7">Domingo</option>
+                            </select>
+                        </div>
+                    </div>   
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Hora Inicio</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" placeholder="Hora Inicio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Hora Fin</label>
+                        <div class="col-sm-9">
+                            <input id="inputPassword3" placeholder="Hora Fin">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Observación</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="txtDescripcion" maxlength="500" cols="40" rows="5" id="txtDescripcion" placeholder="Descripción Objetivo"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+

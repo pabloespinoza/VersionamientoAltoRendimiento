@@ -1,0 +1,82 @@
+﻿@model AltoRendimiento.Models.Geolocalizacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Geolocalizacion</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.geoCoordenadaX)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoCoordenadaX)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoCoordenadaY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoCoordenadaY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.geoUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.geoUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Recinto.recNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recinto.recNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idGeolocalizacion }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

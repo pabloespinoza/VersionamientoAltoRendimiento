@@ -1,0 +1,195 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Geolocalizacion_Horario>
+
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Geolocalizacion Horario";
+    var culture = new System.Globalization.CultureInfo("es-CL");
+}
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+            <li>@Html.ActionLink("Producto " + (string)@ViewBag.NombreProducto, "URLAsignarBeneficiarios", "Producto", new { id = TempData["idProducto"] }, null) </li>
+            <li>@Html.ActionLink("Geolocalización ", "URLVerGeolocalizaciones", "AsignarBeneficiarios", new { id = TempData["idProducto"] }, null) </li>
+            <li><b>Horarios</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Geolocalización Horario</h3>
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Organización</label>
+        <div class="col-md-5">
+            @ViewBag.NombreOrganizacion
+        </div>
+    </div>
+</div>
+@*<div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Recinto</label>
+            <div class="col-md-5">
+                @ViewBag.Geolocalizacion.Recinto.recNombre
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Nombre Beneficiario</label>
+            <div class="col-md-5">
+                @ViewBag.NombreBeneficiario
+            </div>
+        </div>
+    </div>*@
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Producto</label>
+        <div class="col-md-5">
+            @ViewBag.NombreProducto
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "URLVerGeolocalizaciones", "AsignarBeneficiarios", new { id = TempData["idProducto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+
+            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.ActionLink("Nuevo", "Create", "GeolocalizacionHorario", new { id = TempData["idProducto"], idGeo = TempData["idGeo"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+
+            }
+            else if (@ViewBag.Proyecto.idWorkflow == 11 && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+            {
+                @Html.ActionLink("Nuevo", "Create", "GeolocalizacionHorario", new { id = TempData["idProducto"], idGeo = TempData["idGeo"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+            else
+            {
+                <br /> <br />
+            }
+        </div>
+        <div id="divResultado" hidden="hidden" class="alert alert-success" role="alert">...</div>
+        <table class="table table-condensed table-bordered   table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha Inicio
+                    </th>
+
+                    <th>
+                        Fecha Fin
+                    </th>
+                    <th>
+                        Dias
+                    </th>
+
+                    <th>
+                        Hora Inicio
+                    </th>
+                    <th>
+                        Hora Fin
+                    </th>
+                    <th>
+                        Periódico
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayName(item.ghoFechaInicio.ToShortDateString())
+                        </td>
+                        <td>
+                            @Html.DisplayName(item.ghoFechaFin.ToShortDateString())
+                        </td>
+                        <td>
+                            @{
+                    if (item.ghoDias != null)
+                    {
+                        string[] Dias = item.ghoDias.Split('|');
+                        foreach (string dia in Dias)
+                        {
+                            if (dia != "")
+                            {
+                                var DiaInicio = culture.DateTimeFormat.GetDayName((DayOfWeek)(((int)int.Parse(dia)) % 7));
+                                @Html.DisplayName(" - " + DiaInicio)
+                            }
+
+                        }
+                    }
+
+                            }
+                        </td>
+                        @*<td>
+                                    @{
+                            var DiaFin = culture.DateTimeFormat.GetDayName((DayOfWeek)(((int)item.ghoDiaFin) % 7));
+
+                            @Html.DisplayName(DiaFin)
+                                    }
+                                </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ghoHoraInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ghoHoraFin)
+                        </td>
+                        <td>
+                            @if (item.ghoPeriodico == 1)
+                            {
+                                <img data-toggle='tooltip' title='Eliminar' src="../../Images/True.png" />
+                            }
+                            else
+                            {
+                                <img data-toggle='tooltip' title='Eliminar' src="../../Images/False.png" />
+                            }
+                        </td>
+                        <td>
+
+                            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../../Images/Edit.png\" ... />"))
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../../Images/Trash.png\" ... />"))
+
+                            }
+                            else if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../../Images/Edit.png\" ... />"))
+                                //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
+                                @*@Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../../Images/Trash.png\" ... />"))*@
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+
+}

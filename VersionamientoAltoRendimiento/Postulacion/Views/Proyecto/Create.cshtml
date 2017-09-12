@@ -1,0 +1,124 @@
+﻿@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Proyecto</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idOrganizacionLinea, "idOrganizacionLinea", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idOrganizacionLinea", String.Empty)
+                @Html.ValidationMessageFor(model => model.idOrganizacionLinea)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proFolioProyecto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proFolioProyecto)
+                @Html.ValidationMessageFor(model => model.proFolioProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proNombreProyecto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proNombreProyecto)
+                @Html.ValidationMessageFor(model => model.proNombreProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proCodigoRegion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proCodigoRegion)
+                @Html.ValidationMessageFor(model => model.proCodigoRegion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proMesInicio, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proMesInicio)
+                @Html.ValidationMessageFor(model => model.proMesInicio)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proMesTermino, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proMesTermino)
+                @Html.ValidationMessageFor(model => model.proMesTermino)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proJustificacionProyecto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proJustificacionProyecto)
+                @Html.ValidationMessageFor(model => model.proJustificacionProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proEstado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proEstado)
+                @Html.ValidationMessageFor(model => model.proEstado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proFechaCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proFechaCreacion)
+                @Html.ValidationMessageFor(model => model.proFechaCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proUsuarioCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proUsuarioCreacion)
+                @Html.ValidationMessageFor(model => model.proUsuarioCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proFechaModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proFechaModificacion)
+                @Html.ValidationMessageFor(model => model.proFechaModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proUsuarioModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.proUsuarioModificacion)
+                @Html.ValidationMessageFor(model => model.proUsuarioModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

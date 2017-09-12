@@ -1,0 +1,83 @@
+﻿@using PagedList.Mvc;
+@model AltoRendimiento.Models.ContainerModel
+
+@using System.Threading;
+@using System.Globalization;
+@{
+    Layout = null;
+    ViewBag.Title = "Geolocalizacion Horario";
+    var culture = new System.Globalization.CultureInfo("es-CL");
+}
+@Styles.Render("~/Content/bootstrap-theme.css")
+@Styles.Render("~/Content/bootstrap-theme.css.map")
+@Styles.Render("~/Content/bootstrap-theme.min.css")
+@Styles.Render("~/Content/bootstrap.css")
+@Styles.Render("~/Content/bootstrap.css.map")
+@Styles.Render("~/Content/bootstrap.min.css")
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Listado Beneficiarios</title>
+</head>
+<body>
+    <div class="col-md-12">
+        Beneficiarios Asociados a la Geolocalización <br /><br />
+        <table class="table table-condensed table-bordered table-striped table-hover"  style="font-size:small">
+            <thead>
+                <tr>
+                    <th>
+                        Rut
+                    </th>
+                    <th>
+                        Beneficiario
+                    </th>
+                    <th>
+                        Cargo
+                    </th>
+                    <th>
+                        Tipo de Gasto
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ModelUno)
+                {
+                    <tr>
+                        <td>
+                            @item.RUT
+                        </td>
+                        <td>
+                            @item.Nombre
+                        </td>
+                        <td>
+                            @item.Cargo
+                        </td>
+                        <td>
+                            @item.TipoGasto
+                        </td> 
+                    </tr>
+                }
+                @foreach (var item in Model.ModelDos)
+                {
+                    <tr>
+                        <td>
+                            @item.RUT
+                        </td>
+                        <td>
+                            @item.Nombre
+                        </td>
+                        <td>
+                            @item.Cargo
+                        </td>
+                        <td>
+                            @item.TipoGasto
+                        </td> 
+                    </tr>
+                }
+            </tbody>
+    </div>
+
+</body>
+</html>

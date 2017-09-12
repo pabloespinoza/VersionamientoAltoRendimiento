@@ -1,0 +1,294 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Producto_Cargo
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <!--Pablo Espinoza-->
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+            <li>@Html.ActionLink("Producto " + (string)@ViewBag.Producto.prdNombre, "URLAsignarBeneficiarios", "Producto", new { id = ViewBag.Producto.idProducto }, null) </li>
+            <li>Duplicar Geolocalización y Horarios</li>
+            <!--Pablo Espinoza-->
+        </ol>
+    </div>
+</div>
+<h3>Duplicar Geolocalización y Horarios</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+                @Html.Hidden("idProducto", TempData["idProducto"])
+                <div class="form-group">
+
+                    <label for="inputEmail3" class="col-sm-4 control-label">Beneficiario Origen</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("idBeneficiarioOrigen", (IEnumerable<SelectListItem>)ViewBag.idBeneficiario, "--Seleccione--", new { @id = "Beneficiario-DropdownID", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idBeneficiario)
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="inputEmail3" class="col-sm-4 control-label">Geolocalizacion</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("idGeolocalizacion", Enumerable.Empty<SelectListItem>(), "--Seleccione Geolozalización--", new { @id = "Geolocalizacion-DropdownID", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idCargo)
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="inputEmail3" class="col-sm-4 control-label" style="padding-top:15px">Beneficiario Destino</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("listaBeneficiarios", (IEnumerable<SelectListItem>)ViewBag.beneficiarioDestino, null, new { @multiple = "multiple", id = "listaBeneficiarios" })
+                        @Html.ValidationMessageFor(model => model.idBeneficiarioProductoCargo)
+                    </div>
+                </div>
+                <h3>Gastos en Personal</h3>
+                <div class="form-group" id="dvListaGastos">
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3" id="divContenedor">
+                    </div>
+                </div>
+                <div class="text-danger col-md-offset-2 ">@ViewData["Mensaje"]</div><br />
+                <div class="modal-footer">
+                    <!--Pablo Espinoza-->
+                    @Html.ActionLink("Cancelar", "URLAsignarBeneficiarios", "Producto", new { id = ViewBag.Producto.idProducto }, new { @class = "btn btn-sm btn-danger pull-left", @style = "color:White" })
+                    <!--Pablo Espinoza-->
+                    <button type="submit" id="btnCopiar" class="btn btn-sm btn-success ">Duplicar Geolocalización y Horarios</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+@Html.Action(actionName: "TempMessage", controllerName: "Message")
+
+
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <!--Pablo Espinoza-->
+                <label> @TempData["MensajeController"] </label>
+                <!--Pablo Espinoza-->
+            </div>
+            <div class="modal-footer">
+                <!--Pablo Espinoza-->
+                @Html.ActionLink("Aceptar", "URLAsignarBeneficiarios", "Producto", new { id = ViewBag.Producto.idProducto }, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                <!--Pablo Espinoza-->
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    @*Styles.Render("~/Content/searchableOptionList.css")*@
+}
+@Scripts.Render("~/Scripts/bootstrap-multiselect.js")
+@Scripts.Render("~/Content/bootstrap-multiselect.css")
+<script>
+
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+
+    $("#Beneficiario-DropdownID").change(function () {
+        idSelected = $(this).val();
+        $.ajax({
+            //Pablo Espinoza
+            url: '@Url.Action("getGeolocalizaciones")' + "?idBeneficiario=" + idSelected + "&idProducto=" + '@TempData["idProducto"]',
+            //Pablo Espinoza
+            type: "POST",
+            success: function (data) {
+                var options = "";
+                options += ' <option value="">-- Seleccione Geolocalizacion -- </option>';
+                $.each(data, function (index, value) {
+
+                    options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                });
+                $("#Geolocalizacion-DropdownID").html(options);
+            },
+            error: function () {
+            }
+        });
+    });
+
+    //Pablo Espinoza 29-02-2016
+    $('#listaBeneficiarios').multiselect({
+        buttonWidth: '100%',
+        nonSelectedText: 'Buscar...',
+        allSelectedText: 'Todos...',
+        numberDisplayed: 2,
+        nSelectedText: 'Seleccionados',
+        onChange: function (option, checked, select) {
+            if (checked) {
+                idBeneficiarioProductoCargo = $(option).val();
+                nombreBeneficiario = $(option).text();
+                $.ajax({
+                    url: '@Url.Action("ListarGastosBeneficiario")' + "?idBeneficiarioProductoCargo=" + idBeneficiarioProductoCargo,
+                    type: "POST",
+                    success: function (data) {
+                        var gastosBeneficiarios = '';
+                        gastosBeneficiarios += '<div id="dvBenProdCar' + option.val() + '">';
+                        gastosBeneficiarios += '<label for="inputEmail3" class="col-sm-12" style="padding-top:15px">' + nombreBeneficiario + '</label>';
+                        gastosBeneficiarios += '<div class="col-md-12">';
+                        gastosBeneficiarios += '<table class="table table-condensed table-bordered  table-hover">';
+                        gastosBeneficiarios += '<thead>';
+                        gastosBeneficiarios += '<tr>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Rut/Pasaporte';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Nombre';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Apellidos';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Cargo';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Mes Inicio';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>';
+                        gastosBeneficiarios += 'Mes Fin';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>Costo Mensual</th>';
+                        gastosBeneficiarios += '</th>';
+                        gastosBeneficiarios += '<th>Tipo de Gasto</th>';
+                        gastosBeneficiarios += '<th>Copiar</th>';
+                        gastosBeneficiarios += '</tr>';
+                        gastosBeneficiarios += '</thead>';
+                        gastosBeneficiarios += '<tbody>';
+                        if (data.length > 0) {
+                            $.each(data, function (index, value) {
+
+                                gastosBeneficiarios += '<tr>';
+                                gastosBeneficiarios += '<td>';
+
+                                if (value.benExtranjero == true) {
+                                    gastosBeneficiarios += value.benRutBeneficiario;
+                                } else {
+                                    gastosBeneficiarios += value.benRutBeneficiario + '-' + value.benDv;
+                                }
+
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                gastosBeneficiarios += value.benNombre;
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                gastosBeneficiarios += value.benApellidoPaterno;
+                                gastosBeneficiarios += ' ';
+                                gastosBeneficiarios += value.benApellidoMaterno;
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                gastosBeneficiarios += value.carNombre;
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                var mesInicio = new Date(Date.UTC(1911, value.MesInicio));
+                                gastosBeneficiarios += mesInicio.toLocaleString("es-ES", { month: "long" });
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                @*gastosBeneficiarios += '@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(value.bgpMesFin)'*@;
+                                var mesFin = new Date(Date.UTC(1911, value.MesFin));
+                                gastosBeneficiarios += mesFin.toLocaleString("es-ES", { month: "long" });
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                gastosBeneficiarios += '<p class="text-right">$ ' + value.bgpCosto.toLocaleString() + '</p>';
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td>';
+                                gastosBeneficiarios += value.tgpNombre;
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '<td width="120">';
+                                gastosBeneficiarios += '<input type="checkbox" name="listaGastos" id="listaGastos" value="' + value.idBeneficiarioGastoPersonal + '"/>';
+                                gastosBeneficiarios += '</td>';
+                                gastosBeneficiarios += '</tr>';
+                            })
+                        } else {
+                            gastosBeneficiarios += '<tr>';
+                            gastosBeneficiarios += '<td class="text-danger" colspan="9">';
+                            gastosBeneficiarios += 'Sin gastos asignados.';
+                                gastosBeneficiarios += '</td>';
+                            gastosBeneficiarios += '</tr>';
+                        };
+                        gastosBeneficiarios += '</div>';
+                        $("#dvListaGastos").append(gastosBeneficiarios);
+                    },
+                    error: function () {
+                    }
+                });
+            } else {
+                $("#dvBenProdCar" + option.val()).remove();
+            }
+        }
+    });
+
+    $("#btnCopiar").on("click", function () {
+
+        var exito = true;
+        if ($("#Beneficiario-DropdownID").prop('selectedIndex') <= 0) {
+            $("span[data-valmsg-for=idBeneficiario]").text("Debe seleccionar al menos un beneficiario");
+            $("span[data-valmsg-for=idBeneficiario]").attr("class", "field-validation-error");
+            exito = false;
+        } else {
+            $("span[data-valmsg-for=idBeneficiario]").attr("class", "field-validation-valid");
+        }
+
+        if ($("#Geolocalizacion-DropdownID").prop('selectedIndex') <= 0) {
+            $("span[data-valmsg-for=idCargo]").text("Debe seleccionar una geolocalización");
+            $("span[data-valmsg-for=idCargo]").attr("class", "field-validation-error");
+            exito = false;
+        } else {
+            $("span[data-valmsg-for=idCargo]").attr("class", "field-validation-valid");
+        }
+
+        if ($("#Geolocalizacion-DropdownID").prop('selectedIndex') <= 0) {
+            $("span[data-valmsg-for=idCargo]").text("Debe seleccionar una geolocalización");
+            $("span[data-valmsg-for=idCargo]").attr("class", "field-validation-error");
+            exito = false;
+        } else {
+            $("span[data-valmsg-for=idCargo]").attr("class", "field-validation-valid");
+        }
+        if ($("#listaBeneficiarios").val() == null) {
+            $("span[data-valmsg-for=idBeneficiarioProductoCargo]").text("Debe seleccionar al menos un beneficiario");
+            $("span[data-valmsg-for=idBeneficiarioProductoCargo]").attr("class", "field-validation-error");
+            exito = false;
+        } else {
+            $("span[data-valmsg-for=idBeneficiarioProductoCargo]").attr("class", "field-validation-valid");
+        }
+
+        if (exito) {
+            if ($("#listaGastos:checked").val() == undefined) {
+                alert("Debe seleccionar al menos un Gasto en Personal");
+                exito = false;
+            }
+        }
+        return exito;
+
+    }
+    )
+    //Pablo Espinoza 29-02-2016
+</script> 

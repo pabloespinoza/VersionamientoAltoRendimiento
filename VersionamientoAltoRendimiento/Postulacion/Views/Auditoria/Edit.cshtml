@@ -1,0 +1,66 @@
+﻿@model AltoRendimiento.Models.Auditoria
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Auditoria</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idAuditoria)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.audFechaHoraConexion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.audFechaHoraConexion)
+                @Html.ValidationMessageFor(model => model.audFechaHoraConexion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.audFechaHoraDesconexion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.audFechaHoraDesconexion)
+                @Html.ValidationMessageFor(model => model.audFechaHoraDesconexion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.audTipo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.audTipo)
+                @Html.ValidationMessageFor(model => model.audTipo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.audNumeroIP, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.audNumeroIP)
+                @Html.ValidationMessageFor(model => model.audNumeroIP)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

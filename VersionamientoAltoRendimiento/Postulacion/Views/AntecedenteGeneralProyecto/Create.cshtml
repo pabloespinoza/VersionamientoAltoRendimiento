@@ -1,0 +1,140 @@
+﻿@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Crear Proyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $("#ddlMesInicio").change(function () {
+        var cat = $("#ddlMesInicio").val();
+        alert(cat);
+        //diferenciaFechas();
+    });
+
+</script>
+
+<h2 class="text-center">Antecedente General Proyecto</h2>
+
+@Html.Action(actionName: "TempMessage", controllerName: "Message")
+
+
+
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (TempData["lineaPresupuestaria"] != null)
+    {
+        
+        @Html.Hidden("idOrganizacionLinea", TempData["lineaPresupuestaria"])
+    }
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <!--Pablo Espinoza-->
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label">Línea Presupuestaria</label>
+            <div class="col-sm-9">
+                <label class="control-label">@ViewBag.NombreLinea</label>
+            </div>
+        </div>
+        <!--Pablo Espinoza-->
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label">Categoría</label>
+            <div class="col-sm-9">
+                @Html.DropDownList("idConcurso", (IEnumerable<SelectListItem>)ViewBag.idConcurso, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.proNombreProyecto, "Nombre Proyecto", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(model => model.proNombreProyecto, new { @class = "form-control", @maxLength="150" })
+                @Html.ValidationMessageFor(model => model.proNombreProyecto, "Debe ingresar un nombre de proyecto")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proCodigoRegion, "Región", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(model => model.proCodigoRegion, (IEnumerable<SelectListItem>)ViewBag.Regiones, "--Seleccione--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.proCodigoRegion, "Debe seleccionar una región")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proMesInicio, "Mes Inicio", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(model => model.proMesInicio, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @class = "form-control", @id = "ddlMesInicio" })
+                @Html.ValidationMessageFor(model => model.proMesInicio, "Debe Seleccionar un Mes Inicio")
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proMesTermino, "Mes Término", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+
+                @*@if (@ViewBag.NombreLinea == "Apoyo Especial a Deportistas"  || @ViewBag.NombreLinea =="Apoyo Especial a deportistas paralímpicos")
+                {
+                    @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control" })
+                }else
+                {
+                    @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, new { @class = "form-control", @Disabled = "true" })
+                }*@
+                
+                @Html.DropDownListFor(model => model.proMesTermino, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.proMesTermino)
+                @*@Html.Hidden("proMesTermino", ((SelectList)ViewBag.MesesFin).SelectedValue.ToString())*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.proJustificacionProyecto, "Justificación y Objetivo del Proyecto", new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextAreaFor(model => model.proJustificacionProyecto, new { @class = "form-control", @rows = 3, @style = "resize:none;" })
+                @Html.ValidationMessageFor(model => model.proJustificacionProyecto, "Debe ingresar una justificación")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+                <span style="color:red;"><b>Si el proyecto tiene una duración mayor a 6 meses, los recursos serán entregados en 2 giros</b></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label"></label>
+            <div class="col-sm-9 text-right">
+                @Html.ActionLink("Cancelar", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-danger pull-left", @style = "color:White" })
+                <button type="submit" class="btn btn-sm btn-success text-right">Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> Su proyecto fue ingresado de manera exitosa.</label>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

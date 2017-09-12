@@ -1,0 +1,159 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Geolocalizacion>
+
+@{
+    ViewBag.Title = "Geolocalizacion";
+}
+
+
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)@ViewBag.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Proyecto.idProyecto }, null) </li>
+            <li>@Html.ActionLink("Producto " + (string)@ViewBag.Producto.prdNombre, "URLAsignarBeneficiarios", "Producto", new { id = TempData["idProducto"] }, null) </li>
+            <li><b>Geolocalizaciones</b>  </li>
+        </ol>
+    </div>
+</div>
+<h3>Geolocalizaciones</h3>
+@*<div class="row">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Organización</label>
+            <div class="col-md-5">
+                @ViewBag.Proyecto.Organizacion_Linea.Organizacion.orgNombre
+            </div>
+        </div>
+    </div>*@
+
+<div class="row">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Producto</label>
+        <div class="col-md-5">
+            @ViewBag.Producto.prdNombre
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "URLAsignarBeneficiarios", "Producto", new { id = TempData["idProducto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+
+            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.Raw("&nbsp;&nbsp;")
+                @Html.ActionLink("Nueva Geolocalización", "CreateListado", "Geolocalizacion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+            else if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.Producto.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+            {
+                @Html.ActionLink("Nuevo Recinto", "CreateRecinto", "Geolocalizacion", new { idProducto = TempData["idProducto"] }, new { data_modal = "", id = "btnCreateRecinto", @class = "btn btn-sm btn-success text-right", @style = "color:White" })
+                @Html.Raw("&nbsp;&nbsp;")
+                @Html.ActionLink("Nueva Geolocalización", "CreateListado", "Geolocalizacion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+            else
+            {
+                <br /> <br />
+            }
+        </div>
+        <div id="divResultado" hidden="hidden" class="alert alert-success" role="alert">...</div>
+        <table class="table table-condensed table-bordered   table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre Recinto
+                    </th>
+                    <th>
+                        Tipo Recinto
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    @*<th>
+                            Latitud
+                        </th>
+                        <th>
+                            Longitud
+                        </th>*@
+
+                    <th>Integrantes</th>
+                    <th>
+                        Acción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Recinto.recNombre)
+
+                        </td>
+                        <td>
+                            @if (item.Recinto.recPublico == true)
+                            {
+                                @Html.DisplayName("Publico")
+                            }
+                            @if (item.Recinto.recPublico == false)
+                            {
+                                @Html.DisplayName("Privado")
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.geoDescripcion)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.geoCoordenadaX)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.geoCoordenadaY)
+                            </td>*@
+                        <td>@item.CountBeneficiarios</td>
+                        <td>
+
+                            <a href='@Url.Action("IndexListado", "GeolocalizacionHorario", new { id = item.idGeolocalizacion })' data-toggle="tooltip" title="Horarios"><img width="20" src='@Url.Content("~/Images/Timetable.png")' /></a>
+
+                            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                            {
+
+                                <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
+                                @*@Html.Raw(@Html.ActionLink("[replacetext]", "ListadoEdit", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))*@
+
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "ListDelete", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+
+                            }
+                            @if (@ViewBag.Solicitud != null)
+                            {
+                                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.Producto.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                {
+                                    <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
+                                    @*@Html.Raw(@Html.ActionLink("[replacetext]", "ListadoEdit", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))*@
+                                    //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
+                                    @*@Html.Raw(@Html.ActionLink("[replacetext]", "ListDelete", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))*@
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

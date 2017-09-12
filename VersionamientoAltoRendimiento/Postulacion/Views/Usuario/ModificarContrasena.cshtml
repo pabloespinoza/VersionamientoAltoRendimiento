@@ -1,0 +1,117 @@
+﻿@model AltoRendimiento.Models.Usuario
+@using reCAPTCHA.MVC
+
+
+@{
+    ViewBag.Title = "Modificar Contraseña";
+}
+
+<script type="text/javascript">
+    var RecaptchaOptions = {
+        theme: 'custom',
+        custom_theme_widget: 'recaptcha_widget'
+    };
+</script>
+ 
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb"> 
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Modificar Contraseña</li>
+        </ol>
+    </div>
+</div>
+ 
+<h3>Modificar Contraseña</h3>
+
+@Html.Action(actionName: "TempMessage", controllerName: "Message") 
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idUsuario)
+        @Html.HiddenFor(model => model.usuRut)
+
+
+
+        <br />
+        <form method="post" action="<?php echo $base_url; ?>user/register/check" class="form-horizontal" accept-charset="UTF-8">
+            <noscript>
+                <iframe src="<?php echo $recaptcha_noscript_url; ?>"
+                        height="300" width="500" frameborder="0"></iframe><br>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field"
+                       value="manual_challenge">
+            </noscript>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Contraseña Actual</label>
+                <div class="col-sm-3">
+                    @Html.Password("PassAntigua", "", new { @class = "form-control", @placeholder = "Contraseña Actual" })
+
+                    <div class="text-danger">@ViewData["errorPass"]</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Contraseña Nueva</label>
+                <div class="col-sm-3">
+                    @Html.Password("PassNueva", "", new { @class = "form-control", @placeholder = "Contraseña Nueva" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Repetir Contraseña Nueva</label>
+                <div class="col-sm-3">
+                    @Html.Password("PassNuevaRepeticion", "", new { @class = "form-control", @placeholder = "Contraseña Nueva" })
+                    <div class="text-danger">@ViewData["errorPassNueva"]</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                <div class="col-sm-9">
+                    <div class="controls">
+                        @Html.Recaptcha()
+                        @Html.ValidationMessage("ReCaptcha")
+                    </div>
+                </div>
+            </div> 
+
+            <div class="text-center">
+                <button type="button" onclick="volver()" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-sm btn-success" type="submit">Modificar</button>
+            </div>
+
+        </form>
+        <br />
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LcrK9cSAAAAALEcjG9gTRPbeA0yAVsKd8sBpFpR"></script>
+        @*<noscript>
+                <iframe src="<?php echo $recaptcha_noscript_url; ?>"
+                        height="100" width="500" frameborder="0"></iframe><br>
+                <textarea name="recaptcha_challenge_field" rows="5" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+            </noscript>*@
+
+    </div>
+} 
+
+<!-- Modal -->
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> Su contraseña ha sido modificada de manera exitosa.</label>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            </div>
+        </div>
+    </div>
+</div>

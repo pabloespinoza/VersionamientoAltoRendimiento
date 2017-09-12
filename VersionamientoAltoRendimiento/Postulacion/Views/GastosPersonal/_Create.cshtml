@@ -1,0 +1,264 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Gasto_Personal
+@{
+    ViewBag.Title = "Create";
+}
+
+<script type="text/javascript">
+
+
+    $("#txtCosto").change(function () {
+
+        funcionCostoTotal();
+    });
+
+    $("#ddlMesInicio").change(function () {
+
+        funcionCostoTotal();
+    });
+
+    $("#ddlMesfin").change(function () {
+
+        funcionCostoTotal();
+    });
+
+    $("#idTipoGastoPersonal").change(function () {
+        funcionHabilitaCampos();
+        funcionHabilitaCamposDeportista();
+    });
+
+    function funcionHabilitaCamposDeportista() {
+        var cargo = '@ViewBag.Cargo';
+        if (cargo == 'DEPORTISTA') {
+            $("#divObjetivo").show();
+            $("#divMesInicio").hide();
+            $("#divMesFin").hide();
+            $("#divbgpCosto").hide();
+            $("#divCosto").hide();
+            $("#divTipo").hide();
+            $("label[for = lblObjetivo]").text("Descripción");
+            $("#divMarcaObjetivo").hide();
+
+        }
+    }
+</script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Registro</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idBeneficiarioProductoCargo)
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idProducto)
+
+        @Html.ValidationSummary(true)
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            @*Se agregan los mensajes de alerta de monto en Solicitud de cambio*@
+            <div id="div_MontoTotalOriginal" class="alert alert-info" role="alert" style="display:none">
+                <label>@TempData["MontoTotalOriginal"]</label>
+            </div>
+            <div id="div_MontoTotalActual" class="alert alert-danger" role="alert" style="display:none">
+                <label>@TempData["MontoTotalActual"]</label>
+            </div>
+            @*Fin Mensajes Alertas Solicitud de cambio*@
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-5 control-label">Cargo</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.Beneficiario_Producto_Cargo.idCargo, (IEnumerable<SelectListItem>)ViewBag.ListaCargos, new { @class = "form-control", @Disabled = "True" })
+                    @Html.ValidationMessageFor(model => model.Beneficiario_Producto_Cargo.idCargo)
+                </div>
+            </div>
+            <div class="form-group" id="divTipo">
+                <label for="inputEmail3" class="col-sm-5 control-label">Tipo</label>
+                <div class="col-md-5">
+                    @if (@ViewBag.Cargo == "DEPORTISTA")
+                    {
+                        @Html.DropDownListFor(model => model.idTipoGastoPersonal, (IEnumerable<SelectListItem>)ViewBag.ListaTiposGasto, new { @class = "form-control" })
+
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(model => model.idTipoGastoPersonal, (IEnumerable<SelectListItem>)ViewBag.ListaTiposGasto, "--Seleccione--", new { @class = "form-control" })
+
+                    }
+                    @Html.ValidationMessageFor(model => model.idTipoGastoPersonal)
+                </div>
+            </div>
+            <div class="form-group" id="divMarcaObjetivo">
+                <label for="inputEmail3" class="col-sm-5 control-label">Objetivo</label>
+                <div class="col-md-5">
+                    @Html.CheckBoxFor(model => model.bgpMarcaObjetivo, new { @onchange = "hideDisciplina();" })
+                    <br />
+                    <label for="InfoProd" id="InfoProd" style="font-size:x-small">Información: seleccione si el Recurso Humano es por objetivo</label>
+                    <br />
+                </div>
+            </div>
+            <div class="form-group" id="divMesInicio">
+                <label for="inputEmail3" class="col-sm-5 control-label">Mes Inicio</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.bgpMesInicio, (IEnumerable<SelectListItem>)ViewBag.Meses, "--Seleccione--", new { @class = "form-control", @id = "ddlMesInicio" })
+                    @Html.ValidationMessageFor(model => model.bgpMesInicio)
+                </div>
+            </div>
+            <div class="form-group" id="divMesFin">
+                <label for="inputEmail3" class="col-sm-5 control-label">Mes Fin</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.bgpMesFin, (IEnumerable<SelectListItem>)ViewBag.Meses, "--Seleccione--", new { @class = "form-control", @id = "ddlMesfin" })
+                    @Html.ValidationMessageFor(model => model.bgpMesFin)
+                </div>
+            </div>
+
+            <div class="form-group" id="divbgpCosto">
+                <label for="inputEmail3" class="col-sm-5 control-label">Costo Mensual $</label>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.bgpCosto, new { @onkeypress = "return permite(event, 'numeros'); return false;", @class = "form-control", @rows = 3, @placeholder = "0", @id = "txtCosto" })
+                    @Html.ValidationMessageFor(model => model.bgpCosto)
+                </div>
+            </div>
+            <div class="form-group" id="divCosto">
+                <label for="inputEmail3" class="col-sm-5 control-label">Costo Total $</label>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.bgpCostoTotal, new
+               {
+                   @class = "form-control",
+                   @rows = 3,
+                   @placeholder = "Costo Total",
+                   @readonly = "true",
+                   @id = "txtCostoTotal"
+               })
+                    @Html.ValidationMessageFor(model => model.bgpCostoTotal)
+                </div>
+            </div>
+            <div class="form-group" id="divObjetivo">
+                <label id="lblObjetivo" for="lblObjetivo" class="col-sm-5 control-label">Descripcion Objetivo</label>
+                <div class="col-md-5">
+                    @Html.TextAreaFor(model => model.bgpObjetivo, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(model => model.bgpObjetivo)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger col-md-offset-4">@ViewData["errorNuevoGasto"]</div><br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        funcionHabilitaCampos();
+        funcionHabilitaObjetivo();
+        funcionHabilitaCamposDeportista();
+        funcionMuestraMensajesMonto();
+    });
+
+    @*Validacion monto de producto por soicitud de cambio, no deberia verse mas que cuando valida el monto total del producto*@
+    function funcionMuestraMensajesMonto() {
+        var mensajeMontoOriginal = "@TempData["MontoTotalOriginal"]";
+        var mensajemontoActual = "@TempData["MontoTotalActual"]";
+
+        if (mensajeMontoOriginal.length > 0) {
+            if (mensajeMontoOriginal != null || mensajeMontoOriginal != "" || !isNaN(mensajeMontoOriginal)) {
+                $("#div_MontoTotalOriginal").show();
+            }
+        }
+
+        if (mensajemontoActual.length > 0) {
+            if (mensajemontoActual != null || mensajemontoActual != "" || !isNaN(mensajemontoActual)) {
+                $("#div_MontoTotalActual").show();
+            }
+        }
+    }
+    @*fin funcion Solicitud*@
+
+    function funcionHabilitaObjetivo() {
+        var isChecked = $('#bgpMarcaObjetivo').is(':checked');
+        if (isChecked == true) {
+            $("#divObjetivo").show();
+        }
+        else {
+            $("#divObjetivo").hide();
+        }
+    }
+
+    function funcionHabilitaCampos() {
+        var e = document.getElementById("idTipoGastoPersonal");
+        var valor2 = e.value;
+        $("#divObjetivo").hide();
+        //$("#txtCosto").val('');
+        switch (valor2) {
+            case 2:
+                $("#divObjetivo").show();
+                $("#divCosto").hide();
+                $("#divMesFin").hide();;
+                break;
+            case 4:
+                $("#divObjetivo").show();
+                break;
+            default:
+                $("#divObjetivo").hide();
+                $("#divCosto").show();
+                $("#divMesFin").show();
+                funcionHabilitaObjetivo();
+                break;
+
+        }
+    }
+
+    function funcionCostoTotal() {
+
+        var e = document.getElementById("idTipoGastoPersonal");
+        var valor = e.options[e.selectedIndex].text.toUpperCase();
+        var costoTotal = 0;
+        var valor2 = e.selectedIndex;
+        costo = $("#txtCosto").val();
+        idmesinicial = $("#ddlMesInicio").val() - 1;
+        idMesFin = $("#ddlMesfin").val();
+
+
+        //if (valor2 == 2) {
+        //    var costoTotal = costo;
+        //}
+        //else {
+        costoTotal = costo * (idMesFin - idmesinicial);
+        //}
+        if (isNaN(costoTotal)) {
+
+            $("#txtCostoTotal").val('');
+        }
+        else {
+            $("#txtCostoTotal").val(costoTotal);
+        }
+
+
+    };
+
+    $(function () {
+        $('#bgpMarcaObjetivo').change(function () {
+            var isChecked = $(this).is(':checked');
+
+            if (isChecked == true) {
+                $("#divObjetivo").show();
+            }
+            else {
+                $("#divObjetivo").hide();
+            }
+
+
+
+
+        });
+    });
+
+</script>

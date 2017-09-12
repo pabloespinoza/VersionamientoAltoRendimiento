@@ -1,0 +1,39 @@
+﻿@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+   
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Eliminar Proyecto</h4>
+    </div>
+
+    <dl class="dl-horizontal">
+        
+        <dt>
+            Nombre Proyecto
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proNombreProyecto)
+        </dd>
+
+    </dl>
+    
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-sm btn-primary ">Eliminar</button>
+    </div>
+        @*<div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+    }
+</div>

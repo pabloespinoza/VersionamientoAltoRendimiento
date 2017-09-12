@@ -1,0 +1,91 @@
+﻿@model AltoRendimiento.Models.Linea
+@{
+    ViewBag.Title = "_ObtenerLineaPresupuestaria";
+}
+<script>
+    function envioParametro() {
+        var id = $("#LineaPresupuestaria :selected").val();
+        if ($.trim(id) == "0" || $.trim(id) == "") {
+            alert("Debe seleccionar una Línea de Financiamiento");
+        } else {
+            var URL_PATH = '@Url.Content("~")';
+            var e = document.getElementById("LineaPresupuestaria");
+            var id = e.value;
+            document.location.href = URL_PATH + 'AntecedenteGeneralProyecto/URLCreaProyecto?id=' + id;
+        }
+    }
+
+    $("#Concurso").change(function () {
+        $.ajax({
+            url: '@Url.Action("ObtenerLineasPorConcurso", "AntecedenteGeneralProyecto")' //URL_PATH + "AntecedenteGeneralProyecto/ObtenerLineasPorConcurso"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idConcurso: $(this).val() }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    alert(info.Mensaje);
+                } else {
+                    $("#LineaPresupuestaria").empty();
+                    $("#LineaPresupuestaria").append($("<option/>", {
+                        value: 0,
+                        text: "Seleccione..."
+                    }));
+                    $.each(info.Datos, function (index, linea) {
+                        $("#LineaPresupuestaria").append($("<option/>", {
+                            value: linea.ID,
+                            text: linea.Nombre
+                        }));
+                    });
+                    $("#LineaPresupuestaria").focus();
+                }
+            }
+        });
+    })
+</script>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Proyecto</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        <br />
+        <div class="form-group">
+
+            @if (((IEnumerable<SelectListItem>)ViewBag.Concurso).Count() > 1)
+            {
+                <label for="inputPassword3" class="col-sm-4 control-label">Concurso</label>
+                <div class="col-sm-6">
+                    @Html.DropDownList("Concurso", (IEnumerable<SelectListItem>)ViewBag.Concurso, "Seleccione...", new { @class = "form-control", id = "Concurso" })
+                </div>
+            }
+            else
+            {
+                @Html.DropDownList("Concurso", (IEnumerable<SelectListItem>)ViewBag.Concurso, new { @class = "form-control", id = "Concurso", disabled = "disabled", style = "display:none;" })
+            }
+            @Html.ValidationMessage("Concurso")
+
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-4 control-label">Línea Financiamiento</label>
+            <div class="col-sm-6">
+                @Html.DropDownList("LineaPresupuestaria", (IEnumerable<SelectListItem>)ViewBag.LineaPresupuestaria, "Seleccione...", new { @class = "form-control", id = "LineaPresupuestaria" })
+                @Html.ValidationMessageFor(LineaPresupuestaria => LineaPresupuestaria.linNombre)
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+            <button onclick="envioParametro(); return false;" class="btn btn-sm btn-success">Siguiente</button>
+
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,126 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Beneficiario_Producto_Cargo>
+
+@{
+    ViewBag.Title = "BeneficiarioSinGastos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>Proyecto @ViewBag.Proyecto.proNombreProyecto</li>
+            <li><b>Beneficiario Sin Gastos</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Beneficiario Sin Gastos</h3>
+
+<h4>Nombre Proyecto: @ViewBag.Proyecto.proNombreProyecto</h4>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Producto
+                        </th>
+                        <th>
+                            Rut/ Pasaporte
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellido Paterno
+                        </th>
+                        <th>
+                            Apellido Materno
+                        </th>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Fecha Nacimiento
+                        </th>
+                        <th>
+                            Género
+
+                        </th>
+                        <th>
+                            Nacionalidad
+                        </th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Producto.prdNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.RutCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.benNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.benApellidoPaterno)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.benApellidoMaterno)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cargo.carNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayName(item.Beneficiario.benFechaNacimiento.ToShortDateString())
+                            </td>
+                            <td>
+                                @if (item.Beneficiario.benGenero == 1)
+                                {
+                                    @Html.DisplayName("Femenino")
+                                }
+                                @if (item.Beneficiario.benGenero == 2)
+                                {
+                                    @Html.DisplayName("Masculino")
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.Nacionalidad.nacNombre)
+                            </td>
+                            <td width="120">
+                                @*@Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.Producto.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))*@
+                                @{
+                                var cod = item.idCargo;
+
+                                if (cod != 47)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoPersonal", new { idBeneficiario = item.idBeneficiario, idBPC = item.idBeneficiarioProductoCargo }, null).ToHtmlString().Replace("[replacetext]", "<img width='18' data-toggle='tooltip' title='Gastos Personal' src=\"../Images/signo_Peso.png\" ... />"))
+                                }
+                                }
+
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.Producto.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gastos en Bienes y Servicios' src=\"../Images/Gasto_Administrativo.png\" ... />"))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>

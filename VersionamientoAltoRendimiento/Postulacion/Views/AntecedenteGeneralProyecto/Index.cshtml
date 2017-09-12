@@ -1,0 +1,354 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.InfoModel.LineaClasificacionOrganizacionInfoModel>
+
+@{
+    ViewBag.Title = "Antecedente General Proyecto";
+}
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Nuevo Proyecto", "ObtenerLineaPresupuestaria", "AntecedenteGeneralProyecto", null, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary pull-right", @style = "color:White" })
+        @if (ViewBag.Rendiciones != "OUT")
+        {
+            if (ViewBag.Rendiciones != "0")
+            {
+                <div class="alert alert-danger" role="alert">
+                    Bandeja de Entrada &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Tiene Rendiciones Pendientes
+                </div>
+            }
+            else if (ViewBag.Rendiciones == "0")
+            {
+                <div class="alert alert-success" role="alert">
+                    Bandeja de Entrada &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  No Tiene Rendiciones Pendientes
+                    @*@Html.ActionLink("Nuevo Proyecto", "ObtenerLineaPresupuestaria", "AntecedenteGeneralProyecto", null, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary pull-right", @style = "color:White" })*@
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+    <!-- <div class="col-md-12">
+         <span>Cuadro resumen presupuesto organización</span>
+         <table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
+             <tbody>
+                 <tr>
+                     <td>
+                         Presupuesto Total
+                     </td>
+                     <td style="text-align:right;">
+                         @String.Format("{0:C0}", @Model.Sum(modelItem => modelItem.Presupuesto))
+                     </td>
+                 </tr>
+
+                 @foreach (var row in Model)
+                 {
+
+                     <tr>
+                         <td>
+                             Presupuesto @row.NombreLinea
+                         </td>
+                         <td style="text-align:right;">
+                             @String.Format("{0:C0}", @row.Presupuesto)
+                         </td>
+                     </tr>
+                 }
+                 <tr>
+                     <td>
+                         Saldo Vigente
+                     </td>
+                     <td style="text-align:right;">
+                         @*@String.Format("{0:C0}", @Model.Sum(modelItem => modelItem.Presupuesto))*@
+                         @String.Format("{0:C0}", ViewBag.acumuladoGastoxProyecto)
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     <br />-->
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "AntecedenteGeneralProyecto", FormMethod.Get))
+            {
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.First().FolioProyecto, "Proyecto", new { @class = "control-label col-md-2 col-lg-1" })
+                            <div class="col-md-4 col-lg-2">
+                                @Html.TextBoxFor(model => model.First().FolioProyecto, new { @class = "form-control", @maxlength = "10" })
+                                @Html.ValidationMessage("FolioProyecto", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.First().IdEstado, "Estado", new { @class = "control-label col-md-1 col-lg-1" })
+                            <div class="col-md-5 col-lg-3">
+                                @Html.DropDownListFor(model => model.First().IdEstado, (SelectList)ViewBag.SelectListEstados, new { @class = "form-control" })
+                                @Html.ValidationMessage("IdEstado", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.First().IdConcurso, "Concurso", new { @class = "control-label col-md-2 col-lg-1" })
+                            <div class="col-md-4 col-lg-1">
+                                @Html.DropDownListFor(model => model.First().IdConcurso, (SelectList)ViewBag.ListConcurso, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("IdConcurso", new { @class = "text-danger" })
+                            </div>
+
+                            @Html.LabelFor(model => model.First().IdLinea, "Línea", new { @class = "control-label col-md-1 col-lg-1" })
+                            <div class="col-md-5 col-lg-2">
+                                @Html.DropDownListFor(model => model.First().IdLinea, (SelectList)ViewBag.SelectListLineas, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("IdLinea", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Buscar" id="btnBuscar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="Index" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $("#dtProyecto").DataTable({
+                "language":
+                  {
+                      "sProcessing": "Procesando...",
+                      "sLengthMenu": "Mostrar _MENU_ registros",
+                      "sZeroRecords": "No se encontraron resultados",
+                      "sEmptyTable": "Ningún dato disponible en esta tabla",
+                      "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                      "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                      "sInfoPostFix": "",
+                      "sSearch": "Buscar:",
+                      "sUrl": "",
+                      "sInfoThousands": ",",
+                      "sLoadingRecords": "Cargando...",
+                      "oPaginate": {
+                          "sFirst": "Primero",
+                          "sLast": "último",
+                          "sNext": "Siguiente",
+                          "sPrevious": "Anterior"
+                      },
+                      "oAria": {
+                          "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                      }
+                  }
+            }).on("draw.dt", function () {
+                addEventClickDataModal();
+            });
+
+
+
+        });
+    </script>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body">
+                <table id="dtProyecto" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Proyecto
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Inicio
+                            </th>
+                            <th>
+                                Fin
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.ProyectosBusqueda)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                            var folio = string.Format("{0:G}", item.proFolioProyecto);
+                            if (folio == "0" || folio == "")
+                            {
+                                var mensaje = "Sin Código";
+                                @mensaje
+                            }
+                            else
+                            {
+                                @folio.Substring(2, folio.Length - 2)
+                            }
+                                    }
+                                </td>
+                                <td>
+                                    @item.proNombreProyecto
+                                </td>
+                                <td>
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesInicio)
+                                </td>
+                                <td>
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesTermino)
+                                </td>
+                                <td>
+                                    @item.estNombre
+                                </td>
+                                <td>
+                                    @{
+                            var codWorkflow = item.idWorkflow;//var codWorkflow = string.Format("{0:G}", item.idWorkflow);
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "URLProducto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Producto' src=\"../Images/List.png\" ... />"))
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver o Editar' src=\"../Images/Edit.png\" ... />"))
+
+                            if (((codWorkflow == (int)EnumEstados.Ingresada && (item.estadoIngresado == 2 || item.estadoIngresado == 3)) || codWorkflow == (int)EnumEstados.Incompleto || codWorkflow == (int)EnumEstados.Objetada) && item.anioConcurso == DateTime.Now.Year)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
+                            }
+
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Reporte", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Reporte' src=\"../Images/Reporte.png\" ... />"))
+                                        @*<a href='@Url.Action("Reporte", "Home")' title="Reporte"><img data-toggle='tooltip' title='Solicitud de Cambio' src='@Url.Content("~/Images/Solicitud_Cambio.png")' /></a>*@
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaSubirArchivo", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Subir Documento' src=\"../Images/SubirArchivo.png\" ... />"))
+                            if (codWorkflow == (int)EnumEstados.Incompleto)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarProyecto", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                            }
+                            @*Para realizar la solicitud de cambio es necesario descomentar la sección de código que viene a continuación.*@
+                            if (Utilitarios.Instance.PuedeGenerarSolicitud(item.proMesTermino))
+                            {
+                                if (codWorkflow == (int)EnumEstados.Aprobada)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                }
+                                if (codWorkflow == (int)EnumEstados.AprobadoSC || codWorkflow == (int)EnumEstados.AprobadoSCRevision)
+                                {
+                                    int cont = 0;
+                                    foreach (var itemSC in ViewBag.Solicitud)
+                                    {
+                                        if (itemSC.scaPendiente == true && item.idProyecto == itemSC.idProyecto /*|| itemSC.scaPendiente == null && item.idProyecto == itemSC.idProyecto*/)
+                                        {
+                                            cont++;
+                                        }
+                                    }
+                                    if (cont == 0)
+                                    {
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                        //@Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
+                                    }
+                                }
+                            }
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<br />
+
+@*<div class="col-md-12">
+
+        @foreach (var row in ViewBag.TotalesProyectoxOrganizacionLinea)
+        {
+            <div class="panel panel-default">
+                <div id="demo" class="panel-heading">
+                    <h4 class="panel-title">
+                        @row.NombreLinea &nbsp;
+                        <a data-toggle="collapse" class="table-trigger" href="#table_@row.IdOrganizacionLinea" target-id="@row.IdOrganizacionLinea"><span class="glyphicon glyphicon-collapse-down"></span></a>
+                        <a class="pull-right">@String.Format("{0:C0}", @row.Presupuesto)</a>
+                    </h4>
+                </div>
+                <div id="table_@row.IdOrganizacionLinea" class="panel-collapse collapse">
+
+                </div>
+            </div>
+        }
+
+    </div>*@
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+
+    <script src="~/Scripts/jquery.form.min.js"></script>
+    <script type="text/javascript">
+        $('#IdConcurso').change(function () {
+
+            $.ajax({
+                url: '@Url.Action("ObtenerLineaBandejaEntrada", "AntecedenteGeneralProyecto")' //URL_PATH + "AntecedenteGeneralProyecto/ObtenerLineaBandejaEntrada"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { Concurso: $(this).val() }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    alert(info.Mensaje);
+                } else {
+                    $("#IdLinea").empty();
+                    $("#IdLinea").append($("<option/>", {
+                        value: "",
+                        text: "--Seleccione--"
+                    }));
+                    $.each(info.Datos, function (index, linea) {
+                        $("#IdLinea").append($("<option/>", {
+                            value: linea.ID,
+                            text: linea.Nombre
+                        }));
+                    });
+                }
+            }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function sumarColumnas() {
+
+            tabla = document.getElementById("tablaPresupuesto");
+
+            var total = 0;
+            for (var i = 2; tabla.rows[i]; i++)
+                total += Number(tabla.rows[i].cells[3].innerHTML);
+            alert(total);
+        }
+
+    </script>
+}

@@ -1,0 +1,200 @@
+﻿<!--Pablo Espinoza 22-02-2016-->
+@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Verificar y Postular", "URLVerificaProyecto", "AntecedenteGeneralProyecto", new { id = ViewBag.proyecto.idProyecto }, null)</li>
+            <li><b>Geolocalizaciones Pendientes</b></li>
+        </ol>
+    </div>
+</div>
+
+@Html.ActionLink("Volver", "URLVerificaProyecto", "AntecedenteGeneralProyecto", new { id = ViewBag.proyecto.idProyecto }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+
+<br />
+<h3>Geolocalizaciones Pendientes del Proyecto @ViewBag.proyecto.proNombreProyecto</h3>
+
+@if (Model.Producto.Count > 0)
+{
+    foreach (AltoRendimiento.Models.Producto item in Model.Producto)
+    {
+        <h4>Producto @item.prdNombre</h4>
+    
+        <h5>Gastos Personales</h5>
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Rut/ Pasaporte
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Mes Inicio
+
+                        </th>
+                        <th>
+                            Mes Fin
+                        </th>
+                        <th>
+                            Costo Mensual
+                        </th>
+                        <th>
+                            Tipo de Gasto
+                        </th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (item.Beneficiario_Gasto_Personal.Count > 0)
+                    {
+                        foreach (AltoRendimiento.Models.Beneficiario_Gasto_Personal itemBenGasPer in item.Beneficiario_Gasto_Personal)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.RutCompleto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benApellidoPaterno)
+
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benApellidoMaterno)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Cargo.carNombre)
+                                </td>
+                                <td>
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@itemBenGasPer.bgpMesInicio)
+                                </td>
+                                <td>
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@itemBenGasPer.bgpMesFin)
+                                </td>
+                                <td>
+                                    <p class="text-right">@String.Format("{0:N0}", @itemBenGasPer.bgpCostoTotal)</p>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Tipo_Gasto_Personal.tgpNombre)
+                                </td>
+                                <td width="120">
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "URLGeolocalizacion", "GastosPersonal", new { id = itemBenGasPer.idBeneficiarioGastoPersonal, pendientes = 1 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Geolocalizacion' src=\"../Images/Mundo.png\" ... />"))
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-danger" colspan="9">
+                                El Producto no tiene Gastos Personales asociados a Beneficiarios
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    
+    <h5>Gastos Bienes y Servicios</h5>
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Rut/ Pasaporte
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Fecha Inicio
+
+                        </th>
+                        <th>
+                            Fecha Fin
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Tipo de Gasto
+                        </th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (item.Beneficiario_Gasto_Administracion.Count > 0)
+                    {
+                        foreach (AltoRendimiento.Models.Beneficiario_Gasto_Administracion itemBenGasPer in item.Beneficiario_Gasto_Administracion)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.RutCompleto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benApellidoPaterno)
+
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Beneficiario.benApellidoMaterno)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Beneficiario_Producto_Cargo.Cargo.carNombre)
+                                </td>
+                                <td>
+                                    @itemBenGasPer.bgaFechaInicio.ToShortDateString()
+                                </td>
+                                <td>
+                                    @itemBenGasPer.bgaFechaFin.ToShortDateString()
+                                </td>
+                                <td>
+                                    <p class="text-right">@String.Format("{0:N0}", @itemBenGasPer.bgaTotal)</p>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => itemBenGasPer.Tipo_Gasto_Administracion.tgaNombre)
+                                </td>
+                                <td width="120">
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "URLGeolocalizacion", "BeneficiarioGastoAdministracion", new { id = itemBenGasPer.idBeneficiarioGastoAdministracion, pendientes = 1 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Geolocalizacion' src=\"../Images/Mundo.png\" ... />"))
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-danger" colspan="9">
+                                El Producto no tiene Gastos Bienes y Servicios asociados a Beneficiarios
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+else
+{
+    <h4 class="text-danger">El Proyecto no posee Productos</h4>
+}
+<!--Pablo Espinoza 22-02-2016-->

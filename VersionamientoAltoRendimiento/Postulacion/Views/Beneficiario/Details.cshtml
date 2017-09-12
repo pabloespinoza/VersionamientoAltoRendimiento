@@ -1,0 +1,130 @@
+﻿@model AltoRendimiento.Models.Beneficiario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Beneficiario</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.benEsdeportista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benEsdeportista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benRutBeneficiario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benRutBeneficiario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benDv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benDv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benApellidoPaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benApellidoPaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benApellidoMaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benApellidoMaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benFechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benFechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benGenero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benGenero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.benUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.benUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organizacion.orgDv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organizacion.orgDv)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idBeneficiario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

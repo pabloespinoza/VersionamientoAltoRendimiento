@@ -1,0 +1,131 @@
+﻿@model PagedList.IPagedList<AltoRendimiento.Models.Recinto>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Create";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Recintos Disponibles</h4>
+</div>
+
+<div class="modal-body">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="inputPassword3" class="col-md-1 control-label">Región</label>
+            <div class="col-md-5">
+                @Html.DropDownList("idRegion", (SelectList)ViewBag.Regiones, "--Seleccione--", new { @class = "form-control" })
+                @Html.ValidationMessage("idRegion")
+            </div>
+            <label for="inputPassword3" class="col-md-1 control-label">Tipo</label>
+            <div class="col-md-5">
+                @Html.DropDownList("idTipo", (SelectList)ViewBag.Tipo, "--Seleccione--", new { @class = "form-control" })
+                @Html.ValidationMessage("idTipo")
+            </div>
+        </div>
+
+        <table id="tblRecintos" class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word; margin-bottom:0">
+            <thead>
+                <tr>
+                    <th style="width: 12%;">
+                        &nbsp;
+                    </th>
+                    <th style="width: 36%;">
+                        Nombre Recinto
+                    </th>
+                    <th style="width: 46%;">
+                        Dirección
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.recPublico)
+                            {
+                                @Html.DisplayName("Publico");
+                            }
+                            else
+                            {
+                                @Html.DisplayName("Privado");
+                            }
+                        </td>
+                        <td>
+                            @item.recNombre
+                        </td>
+                        <td>
+                            @item.recDireccion
+                        </td>
+                        <td>
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "AsignarRecinto", new { id = item.idRecinto }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignar' src=\"../Images/True.png\" ... />"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="paginator">
+            @Html.PagedListPager(Model, page => Url.Action("ListadoRecintos",
+    new { page }))
+        </div>
+    </div>
+</div>
+
+<script>
+    var urlListadoRecintos = '@Url.Action("ListadoRecintos", "Recinto", new { page = 1 })';
+    var filtroRegion = $("#idRegion option:selected").val();
+    var filtroTipo = $("#idTipo option:selected").val();
+    $("#paginator").on("click", "a", function () {
+        if (this.href != "") {
+            urlListadoRecintos = this.href;
+            ejecutarLlamada();
+        }
+        return false;
+    })
+
+    $("#idRegion").change(function () {
+        filtroRegion = $("#idRegion").val();
+        ejecutarLlamada();
+        return false;
+    })
+
+    $("#idTipo").change(function () {
+        filtroTipo = $("#idTipo").val();
+        ejecutarLlamada();
+        return false;
+    })
+
+    function ejecutarLlamada() {
+        var url = urlListadoRecintos + "&idRegion=" + filtroRegion + "&idTipo=" + filtroTipo;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+                $("#myModalContent").html(result);
+            }
+        });
+    }
+    $("#tblRecintos").on("click", "a", function () {
+        var url = this.href;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $.each(result, function (i, item) {
+                    if (i == "mensajeModal")
+                    {
+                        $("#lblMensajeProceso").text(item);
+                        $('#modalMensaje').modal('show');
+                    }
+                })
+            }
+        });
+        $('#myModal').modal('hide');
+        return false;
+    });
+</script>

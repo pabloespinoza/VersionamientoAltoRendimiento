@@ -1,0 +1,57 @@
+﻿@model AltoRendimiento.Models.Plan_Plurianual
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Editar Diseño Plurianual</h4>
+</div>
+
+@using (Html.BeginForm())
+{ 
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idPlanPluriAnual)
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Año</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.pplAno, new SelectList(
+                        new List<Object>{
+                                           new { value = DateTime.Now.Year.ToString() , text =DateTime.Now.Year.ToString()  },
+                                           new { value = DateTime.Now.AddYears(1).Year.ToString() , text = DateTime.Now.AddYears(1).Year.ToString() },
+                                           new { value = DateTime.Now.AddYears(2).Year.ToString() , text = DateTime.Now.AddYears(2).Year.ToString()},
+                                           new { value = DateTime.Now.AddYears(3).Year.ToString() , text = DateTime.Now.AddYears(3).Year.ToString()}
+                                        },
+                                  "value",
+                                  "text",
+                                   2), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.pplAno)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Area Tecnica</label>
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.pplAreaTecnica, new { @class = "form-control", @rows = 5 })
+                    @Html.ValidationMessageFor(model => model.pplAreaTecnica)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Area Competitiva</label>
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.pplAreaCompetitiva, new { @class = "form-control", @rows = 5 })
+                    @Html.ValidationMessageFor(model => model.pplAreaCompetitiva)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger col-md-offset-3 ">@ViewData["errorDiseno"]</div><br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+<style>
+    textarea {
+        resize: none;
+    }
+</style>

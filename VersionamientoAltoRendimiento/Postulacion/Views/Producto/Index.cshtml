@@ -1,0 +1,176 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Producto>
+
+@{
+    ViewBag.Title = "Listado de Producto";
+}
+@using System.Globalization;
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>Proyecto @ViewBag.Proyecto.proNombreProyecto</li>
+            <li><b>Productos</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Listado de Producto</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+
+            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
+            {
+                @Html.ActionLink("Volver", "Index", "ProductoCopia", new { idProyecto = TempData["IdProyecto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            }
+            else
+            {
+                @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+            }
+
+            @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.ActionLink("Nuevo", "Create", "Producto", new { id = TempData["IdProyecto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+            else
+            {
+
+                <br />
+            }
+        </div>
+        <br />
+
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered  table-hover">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Tipo de Producto</th>
+                        <th>Actividad</th>
+                        <th>Nivel</th>
+                        <th>Región/Pais</th>
+                        <th>Comuna/Ciudad</th>
+                        <th>Mes Inicio</th>
+                        <th>Mes Fin</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.prdSecuencia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.tprNombre)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.prdNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Producto_Nivel.Nivel.nivNombre)
+                            </td>
+                            <td>
+                                @if (item.idCiudad == 2)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Comuna.Provincia.Region.regNombre)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Ciudad.Pais.paiNombre)
+                                }
+                            </td>
+                            <td>
+                                @if (item.idCiudad == 2)
+                                {
+                                    @Html.DisplayFor(modelItem => item.Comuna.comNombre)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Ciudad.ciuNombre)
+                                }
+                            </td>
+                            <td>
+                                @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesDesde)
+                            </td>
+                            <td>
+                                @*int month = item.prdMesHasta;
+                                    var dt = new DateTime(2012, month, 1);
+                                     var monthAbbr = dt.ToString("MMM");
+                                     @monthAbbr*@
+                                @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesHasta)
+                            </td>
+                            <td width="140">
+
+                                @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && (item.Proyecto.estadoIngresado == 2 || item.Proyecto.estadoIngresado == 3)) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
+
+                                    if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
+                                    {
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gastos en Bienes y Servicios' src=\"../Images/Gasto_Administrativo.png\" ... />"))
+                                    }
+                                }
+                                @*@if (item.prdEstado == 4)
+                                    {
+                                        <a href='@Url.Action("SolicitudCambio", "Home")' data-toggle="tooltip" title="Solicitud de Cambio"><img src='@Url.Content("~/Images/Solicitud_Cambio.png")' /></a>
+
+                                    }*@@if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && item.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                                    {
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                                    }
+                                    @*Parte agregada por la Solicitud de Cambio*@
+                                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
+                                    {
+                                        if (ViewBag.Solicitud != null)
+                                        {
+                                            foreach (var sc in ViewBag.Solicitud)
+                                            {
+                                                if (sc.Producto_Copia.idProducto == item.idProducto && sc.scaPendiente == null)
+                                                {@Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
+
+                                                    if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
+                                                    {
+                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gasto Administracion' src=\"../Images/Gasto_Administrativo.png\" ... />"))
+                                                    }
+                                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                                                    //@Html.Raw(@Html.ActionLink("[replacetext]", "verProductoCopia", "ProductoCopia", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Producto Original sin cambio' src=\"../Images/Postular.png\" ... />"))
+                                                }
+                                            }
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <!--Pablo Espinoza 09-02-2016-->
+    @Styles.Render("~/Content/searchableOptionList.css")
+    @Scripts.Render("~/Scripts/sol.js")
+    <!--Pablo Espinoza 09-02-2016-->
+}
+
+

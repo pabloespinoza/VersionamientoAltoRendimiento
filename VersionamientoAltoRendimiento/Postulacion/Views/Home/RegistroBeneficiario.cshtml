@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "RegistroBeneficiario";
+}
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+</script> 
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Registro Beneficiarios</li>
+        </ol>
+    </div>
+</div>
+<h3>Registro Beneficiario</h3>
+<br />
+<div class="row">   
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info  pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-primary  text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombres</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Género</th>
+                    <th>Ocupación</th>
+                    <th>Nacionalidad</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>                    
+                    <td>12.345.678-9</td>
+                    <td>Esmeralda Camila</td>
+                    <td>Herrera</td>
+                    <td>Acosta</td>
+                    <td>21-12-1988</td>
+                    <td>Femenino</td>
+                    <td>Paramédico</td>
+                    <td>Chilena</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        @*  @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                        <a> <img src="~/Images/Trash.png" /> </a>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>14.543.876-9</td>
+                    <td>Pamela Antonia</td>
+                    <td>Riquelme</td>
+                    <td>Andrade</td>
+                    <td>30-09-1978</td>
+                    <td>Femenino</td>
+                    <td>Abogado</td>
+                    <td>Chilena</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        @*  @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                        <a> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- /.modal -->
+    <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Registro Beneficiario</h4>
+            </div>
+            <div class="modal-body">
+
+                
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9">
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> Deportista</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> No Deportista</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9">
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> Nacional</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> Extranjero</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Rut / Pasaporte</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="inputPassword3" placeholder="Rut / Pasaporte">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Nombre</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="inputPassword3" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Apellido Paterno</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="inputPassword3" placeholder="Apellido Paterno">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Apellido Materno</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="inputPassword3" placeholder="Apellido Materno">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Disciplina / Especialidad</label>
+                            <div class="col-sm-9">
+                                <select name="cars" class="form-control">
+                                    <option value="1">Natación</option>
+                                    <option value="2">Fútbol</option>
+                                    <option value="3">Tenis</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Fecha Nacimiento</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="inputPassword3" placeholder="Fecha Nacimiento">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Género</label>
+                            <div class="col-sm-9">
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> Femenino</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1"> Masculino</label>
+                            </div>
+                        </div>
+                    </form>
+</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger  pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

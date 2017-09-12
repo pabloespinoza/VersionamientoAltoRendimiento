@@ -1,0 +1,49 @@
+﻿@model AltoRendimiento.Models.Producto
+@using System.Globalization;
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
+</div>
+
+<div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>Tipo Producto</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Organizacion_Linea_Tipo_Producto.Tipo_Producto.tprNombre)            
+        </dd>
+        <dt>Actividad</dt>
+        <dd>
+            @Html.DisplayFor(model => model.prdNombre)
+        </dd>
+        <dt>Nivel</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Producto_Nivel.Nivel.nivNombre)
+        </dd>
+        <dt>Mes Inicio</dt>
+        <dd>
+
+            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.prdMesDesde) 
+        </dd>
+        <dt>Mes Fin</dt>
+        <dd>
+            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.prdMesHasta)
+             
+        </dd>
+    </dl>
+</div>
+
+<div>
+   
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn-success ">Aceptar</button>
+    </div>   
+   
+    }
+</div>

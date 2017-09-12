@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<AltoRendimiento.Models.Plan_Plurianual>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "DisenoPlurianual";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li><b>Diseño Plurianual</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Diseño Plurianual</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+@*<button class="btn btn-primary text-right"> Guardar Datos Definitivos </button>*@
+
+            @if (@Model.Count() < 4)
+                            {
+            @Html.ActionLink("Nuevo", "Create", "DisenoPlurianual", null, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            }
+        </div>
+        <br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word">
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Área Técnica</th>
+                    <th>Área Competitiva</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pplAno)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pplAreaTecnica)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pplAreaCompetitiva)
+                        </td>
+                        <td>
+                            @if (item.pplEstado == 1)
+                            {
+
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idPlanPluriAnual }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idPlanPluriAnual }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

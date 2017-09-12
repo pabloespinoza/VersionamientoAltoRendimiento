@@ -1,0 +1,217 @@
+﻿@model AltoRendimiento.Models.Recinto
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Create";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@*Html.Action(actionName: "TempMessage", controllerName: "Message")*@
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li><b>Nuevo Recinto</b></li>
+        </ol>
+    </div>
+</div>
+<h3>Nuevo Recinto</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+
+            <!--<div class="form-group">
+                <div class="col-md-12">
+                    <div class="text-right">
+                        @*Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })*@
+                    </div>
+                </div>
+            </div>-->
+            @Html.ValidationSummary(true)
+            <div class="form-group col-md-12">
+                <div class="col-md-6">
+                    <script src="//maps.google.com/maps/api/js?sensor=false&region=CL" type="text/javascript"></script>
+                    <div id="map_canvas" style="width: auto; height: 300px;">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.Partial("ListadoRecintosOrganizacion", (PagedList.PagedList<AltoRendimiento.Controllers.RecintoRelOrganizacion>)ViewBag.RecintosOrganizacion)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-md-2 control-label">Región</label>
+                <div class="col-md-4">
+                    @Html.DropDownList("idRegion", (SelectList)ViewBag.Regiones, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idRegion")
+                </div>
+                <div class="col-md-6 col-md-offset-6">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.recNombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.recNombre)
+                </div>
+                <div class="col-md-6  col-md-offset-6">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-md-2 control-label">Dirección</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.recDireccion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.recDireccion)
+                </div>
+                <div class="col-md-6 col-md-offset-6">
+                </div>
+            </div>
+            <div class="form-group" id="divCoords">
+                <label for="inputPassword3" class="col-md-2 control-label">Coordenadas</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.recCoordenadaX, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.recCoordenadaY, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="text-danger col-md-offset-1 ">@ViewData["errorDiseno"]  </div><br />
+            <div id="divResultado" hidden="hidden" class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <label id="textoResultado"></label></div>
+            <div class="form-group">
+                <div class="col-md-6" style="margin-top: 30px;">
+                    @Html.ActionLink("Cancelar", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-danger pull-left", @style = "color:White" })
+                    <button type="submit" class="btn btn-sm btn-success pull-right">Guardar</button>
+                </div>
+                <div class="col-md-6" style="margin-top: 30px;">
+                    @Html.ActionLink("Otros Recintos", "ListadoRecintos", "Recinto", null, new { id = "btnOtrosRecintos", @class = "btn btn-sm btn-success pull-right", @style = "color:White", @data_modal = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modalMensaje" class="modal fade">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Información</h4>
+                </div>
+                <div class="modal-body">
+                    <label id="lblMensajeProceso"> @TempData["MensajeController"] </label>
+                </div>
+                <div class="modal-footer">
+                    @Html.ActionLink("Aceptar", "CreateRecinto", "Recinto", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+<script>
+
+    $("#divCoords").hide();
+    $('html').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
+
+    var geocoder;
+    var map;
+    var marker;
+    var textRegion = "";
+    function initialize() {
+        // Creating map object
+        geocoder = new google.maps.Geocoder();
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 14,
+            center: new google.maps.LatLng(-33.447641, -70.667227),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creates a draggable marker to the given coords
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(-33.447641, -70.667227),
+            draggable: true
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#recCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#recCoordenadaY").val(evt.latLng.lng().toFixed(6));
+            geocoder.geocode({ 'latLng': evt.latLng }, function (results) {
+                $("#recDireccion").text(results[0].formatted_address);
+            });
+            map.panTo(evt.latLng);
+        });
+
+        // centers the map on markers coords
+        map.setCenter(marker.position);
+
+        // adds the marker on the map
+        marker.setMap(map);
+
+    }
+    function codeAddressIngreso(direccion) {
+        var address = direccion;
+        if (direccion != "") {
+            address += ", " + textRegion;
+        } else {
+            address += textRegion;
+        }
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker.setPosition(results[0].geometry.location);
+                $("#recCoordenadaX").val(marker.getPosition().lat());
+                $("#recCoordenadaY").val(marker.getPosition().lng());
+
+            } else {
+                $("#resultadoMapa").text("Error no se logro geolocalizar la dirección registrada");
+            }
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#recCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#recCoordenadaY").val(evt.latLng.lng().toFixed(6));
+            map.panTo(evt.latLng);
+        });
+    }
+    initialize();
+    $("#recDireccion").keyup(function () {
+        codeAddressIngreso($("#recDireccion").val());
+    });
+
+    $("#idRegion").change(function () {
+        textRegion = $("#idRegion option:selected").text() + ", Chile";
+        codeAddressIngreso($("#recDireccion").val());
+    });
+
+</script>

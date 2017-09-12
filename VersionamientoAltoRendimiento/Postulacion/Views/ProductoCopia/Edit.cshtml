@@ -1,0 +1,157 @@
+﻿@model AltoRendimiento.Models.Producto_Copia
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Producto_Copia</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idProductoCopia)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProducto, "idProducto", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idProducto", String.Empty)
+                @Html.ValidationMessageFor(model => model.idProducto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idOrganizacionLineaTipoProducto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idOrganizacionLineaTipoProducto)
+                @Html.ValidationMessageFor(model => model.idOrganizacionLineaTipoProducto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProyecto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idProyecto)
+                @Html.ValidationMessageFor(model => model.idProyecto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProductoNivel, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idProductoNivel)
+                @Html.ValidationMessageFor(model => model.idProductoNivel)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idComuna, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idComuna)
+                @Html.ValidationMessageFor(model => model.idComuna)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCiudad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.idCiudad)
+                @Html.ValidationMessageFor(model => model.idCiudad)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcMonto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcMonto)
+                @Html.ValidationMessageFor(model => model.prcMonto)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcNombre, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcNombre)
+                @Html.ValidationMessageFor(model => model.prcNombre)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcDescripcion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcDescripcion)
+                @Html.ValidationMessageFor(model => model.prcDescripcion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcMesDesde, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcMesDesde)
+                @Html.ValidationMessageFor(model => model.prcMesDesde)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcMesHasta, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcMesHasta)
+                @Html.ValidationMessageFor(model => model.prcMesHasta)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcEstado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcEstado)
+                @Html.ValidationMessageFor(model => model.prcEstado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcUsuarioCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcUsuarioCreacion)
+                @Html.ValidationMessageFor(model => model.prcUsuarioCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcFechaCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcFechaCreacion)
+                @Html.ValidationMessageFor(model => model.prcFechaCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcUsuarioModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcUsuarioModificacion)
+                @Html.ValidationMessageFor(model => model.prcUsuarioModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prcFechaModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.prcFechaModificacion)
+                @Html.ValidationMessageFor(model => model.prcFechaModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

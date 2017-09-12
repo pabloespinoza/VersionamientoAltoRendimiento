@@ -1,0 +1,115 @@
+﻿@model AltoRendimiento.Models.Proyecto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Proyecto</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.proFolioProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proFolioProyecto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proNombreProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proNombreProyecto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proCodigoRegion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proCodigoRegion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proMesInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proMesInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proMesTermino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proMesTermino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proJustificacionProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proJustificacionProyecto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.proUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organizacion_Linea.oliEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organizacion_Linea.oliEstado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idProyecto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

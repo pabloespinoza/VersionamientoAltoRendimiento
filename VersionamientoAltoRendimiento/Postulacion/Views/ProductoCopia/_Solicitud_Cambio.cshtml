@@ -1,0 +1,145 @@
+﻿@model AltoRendimiento.Models.GeneraSolicitud
+
+
+@{
+    ViewBag.Title = "Solicitud_Cambio";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Solicitud de Cambio</h4>
+</div>
+
+@using (Html.BeginForm("GuardaSolicitud", "ProductoCopia", FormMethod.Post, new { id = "form-GuardarSolicitudCambio", enctype = "multipart/form-data" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.idProducto, new { @value = ViewData["idProducto"] })
+        @Html.HiddenFor(model => model.idProyecto, ViewData["idProyecto"])
+
+        @Html.Hidden("idproducto", ViewData["idProducto"], new { @id = "Id_Producto" })
+
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div id="div_Mensaje" class="alert alert-info" role="alert" style="display:none">
+                <label>La Informacion se ha Guardado con exito.</label>
+                <button type="button" class="btn btn-sm btn-sm" id="btnDireccionaEdit" onclick="redireccionaModificar()">Direccionar a Modificación</button>
+            </div>
+            <div id="div_Mensaje_Error" class="alert alert-info" role="alert" style="display:none">
+                <label id="txtError">Ha ocurrido un problema, asegúrese de ingresar todos los campos que sean requeridos.</label>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-5 control-label">Nombre Producto:</label>
+                <div class="form-group col-sm-6" id="nombreProducto">
+                    @Html.LabelFor(p => p.nombreProducto, Model.nombreProducto)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-md-5 control-label">Total Monto Producto:</label>
+                <div id="txtMontoProducto" class="col-md-5">
+                    @Html.TextBoxFor(p => p.MontoProductoTotal, new { @disabled = "disabled", @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-5 control-label">Motivo de la solicitud:</label>
+                <div class="form-group col-sm-7" id="MotivoContainer">
+                    @Html.TextAreaFor(p => p.scaMotivoCambio, new { @id = "txtMotivoSolicitud", @class = "form-control required", @rows = "7", @maxlength = "2047", @style = "resize:none;" })
+                    @Html.ValidationMessageFor(model => model.scaMotivoCambio)
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script type="text/javascript">
+
+    function redireccionaModificar() {
+        window.location.href = '@Url.Action("RedireccionaEdicion", new { idProducto = decimal.Parse(ViewData["idProducto"].ToString()) })';
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#form-GuardarSolicitudCambio').validate({
+            rules: {
+                scaMotivoCambio: {
+                    required: true
+                }
+            },
+            messages: {
+                scaMotivoCambio: {
+                    required: "El campo Motivo es obligario."
+                }
+            },
+            onfocusout: function (e) {
+                this.element(e);
+            },
+            onkeyup: false,
+            errorClass: 'text-danger'
+        });
+
+        $('#btnDireccionaEdit').click(function () {
+            window.location.href = '@Url.Action("RedireccionaEdicion", new { idProducto = decimal.Parse(ViewData["idProducto"].ToString()) })';
+        });
+
+
+        $('#btnGuardar').click(function (e) {
+            $('#form-GuardarSolicitudCambio').valid();
+
+
+            var url = '@Url.Action("GuardarSolicitud")';
+            var model = $('form').serialize();
+            var idproducto = $('#Id_Producto').val();
+            //ni idea para que se usa
+            console.log(model);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    if (data.success == true) {
+                        $("#div_Mensaje").show();
+                        //$("#TipoSolicitud-DropdownID").prop("disabled", true);
+                        $("#txtMotivoSolicitud").attr("disabled", "disabled");
+                        $("#btnGuardar").attr("disabled", "disabled");
+                    }
+                    else {
+                        $("#txtErrror").prop("text", "No es posible Realizar la solicitud");
+                        $("#div_Mensaje_Error").show();
+
+                    }
+                },
+                error: function () {
+                    $("#txtErrror").prop("text", "ha ocurrido un error, si el problema persiste comuniquese con el administrador.");
+                    $("#div_Mensaje_Error").show();
+                }
+            });
+
+        });
+    });
+
+</script>
+

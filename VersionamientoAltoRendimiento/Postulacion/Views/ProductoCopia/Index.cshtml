@@ -1,0 +1,488 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Producto>
+
+@{
+    ViewBag.Title = "Productos para Solicitud de Cambio";
+}
+
+@using System.Globalization;
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<!-- modal placeholder-->
+<div class="container">
+    <div id='myModal' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal para los mensajes de error*@
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> @TempData["MensajeController"] </label>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<h2>Productos para Solicitud de Cambio</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>Home</li>
+            <li>Proyecto @ViewBag.Proyecto.proNombreProyecto</li>
+            <li>Productos</li>
+        </ol>
+    </div>
+</div>
+
+<div id="div_Mensaje" class="alert alert-info" role="alert" style="display:none">
+    @**@
+    @*@if (string.IsNullOrEmpty(TempData["MensajeController"].ToString()))
+        {
+            <label>Hay una solicitud en revisión, por ahora no podra realizar otra solicitud hasta que sea evaluada por el analista correspondiente</label>
+        }*@
+    @if (TempData["MensajeController"].ToString().Length > 2)
+    {
+        <label>@TempData["MensajeController"]</label>
+    }
+</div>
+
+<div id="div_MensajeWS" class="alert alert-info" role="alert" style="display:none">
+    <label>@ViewData["mensajeWS"]</label>
+</div>
+
+<div id="div_Mensaje_Monto" class="alert alert-danger" role="alert" style="display:none">
+    <label>@TempData["MesajeMontoProducto"]</label>
+</div>
+
+@if (TempData["pasa5Porciento"] != null)
+{
+    if (TempData["pasa5Porciento"].ToString() == "1")
+    {
+        <div id="div_Mensaje_Envio" class="alert alert-danger" role="alert" style="display:none">
+            <label>@TempData["Mensaje5Porciento"]</label>
+        </div>
+    }
+    else
+    {
+        <div id="div_Mensaje_Cinco_Porciento" class="alert alert-danger" role="alert" style="display:none">
+            <label>@TempData["Mensaje5Porciento"]</label>
+        </div>
+    }
+}
+<div id="div_Mensaje_Porciento" class="alert alert-info" role="alert" style="display:none">
+    @*<label>Porcentaje restante para utilizar: @TempData["_porcentajeRestante"] </label>*@
+    @*<label>Porcentaje utilizado en la solicitud actual: @TempData["_porcentajeUsado"] </label>*@
+    @*<label>Porcentaje total utilizado hasta el momento: @TempData["_porcentajeUsadoConActual"]</label>*@
+    @*<br />*@
+    <label>Gasto Bienes y Servicios del Producto Original: $ @TempData["_gaOriginalProd"] </label>
+    <label>Gasto Bienes y Servicios del Producto Actual: $ @TempData["_gaActualProd"]</label>
+    <br />
+    <label>Gasto Personal del Producto Original: $ @TempData["_gpOriginalProd"]</label>
+    <label>Gasto Personal del Producto Actual: $ @TempData["_gpActualProd"]</label>
+</div>
+
+<div id="div_Mensaje_Elimina_Incompleto" class="alert alert-info" role="alert" style="display:none">
+    <label>@TempData["MensajeEliminacion"]</label>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Items / Etapa</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @{
+                    var ValidaGastosPerso = true;
+                    var ValidaGastoAdmin = true;
+                    var ValidaGeo = true;
+
+                    if (ViewBag.idWorkflow == (int)EnumEstados.AprobadoSC)
+                    {
+                        ValidaGastosPerso = ViewBag.ValidaGastosPerso;
+                        ValidaGastoAdmin = ViewBag.ValidaGastosAdmin;
+                        ValidaGeo = ViewBag.ValidaGeos;
+                    }
+                }
+
+                <td>
+                    Gastos en Personal y Bienes y Servicios
+                    @if (!ValidaGastosPerso)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen gastos asignados</label>
+
+                        using (Html.BeginForm("BeneficiarioSinGastos", "Proyecto", FormMethod.Post, new { @style = "float:right;" }))
+                        {
+                            @Html.Hidden("idProyecto", TempData["idProyecto"])
+                            <button type="submit" class="btn btn-xs btn-danger pull-right">Ver Detalle +</button>
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (ValidaGastosPerso)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Geolocalización
+                    @if (!ValidaGeo)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen al menos una geolocalización</label>
+                        <!--Pablo Espinoza 22-02-2016-->
+                        using (Html.BeginForm("BeneficiarioSinGeolocalizacion", "Proyecto", FormMethod.Post, new { @style = "float:right;" }))
+                        {
+                            @Html.Hidden("idProyecto", TempData["idProyecto"])
+                            <button type="submit" class="btn btn-xs btn-danger pull-right">Ver Detalle +</button>
+                        }
+                        <!--Pablo Espinoza 22-02-2016-->
+                    }
+                    @if (!ValidaGastosPerso)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen beneficiarios que no poseen gastos asignados a una geolocalización</label>
+                    }
+                </td>
+                <td>
+                    @{
+                        if (ValidaGeo && ValidaGastosPerso)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-striped table-hover"></table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $("#tblSolicitud").DataTable({
+            "language":
+              {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+              }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+
+
+    });
+</script>
+
+
+
+<h3>Productos disponibles para Solicitud de Cambio</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+        </div>
+
+        <br />
+        <br />
+        <div id="div_Mensaje_Error" class="alert alert-info" role="alert" style="display:none">
+            <label id="txtError">Ya hay una solicitud creada, favor esperar a que se postule o evalue para generar otra solicitud.</label>
+        </div>
+
+        <br />
+
+        <div class="table-responsive">
+            @if (Model.Count() > 0)
+            {
+                <table id="tblSolicitud" class="table table-condensed table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>N° producto</th>
+                            <th>Tipo de Producto</th>
+                            <th>Nombre</th>
+                            @*<th>Nivel</th>*@
+                            <th>Región/Pais</th>
+                            @*<th>Comuna/Ciudad</th>*@
+                            <th>Mes Inicio</th>
+                            <th>Mes Fin</th>
+                            <th>Monto</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.prdSecuencia)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.tprNombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.prdNombre)
+                                </th>
+                                @*<th>
+                                    @Html.DisplayFor(modelItem => item.Producto_Nivel.Nivel.nivNombre)
+                                </th>*@
+                                <th>
+                                    @if (item.idCiudad == 2)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Comuna.Provincia.Region.regNombre)
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Ciudad.Pais.paiNombre)
+                                    }
+                                </th>
+                                @*<th>
+                                    @if (item.idCiudad == 2)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Comuna.comNombre)
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Ciudad.ciuNombre)
+                                    }
+                                </th>*@
+                                <th>
+                                    @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesDesde)
+                                </th>
+                                <th>
+                                    @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesHasta)
+                                </th>
+                                <th>
+                                    @string.Format("{0:C0}", item.prdMonto)
+                                </th>
+                                <th class="iconed-box">
+                                    @{
+                            if (ViewBag.idWorkflow != (int)EnumEstados.AprobadoSCRevision)
+                            {
+                                int contador = 0;
+
+                                foreach (var idProds in ViewBag.idProdSI)
+                                {
+
+                                    if (item.idProducto == idProds)
+                                    {
+                                        if (ViewBag.idWorkflow == (int)EnumEstados.Aprobada && ViewData["mensajeWS"] == string.Empty)
+                                        {
+                                            @Html.Raw(@Html.ActionLink("[replacetext]", "RealizarSolicitud", new { idProducto = item.idProducto }, new { data_modal = "", id = "btnRealizarSolicitud" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Generar Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                        }
+                                        contador++;
+                                    }
+                                }
+
+
+                                if (contador == 0)
+                                {
+                                    if (ViewBag.Solicitud != null)
+                                    {
+                                        foreach (var sc in ViewBag.Solicitud)
+                                        {
+                                            @*Direcciona al Producto*@
+                                            @Html.Raw(@Html.ActionLink("[replacetext]", "RedireccionaEdicion", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ir a Producto' src=\"../Images/List.png\" ... />"))
+                                            @*Subir archivo para la solicitud de cambio*@
+                                            @Html.Raw(@Html.ActionLink("[replacetext]", "SubirArchivo", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Subir Archivo Respaldo Solicitud de Cambio' src=\"../Images/SubirArchivo.png\" ... />"))
+                                            @*Eliminar Solicitud en construcción.*@
+                                            @Html.Raw(@Html.ActionLink("[replacetext]", null, new { idProducto = item.idProducto }, new { onclick = "confirma(" + item.idProducto + ",'DeshaceSolicitudIncompleta'); return false;" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Elimina Solicitud Incompleta' src=\"../Images/False.png\" ... />"))
+                                            @*Postular Solicitud*@
+                                            @*Debe pasar primero la valdacion de gastos y geos.*@
+                                            if (ValidaGeo && ValidaGastosPerso @*&& ValidaGastoAdmin*@)
+                                            {
+                                                @Html.Raw(@Html.ActionLink("[replacetext]", null, new { idProducto = item.idProducto }, new { onclick = "confirma(" + item.idProducto + ",'Evaluarsolicitud'); return false;" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Enviar Solicitud de Cambio' src=\"../Images/True.png\" ... />"))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            @*else if (ViewBag.idWorkflow == (int)EnumEstados.AprobadoSCRevision)
+                                {
+                                    @Html.Label("Hay una solicitud en revisión, por ahora no podra realizar otra solicitud hasta que sea evaluada por el analista correspondiente");
+                                }*@
+
+                                    }
+
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                @*Aqui va el texto en caso de que el conteo sea 0*@
+            }
+        </div>
+        <div class="panel-footer">@Model.Count() Registro(s)</div>
+    </div>
+</div>
+<div style="visibility:hidden">
+    @Html.BeginForm(null, null, FormMethod.Post, new { id = "idEliminaSolicitud" })
+    {
+    @Html.Hidden("idProducto", null, new { id = "idProductoHD" })
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+
+<script>
+    function confirma(idProducto, ruta) {
+        if (ruta != "" || !isNaN(ruta) || ruta != null) {
+            var mensaje = "";
+
+            if (ruta == "DeshaceSolicitudIncompleta") {
+                mensaje = "¿Está seguro que desea eliminar la solicitud de cambio incompleta?";
+            } else if (ruta == "Evaluarsolicitud") {
+                mensaje = "¿Está seguro que desea enviar la solicitud de cambio a evaluación?"
+            }
+
+            var acepta = confirm(mensaje)
+            if (acepta) {
+                $("#idProductoHD").val(idProducto);
+                $("#idEliminaSolicitud").attr("Action", ruta);
+
+                $("#idEliminaSolicitud").submit();
+            }
+            else {
+
+                return false;
+            }
+        } else {
+
+            return false;
+        }
+
+
+    }
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+
+
+        var idActual = "@ViewBag.idWorkflow";
+        var idArpobadoSCRevision = "@((int)EnumEstados.AprobadoSCRevision)";
+
+        if (idActual == idArpobadoSCRevision) {
+            $("#div_Mensaje").show();
+        }
+        else {
+            var mensajeMontoProducto = "@TempData["MesajeMontoProducto"]";
+            var mensajePasaCincoPorCiento = "@TempData["pasa5Porciento"]";
+            var mensajeEliminacionincompleto = "@TempData["MensajeEliminacion"]";
+            var mensajeCincoPorCiento = "@TempData["Mensaje5Porciento"]";
+            var mensajeWS = "@ViewData["mensajeWS"]";
+
+            if (mensajeMontoProducto.length != 0) {
+                if (mensajeMontoProducto != null || mensajeMontoProducto != "" || !isNaN(mensajeMontoProducto)) {
+                    $("#div_Mensaje_Monto").show();
+                }
+            }
+
+            if (mensajePasaCincoPorCiento.length > 0 && mensajePasaCincoPorCiento == "0") {
+                if (mensajeCincoPorCiento != null || mensajeCincoPorCiento != "" || !isNaN(mensajeCincoPorCiento)) {
+                    $("#div_Mensaje_Cinco_Porciento").show();
+                    $("#div_Mensaje_Porciento").show();
+                }
+            } else if (mensajePasaCincoPorCiento.length != 0 && mensajePasaCincoPorCiento == "1") {
+                if (mensajeCincoPorCiento != null || mensajeCincoPorCiento != "" || !isNaN(mensajeCincoPorCiento)) {
+                    $("#div_Mensaje_Envio").show();
+                }
+            }
+
+            if (mensajeEliminacionincompleto.length != 0) {
+                if (mensajeEliminacionincompleto != null || mensajeEliminacionincompleto != "" || !isNaN(mensajeEliminacionincompleto)) {
+                    $("#div_Mensaje_Elimina_Incompleto").show();
+                }
+            }
+
+            if (mensajeWS.length != 0) {
+                $("#div_MensajeWS").show();
+            }
+
+        }
+    });
+
+    //div_Mensaje_Elimina_Incompleto
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+</script>

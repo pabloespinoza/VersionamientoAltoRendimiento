@@ -1,0 +1,429 @@
+﻿@model AltoRendimiento.Models.Producto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Producto</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (TempData["IdProyecto"] != null)
+    {
+        @Html.Hidden("idProyecto", TempData["IdProyecto"])
+    }
+    
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Tipo Producto</label>
+                <div id="ProductoContainer" class="col-sm-8">
+                    @Html.DropDownListFor(model => model.idOrganizacionLineaTipoProducto, (SelectList)ViewBag.list, "--Seleccione--", new { @id = "TipoProducto-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idOrganizacionLineaTipoProducto)
+                </div>
+            </div>
+
+            <div id="dvCategoriaDeporte" class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Categoria</label>
+                <div id="CategoriaDeporteContainer" class="col-sm-8">
+                    @Html.DropDownList("idCategoriaDeporte", (SelectList)ViewBag.listCategoriaDeporte, new { @id = "CategoriaDeporteContainer-DropdownID", @multiple = "multiple" })
+                    @Html.ValidationMessage("idCategoriaDeporte")
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Nivel</label>
+                <div id="NivelContainer" class="col-sm-8">
+                    @*<select id="NivelContainer-DropdownID">
+                            <option value="">-- Seleccione Nivel -- </option>
+                        </select>*@
+                    @Html.DropDownListFor(model => model.idProductoNivel, (SelectList)ViewBag.listNivel, "--Seleccione--", new { @id = "NivelContainer-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idProductoNivel)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblRegionPais" for="lblRegionPais" class="col-sm-4 control-label">País/Regíon</label>
+                <div class="col-md-8">
+                    @* @Html.DropDownList("RegionPais", (SelectList)ViewBag.idPais, "--Seleccione--", new { @id = "PaisContainer-DropdownID", @class = "form-control" })*@
+
+                    @Html.DropDownList("RegionPais", (SelectList)ViewBag.listPaisRegion, "--Seleccione Nivel--", new { @id = "PaisContainer-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessage("RegionPais")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label id="lblCiudadComuna" for="lblCiudadComuna" class="col-sm-4 control-label">Ciudad/Comuna</label>
+                <div class="col-md-8">
+                    @Html.DropDownList("CiudadComuna", (SelectList)ViewBag.listCiudadComuna, "--Seleccione Pais/Region--", new { @id = "RegionContainer-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessage("CiudadComuna")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Actividad</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.prdNombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.prdNombre)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Mes Inicio</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.prdMesDesde)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Mes Fin</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.prdMesHasta, (IEnumerable<SelectListItem>)ViewBag.MesesFin, "--Seleccione--", new { @id = "idFecHasta", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.prdMesHasta)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Descripción y Objetivos del Producto</label>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.prdDescripcion, new { @class = "form-control", @rows = 4, @style = "resize:none;" })
+                    @Html.ValidationMessageFor(model => model.prdDescripcion)
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        texto = $("#TipoProducto-DropdownID option:selected").text().toUpperCase();
+        @*if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN') {
+            $("#idFecHasta").val(@ViewBag.MesFin);
+            $("#idFecDesde").val(@ViewBag.MesInicio);
+            document.getElementById("idFecDesde").setAttribute("disabled", "disabled");
+            document.getElementById("idFecHasta").setAttribute("disabled", "disabled");
+        }
+        else {
+            document.getElementById("idFecDesde").removeAttribute("disabled");
+            document.getElementById("idFecHasta").removeAttribute("disabled");
+        }*@
+
+        texto = $("#NivelContainer-DropdownID option:selected").text();
+        if (texto == 'Nacional') {
+            $("label[for = lblRegionPais]").text("Región");
+            $("label[for = lblCiudadComuna]").text("Comuna");
+        } if (texto == 'Internacional') {
+            $("label[for = lblRegionPais]").text("Pais");
+            $("label[for = lblCiudadComuna]").text("Ciudad");
+
+        }
+
+
+    });
+    //$(function () {
+    //    recuperarCampos();
+    //});
+
+    @*function recuperarCampos() {
+        var postIdOrganizacionLineaTipoProducto = '@ViewBag.postIdOrganizacionLineaTipoProducto';
+        var postIdProductoNivel = '@ViewBag.postIdProductoNivel';
+        var postRegionPais = '@ViewBag.postRegionPais';
+        var postCiudadComuna = '@ViewBag.postCiudadComuna';
+        if (postIdOrganizacionLineaTipoProducto > 0) {
+
+            texto = $("#TipoProducto-DropdownID option:selected").text().toUpperCase();
+            if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN') {
+                $("#idFecHasta").val(@ViewBag.MesFin);
+                $("#idFecDesde").val(@ViewBag.MesInicio);
+                document.getElementById("idFecDesde").setAttribute("disabled", "disabled");
+                document.getElementById("idFecHasta").setAttribute("disabled", "disabled");
+            }
+            else {
+                document.getElementById("idFecDesde").removeAttribute("disabled");
+                document.getElementById("idFecHasta").removeAttribute("disabled");
+            }
+            $.ajax({
+                url: '@Url.Action("getTipoProducto")' + "?idOrganizacionLineaTipoProducto=" + postIdOrganizacionLineaTipoProducto,
+                type: "POST",
+                success: function (data) {
+                    var options = "";
+                    options += ' <option value="">-- Seleccione Nivel -- </option>';
+                    $.each(data, function (index, value) {
+                        if (value.id == postIdProductoNivel) {
+                            options += '<option value="' + value.id + '" selected="selected">' + value.nombre + '</option>';
+                        }
+                        else {
+                            options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                        }
+                    });
+                    $("#NivelContainer-DropdownID").html(options);
+                },
+                error: function () {
+                }
+            });
+        }
+
+        if (postIdProductoNivel > 0) {
+
+            texto = $("#NivelContainer-DropdownID option:selected").text();
+            if (texto == 'Nacional') {
+                $("label[for = lblRegionPais]").text("Región");
+                $("label[for = lblCiudadComuna]").text("Comuna");
+            } if (texto == 'Internacional') {
+                $("label[for = lblRegionPais]").text("Pais");
+                $("label[for = lblCiudadComuna]").text("Ciudad");
+
+            }
+            $.ajax({
+                url: '@Url.Action("getPaisRegion")' + "?idProductoNivel=" + postIdProductoNivel,
+                type: "POST",
+                success: function (data) {
+                    var options = "";
+                    options += ' <option value="">-- Seleccione -- </option>';
+                    $.each(data, function (index, value) {
+                        if (value.id == postRegionPais) {
+                            options += '<option value="' + value.id + '" selected="selected">' + value.nombre + '</option>';
+                        }
+                        else {
+                            options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                        }
+                    });
+                    $("#PaisContainer-DropdownID").html(options);
+                },
+                error: function () {
+                }
+            });
+        }
+
+        if (postRegionPais > 0) {
+
+            $.ajax({
+                url: '@Url.Action("getCiudadComuna")' + "?idPaisRegion=" + postRegionPais,
+                type: "POST",
+                success: function (data) {
+                    var options = "";
+                    options += ' <option value="">-- Seleccione -- </option>';
+                    $.each(data, function (index, value) {
+                        if (value.id == postCiudadComuna) {
+                            options += '<option value="' + value.id + '" selected="selected">' + value.nombre + '</option>';
+                        }
+                        else {
+                            options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                        }
+                    });
+                    $("#RegionContainer-DropdownID").html(options);
+                },
+                error: function () {
+                }
+            });
+
+        }
+
+    }*@
+
+
+    $('#btnGuardar').click(function () {
+
+        var exito = true;
+        document.getElementById("idFecDesde").removeAttribute("disabled");
+        document.getElementById("idFecHasta").removeAttribute("disabled");
+
+        var texto = $("#TipoProducto-DropdownID option:selected").text().toUpperCase();
+
+        if (texto != 'ADMINISTRACION' && texto != 'ADMINISTRACIÓN') {
+            if (!$("input:checkbox[name=idCategoriaDeporte]").is(":checked")) {
+                $("span[data-valmsg-for=idCategoriaDeporte]").text("Debe seleccionar al menos una Categoria");
+                $("span[data-valmsg-for=idCategoriaDeporte]").attr("class", "field-validation-error");
+
+                exito = false;
+            } else {
+                $("span[data-valmsg-for=idCategoriaDeporte]").attr("class", "field-validation-valid");
+                $("span[data-valmsg-for=idCategoriaDeporte]").text("");
+            }
+        }
+
+        $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+            $(obj).removeAttr("disabled");
+        })
+
+        return exito;
+    });
+
+    $(function () {
+        // initialize sol
+
+        $('#CategoriaDeporteContainer-DropdownID').searchableOptionList({
+            maxHeight: '200px',
+            showSelectAll: false,
+            events:{
+                onChange: function(sol, data)
+                {
+                    if($(data).val() == "1")
+                    {
+                        if ($(data).is(':checked')) {
+                            $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+                                if ($(obj).val() != "1") {
+                                    $(obj).attr("disabled", "disabled");
+                                }
+                            })
+                        }else
+                        {
+                            $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+                                $(obj).removeAttr("disabled");
+                            })
+                        }
+                    }else
+                    {
+                        var checked = false;
+                        var todas = false;
+                        $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+                            if($(obj).val() == "0")
+                            {
+                                todas = $(obj).is(":checked");
+                            }
+                            if ($(obj).val() == "1") {
+                                $(obj).attr("disabled", "disabled");
+                            }else
+                            {
+                                if ($(data).val() == "0" && $(data).is(':checked'))
+                                {
+                                    $(obj).prop("checked", "checked");
+                                    if ($(obj).val() != "0") {
+                                        $(obj).attr("disabled", "disabled");
+                                    }
+                                } else if ($(data).val() == "0" && !$(data).is(':checked'))
+                                {
+                                    $(obj).removeProp("checked");
+                                    $(obj).removeAttr("disabled");
+                                } else if ($(data).val() != "0" && !$(data).is(':checked') && $(data).val() == $(obj).val() && todas) {
+                                    $(obj).prop("checked", "checked");
+
+                                }
+                                if ($(obj).is(":checked")) {
+                                    checked = true;
+                                }
+                            }
+                        })
+                        if (!checked) {
+                            $("input:checkbox[name=idCategoriaDeporte]").removeAttr("disabled");
+                        }
+                    }
+                }
+            }
+
+        });
+    });
+
+    $("#TipoProducto-DropdownID").change(function () {
+        idSelected = $(this).val();
+        texto = $("#TipoProducto-DropdownID option:selected").text().toUpperCase();
+        @*if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN') {
+            $("#idFecHasta").val(@ViewBag.MesFin);
+            $("#idFecDesde").val(@ViewBag.MesInicio);
+            document.getElementById("idFecDesde").setAttribute("disabled", "disabled");
+            document.getElementById("idFecHasta").setAttribute("disabled", "disabled");
+        }
+        else {
+            document.getElementById("idFecDesde").removeAttribute("disabled");
+            document.getElementById("idFecHasta").removeAttribute("disabled");
+        }*@
+        if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN')
+        {
+            $("#dvCategoriaDeporte").hide();
+            
+        } else
+        {
+            $("#dvCategoriaDeporte").show();
+        }
+        $.ajax({
+            url: '@Url.Action("getTipoProducto")' + "?idOrganizacionLineaTipoProducto=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                var options = "";
+                options += ' <option value="">-- Seleccione Nivel -- </option>';
+                $.each(data, function (index, value) {
+
+                    options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                });
+                $("#NivelContainer-DropdownID").html(options);
+            },
+            error: function () {
+            }
+        });
+    });
+
+    $("#NivelContainer-DropdownID").change(function () {
+        idSelected = $(this).val();
+        texto = $("#NivelContainer-DropdownID option:selected").text();
+        if (texto == 'Nacional') {
+            $("label[for = lblRegionPais]").text("Región");
+            $("label[for = lblCiudadComuna]").text("Comuna");
+        } if (texto == 'Internacional') {
+            $("label[for = lblRegionPais]").text("Pais");
+            $("label[for = lblCiudadComuna]").text("Ciudad");
+
+        }
+        $.ajax({
+            url: '@Url.Action("getPaisRegion")' + "?idProductoNivel=" + idSelected,
+            type: "POST",
+            success: function (data) {
+                var options = "";
+                options += ' <option value="">-- Seleccione -- </option>';
+                $.each(data, function (index, value) {
+
+                    options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                });
+                $("#PaisContainer-DropdownID").html(options);
+                $("#RegionContainer-DropdownID").html('<option value="">--Seleccione Pais/Region--</option>');
+            },
+            error: function () {
+            }
+        });
+    });
+
+
+    $("#PaisContainer-DropdownID").change(function () {
+        idSelected = $(this).val();
+        idSelectedNivel = $("#NivelContainer-DropdownID").val();
+        $.ajax({
+            url: '@Url.Action("getCiudadComuna")' + "?idPaisRegion=" + idSelected + "&idProductoNivel=" + idSelectedNivel,
+            type: "POST",
+            success: function (data) {
+                var options = "";
+                options += ' <option value="">-- Seleccione -- </option>';
+                $.each(data, function (index, value) {
+
+                    options += '<option value="' + value.id + '">' + value.nombre + '</option>';
+                });
+                $("#RegionContainer-DropdownID").html(options);
+            },
+            error: function () {
+            }
+        });
+    });
+
+
+
+</script>

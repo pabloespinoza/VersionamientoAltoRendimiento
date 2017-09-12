@@ -1,0 +1,144 @@
+﻿@model IEnumerable<AltoRendimiento.Clases.BeneficiarioPorDefinir>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>Modificación de Beneficiarios Por Definir</li>
+        </ol>
+    </div>
+</div>
+
+<h3>
+    Asignación de Beneficiarios Por Definir
+</h3>
+<br />
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $("#dtBenfeficiariosPorDefinir").DataTable({
+            "language":
+              {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+              }
+        }).on("draw.dt", function ()
+        {
+            addEventClickDataModal();
+        });
+
+
+
+    });
+</script>
+
+<table id="dtBenfeficiariosPorDefinir" class="table">
+    <thead>
+        <tr>
+            <th>
+                Folio Proyecto
+            </th>
+            <th>
+                Nombre Proyecto
+            </th>
+            <th>
+                Nombre Producto
+            </th>
+            <th>
+                Tipo Gasto
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Cargo
+            </th>
+            <th>
+                Acción
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+            var folio = string.Format("{0:G}", item.bpfFolioProyecto);
+            if (folio == "0" || folio == "")
+            {
+                var mensaje = "Sin Código";
+                @mensaje
+            }
+            else
+            {
+                @folio.Substring(2, folio.Length - 2)
+            }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bpfNombreProyecto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bpfNombreProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bpfNombreTipoGasto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bpfNombreBeneficiario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bpfNombreCargo)
+                </td>
+                <td>
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idBeneficiarioProductoCargo }, new { data_modal = "data_modal" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="panel-footer">@Model.Count() Registro(s)</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}

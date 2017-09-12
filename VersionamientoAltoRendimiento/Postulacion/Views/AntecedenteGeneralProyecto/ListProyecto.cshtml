@@ -1,0 +1,137 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Clases.datosProyecto>
+
+@{
+    if (ViewBag.idLineaClasificacion == "3")
+    {
+        <div style="clear:both">
+            <span style="color:red">
+                Estimado Usuario <br />El  proyecto PDA que aparece en su bandeja fue creado por el IND con datos totales. Lo anterior,  por motivos de acelerar su financiamiento. Una vez girado el proyecto, se cambiará el estado de éste para que pueda realizar las modificaciones que correspondan al detalle de dicho proyecto.
+                <br />Departamento de Informática.
+            </span>
+        </div>
+
+    }
+}
+<table class="table table-condensed table-bordered table-hover">
+    <tr>
+        <th>
+            Proyecto
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Inicio
+        </th>
+        <th>
+            Fin
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>Acción</th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+            var folio = string.Format("{0:G}", item.proFolioProyecto);
+            if (folio == "0" || folio == "")
+            {
+                var mensaje = "Sin Código";
+                @mensaje
+            }
+            else
+            {
+                @folio.Substring(2, folio.Length - 2)
+            }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.proNombreProyecto)
+                </td>
+                <td>
+                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesInicio)
+                </td>
+                <td>
+                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesTermino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estNombre)
+                </td>
+                <td>
+                    @{
+            var codWorkflow = item.idWorkflow;
+            @Html.Raw(@Html.ActionLink("[replacetext]", "URLProducto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Producto' src=\"../Images/List.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver o Editar' src=\"../Images/Edit.png\" ... />"))
+            if (codWorkflow == (int)EnumEstados.Incompleto || codWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
+            }
+            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "Reporte", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Reporte' src=\"../Images/Reporte.png\" ... />"))
+
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaSubirArchivo", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Subir Documento' src=\"../Images/SubirArchivo.png\" ... />"))
+
+            if (codWorkflow == (int)EnumEstados.Incompleto)
+            {
+                @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarProyecto", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+            }
+            @*Para realizar la solicitud de cambio es necesario descomentar la sección de código que viene a continuación.*@
+            @*if (Utilitarios.Instance.PuedeGenerarSolicitud(item.proMesTermino))
+            {
+                if (codWorkflow == (int)EnumEstados.Aprobada)
+                {
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                } if ((codWorkflow == (int)EnumEstados.AprobadoSC && ViewBag.Solicitud != null))
+                {
+                    int cont = 0;
+
+                    foreach (var itemSC in ViewBag.Solicitud)
+                    {
+
+                        if (itemSC.scaPendiente == true && item.idProyecto == itemSC.idProyecto)
+                        {
+                            cont++;
+                        }
+                    }
+                    if (cont == 0)
+                    {
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                        //@Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
+                    }
+                }
+                else if (codWorkflow == (int)EnumEstados.AprobadoSCRevision)
+                {
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                }
+            }*@
+                    }
+
+                </td>
+            </tr>
+        }
+    }
+
+
+</table>
+<div class="panel-footer">@Model.Count() Registro(s)</div>
+
+<script type="text/javascript">
+    $('.anchor-edit').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $.get(url, null, function (response) {
+            $('#myModalContent').html(response);
+            $('#myModal').modal('show');
+        });
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>

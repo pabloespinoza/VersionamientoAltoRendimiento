@@ -1,0 +1,86 @@
+﻿@using PagedList.Mvc; 
+@model PagedList.IPagedList<AltoRendimiento.Models.Geolocalizacion_Horario>
+
+@using System.Threading;
+@using System.Globalization;
+@{
+    Layout = null;
+    ViewBag.Title = "Geolocalizacion Horario";
+    var culture = new System.Globalization.CultureInfo("es-CL");
+}
+@Styles.Render("~/Content/bootstrap-theme.css")
+@Styles.Render("~/Content/bootstrap-theme.css.map")
+@Styles.Render("~/Content/bootstrap-theme.min.css")
+@Styles.Render("~/Content/bootstrap.css")
+@Styles.Render("~/Content/bootstrap.css.map")
+@Styles.Render("~/Content/bootstrap.min.css")
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListadoRecintos</title>
+</head>
+<body>
+    <div class="col-md-12">
+        <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word; margin-bottom:0">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha Inicio
+                    </th>
+
+                    <th>
+                        Fecha Fin
+                    </th>
+                    <th>
+                        Dias
+                    </th>
+
+                    <th>
+                        Hora Inicio
+                    </th>
+                    <th>
+                        Hora Fin
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayName(item.ghoFechaInicio.ToShortDateString())
+                    </td>
+                    <td>
+                        @Html.DisplayName(item.ghoFechaFin.ToShortDateString())
+                    </td>
+                    <td>
+                        @{
+                    if (item.ghoDias != null)
+                    {
+                        string[] Dias = item.ghoDias.Split('|');
+                        foreach (string dia in Dias)
+                        {
+                            if (dia != "")
+                            {
+                                var DiaInicio = culture.DateTimeFormat.GetDayName((DayOfWeek)(((int)int.Parse(dia)) % 7));
+                            @Html.DisplayName(" - " + DiaInicio)
+                            }
+                        }
+                    }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ghoHoraInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ghoHoraFin)
+                    </td>
+                </tr>
+                }
+            </tbody> 
+    </div>
+
+</body>
+</html>

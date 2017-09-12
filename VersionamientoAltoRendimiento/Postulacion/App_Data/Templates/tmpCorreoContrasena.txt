@@ -1,0 +1,83 @@
+﻿<html>	
+	<header class="header header-2 header-not-sticky">
+		<div class="header-wrapper">
+			<div class="container">
+				<div class="logo-row">
+					<!-- LOGO -->
+					<div class="logo-container-2"> 
+							<div class="logo-2">
+								<img src="www.ind.cl/wp-content/themes/mindep-2014/images/logo.png" class="logo-img" alt="Logo">
+							</div>
+                                 
+					</div>
+				</div>
+			</div>
+		</div><!-- header-wrapper -->
+    </header>
+	<body> 
+		<p>
+			Estimada Federación: 
+		</p>
+		<p>
+			Usted ha seleccionado la opción recuperar contraseña, la cuál por motivo de seguridad tiene un tiempo de duración de 48 Hrs. 
+		</p>  
+		<p>
+			Una vez terminado el plazo deberá recuperarla nuevamente.
+		</p>  
+		<p> 
+			Su contraseña es la siguiente: 
+		</p>
+		<p style="font-size: 25px;font-weight: bold;color: rgba(10,142,205,1);">	
+			{2}
+		</p> 
+		<br/>
+		<p> 
+			Favor de no responder este correo, ya que es sólo de información hacia los usuarios.
+
+			Saludos, Departamento de Informática.
+		</p>
+	</body>
+	<footer >
+        <!-- FOOTER 3-->
+		<div class="footer3-bg">
+            <div class="container">
+                <div class="row">
+                    <!-- ICON CONTAINER  -->
+                    <div class="col-md-4 footer3-icon-container">
+                        <div class="footer3-icon">
+                            <span aria-hidden="true" class="icon_pin_alt"></span>
+                        </div>
+                        <h3 class="footer3-title-container">
+                            UBICACIÓN
+                        </h3>
+                        <div class="footer3-text-container">
+                            Fidel Oteiza N°1956, piso 3, Providencia. Santiago - Chile
+                        </div>
+                    </div>
+                    <div class="col-md-4 footer3-icon-container">
+                        <div class="footer3-icon">
+                            <span aria-hidden="true" class="icon_phone"></span>
+                        </div>
+                        <h3 class="footer3-title-container">
+                            TELÉFONO
+                        </h3>
+                        <div class="footer3-text-container">
+                            (56 2 ) 2754 02 00
+                        </div>
+                    </div>
+                    <div class="col-md-4 footer3-icon-container">
+                        <div class="footer3-icon">
+                            <span aria-hidden="true" class="icon_comment"></span>
+                        </div>
+                        <h3 class="footer3-title-container">
+                            IND ATIENDE
+                        </h3>
+                        <div class="footer3-text-container">
+                            <a class="a-invert" href="mailto:indatiende@ind.cl">indatiende@ind.cl</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</html>

@@ -1,0 +1,144 @@
+﻿@model AltoRendimiento.Models.Usuario
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.usuRut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuRut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuDv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuDv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuApellidoPaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuApellidoPaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuApellidoMaterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuApellidoMaterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuContrasena)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuContrasena)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuDireccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuDireccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organizacion.orgDv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organizacion.orgDv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rol.rolNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rol.rolNombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

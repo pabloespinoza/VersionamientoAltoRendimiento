@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "GastosPersonal";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Producto XXX</li>
+            <li>Gastos Personal</li>
+        </ol>
+    </div>
+</div>
+<h3>Gastos Personal</h3>
+<h4>Nombre Persona : Roberto Gomez</h4>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info  pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-primary  text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Mes Inicio</th>
+                    <th>Mes Fin</th>
+                    <th>Cargo</th>
+                    <th>Tipo</th>
+                    <th>Costo</th>
+                    <th>Costo Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01-01-2015</td>
+                    <td>01-12-2015</td>
+                    <td>Futbolista</td>
+                    <td>Deporte</td>
+                    <td>10.000</td>
+                    <td>120.000</td>
+                    <td>
+                        <a title="Geolocalización" href='@Url.Action("Geolocalizacion", "Home")'><img src="~/Images/Mundo.png" /></a>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"><img src="~/Images/Trash.png" /></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>01-01-2015</td>
+                    <td>01-12-2015</td>
+                    <td>Futbolista</td>
+                    <td>Deporte</td>
+                    <td>10.000</td>
+                    <td>120.000</td>
+                    <td>
+                        <a title="Geolocalización" href='@Url.Action("Geolocalizacion", "Home")'><img src="~/Images/Mundo.png" /></a>
+                        <a title="Editar" data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a title="Eliminar"><img src="~/Images/Trash.png" /></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">       
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>         
+                <h4 class="modal-title">Gasto Personal</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">                    
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Mes Inicio</label>
+                        <div class="col-sm-9">
+                            <select name="meses" class="form-control">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Mes Fin</label>
+                        <div class="col-sm-9">
+                            <select name="meses" class="form-control">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Cargo</label>
+                        <div class="col-sm-9">
+                            <select name="meses" class="form-control">
+                                <option value="1">Auxiliar</option>
+                                <option value="2">Enfermero</option>
+                                <option value="3">Médico</option>
+                                <option value="4">Deportista</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Tipo</label>
+                        <div class="col-sm-9">
+                            <select name="meses" class="form-control">
+                                <option value="1">Remuneración</option>
+                                <option value="2">Honorario</option>
+                                <option value="3">Objetivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Costo $</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" placeholder="Costo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Costo Total</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="inputPassword3" disabled="false">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Descripción Objetivo</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="4" cols="5"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success ">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+

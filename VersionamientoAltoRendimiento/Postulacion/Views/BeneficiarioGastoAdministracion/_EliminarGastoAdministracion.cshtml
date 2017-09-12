@@ -1,0 +1,55 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Gasto_Administracion
+
+@{
+    ViewBag.Title = "EliminarGastoAdministracion";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("idProducto", TempData["idProducto"])
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <h4>Eliminar Gasto en Bienes y Servicios</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idBeneficiarioGastoAdministracion)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idTipoGastoAdministracion)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idTipoGastoAdministracion)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idBeneficiarioProductoCargo)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.bgaDescripcion)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.bgaFechaInicio)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.bgaFechaFin)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.bgaDias)
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.bgaTotal)
+
+
+            ¿Desea eliminar este Gasto en Bienes y Servicios?   
+            <br />
+            <br />
+
+            <div class="form-group">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-success ">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

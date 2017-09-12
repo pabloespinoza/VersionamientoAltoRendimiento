@@ -1,0 +1,50 @@
+﻿@model AltoRendimiento.Models.Auditoria
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Auditoria</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.audFechaHoraConexion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.audFechaHoraConexion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.audFechaHoraDesconexion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.audFechaHoraDesconexion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.audTipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.audTipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.audNumeroIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.audNumeroIP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idAuditoria }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,114 @@
+﻿@model AltoRendimiento.Models.Beneficiario_Gasto_Administracion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Beneficiario_Gasto_Administracion</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaFechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaFechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaFechaFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaFechaFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaDias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaDias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bgaUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bgaUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Beneficiario_Producto_Cargo.idBeneficiarioProductoCargo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beneficiario_Producto_Cargo.idBeneficiarioProductoCargo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Gasto_Administracion.tgaNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Gasto_Administracion.tgaNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idBeneficiarioGastoAdministracion }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

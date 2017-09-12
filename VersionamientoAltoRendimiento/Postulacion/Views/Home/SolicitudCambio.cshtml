@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "SolicitudCambio";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li> 
+            <li>Proyecto XXX</li>
+            <li>Solicitud de Cambio</li>
+        </ol>
+    </div>
+</div>
+<h3>Solicitud de Cambio</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-right">
+            <button type="button" onclick="volver()" class="btn btn-info  pull-left" data-dismiss="modal">Volver</button>
+            <button class="btn btn-primary  text-right" data-toggle="modal" data-target="#myModal"> Nuevo </button>
+        </div>
+        <br />
+
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Nombre</th>
+                    <th>Nivel</th>
+                    <th>Lugar / Pais</th>
+                    <th>Ciudad</th>
+                    <th>Mes Inicio</th>
+                    <th>Mes Fin</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Movilización</td>
+                    <td>Esmeralda Herrera</td>
+                    <td>Internacional</td>
+                    <td>Alemania</td>
+                    <td>Berlin</td>
+                    <td>Enero</td>
+                    <td>Marzo</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Capacitación</td>
+                    <td>Esmeralda Herrera</td>
+                    <td>Internacional</td>
+                    <td>Alemania</td>
+                    <td>Berlin</td>
+                    <td>Enero</td>
+                    <td>Marzo</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#myModal"><img src='@Url.Content("~/Images/Edit.png")' /></a>
+                        <a> <img src="~/Images/Trash.png" /> </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- /.modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Solicitud de Cambio</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Tipo Solicitud</label>
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                                <option value="1">Tiempo Ejecución</option>
+                                <option value="2">Geolocalización</option>
+                                <option value="3">Gastos Administrativos</option>
+                                <option value="4">Gastos Personal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Motivo</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="txtMotivo" maxlength="500" cols="40" rows="5" id="txtMotivo" placeholder="Motivo"></textarea>
+                        </div>
+                    </div>                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger  pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success">Enviar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
