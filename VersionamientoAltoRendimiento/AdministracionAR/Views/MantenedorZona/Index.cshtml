@@ -1,0 +1,56 @@
+﻿@model AltoRendimiento.Administracion.Models.ZonaModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Zona</div>
+        </div>
+    </div>
+</div>
+
+<div id="divMensaje"></div>
+
+@Html.Partial("ListaZona", Model)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#tblOrganizaciones").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+</script>

@@ -1,0 +1,97 @@
+﻿@model AltoRendimiento.Administracion.Models.LineaModel
+
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Mantenedor de Líneas</li>
+        </ol>
+    </div>
+</div>
+<h3>Mantenedor de Líneas</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "MantenedorLinea", FormMethod.Get))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idProgramaBusca, new { @class = "control-label col-md-1" })
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(model => model.idProgramaBusca, Model.ListaPrograma, new { @class = "form-control" })
+                            </div>
+                            @Html.LabelFor(model => model.idLineaClasificacionBusca, new { @class = "control-label col-md-1" })
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(model => model.idLineaClasificacionBusca, Model.ListaLineaClasificacion, new { @class = "form-control" })
+                            </div>
+                            @Html.LabelFor(model => model.sLineaBusca, new { @class = "control-label col-md-1" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(model => model.sLineaBusca, new { @class = "form-control", @maxlength = "10" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Filtrar" id="btnFiltrar" class="btn btn-sm btn-success">Filtrar</button>
+                                <a href="MantenedorLinea" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaLinea", Model)
+    </div>
+</div>
+
+<div id="divMensaje"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        if (codRespuesta == '1') {
+            $("#tblData").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+</script>
+

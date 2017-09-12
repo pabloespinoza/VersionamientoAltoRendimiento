@@ -1,0 +1,119 @@
+﻿@model AltoRendimiento.Administracion.Models.OrganizacionLineaModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Mantenedor de Organización Línea</li>
+        </ol>
+    </div>
+</div>
+<h3>Mantenedor de Organización Línea</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Filtros</h4>
+            </div>
+            @using (Html.BeginForm("Index", "MantenedorOrganizacionLinea", FormMethod.Get)) 
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idCategoria, new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(model => model.idCategoria, Model.ListaCategorias, new { @onchange = "buscaConcursos()", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.idCategoria, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.idConcurso, new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(model => model.idConcurso, Model.ListaConcursos, new { @class = "form-control", @onchange = "focoOrg()" })
+                                @Html.ValidationMessageFor(model => model.idConcurso, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.idOrganizacion, new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaOrganizacion, new { @class = "form-control", @onchange = "focoBoton()" })
+                                @Html.ValidationMessageFor(model => model.idOrganizacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Filtrar" id="btnFiltrar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="MantenedorOrganizacionLinea" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaOrganizacionLinea", Model)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    if (codRespuesta == '1' || codRespuesta == '2') {
+        $("#tblData").attr("style", "display:none;");
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    function buscaConcursos() {
+        var nIdCategoria = $("#idCategoria").val();
+        $("#idConcurso").html("");
+        $("#idOrganizacionLinea").html("");
+
+        $.ajax({
+            url: "MantenedorOrganizacionLinea/buscaConcursos"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idCategoria: nIdCategoria }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    bootbox.alert({ message: info.Mensaje, backdrop: false });
+                } else {
+                    $("#idConcurso").append($("<option/>", {
+                        value: 0,
+                        text: "Seleccione..."
+                    }));
+                    $.each(info.Datos, function (index, concurso) {
+                        $("#idConcurso").append($("<option/>", {
+                            value: concurso.idConcurso,
+                            text: concurso.conNombre
+                        }));
+                    });
+                    $("#idConcurso").focus();
+                }
+            }
+        });
+    }
+
+    function focoOrg() {
+        $("#idOrganizacion").focus();
+    }
+
+    function focoBoton() { $("#btnFiltrar").focus(); }
+</script>

@@ -1,0 +1,47 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorTipoOrganizacionModel
+
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarTipoOrganizacion", "MantenedorTipoOrganizacion", null, new { data_modal = "", id = "btnAgregarTipoOrganizacion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+
+<div class="table-responsive">
+    <table id="tblCargos" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorTipoOrganizacionModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreBuscar = Model.NombreBuscar })
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaTiposOrganizacion)
+            {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Descripcion
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarTipoOrganizacion", new { id = item.IdTipoOrganizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarTipoOrganizacion", new { id = item.IdTipoOrganizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaTiposOrganizacion.PageCount < Model.ListaTiposOrganizacion.PageNumber ? 0 : Model.ListaTiposOrganizacion.PageNumber) de @Model.ListaTiposOrganizacion.PageCount
+        @Html.PagedListPager(Model.ListaTiposOrganizacion, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorTipoOrganizacionModel { Page = page, SortOrder = ViewBag.CurrentSort, NombreBuscar = Model.NombreBuscar }))
+    </div>
+</div>

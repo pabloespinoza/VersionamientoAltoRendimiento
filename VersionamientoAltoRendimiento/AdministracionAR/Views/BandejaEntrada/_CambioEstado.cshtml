@@ -1,0 +1,158 @@
+﻿@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var mensaje = '@ViewData["mensaje"]';
+        var tipoAlerta = '@ViewData["tipoAlterta"]';
+        if (tipoAlerta == "" || tipoAlerta == null) {
+            tipoAlerta = "success";
+        }
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+
+
+        $('#frm-CambioEstado').validate({
+            rules: {
+
+                Observacion: {
+                    required: true, equalTo: '#Observacion'
+                },
+                SelectName: {
+                    required: true, equalTo: '#edrp_idWorkflow'
+                }
+            },
+            messages: {
+                Observacion: {
+                    required: "Campo Obligatorio",
+
+                },
+                SelectName: {
+                    required: "Campo Obligatorio",
+                }
+            }
+        });
+
+    });
+
+</script>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
+}
+<script src="~/Scripts/modalform.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("GuardarEstadoProyecto", "BandejaEntrada", FormMethod.Post, new { Id = "frm-CambioEstado" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    if(Model.estadoIngresado == 2)
+    { 
+    <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">Observar</h3>
+    </div>
+    }
+    
+    if(Model.estadoIngresado == 3)
+    { 
+    <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">Aceptar Proyecto</h3>
+    </div>
+    }
+    
+    <div class="modal-body">
+
+        <div class="form-group">
+
+            <div id="mensaje">
+            </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="lblEstado" class="control-label col-md-4">Estado Seleccionado </label>
+                    <div class="col-md-7">
+                        @Html.ValidationMessageFor(model => model.IdWorkflowDestino)
+                        @if (Model.ListaEstados.Count() > 1)
+                        {
+                            @Html.DropDownListFor(model => model.IdWorkflowDestino, Model.ListaEstados, "--Seleccione--", new { @id = "drp_idWorkflow", @class = "form-control required" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.IdWorkflowDestino, Model.ListaEstados, new { @id = "drp_idWorkflow", @class = "form-control required" })
+                            @*Html.Hidden("IdWorkflowDestino", null, new { @value = Model.ListaEstados.First().Value })*@
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lblFecha" class="control-label col-md-4">Fecha</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.FechaEvaluacion, new { @class = "form-control", @disabled = "disabled" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lblUsuario" class="control-label col-md-4">Usuario</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.UsuarioCambio, new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+
+        @Html.HiddenFor(p => p.IdProyecto, new { @value = Model.IdProyecto })
+        @Html.HiddenFor(p => p.IdWorkflow, new { @value = Model.IdWorkflow })
+        @Html.HiddenFor(p => p.EstadoEvaluacion, new { @value = Model.EstadoEvaluacion })
+        @Html.HiddenFor(p => p.IdUsuario, new { @value = Model.IdUsuario })
+        @Html.HiddenFor(p => p.Vista, new { @value = Model.Vista })
+        @Html.HiddenFor(p => p.estadoIngresado, new { @value = Model.estadoIngresado })
+
+        @*@Html.HiddenFor(p => p.InformeFinanciero, new { @value = Model.InformeFinanciero })
+            @Html.HiddenFor(p => p.InformeTecnico, new { @value = Model.InformeTecnico })*@
+
+        @Html.HiddenFor(p => p.FechaResolucion, new { @value = Model.FechaResolucion })
+        @Html.HiddenFor(p => p.NumeroResolucion, new { @value = Model.NumeroResolucion })
+        @*@Html.HiddenFor(p=>p.IdConcurso)*@
+        <div>
+
+            <div class="form-group">
+                <fieldset>
+                    <legend>
+                        Observación
+                    </legend>
+                    <div class="form-group col-xs-12">
+                        @Html.TextAreaFor(p => p.Observacion, new { @class = "form-control textArea", @data_val_required = "Required", @rows = "5", @maxlength = "50000" })
+
+                    </div>
+                </fieldset>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" id="btnGuardarEstadoPopUp" class="btn btn-sm btn-success ">Guardar</button>
+        <button type="button" class="btn btn-sm btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+    </div>
+}

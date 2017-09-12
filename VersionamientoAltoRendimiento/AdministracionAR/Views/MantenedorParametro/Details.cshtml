@@ -1,0 +1,42 @@
+﻿@model AltoRendimiento.Administracion.Models.Parametro
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Parametro</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.parNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.parDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.parValor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parValor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idParametro }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

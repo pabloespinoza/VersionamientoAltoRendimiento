@@ -1,0 +1,75 @@
+﻿@model AltoRendimiento.Administracion.Models.ResumenSolicitudCambioModel
+
+@{
+    int correlativo = 0;
+}
+
+
+@foreach (var beneficiario in Model.productoSolicitud.listaBeneficiarios)
+{
+    <div class="panel-group" id="accordeonNombreSol@((beneficiario.idBeneficiario) + "_" + (correlativo))">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <a data-toggle="collapse" data-parent="#accordeonNombreSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" href="#collapseNombreSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" @(beneficiario.esNuevo == true ? "class= alert-danger" : string.Empty)>
+                    @Html.DisplayFor(b => beneficiario.NombreBeneficiario)
+
+                    @Html.DisplayFor(b => beneficiario.RutBeneficiario)
+                </a>
+
+
+
+
+            </div>
+            <div id="collapseNombreSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Cargo: @Html.DisplayFor(b => beneficiario.nombreCargo)
+
+                    <br />
+                    <br />
+
+
+                    @if (beneficiario.listaGastosPer.Count() > 0)
+                    {
+                        <div class="panel-group" id="accordeonGastosPerSol@((beneficiario.idBeneficiario) + "_" + (correlativo))">
+                            <div class="panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordeonGastosPerSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" href="#collapseGastosPerSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" @(beneficiario.esNuevo == true ? "class= alert-danger" : string.Empty)>
+                                        Gastos Personales
+                                    </a>
+                                </div>
+                                <div id="collapseGastosPerSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" class="panel-collapse collapse">
+                                    <div class="panel panel-body">
+                                        @Html.Partial("_PartialGastoPersonalSol", beneficiario)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (beneficiario.listaGastosAdm.Count() > 0)
+                    {
+                        <div class="panel-group" id="accordeonGastosAdmSol@((beneficiario.idBeneficiario) + "_" + (correlativo))">
+                            <div class="panel-default">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-parent="#accordeonGastosAdmSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" href="#collapseGastosAdmSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" @(beneficiario.esNuevo == true ? "class= alert-danger" : string.Empty)>
+                                        Gastos Administrativos
+                                    </a>
+                                </div>
+                                <div id="collapseGastosAdmSol@((beneficiario.idBeneficiario) + "_" + (correlativo))" class="panel-collapse collapse">
+                                    <div class="panel panel-body">
+                                        @Html.Partial("_PartialGastoAdmSol", beneficiario)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+                    correlativo++;
+
+}

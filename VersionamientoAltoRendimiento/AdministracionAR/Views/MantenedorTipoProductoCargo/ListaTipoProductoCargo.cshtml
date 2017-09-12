@@ -1,0 +1,50 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorTipoProductoCargoModel
+
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarTipoProductoCargo", "MantenedorTipoProductoCargo", null, new { data_modal = "", id = "btnAgregarTipoProductoCargo", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+
+@if(Model.ListaCargosTipoProduto.Count > 0)
+{ 
+<div class="table-responsive">
+    <table id="tblTipoProductoCargo" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorTipoProductoCargoModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreCargoBuscar = Model.NombreCargoBuscar, idTipoProducto = Model.idTipoProducto })
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaCargosTipoProduto)
+            {
+                <tr>
+                    <td>
+                        @item.NombreCargo
+                    </td>
+                    <td>
+                        @item.DescripcionCargo
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarTipoProductoCargo", new { idTipoProducto = Model.idTipoProducto, idCargo = item.IdCargo }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarTipoProductoCargo", new { id = item.IdCargoProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaCargosTipoProduto.PageCount < Model.ListaCargosTipoProduto.PageNumber ? 0 : Model.ListaCargosTipoProduto.PageNumber) de @Model.ListaCargosTipoProduto.PageCount
+        @Html.PagedListPager(Model.ListaCargosTipoProduto, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorTipoProductoCargoModel { SortOrder = ViewBag.CurrentSort, Page = page, NombreCargoBuscar = Model.NombreCargoBuscar, idTipoProducto = Model.idTipoProducto }))
+    </div>
+</div>
+}

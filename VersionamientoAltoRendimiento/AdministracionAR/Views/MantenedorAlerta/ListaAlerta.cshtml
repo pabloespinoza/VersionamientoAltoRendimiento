@@ -1,0 +1,98 @@
+﻿@model AltoRendimiento.Administracion.Models.AlertaModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nueva", "CrearAlerta", "MantenedorAlerta", null, new { data_modal = "", id = "btnAgregar", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnCambiarEstadoPreselecionado').click(function () {
+
+            var url = '@Url.Action("CambiarEstado")';
+            var model = $('form').serialize();
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    console.log(data);
+                    $('#myModalContent').html(data);
+
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        });
+    });
+</script>
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.aleNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sWorkFlowInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sWorkFlowDestino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sAdjuntaArchivo)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaAlertas)
+            {
+                <tr>
+                    <td>
+                        @item.aleNombre
+                    </td>
+                    <td>
+                        @item.sWorkFlowInicio
+                    </td>
+                    <td>
+                        @item.sWorkFlowDestino
+                    </td>
+                    <td>
+                        @item.sAdjuntaArchivo
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @*@Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaPlantillaCampo", new { idAlerta = item.idAlerta }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Campos Alerta' src=\"Images/arroba-sign.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaExclusionUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Excluir Usuario de Correo Alerta' src=\"Images/delete-user.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaRol", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Roles' src=\"Images/people.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Usuario' src=\"Images/interface.png\" ... />"))*@
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @*@Html.Raw(@Html.ActionLink("[replacetext]", "EliminarAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))*@
+                        @*@Html.Raw(@Html.ActionLink("[replacetext]" , "VistaPreliminar" , "MantenedorAlerta" , new { plantilla = item.idAlerta } , new { @id = "Preliminar" }))*@
+                        @*<a href="#" onclick="VerProyecto(@row.IdProyecto)" data_toggle:"tooltip" title="Ver Proyecto" class="fa fa-eye fa-lg" @((@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnVerProyecto == false) ? "display:none" : "display:block")></a>*@
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaAlertas.PageCount < Model.ListaAlertas.PageNumber ? 0 : Model.ListaAlertas.PageNumber) de @Model.ListaAlertas.PageCount
+        @Html.PagedListPager(Model.ListaAlertas, page => Url.Action("Index", new { page }))
+    </div>
+</div>

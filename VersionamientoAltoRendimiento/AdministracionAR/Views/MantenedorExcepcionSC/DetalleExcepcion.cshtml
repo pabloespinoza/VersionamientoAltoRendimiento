@@ -1,0 +1,31 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionSCModel
+
+@{
+    ViewBag.Title = "Ver Justificación";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Ver Justificación</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(model => model.JustificacionExcepcion, "Justificación", new { @class = "col-sm-3" })
+                <div class="col-sm-9">
+                    @Model.JustificacionExcepcion
+                    @Html.HiddenFor(model => model.JustificacionExcepcion)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+    </div>
+}

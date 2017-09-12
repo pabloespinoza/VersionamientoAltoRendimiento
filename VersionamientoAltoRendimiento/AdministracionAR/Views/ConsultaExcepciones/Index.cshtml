@@ -1,0 +1,121 @@
+﻿@model AltoRendimiento.Administracion.Models.ConsultaExcepcionesModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Consulta de Excepxiones</li>
+        </ol>
+    </div>
+</div>
+
+<h3>Consulta de Excepciones</h3>
+
+<div class="row">
+    <div class="co-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Busqueda
+            </div>
+            @using (Html.BeginForm("Index", "ConsultaExcepciones",FormMethod.Get))
+            {
+                 <div class="panel-body">
+                     <div class="row">
+                         <div class="form-group">
+                             @Html.LabelFor(m => m.ProyectoId,
+                                new
+                                {
+                                    @class = "control-label col-md-2"
+                                })
+                             <div class="col-md-8">
+                                 @Html.DropDownListFor(m => m.ProyectoId, Model.ListaProyectos,
+                                 new
+                                 {
+                                     @class = "form-control"
+                                 })
+                             </div>
+                         </div>
+                     </div>
+                     <br />
+                     <div class="row">
+                         <div class="form-group">
+                             @Html.LabelFor(m => m.ProyectoFolio,
+                                new
+                                {
+                                    @class = "control-label col-md-2"
+                                }
+                            )
+                             <div class="col-md-8">
+                                 @Html.TextBox("folio",null,
+                                 new
+                                 {
+                                     @class = "form-control",
+                                     Name = "ProyectoFolio",
+                                     id = "ProyectoFolio"   
+                                 })
+                             </div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="form-group pull-right">
+                             <div class="col-md-12">
+                                 <button value="Consultar" id="btnFiltrar" class="btn btn-sm btn-success">Consultar</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            }
+        </div>
+        <div id="divlistaProductos" class="hidden">
+            @Html.Partial("ListaProductos", Model)
+        </div>
+       
+    </div>
+    <div id="divMensaje" ></div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/modalform")
+    }
+</div>
+<script>
+    $("#ProyectoFolio").val("");
+    if ($("#ProyectoId").val() != 0 || $("#ProyectoFolio").val() != 0)
+    {
+        $("#divlistaProductos").removeClass("hidden");
+    }
+
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        if (codRespuesta == '1') {
+            $("#tblData").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+   
+</script>
+
+

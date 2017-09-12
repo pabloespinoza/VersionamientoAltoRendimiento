@@ -1,0 +1,155 @@
+﻿@model AltoRendimiento.Administracion.Models.ResumenSolicitudCambioModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnGuardarEstado').click(function () {
+
+            $('#form-GuardarSolicitudCambio').validate({
+                rules: {
+                    ObservacionCambio: {
+                        required: true
+                    },
+                    idEstado: {
+                        required : true
+                    }
+                },
+                messages: {
+                    ObservacionCambio: {
+                        required: "El Campo Comentario es requerido"
+                    },
+                    idEstado: {
+                        required: "El Campo Estado es requerido"
+                    }
+                },
+                errorClass: 'text-danger',
+                submitHandler: function () {
+                    var url = '@Url.Action("GuardarSolicitud")';
+                    var model = $('form').serialize();
+                    console.log(model);
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: model,
+                        dataType: 'json',
+                        success: function (data) {
+
+                            $("#" + data.Div).show();
+                            $("#lblErrorSC").text(data.Mensaje);
+                            $("#lblMensajeSC").text(data.Mensaje);
+                            $("#btnGuardarEstado").prop("disabled", true);
+                            $("#btnCancelarEstado").text("Cerrar");
+                            $("#btnCancelarEstado").removeClass("btn-warning");
+                            $("#btnCancelarEstado").addClass("btn btn-info");
+                            $('#ddl_Estados').prop('disabled', true);
+                            $('#ObservacionCambio').prop('disabled', true);
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+            });
+        });
+
+
+        @*$('#btnGuardarEstado').click(function () {
+            var url = '@Url.Action("GuardarSolicitud")';
+            var model = $('form').serialize();
+            console.log(model);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Valid)
+                    {
+                        $("#Mensaje").show();
+                        $("#btnGuardarEstado").prop("disabled", true);
+                        $("#btnCancelarEstado").text("Cerrar");
+                        $("#btnCancelarEstado").removeClass("btn-warning");
+                        $("#btnCancelarEstado").addClass("btn btn-info");
+                        return;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });*@
+
+    });
+</script>
+
+<div class="container">
+    <div id='myModal' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-header">
+    <label class="control-label">Confirmar Envio</label>
+</div>
+
+@using (Html.BeginForm("GuardarSolicitudCambio", "SolicitudCambio", FormMethod.Post, new { id = "form-GuardarSolicitudCambio" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <div class="modal-body">
+        <div class="form-group">
+            <div id="Mensaje" class="alert alert-info" role="alert" style="display:none">
+                <label id="lblMensajeSC">La solicitud de cambio se ha evaluado con éxito</label>
+            </div>
+            <div id="Mensaje_Error" class="alert alert-danger" role="alert" style="display:none">
+                <label id="lblErrorSC" >La solicitud ya fue Evaluada, no se puede Aprobar o Rechazar en este punto.</label>
+            </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="lblEstado" class="control-label col-md-4">Estado Seleccionado </label>
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.idEstado, Model.ListaEstado, "--Seleccione--", new { @id = "ddl_Estados", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lblFecha" class="control-label col-md-4">Fecha</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.FechaModificacion, "{0:dd/MM/yyyy}", new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lblUsuario" class="control-label col-md-4">Usuario</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.UsuarioModificacion, new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        @Html.HiddenFor(m => m.idSolicitud)
+        @Html.HiddenFor(m => m.idProyecto)
+        @Html.HiddenFor(m => m.idProductoOriginal)
+        @Html.HiddenFor(m => m.idUsuario)
+        <div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>
+                        Comentario
+                    </legend>
+                    <div class="form-group col-xs-12">
+                        @Html.TextAreaFor(p => p.ObservacionCambio, new { @class = "form-control", @rows = "5", @maxlength = "50000" })
+                        @Html.ValidationMessage("ObservacionCambio", new { @class = "text-danger" })
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="btnGuardarEstado" class="btn btn-sm btn-success ">Guardar</button>
+        <button type="button" id="btnCancelarEstado" class="btn btn-sm btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+    </div>
+}
+
+

@@ -1,0 +1,89 @@
+﻿@model AltoRendimiento.Administracion.Models.HistorialAsignacionLineaModel
+<br />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">Historial de cambios de Asignación de Recursos</div>
+        </div>
+    </div>
+</div>
+
+<div id="divMensaje"></div>
+
+<div class="table-responsive">
+    @Html.HiddenFor(model => model.idOrganizacionLinea)
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.sUsuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.halFechaCreacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sMontoDiferencia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.halPresupuestoOriginal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.halPresupuestoNuevo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sGlosaAccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.halObservacion)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaHistorial)
+            {
+                <tr>
+                    <td>
+                        @item.sUsuario
+                    </td>
+                    <td>
+                        @item.halFechaCreacion
+                    </td>
+                    <td>
+                        @item.sMontoDiferencia
+                    </td>
+                    <td>
+                        @item.halPresupuestoOriginal
+                    </td>
+                    <td>
+                        @item.halPresupuestoNuevo
+                    </td>
+                    <td>
+                        @item.sGlosaAccion
+                    </td>
+                    <td>
+                        @item.halObservacion
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>
+
+<script>
+    var codError = '@(ViewBag.codRespuesta)';
+    var mensajeRespuesta = '@(ViewBag.msgRespuesta)'
+    var tipoEstilo = "";
+
+    if (codError == '1') {
+        tipoEstilo = "alert-danger";
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable">' + mensajeRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        $("#tblData").attr("style", "display:none;");
+    }
+</script>

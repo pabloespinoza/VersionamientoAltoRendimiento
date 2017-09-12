@@ -1,0 +1,49 @@
+﻿@model AltoRendimiento.Administracion.Models.AsignacionRecurso
+
+@{
+    ViewBag.Title = "Detalle Comprometido.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Detalle Comprometido</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Detalle Comprometido
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.sComprometido, new { @class = "col-md-4" })*@
+                        @Html.Label("Comprometido Aprobado", new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.sComprometido
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sTotalSeleccionado, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.sTotalSeleccionado
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sTotal, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.sTotal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>

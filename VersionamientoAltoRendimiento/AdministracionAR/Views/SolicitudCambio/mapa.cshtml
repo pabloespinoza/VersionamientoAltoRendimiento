@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<div class="map" id="map_canvas" style="width: 439px; height: 330px; margin-bottom: 5px; "></div>
+<script src="//maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    var loc = document.location.href;
+    var getString = loc.split('?')[1];
+    var GET = getString.split('&');
+    var get = {};//this object will be filled with the key-value pairs and returned.
+
+    for (var i = 0, l = GET.length; i < l; i++) {
+        var tmp = GET[i].split('=');
+        get[tmp[0]] = unescape(decodeURI(tmp[1]));
+    }
+
+    var mapDelete;
+    function initialize() {
+        mapDelete = new google.maps.Map(document.getElementById("map_canvas"), { zoom: 15, center: new google.maps.LatLng(get["coordenadaX"], get["coordenadaY"]), mapTypeId: google.maps.MapTypeId['ROADMAP'] });
+        var markerDelete = new google.maps.Marker({
+            position: new google.maps.LatLng(get["coordenadaX"], get["coordenadaY"]),
+        });
+        markerDelete.setMap(mapDelete);
+
+    }
+    initialize();
+    
+    
+</script>

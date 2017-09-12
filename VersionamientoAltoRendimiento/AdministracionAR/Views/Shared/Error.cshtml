@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Error.cshtml";
+}
+
+@*@model AltoRendimiento.Administracion.Models.InfoSysModel*@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <div class="panel panel-default">
+        <div class="panel-heading">Información de Sistema</div>
+        <div class="panel-body">
+            <h3>Información :</h3> 
+            <h4>Se ha producido un error interno. Si este persiste favor comunicarse con el Administrador.</h4>
+
+            @if (Request.UrlReferrer != null)
+            {
+                <a class="bottomNav" onclick="history.go(-1); return false;" href="#">Volver</a><br />
+            }
+        </div>
+    </div>
+
+   
+</body>
+</html>

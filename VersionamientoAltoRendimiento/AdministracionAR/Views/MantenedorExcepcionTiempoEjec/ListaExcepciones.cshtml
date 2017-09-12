@@ -1,0 +1,85 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionTiempoEjecModel
+
+@using PagedList.Mvc;
+@using System.Globalization;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarExcepcion", "MantenedorExcepcionTiempoEjec", null, new { data_modal = "", id = "btnAgregarExcepcion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+@if (Model.ListaExcepciones != null && Model.ListaExcepciones.Count > 0)
+{
+    <div class="table-responsive">
+        <table id="tblExcepcionTiempoEjec" class="table table-condensed table-bordered  table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre Producto
+                        @*@Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorNivelModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional })*@
+                    </th>
+                    <th>
+                        Tipo Producto
+                    </th>
+                    <th>
+                        Nombre Línea
+                    </th>
+                    <th>
+                        Mes Inicio Producto
+                    </th>
+                    <th>
+                        Mes Fin Producto Original
+                    </th>
+                    <th>
+                        Mes Fin Producto Excepción
+                    </th>
+                    <th>
+                        Año Excepción
+                    </th>
+                    <th>
+                        Acción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaExcepciones)
+                {
+                    <tr>
+                        <td>
+                            @item.NombreProducto
+                        </td>
+                        <td>
+                            @item.NombreTipoProducto
+                        </td>
+                        <td>
+                            @item.NombreLinea
+                        </td>
+                        <td>
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(item.MesInicioProducto))
+                        </td>
+                        <td>
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(item.MesFinOrginalProducto))
+                        </td>
+                        <td>
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(int.Parse(item.MesFinExcepcionProducto))
+                        </td>
+                        <td>
+                            @item.AnioExcepcionProducto
+                        </td>
+                        <td class="text-right">
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleExcepcion", new { id = item.IdExcepcionTiempoEjecucion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Justificación' src=\"Images/Reporte.png\" ... />"))
+                            @* @Html.Raw(@Html.ActionLink("[replacetext]", "EditarExcepcion", new { id = item.IdExcepcionTiempoEjecucion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))*@
+                            @if (item.Elimina)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarExcepcion", new { id = item.IdExcepcionTiempoEjecucion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="dvInfoPaginacion">
+            Página @(Model.ListaExcepciones.PageCount < Model.ListaExcepciones.PageNumber ? 0 : Model.ListaExcepciones.PageNumber) de @Model.ListaExcepciones.PageCount
+            @Html.PagedListPager(Model.ListaExcepciones, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorExcepcionTiempoEjecModel { SortOrder = ViewBag.CurrentSort, Page = Model.Page/*, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional*/ }))
+        </div>
+    </div>
+}

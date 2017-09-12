@@ -1,0 +1,82 @@
+﻿@model AltoRendimiento.Administracion.Models.Cargo_Producto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cargo_Producto</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cprMontoViatico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprMontoViatico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cprEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cprFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cprUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cprFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cprUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cprUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargo.carNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo.carNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Producto.tprNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Producto.tprNombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idCargoProducto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,90 @@
+﻿@model AltoRendimiento.Administracion.Models.AlertaModel
+
+@{
+    ViewBag.Title = "Inicio";
+}
+
+@*<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Mantenedor de Plantilla Correo Alerta</li>
+        </ol>
+    </div>
+</div>
+
+<h3>Mantenedor de Plantilla Correo Alerta</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "MantenedorAlerta", FormMethod.Get))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.sNombreBusqueda, new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.sNombreBusqueda, new { @class = "form-control", @maxlength = "10" })
+                                @Html.ValidationMessageFor(model => model.sNombreBusqueda, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Filtrar" id="btnFiltrar" class="btn btn-sm btn-success">Filtrar</button>
+                                <a href="MantenedorAlerta" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaAlerta", Model)
+    </div>
+</div>
+
+<div id="divMensaje"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        if (codRespuesta == '1') {
+            $("#tblData").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+</script>

@@ -1,0 +1,65 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorTipoProductoCargoModel
+
+@{
+    ViewBag.Title = "Eliminar Cargo Relacionado.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar el Cargo Relacionado?</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.IdCargoProducto)
+            <div class="form-group">
+                @Html.LabelFor(model => model.GlosaTipoProducto, "Tipo de Producto", new { @class = "col-md-4" })
+                <div class="col-md-8">
+                    @Model.GlosaTipoProducto
+                    @Html.HiddenFor(model => model.GlosaTipoProducto)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NombreCargo, "Cargo", new { @class = "col-md-4" })
+                <div class="col-md-8">
+                    @Model.NombreCargo
+                    @Html.HiddenFor(model => model.NombreCargo)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DescripcionCargo, "Descripción Cargo", new { @class = "col-md-4" })
+                <div class="col-md-8">
+                    @Model.DescripcionCargo
+                    @Html.HiddenFor(model => model.DescripcionCargo)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEliminar" class="btn btn-sm btn-success ">Eliminar</button>
+    </div>
+}
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        $("#btnEliminar").attr("disabled", "disabled");
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnCancelar").html("Cerrar");
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+
+    }
+</script>

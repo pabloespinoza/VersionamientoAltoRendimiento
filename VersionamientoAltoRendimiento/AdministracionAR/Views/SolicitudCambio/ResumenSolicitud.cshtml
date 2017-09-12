@@ -1,0 +1,294 @@
+﻿@model AltoRendimiento.Administracion.Models.ResumenSolicitudCambioModel
+
+@{
+    ViewBag.Title = "ResumenSolicitud";
+}
+<div class="container">
+    <div id="myModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="myModalContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnEnviar").click(function () {
+            var url = '@Url.Action("EnviarSolicitud")';
+            model = $('form').serialize();
+            console.log(model)
+            $.ajax({
+                url: url,
+                type: 'Post',
+                data: model,
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+
+                    alert("Error");
+                }
+            });
+
+        });
+
+    });
+</script>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Bandeja Entrada", "Index", "BandejaEntrada")</li>
+            <li>Solicitud de cambio</li>
+        </ol>
+    </div>
+</div>
+
+<h3>Resumen Solicitud de Cambio</h3>
+
+<br />
+
+<div class="panel panel-primary">
+    <div class="panel-heading" id="accordeonCero">
+        <div class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordeonCero" href="#collapseCero">
+                Motivo de Cambio
+            </a>
+        </div>
+    </div>
+    <div class="panel-collapse collapse in" id="collapseCero">
+        <div class="panel-body">
+            <fieldset disabled>
+                @Html.TextAreaFor(m => m.MotivoCambio, new { @class = "form-control", @rows = 8, @id = "txt_motivoCambio", @maxlength = "2047", @style = "resize: none" })
+                @Html.ValidationMessageFor(m => m.MotivoCambio)
+            </fieldset>
+        </div>
+    </div>
+
+</div>
+
+<div class="panel-default">
+    @Html.Partial("_CuadroResumen", Model.CuadroResumen)
+</div>
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Producto Original
+        </div>
+        <!--<div class="panel-body">-->
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span>@Model.productoOriginal.NombreProductoOriginal</span>
+            </li>
+            <li class="list-group-item">
+                Fecha Inicio:&nbsp;@Html.DisplayFor(m => m.productoOriginal.fechaInicioProducto)
+            </li>
+            <li class="list-group-item">
+                Fecha Fin:&nbsp;@Html.DisplayFor(m => m.productoOriginal.fechaFinProducto)
+            </li>
+            <li class="list-group-item">
+                Tipo Producto:&nbsp;@Html.DisplayFor(m => m.productoOriginal.tipoProducto)
+            </li>
+            <li class="list-group-item">
+                Categoria:&nbsp;@Html.DisplayFor(m => m.productoOriginal.categoria)
+            </li>
+            <li class="list-group-item">
+                Nivel:&nbsp;@Html.DisplayFor(m => m.productoOriginal.nivel.nivNombre)
+            </li>
+            @if (Model.productoOriginal.nivel.idNivel == 1)
+            {
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Región:&nbsp;");
+                @Html.DisplayFor(m => m.productoOriginal.region);
+                @Html.Raw("</li>");
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Comuna:&nbsp;");
+                @Html.DisplayFor(m => m.productoOriginal.comuna);
+                @Html.Raw("</li>");
+            }
+            else
+            {
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Pais:&nbsp;");
+                @Html.DisplayFor(m => m.productoOriginal.pais);
+                @Html.Raw("</li>");
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Ciudad:&nbsp;");
+                @Html.DisplayFor(m => m.productoOriginal.ciudad);
+                @Html.Raw("</li>");
+            }
+        </ul>
+        <!--</div>-->
+    </div>
+    @if (Model.productoOriginal.listaBeneficiarios.Count() > 0)
+    {
+        <div class="panel-group" id="accordeonBeneficiariosOrg">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonBeneficiariosOrg" href="#collapseBeneficiariosOrg">Beneficiarios</a>
+                </div>
+                <div id="collapseBeneficiariosOrg" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialBeneficiariosOrg", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.productoOriginal.listaGastosAdm.Count() > 0)
+    {
+        <div class="panel-group" id="accordeonGastoAAdmOrg">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonGastoAAdmOrg" href="#collapseGastoAAdmOrg">Gastos de Administracion</a>
+                </div>
+                <div id="collapseGastoAAdmOrg" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialGastoAdmPrOrg", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span @(Model.productoSolicitud.esNuevo == true ? "class= alert-danger" : string.Empty)>Producto Solicitud</span>
+        </div>
+        <!--<div class="panel-body">-->
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span>@Model.productoSolicitud.NombreProductoSolicitud</span>
+            </li>
+            <li class="list-group-item">
+                Fecha Inicio:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.fechaInicioProducto)
+            </li>
+            <li class="list-group-item">
+                Fecha Fin:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.fechaFinProducto)
+            </li>
+            <li class="list-group-item">
+                Tipo Producto:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.tipoProducto)
+            </li>
+            <li class="list-group-item">
+                Categoria:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.categoria)
+            </li>
+            <li class="list-group-item">
+                Nivel:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.nivel.nivNombre)
+            </li>
+            @if (Model.productoSolicitud.nivel.idNivel == 1)
+            {
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Región:&nbsp;");
+                @Html.DisplayFor(m => m.productoSolicitud.region);
+                @Html.Raw("</li>");
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Comuna:&nbsp;");
+                @Html.DisplayFor(m => m.productoSolicitud.comuna);
+                @Html.Raw("</li>");
+            }
+            else
+            {
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Pais:&nbsp;");
+                @Html.DisplayFor(m => m.productoSolicitud.pais);
+                @Html.Raw("</li>");
+                @Html.Raw("<li class=\"list-group-item\">");
+                @Html.Raw("Ciudad:&nbsp;");
+                @Html.DisplayFor(m => m.productoSolicitud.ciudad);
+                @Html.Raw("</li>");
+            }
+        </ul>
+        <!--</div>-->
+    </div>
+    @if (Model.productoSolicitud.listaBeneficiarios.Count() > 0)
+    {
+        bool tienenuevosB = false;
+
+        foreach (var item in Model.productoSolicitud.listaBeneficiarios)
+        {
+            if (item.esNuevo == true)
+            {
+                tienenuevosB = true;
+            }
+        }
+
+        <div class="panel-group" id="accordeonBeneficiariosSol">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonBeneficiariosSol" href="#collapseBeneficiariosSol" @(tienenuevosB == true ? "class= alert-danger" : string.Empty)>Beneficiarios</a>
+                </div>
+                <div id="collapseBeneficiariosSol" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialBeneficiariosSol", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.productoSolicitud.listaGastosAdm.Count() > 0)
+    {
+        bool tienenuevosG = false;
+
+        foreach (var item in Model.productoSolicitud.listaGastosAdm)
+        {
+            if (item.esNuevo == true)
+            {
+                tienenuevosG = true;
+            }
+        }
+
+        <div class="panel-group" id="accordeonGastoAAdmSol">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonGastoAAdmSol" href="#collapseGastoAAdmSol" @(tienenuevosG == true ? "class= alert-danger" : string.Empty)>Gastos de Administracion</a>
+                </div>
+                <div id="collapseGastoAAdmSol" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialGastoAdmPrSol", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="col-md-12">
+    <div class="panel-default">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <form class="form-horizontal has-warning" role="form">
+                <div class="panel-body">
+                    @Html.HiddenFor(m => m.idSolicitud)
+                    @Html.HiddenFor(m => m.idProyecto)
+                    @Html.HiddenFor(m => m.idProductoOriginal)
+                    @Html.HiddenFor(m => m.idUsuarioCreacion)
+                    <div class="form-inline">
+                        <div class="row">
+                            <fieldset>
+                                <div class="btn-group">
+                                    <div class="col-md-5">
+                                        @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-info pull-left", @style = "color:White" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <button type="button" class="btn btn-success" id="btnEnviar">Enviar</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</div>

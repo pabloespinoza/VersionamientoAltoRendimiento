@@ -1,0 +1,41 @@
+﻿@model AltoRendimiento.Administracion.Models.GeoModel
+
+
+
+ @foreach (var horario in Model.listaHorarios)
+ {
+    <div class="panel-default">
+        <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordeonHorarioOrg@((horario.idHorario) + "_" + (horario.correlativo))" href="#collapseHorarioOrg@((horario.idHorario) + "_" + (horario.correlativo))">
+                Horario Fecha de Inicio: @Html.DisplayFor(h => horario.fechaInicio)
+            </a>
+        </div>
+    </div>
+    <div id="collapseHorarioOrg@((horario.idHorario) + "_" + (horario.correlativo))" class="panel-collapse collapse">
+        <ul class="list-group">
+
+            <li class="list-group-item">
+                @Html.DisplayNameFor(h => horario.fechaFin):
+                @Html.DisplayFor(h => horario.fechaFin)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(h => horario.dias):
+                @Html.DisplayFor(h => horario.dias)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(h => horario.horaInicio):
+                @Html.DisplayFor(h => horario.horaInicio)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(h => horario.horafin):
+                @Html.DisplayFor(h => horario.horafin)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(h => horario.periodico):
+                @Html.DisplayFor(h => horario.periodico)
+            </li>
+        </ul>
+    </div>
+ }
+
+

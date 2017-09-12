@@ -1,0 +1,80 @@
+﻿@model AltoRendimiento.Administracion.Models.TipoGastoAdministracionModel
+
+@{
+    ViewBag.Title = "Editar Tipo Gasto Administración.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Editar Tipo Gasto Administración</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idTipoGastoAdministracion)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Tipo Gasto Administración
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaNombre, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.tgaNombre, new { @class = "form-control", @maxlength = "128" })
+                            @Html.ValidationMessageFor(model => model.tgaNombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TipoGastoConverge, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.idTipoGastoConverge, new SelectList(Model.TipoGastoConverge, "Value", "Text", Model.idTipoGastoConverge), "--Seleccione--", new { @id = "Concurso-DropdownID", @class = "form-control", @data_toggle = "tooltip", @title = "Concurso Asociado al Proyecto." })
+                            @Html.ValidationMessageFor(model => model.tgaNombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaDescripcion, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Html.TextAreaFor(model => model.tgaDescripcion, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.tgaDescripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaNumeroGastoAdministracion, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.tgaNumeroGastoAdministracion, new { @class = "form-control", @maxlength = "10" })
+                            @Html.ValidationMessageFor(model => model.tgaNumeroGastoAdministracion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEditar" class="btn btn-sm btn-success">Guardar</button>
+    </div>
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnEditar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        $("#tgaNombre").attr("disabled", "disabled");
+        $("#tgaDescripcion").attr("disabled", "disabled");
+        $("#tgaNumeroGastoAdministracion").attr("disabled", "disabled");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>

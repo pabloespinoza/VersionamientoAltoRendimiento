@@ -1,0 +1,65 @@
+﻿@model AltoRendimiento.Administracion.Models.PaisModel
+
+@{
+    ViewBag.Title = "Eliminar País.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar País?</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idPais)
+            @Html.HiddenFor(model => model.idZonaPais)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes País
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.paiNombre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.paiNombre
+                            @Html.HiddenFor(model => model.paiNombre)
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sNombreZona, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.sNombreZona
+                            @Html.HiddenFor(model => model.sNombreZona)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEliminar" class="btn btn-sm btn-success">Eliminar</button>
+    </div>
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnEliminar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>

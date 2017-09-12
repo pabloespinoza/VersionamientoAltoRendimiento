@@ -1,0 +1,46 @@
+﻿@model AltoRendimiento.Administracion.Models.ConsultaExcepcionesModel
+@using PagedList.Mvc;
+
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(m=>m.ProductoId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(m=>m.sProducto)
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaProductos)
+            {
+                <tr>
+                    @*<td>
+                        @item.ProductoId
+                    </td>*@
+                    <td>
+                        @item.sProducto
+                    </td>
+                    <td>
+                        @if (item.ExTiempoEjecucion)
+                        {
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExTiempoEjecucion", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Tiempo de Ejecucion' src=\"Images/Reporte.png\" ... />"))
+                        }
+                        @if (item.ExSolicitudCambio)
+                        {
+                           @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExSolicitudCambio", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"Images/Solicitud_Cambio.png\" ... />"))
+                        }
+                    </td>
+                </tr> 
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaProductos.PageCount<Model.ListaProductos.PageNumber ? 0 : Model.ListaProductos.PageNumber) de @Model.ListaProductos.PageCount
+    </div>
+</div>

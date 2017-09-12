@@ -1,0 +1,159 @@
+﻿@model AltoRendimiento.Administracion.Models.ReporteProductoFiscalizacionModel
+
+@{
+    ViewBag.Title = "Reporte Producto Fiscalización.";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnExportarExcel').click(function () {
+
+            $('#form-Export').submit();
+        });
+
+        console.log("entro a la funcion");
+
+
+
+    });
+</script>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Reporte Producto Fiscalización</li>
+        </ol>
+    </div>
+</div>
+<h3>Reporte Producto Fiscalización</h3>
+
+@if (Model.ListaProductosFiscalizacion != null)
+{
+    <div class="col-xs-12 col-md-12">
+        <div class="pull-right">
+            @Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProductoFiscalizacion", new { rut = Model.Rut, Concurso = Model.IdConcurso, Codigo = Model.CodigoProyecto, Linea = Model.IdLinea, Workflow = Model.IdEstado }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
+        </div>
+    </div>
+}
+<br />
+<br />
+<div id="mensaje"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "ReporteProductoFiscalizacion", FormMethod.Post))
+            {
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="form-group">
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.Rut)</label>
+                            <div class="col-xs-5">
+                                @Html.TextBoxFor(p => p.Rut, new { @class = "form-control", size = "2", @maxlength = "8", @onkeypress = "return permite(event, 'numeros');", @placeholder = "Rut de la Federación 12345678" })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.IdConcurso)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdConcurso, new SelectList(Model.ListConcurso, "idConcurso", "conNombre", Model.IdConcurso), "Seleccione...", new { @id = "Concurso-DropdownID", @onchange = "buscaLineas()", @class = "form-control", @data_toggle = "tooltip", @title = "Concurso Asociado al Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.CodigoProyecto)</label>
+                            <div class="col-xs-5">
+                                @Html.TextBoxFor(p => p.CodigoProyecto, new { @class = "form-control", @maxlength = "10", @onkeypress = "return permite(event, 'numeros');", @placeholder = "Codigo del Proyecto", @data_toggle = "tooltip", @title = "Codigo del Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.IdLinea)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdLinea, new SelectList(Model.ListLinea, "idLinea", "linNombre", Model.IdLinea) , "Seleccione...", new { @id = "Linea-DropdownID", @class = "form-control", @data_toggle = "tooltip", @title = "Filtra por cuota del Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.IdEstado)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdEstado, new SelectList(Model.ListEstadoProyecto, "idEstado", "eprNombre", Model.IdEstado), "Seleccione...", new { @id = "Estado-DropdownID", @class = "form-control" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="pull-right">
+                                <input id="btnBuscar" type="submit" class="btn btn-sm btn btn-success" value="Buscar" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-7">
+                            <div class="pull-right">
+                                <a href="ReporteProductoFiscalizacion" class="btn btn-primary">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    @Html.Partial("ListaProductoFiscalizacion", Model)
+</div>
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/modalform")
+
+<script>
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#tblProductosFiscalizacion").attr("style", "display:none;");
+            $("#btnExportarExcel").attr("style", "display:none;");
+        }
+    }
+
+    function buscaLineas() {
+        var nIdConcurso = $("#Concurso-DropdownID").val();
+        $("#Linea-DropdownID").html("");
+
+        $.ajax({
+            url: "BandejaEntrada/buscaLineas"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idConcurso: nIdConcurso }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    bootbox.alert({ message: info.Mensaje, backdrop: false });
+                } else {
+                    $("#Linea-DropdownID").append($("<option />", {
+                        value: 0,
+                        text: "Seleccione..."
+                    }));
+                    $.each(info.Datos, function (index, concurso) {
+                        $("#Linea-DropdownID").append($("<option />", {
+                            value: concurso.idLinea,
+                            text: concurso.linNombre
+                        }));
+                    });
+                    $("#Linea-DropdownID").focus();
+                }
+            }
+        });
+    }
+</script>

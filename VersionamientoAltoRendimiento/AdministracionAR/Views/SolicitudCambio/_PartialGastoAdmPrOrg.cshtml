@@ -1,0 +1,39 @@
+﻿@model AltoRendimiento.Administracion.Models.ResumenSolicitudCambioModel
+
+@{
+    int correlativo = 0;
+}
+
+@foreach (var gastoAdm in Model.productoOriginal.listaGastosAdm)
+{
+    <div class="panel-group" id="accordeonDetalleGastosAdmOrg@((gastoAdm.idGasto) + "_" + (correlativo))">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordeonDetalleGastosAdmOrg@((gastoAdm.idGasto) + "_" + (correlativo))" href="#collapseGastosAdmDetalleOrg@((gastoAdm.idGasto) + "_" + (correlativo))">
+                    Tipo de Gasto :@Html.DisplayFor(g => gastoAdm.tipoGasto)
+                </a>
+            </div>
+            <div id="collapseGastosAdmDetalleOrg@((gastoAdm.idGasto) + "_" + (correlativo))" class="panel-collapse collapse">
+
+                <ul class="list-group">
+
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoAdm.costoTotal) :
+                        @String.Format("{0:C0}", gastoAdm.costoTotal)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoAdm.descripcionGasto) :
+                        @Html.DisplayFor(g => gastoAdm.descripcionGasto)
+                    </li>
+                </ul>
+                @if (gastoAdm.listaGeo.Count() > 0)
+                {
+                    @Html.Partial("_PartialGeoOrg", gastoAdm)
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+

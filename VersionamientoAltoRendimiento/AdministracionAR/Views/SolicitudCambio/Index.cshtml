@@ -1,0 +1,84 @@
+﻿@*@model AltoRendimiento.Administracion.Models.Solicitud_Cambio*@
+@model IEnumerable<AltoRendimiento.Administracion.Models.Solicitud_Cambio>
+
+
+
+
+@{
+    ViewBag.Title = "Solicitudes Pendiente por Proyecto";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Bandeja Entrada", "Index", "BandejaEntrada")</li>
+            <li><b>Solicitudes a Evaluar</b></li>
+            <li>Proyecto @Model.First().Proyecto.proNombreProyecto</li>
+        </ol>
+    </div>
+</div>
+
+@*@Html.Action(actionName: "TempMessage", controllerName: "Message")*@
+
+<button type="button" onclick="volver()" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+<br />
+<h3>Solicitudes de Cambio por evaluar</h3>
+
+<table class="table table-condensed table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nombre Proyecto</th>
+            <th>Nombre Producto</th>
+            @*<th>Tipo Solicitud</th>
+            <th>Pendiente</th>*@
+            <th>Fecha Creación Solicitud</th>
+            <th>Fecha Recepción Solicitud</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proyecto.proNombreProyecto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto_Copia.Producto.prdNombre)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Tipo_Solicitud_Cambio.tscNombre)
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.scaPendiente == true ? "SI" : "NO")</td>*@
+                <td>@Html.DisplayFor(modelItem => item.scaFechaCreacion)</td>
+                <td>@Html.DisplayFor(modelItem => @*String.Format("{0:d}", *@item.scaFechaModificacion)</td>
+                <td>
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "ResumenSolicitud", new { idSolicitud = item.idSolicitudCambio }, new { data_modal = "", id = "btnTRevisarSolicitud", @class = "fa fa-code-fork fa-2x", @data_toggle = "tooltip", @title = "Resumen Solicitud de Cambio", @style = @AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnSolicituddeCambio == false ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", ""))
+                    @*Ver archivo de la solicitud de cambio*@
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "VerArchivo", new { idSolicitud = item.idSolicitudCambio}, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver archivos adjuntos de la Solicitud de Cambio' src=\"Images/BajarArchivo.png\" ... />"))
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<div id="modalMensaje" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Información</h4>
+            </div>
+            <div class="modal-body">
+                <label> @TempData["MensajeController"] </label>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            </div>
+        </div>
+    </div>
+</div>
+

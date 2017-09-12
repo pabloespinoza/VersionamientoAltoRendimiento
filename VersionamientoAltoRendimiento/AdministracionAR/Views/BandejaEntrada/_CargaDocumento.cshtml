@@ -1,0 +1,88 @@
+﻿@model AltoRendimiento.Administracion.Models.DocumentoModel
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var mensaje = '@ViewData["mensaje"]';
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+
+
+    });
+    
+
+</script>
+
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Carga de Documento</h4>
+</div>
+
+@using (Html.BeginForm("GuardarDocumento", "BandejaEntrada", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div id="mensaje" class="alert-success">
+    </div>
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+
+        <div class="form-group">
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="lblEstado" class="control-label col-md-4">Tipo Documento </label>
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(model => model.IdTipoDocumento, Model.ListaTipoDocumentos, "--Seleccione--", new { @id = "drp_idWorkflow", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdDocumento)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lblFecha" class="control-label col-md-4">Nombre Documento</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.Nombre, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lblFecha" class="control-label col-md-4">Documento</label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(p => p.archivodocumento, new { @class = "form-control", @type = "file", @name = "Documento" })
+                        @Html.ValidationMessageFor(model => model.archivodocumento)
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+        @Html.HiddenFor(p => p.IdProyecto)
+        <div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>
+                        Comentario
+                    </legend>
+                    <div class="form-group col-xs-12">
+                        @Html.Raw(Html.TextAreaFor(p => p.Observacion, new { @class = "form-control textArea", @rows = "5", @maxlength = "2047" }))
+                        @Html.ValidationMessageFor(model => model.Observacion)
+                    </div>
+                </fieldset>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-success ">Guardar</button>
+        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+    </div>
+}

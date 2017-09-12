@@ -1,0 +1,55 @@
+﻿@model AltoRendimiento.Administracion.Models.TipoGastoAdministracionModel
+
+@{
+    ViewBag.Title = "Detalle Tipo Gasto Personal.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Tipo Gasto Administración</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Tipo Gasto Administración
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaNombre, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.tgaNombre
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DescripcionGastoConverge, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.DescripcionGastoConverge
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaDescripcion, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.tgaDescripcion
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.tgaNumeroGastoAdministracion, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.tgaNumeroGastoAdministracion
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>
+

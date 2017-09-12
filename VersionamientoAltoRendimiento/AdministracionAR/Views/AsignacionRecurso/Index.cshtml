@@ -1,0 +1,104 @@
+﻿@model AltoRendimiento.Administracion.Models.AsignacionRecurso
+
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Asignación de Recursos</li>
+        </ol>
+    </div>
+</div>
+
+<h3>Asignación de Recursos</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "AsignacionRecurso", FormMethod.Get))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idConcurso, new { @class = "control-label col-md-2" })
+                            <div class="col-md-2">
+                                @Html.DropDownListFor(model => model.idConcurso, Model.ListaConcursos, new { @class = "form-control", @onchange = "focoFederacion()" })
+                                @Html.ValidationMessageFor(model => model.idConcurso, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.idOrganizacion, new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaFederaciones, new { @class = "form-control", @onchange = "focoBoton()" })
+                                @Html.ValidationMessageFor(model => model.idOrganizacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.ActionLink("Reporte Converges", "AbrirReporteGeneralLineas", "AsignacionRecurso", new { @anio = DateTime.Now.Year}, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White", target = "_blank" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Buscar" id="btnFiltrar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="AsignacionRecurso" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="divMensaje"></div>
+        @Html.Partial("ListaAsignacion", Model)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (codRespuesta != '0') {
+        if (codRespuesta == '1') {
+            tipoEstilo = "alert-danger";
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>';
+            $("#divMensaje").append(mensajeUsuario);
+            //$("#tblData").attr("style", "display:none;");
+        }
+        if (codRespuesta == '2') {
+            $("#tblData").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }           
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    function focoBoton() { $("#btnFiltrar").focus(); }
+    function focoFederacion() { $("#idOrganizacion").focus(); }
+</script>

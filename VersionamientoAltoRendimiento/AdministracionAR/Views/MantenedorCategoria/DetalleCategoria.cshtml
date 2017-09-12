@@ -1,0 +1,43 @@
+﻿@model AltoRendimiento.Administracion.Models.CategoriaModel
+
+@{
+    ViewBag.Title = "Detalle Categoría.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Categoría</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Categoría
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.catNombre, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.catNombre
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.catDescripcion, new { @class = "col-md-6" })
+                        <div class="col-md-6">
+                            @Model.catDescripcion
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>
+

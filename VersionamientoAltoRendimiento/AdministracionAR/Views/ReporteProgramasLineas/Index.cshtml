@@ -1,0 +1,203 @@
+﻿@model AltoRendimiento.Administracion.Models.ReporteProgramasLineasModel
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Reporte General por Líneas";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Reporte General por Líneas</li>
+        </ol>
+    </div>
+</div>
+<h2>Reporte General por Líneas</h2>
+    @Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProgramasLineas", new { idPrograma = Model.IdPrograma }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
+<br />
+<br />
+<div id="mensaje"></div>
+<div id="dvProgramas">
+    <h3>Cuentas Presupuestarias</h3>
+    <div class="table-responsive">
+        <table id="tblProgramas" class="table table-condensed table-bordered  table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Número Cuenta
+                    </th>
+                    <th>
+                        Programa
+                    </th>
+                    <th>
+                        Año presupuestario
+                    </th>
+                    <th>
+                        Monto
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaProgramas)
+                {
+                    <tr>
+                        <td>
+                            @item.NumeroCuenta
+                        </td>
+                        <td>
+                            @item.NombrePrograma
+                        </td>
+                        <td>
+                            @item.anioPresupuesto
+                        </td>
+                        <td>
+                            @item.MontoPrograma
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Ver Línea", null, null, new { onClick = "verLineas(" + item.IdPrograma + ", ''); return false;" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="dvInfoPaginacion">
+            Página @(Model.ListaProgramas.PageCount < Model.ListaProgramas.PageNumber ? 0 : Model.ListaProgramas.PageNumber) de @Model.ListaProgramas.PageCount
+            @Html.PagedListPager(Model.ListaProgramas, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort }))
+        </div>
+    </div>
+</div>
+
+<div id="dvLineas" style="display:none;">
+    <h3>Cuentas Presupuestarias</h3>
+    <div class="table-responsive">
+        <table id="tblOrganizaciones" class="table table-condensed table-bordered  table-hover">
+            <thead id="tbhListaLineas">
+            </thead>
+            <tbody id="tbdListaLineas"></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+
+    <script>
+        var idPrograma = "";
+        var ordenNombreLinea = "";
+        var ordenPresupuestoLinea = "presuLinea";
+
+        function verLineas(programa, sortOrder) {
+            $("#mensaje").html("");
+            idPrograma = programa;
+            ordenNombreLinea = sortOrder == "" ? "nomLinea_desc" : "";
+            ordenPresupuestoLinea = sortOrder == "presuLinea" ? "presuLinea_desc" : "presuLinea";
+
+            $.getJSON(
+                 "@Url.Action("ObtenerLineasPorPrograma")",// URL a la acción
+                { paramUno: idPrograma, paramDos: sortOrder },                  // Objeto JSON con parámetros
+                function (data) {                    // Función de retorno exitoso
+                    $("#tbhListaLineas").html("");
+                    $("#tbdListaLineas").html("");
+                    var obJson = JSON.parse(data);
+                    var inicioEtiqueta = "<td>";
+                    var finEtiqueta = "</td>";
+                    if (obJson.length > "0") {
+                        var urlReporte = '@Url.Action("GenerarReporte", "ReporteProgramasLineas", new { idPrograma = "paramIdPrograma" })';
+                        urlReporte = urlReporte.replace("paramIdPrograma", encodeURIComponent(idPrograma));
+                            $("#btnGenerarReporte").attr("href", urlReporte);
+                        var filaTitulo = "<tr>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "Número Línea";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "    <a href='@Url.Action("")' onclick='verLineas(\"" + idPrograma + "\", \"" + ordenNombreLinea + "\"); return false;'>Nombre de Línea</a>";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "    <a href='@Url.Action("")' onclick='verLineas(\"" + idPrograma + "\", \"" + ordenPresupuestoLinea + "\"); return false;'>Presupuesto</a>";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "    Comprometido";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "Ejecutado";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "Disponible";
+                        filaTitulo += "</th>";
+                        filaTitulo += "<th>";
+                        filaTitulo += "Reintegro";
+                        filaTitulo += "</th>";
+                        filaTitulo += "</tr>";
+                        $("#tbhListaLineas").append(filaTitulo);
+
+                        $.each(obJson, function (i, item) {
+                            var fila = "<tr>";
+
+                            fila += inicioEtiqueta;
+                            fila += item.NumeroLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.NombreLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.PresupuestoLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.MontoCompLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.MontoEjecLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.MontoDispLinea;
+                            fila += finEtiqueta;
+
+                            fila += inicioEtiqueta;
+                            fila += item.MontoReintLinea;
+                            fila += finEtiqueta;
+
+                            fila += "</tr>";
+                            $("#tbdListaLineas").append(fila);
+                        });
+                        $("#dvLineas").attr("style", "display:block;");
+                    } else {
+                        var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>El programa seleccionado no tiene Líneas asociadas.</div>';
+                        $("#mensaje").html(mensajeUsuario);
+                    }
+                });
+        }
+    </script>
+}
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)';
+    if (codError == '2') {
+        $("#dvProgramas").attr("style", "display:none;");
+        $("#dvInfoPaginacion").attr("style", "display:none;");
+        var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+    }
+</script>

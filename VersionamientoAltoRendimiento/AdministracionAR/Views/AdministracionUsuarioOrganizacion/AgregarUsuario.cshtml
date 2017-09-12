@@ -1,0 +1,246 @@
+﻿@model AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel
+
+@{
+    ViewBag.Title = "Crear Usuario.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nuevo Usuario</h4>
+</div>
+<style>
+    #lblApePaterno {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.idTipoOrganizacion, "Tipo de Organización", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idTipoOrganizacion, Model.ListaTipoOrganizacion, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idTipoOrganizacion", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div id="contenedor" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+
+                        Identificación del Usuario
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Rut, "Rut", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Rut, new { @class = "form-control", @placeHolder = "Rut ejemplo :12345678-9", @maxlength = "10" })
+                                @Html.ValidationMessage("Rut", new { @class = "text-danger" })
+                            </div>
+                            <div id="dvContrasena">
+                                @Html.LabelFor(model => model.Contrasena, "Contraseña", new { @class = "control-label col-sm-2", id = "lblContrasena" })
+                                <div class="col-sm-4">
+                                    @Html.PasswordFor(model => model.Contrasena, new { @class = "form-control", @maxlength = "128" })
+                                    @Html.ValidationMessage("Contrasena", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div id="dvUsuario">
+                                @Html.LabelFor(model => model.NombreUsuario, "Usuario", new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @maxlength = "128" })
+                                    @Html.ValidationMessage("NombreUsuario", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idOrganizacion, "Organización", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaOrganizacion, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("idOrganizacion", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.idOrganizacion, new { id = "hddidOrganizacion" })
+                            </div>
+                            @Html.LabelFor(model => model.idRol, "Rol", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.idRol, Model.ListaRol, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("idRol", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.idRol, new { id = "hddidRol" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dvAntecedentes" class="panel panel-default">
+                    <div class="panel-heading">
+
+                        Antecedentes personales
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Nombre, "Nombre", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+                            </div>
+
+                            @Html.LabelFor(model => model.ApellidoPaterno, "Apellido Paterno", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("ApellidoPaterno", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApellidoMaterno, "Apellido Materno", new { @class = "control-label col-sm-2", id = "lblApePaterno" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("ApellidoMaterno", new { @class = "text-danger" })
+                            </div>
+
+                            @Html.LabelFor(model => model.Email, "E-mail", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @maxlength = "50" })
+                                @Html.ValidationMessage("Email", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Direccion, "Dirección", new { @class = "control-label col-sm-2" })
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("Direccion", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="btnGuardar" class="btn btn-sm btn-success ">Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+
+    if ($("#idTipoOrganizacion option:selected").index() == 0) {
+        $("#contenedor").attr("style", "display:none;")
+    } else {
+        $("#contenedor").attr("style", "display:block;")
+    }
+
+    // Inicialización
+    cambiaElementos($("#idTipoOrganizacion").val());
+    $(document).ready(function () {
+        $("#idTipoOrganizacion").change(function () {
+            cambiaElementos($("#idTipoOrganizacion").val());
+        });
+    });
+
+    // Carga el desplegable de elementos en función
+    // de la categoría que le llega como parámetro.
+
+    function cambiaElementos(cat) {
+        if (cat != "0" && cat != "") {
+            $("#contenedor").attr("style", "display:block;");
+
+            // Obtenemos los datos...
+
+            listarJson("ListaOrganizacionesPorTipo", cat, "idOrganizacion", "@Model.idOrganizacion");
+            
+            listarJson("ListaRolesPorTipoOrganizacion", cat, "idRol", "@Model.idRol");
+
+            if (cat == "2") {
+                $("#dvAntecedentes").attr("style", "display:none;")
+                $("#dvUsuario").attr("style", "display:block;")
+
+                $("#dvContrasena").attr("style", "display:none;")
+
+            }
+            else {
+                $("#dvAntecedentes").attr("style", "display:block;")
+                $("#dvUsuario").attr("style", "display:none;")
+
+                $("#dvContrasena").attr("style", "display:block;")
+            }
+        } else {
+            $("#contenedor").attr("style", "display:none;")
+        }
+    }
+
+    function listarJson(accion, valorParam, idObjIncrustar, valorSeleccionado) {
+        var url = '@Url.Action("param-view")';
+        var objIncrustar = document.getElementById(idObjIncrustar);
+
+        $.getJSON(
+                 url.replace("param-view", accion),// URL a la acción
+                { param: valorParam },                  // Objeto JSON con parámetros
+                function (data) {                    // Función de retorno exitoso
+                    var obJson = JSON.parse(data);
+                    objIncrustar.options.length = 0;
+
+                    var opcionDefecto = new Option("--Seleccione--", "0");
+                    objIncrustar.add(opcionDefecto)
+
+                    $.each(obJson, function (i, item) {
+                        var opcion;
+
+                        if (item.Value == valorSeleccionado) {
+                            opcion = new Option(item.Text, item.Value, false, true);
+
+                        } else {
+                            opcion = new Option(item.Text, item.Value);
+                        }
+
+                        objIncrustar.add(opcion)
+                    });
+                    if (codError == "0" || objIncrustar.options.length == "2") {
+                        objIncrustar.selectedIndex = "1";
+                        $("#hdd" + idObjIncrustar).val($("#" + idObjIncrustar).val());
+                        objIncrustar.disabled = true;
+                    }
+                    else {
+                        objIncrustar.disabled = false;
+                    }
+                });
+    }
+    document.getElementById("Rut").value = document.getElementById("Rut").value.replace(/\./g, '').replace(/\,/g, '');
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)';
+    var tipoEstilo = "";
+
+    if (codError != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnGuardar").attr("disabled", "disabled");
+            $("#Rut").attr("disabled", "disabled");
+            $("#Contrasena").attr("disabled", "disabled");
+            $("#idOrganizacion").attr("disabled", "disabled");
+            $("#idRol").attr("disabled", "disabled");
+            $("#Nombre").attr("disabled", "disabled");
+            $("#ApellidoPaterno").attr("disabled", "disabled");
+            $("#ApellidoMaterno").attr("disabled", "disabled");
+            $("#Email").attr("disabled", "disabled");
+            $("#Direccion").attr("disabled", "disabled");
+            $("#idTipoOrganizacion").attr("disabled", "disabled");
+            $("#NombreUsuario").attr("disabled", "disabled");
+            $("#btnCancelar").html("Cerrar");
+        } else {
+            tipoEstilo = "alert-danger";
+
+        }
+        if (mensajeRespuesta != "") {
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+    }
+
+</script>

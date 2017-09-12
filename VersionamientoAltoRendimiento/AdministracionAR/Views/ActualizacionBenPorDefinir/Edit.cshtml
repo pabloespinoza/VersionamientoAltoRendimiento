@@ -1,0 +1,189 @@
+﻿@model AltoRendimiento.Administracion.Models.Beneficiario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>Beneficiario</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.idBeneficiario)
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.idOrganizacion, "idOrganizacion", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("idOrganizacion", String.Empty)
+                    @Html.ValidationMessageFor(model => model.idOrganizacion)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.idNacionalidad, "idNacionalidad", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("idNacionalidad", String.Empty)
+                    @Html.ValidationMessageFor(model => model.idNacionalidad)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.idDisciplina, "idDisciplina", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("idDisciplina", String.Empty)
+                    @Html.ValidationMessageFor(model => model.idDisciplina)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benEsdeportista, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benEsdeportista)
+                    @Html.ValidationMessageFor(model => model.benEsdeportista)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benRutBeneficiario, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benRutBeneficiario)
+                    @Html.ValidationMessageFor(model => model.benRutBeneficiario)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benDv, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benDv)
+                    @Html.ValidationMessageFor(model => model.benDv)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benNombre, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benNombre)
+                    @Html.ValidationMessageFor(model => model.benNombre)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benApellidoPaterno, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benApellidoPaterno)
+                    @Html.ValidationMessageFor(model => model.benApellidoPaterno)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benApellidoMaterno, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benApellidoMaterno)
+                    @Html.ValidationMessageFor(model => model.benApellidoMaterno)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benFechaNacimiento, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benFechaNacimiento)
+                    @Html.ValidationMessageFor(model => model.benFechaNacimiento)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benGenero, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benGenero)
+                    @Html.ValidationMessageFor(model => model.benGenero)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benCorreo, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benCorreo)
+                    @Html.ValidationMessageFor(model => model.benCorreo)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benEstado, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benEstado)
+                    @Html.ValidationMessageFor(model => model.benEstado)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benFechaCreacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benFechaCreacion)
+                    @Html.ValidationMessageFor(model => model.benFechaCreacion)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benUsuarioCreacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benUsuarioCreacion)
+                    @Html.ValidationMessageFor(model => model.benUsuarioCreacion)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benFechaModificacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benFechaModificacion)
+                    @Html.ValidationMessageFor(model => model.benFechaModificacion)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benUsuarioModificacion, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benUsuarioModificacion)
+                    @Html.ValidationMessageFor(model => model.benUsuarioModificacion)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benExtranjero, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benExtranjero)
+                    @Html.ValidationMessageFor(model => model.benExtranjero)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.benPorDefinir, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.benPorDefinir)
+                    @Html.ValidationMessageFor(model => model.benPorDefinir)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

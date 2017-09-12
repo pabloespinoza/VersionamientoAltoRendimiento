@@ -1,0 +1,44 @@
+﻿@model AltoRendimiento.Administracion.Models.RegionModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nueva", "CrearRegion", "MantenedorRegion", null, new { data_modal = "", id = "btnAgregarRegion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.regNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.regNumeroRegion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaRegion)
+            {
+                <tr>
+                    <td>
+                        @item.regNombre
+                    </td>
+                    <td>
+                        @item.regNumeroRegion
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleRegion", new { id = item.idRegion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarRegion", new { id = item.idRegion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarRegion", new { id = item.idRegion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaRegion.PageCount < Model.listaRegion.PageNumber ? 0 : Model.listaRegion.PageNumber) de @Model.listaRegion.PageCount
+        @Html.PagedListPager(Model.listaRegion, page => Url.Action("Index", new { page }))
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorTipoProductoModel
+
+@{
+    ViewBag.Title = "Buscar Tipos de Producto.";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Administración de Tipos de Producto</li>
+        </ol>
+    </div>
+</div>
+<h3>Administración de Tipos de Producto</h3>
+
+<div id="mensaje"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "MantenedorTipoProducto"))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreBuscar, "Nombre", new { @class = "control-label col-md-1" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.NombreBuscar, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("NombreBuscar", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Buscar" id="btnBuscar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="MantenedorTipoProducto" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaTiposProducto", Model)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#tblTiposProducto").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+</script>

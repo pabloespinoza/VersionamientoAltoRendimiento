@@ -1,0 +1,151 @@
+﻿@model AltoRendimiento.Administracion.Models.ReporteProyectoModel
+
+
+@{
+    ViewBag.Title = "Reporte Detallado.";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnExportarExcel').click(function () {
+
+            $('#form-Export').submit();
+        });
+
+            console.log("entro a la funcion");
+
+
+
+    });
+</script>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio" , "Index" , "BandejaEntrada")</li>
+            <li>Reporte Detallado</li>
+        </ol>
+    </div>
+</div>
+<h3>Reporte Detallado</h3>
+@if (Model.listaProyectos != null)
+{
+    <div class="col-xs-12 col-md-12">
+        <div class="pull-right">
+            <input id="btnExportarExcel" type="submit" class="btn btn-sm btn-info pull-right" style="color:White" value="Exportar a Excel" />
+        </div>
+    </div>
+}
+<br />
+<br />
+<div id="mensaje"></div>
+
+<div class="row">
+    @using (Html.BeginForm("Index" , "ReporteProyecto" , FormMethod.Post))
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Filtros</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.IdLinea , "Línea Presupuestaria:" , new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.IdLinea , Model.LineasPresupuestarias , "--Seleccione--" , new { @class = "form-control" })
+                                @Html.ValidationMessage("IdLinea" , new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.NumProyecto , "N° Proyecto:" , new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.NumProyecto , new { @class = "form-control" , @maxlength = "11" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.IdOrganizacionFed , "Federación:" , new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.IdOrganizacionFed , Model.Federaciones , "--Seleccione--" , new { @class = "form-control" })
+                                @Html.ValidationMessage("IdOrganizacionFed" , new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.IdEstadoProy , "Estado:" , new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.IdEstadoProy , Model.Estados , "--Seleccione--" , new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-5">
+                                <button value="Buscar" id="btnBuscar" class="btn btn-sm btn-success pull-right">Buscar</button>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="ReporteProyecto" class="btn btn-sm btn-default pull-right">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @Html.Partial("ListaProyectos" , Model)
+        </div>
+    }
+
+    @using (Html.BeginForm("ExportToExcel" , "ReporteProyecto" , FormMethod.Post , new { @id = "form-Export" }))
+    {
+        @Html.HiddenFor(p => p.IdLinea)
+        @Html.HiddenFor(p => p.NumProyecto)
+        @Html.HiddenFor(p => p.IdOrganizacionFed)
+        @Html.HiddenFor(p => p.IdEstadoProy)
+        @Html.HiddenFor(p => p.IdEstadoProy)
+
+    }
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script>
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#tblProyectos").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+            $("#btnGenerarReporte").attr("style", "display:none;");
+        }
+        }
+</script>

@@ -1,0 +1,43 @@
+﻿@model AltoRendimiento.Administracion.Models.OrganizacionLineaTipoProductoModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+</div>
+<br />
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.sAgregado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tprNombre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaTipoProductos)
+            {
+                <tr>
+                    <td>
+                        @item.sAgregado
+                    </td>
+                    <td>
+                        @item.tprNombre
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "AgregarTipoProducto", new { idOrganizacionLinea = item.idOrganizacionLinea, idTipoProducto = item.idTipoProducto, sAgregado = item.sAgregado, tprNombre = item.tprNombre }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarTipoProducto", new { idOrganizacionLinea = item.idOrganizacionLinea, idTipoProducto = item.idTipoProducto, sAgregado = item.sAgregado, tprNombre = item.tprNombre }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaTipoProductos.PageCount < Model.ListaTipoProductos.PageNumber ? 0 : Model.ListaTipoProductos.PageNumber) de @Model.ListaTipoProductos.PageCount
+        @Html.PagedListPager(Model.ListaTipoProductos, page => Url.Action("Index", new { page, idOrganizacionLinea  = Model.idOrganizacionLinea, idOrganizacion = Model.idOrganizacion, linNombre = Model.linNombre}))
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model AltoRendimiento.Administracion.Models.ComunaModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nueva", "CrearComuna", "MantenedorComuna", null, new { data_modal = "", id = "btnAgregarComuna", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.sProvincia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.comNumeroComuna)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.comNombre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaComunas)
+            {
+                <tr>
+                    <td>
+                        @item.sProvincia
+                    </td>
+                    <td>
+                        @item.comNumeroComuna
+                    </td>
+                    <td>
+                        @item.comNombre
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleComuna", new { id = item.idComuna }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarComuna", new { id = item.idComuna }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarComuna", new { id = item.idComuna }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaComunas.PageCount < Model.ListaComunas.PageNumber ? 0 : Model.ListaComunas.PageNumber) de @Model.ListaComunas.PageCount
+        @Html.PagedListPager(Model.ListaComunas, page => Url.Action("Index", new { page }))
+    </div>
+</div>

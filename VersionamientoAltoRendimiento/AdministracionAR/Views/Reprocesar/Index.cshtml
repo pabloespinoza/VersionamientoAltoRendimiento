@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Reproceso de Proyectos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AltoRendimiento.Administracion.Models.BandejaEntradaModel
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var mensaje = '@ViewData["Mensaje"]';
+        console.log(mensaje);
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensajeresolucion").append(mensajeUsuario);
+
+        }
+
+        $('#CodigoProyecto').keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+
+        $("#btnBuscar").click(function () {
+            $("#form-BuscarProyecto").reset();
+            HTMLFormElement.reset()
+        });
+    });
+
+</script>
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index" , "Reprocesar" , FormMethod.Post , new { Id = "form-BuscarProyecto" }))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.CodigoProyecto)</label>
+                            <div class="col-xs-5">
+                                @Html.TextBoxFor(p => p.CodigoProyecto , "" , new { @class = "form-control" , @maxlength = "10" , @placeholder = "Codigo del Proyecto" , @data_toggle = "tooltip" , @title = "Codigo del Proyecto." })
+                            </div>
+                            <div class="col-xs-5 col-md-1">
+                                <div class="pull-right">
+                                    <input id="btnBuscar" type="submit" class="btn btn-sm btn btn-success" value="Buscar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="col-xs-12 col-md-2">
+                            <div class="pull-right">
+                                <a href="Reprocesar" class="btn btn-primary">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div id="mensajeresolucion" class="alert-danger">
+</div>
+
+@*<div class="row">
+    <div class="col-xs-12 col-md-12">*@
+@Html.Partial("_ListaProyectos" , Model)
+@*</div>
+    </div>*@

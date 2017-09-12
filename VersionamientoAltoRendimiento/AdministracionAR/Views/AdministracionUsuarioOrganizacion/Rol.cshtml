@@ -1,0 +1,17 @@
+﻿@Html.Partial("Index")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <h1>Rol</h1>
+        </div>
+    </div>
+}
+<script>
+    document.onload = $("#Administracion").addClass("active");
+</script>

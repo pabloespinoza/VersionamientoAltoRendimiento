@@ -1,0 +1,63 @@
+﻿@model AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarUsuario", "AdministracionUsuarioOrganizacion", null, new { data_modal = "", id = "btnAgregarUsuario", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br/>
+<div class="table-responsive">
+    <table id="tblUsuarios" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rut)
+                </th>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, RutBuscar = Model.RutBuscar, idOrganizacionBuscar = Model.idOrganizacionBuscar })
+                </th>
+                <th>
+                    @Html.ActionLink("Apellido Paterno", "Index", new AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel { SortOrder = ViewBag.ApellidoSortParm, Page = Model.Page, RutBuscar = Model.RutBuscar, idOrganizacionBuscar = Model.idOrganizacionBuscar })
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApellidoMaterno)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Organizacion)
+                </th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaUsuarios)
+            {
+                <tr>
+                    <td>
+                        @item.Rut
+                    </td>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.ApellidoPaterno
+                    </td>
+                    <td>
+                        @item.ApellidoMaterno
+                    </td>
+                    <td>
+                        @item.Organizacion
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleUsuario", new { id = item.idUsuario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarUsuario", new { id = item.idUsuario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarUsuario", new { id = item.idUsuario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaUsuarios.PageCount < Model.listaUsuarios.PageNumber ? 0 : Model.listaUsuarios.PageNumber) de @Model.listaUsuarios.PageCount
+        @Html.PagedListPager(Model.listaUsuarios, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel { SortOrder = ViewBag.CurrentSort, Page = page, RutBuscar = Model.RutBuscar, idOrganizacionBuscar = Model.idOrganizacionBuscar }))
+    </div>
+</div>

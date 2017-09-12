@@ -1,0 +1,76 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionSCModel
+
+@using PagedList.Mvc;
+@using System.Globalization;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarExcepcion", "MantenedorExcepcionSC", null, new { data_modal = "", id = "btnAgregarExcepcion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+@if (Model.ListaExcepciones != null && Model.ListaExcepciones.Count > 0)
+{ 
+<div class="table-responsive">
+    <table id="tblExcepcionesSC" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Nombre Producto                
+    @*@Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorNivelModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional })*@
+                </th>
+                <th>
+                    Tipo Producto
+                </th>
+                <th>
+                    Nombre Línea
+                </th>
+                <th>
+                    Fecha Inicio Producto
+                </th>
+                <th>
+                    Fecha Fin Producto
+                </th>
+                <th>
+                    Monto Producto
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaExcepciones)
+            {
+                <tr>
+                    <td>
+                        @item.NombreProducto
+                    </td>
+                    <td>
+                        @item.NombreTipoProducto
+                    </td>
+                    <td>
+                        @item.NombreLinea
+                    </td>
+                    <td>
+                        @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.FechaInicioProducto)
+                    </td>
+                    <td>
+                        @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.FechaFinProducto)
+                    </td>
+                    <td>
+                        @String.Format("{0:C0}", item.MontoProducto)
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleExcepcion", new { id = item.IdExcepcionSolicitudCambio }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Justificación' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarExcepcion", new { id = item.IdExcepcionSolicitudCambio }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarExcepcion", new { id = item.IdExcepcionSolicitudCambio }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaExcepciones.PageCount < Model.ListaExcepciones.PageNumber ? 0 : Model.ListaExcepciones.PageNumber) de @Model.ListaExcepciones.PageCount
+        @Html.PagedListPager(Model.ListaExcepciones, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorExcepcionSCModel { SortOrder = ViewBag.CurrentSort, Page = Model.Page/*, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional*/ }))
+    </div>
+</div>
+}

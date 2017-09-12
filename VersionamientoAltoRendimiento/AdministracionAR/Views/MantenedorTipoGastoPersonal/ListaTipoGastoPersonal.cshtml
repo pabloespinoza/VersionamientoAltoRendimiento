@@ -1,0 +1,50 @@
+﻿@model AltoRendimiento.Administracion.Models.TipoGastoPersonalModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "CrearTipoGastoPersonal", "MantenedorTipoGastoPersonal", null, new { data_modal = "", id = "btnAgregarGasto", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tgpNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tgpDescripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tgpNumeroGastoPersonal)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaTipoGastoPersonal)
+            {
+                <tr>
+                    <td>
+                        @item.tgpNombre
+                    </td>
+                    <td>
+                        @item.tgpDescripcion
+                    </td>
+                    <td>
+                        @item.tgpNumeroGastoPersonal
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleTipoGasto", new { id = item.idTipoGastoPersonal }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarTipoGastoPersonal", new { id = item.idTipoGastoPersonal }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarTipoGasto", new { id = item.idTipoGastoPersonal }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaTipoGastoPersonal.PageCount < Model.listaTipoGastoPersonal.PageNumber ? 0 : Model.listaTipoGastoPersonal.PageNumber) de @Model.listaTipoGastoPersonal.PageCount
+        @Html.PagedListPager(Model.listaTipoGastoPersonal, page => Url.Action("Index", new { page }))
+    </div>
+</div>

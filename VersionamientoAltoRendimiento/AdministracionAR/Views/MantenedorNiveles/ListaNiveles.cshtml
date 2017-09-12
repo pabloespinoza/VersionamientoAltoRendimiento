@@ -1,0 +1,53 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorNivelModel
+
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarNivel", "MantenedorNiveles", null, new { data_modal = "", id = "btnAgregarNivel", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+
+<div class="table-responsive">
+    <table id="tblCargos" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorNivelModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional })
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Nivel
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaNiveles)
+            {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Descripcion
+                    </td>
+                    <td>
+                        @item.GlosaInternacional
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarNivel", new { id = item.IdNivel }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarNivel", new { id = item.IdNivel }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaNiveles.PageCount < Model.ListaNiveles.PageNumber ? 0 : Model.ListaNiveles.PageNumber) de @Model.ListaNiveles.PageCount
+        @Html.PagedListPager(Model.ListaNiveles, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorNivelModel { SortOrder = ViewBag.CurrentSort, Page = Model.Page, NombreBuscar = Model.NombreBuscar, IdInternacional = Model.IdInternacional }))
+    </div>
+</div>

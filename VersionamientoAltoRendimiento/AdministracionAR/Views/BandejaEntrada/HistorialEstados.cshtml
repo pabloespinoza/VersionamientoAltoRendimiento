@@ -1,0 +1,149 @@
+﻿@model AltoRendimiento.Administracion.Models.DocumentoModel
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var adm = '@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.admin';
+
+        if (adm == 'False') {
+            $('#Administracion').addClass("hide");
+        }
+
+        $('#btnCargar').click(function () {
+
+
+
+            var url = '@Url.Action("CargaDocumento")';
+            var model = $('form').serialize();
+
+            console.log(model);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    console.log(data);
+                    $('#myModalContent').html(data);
+
+                    $('#myModal').modal('show');
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container">
+    <div id='myModal' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/modalform.js"></script>
+
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="form-horizontal">
+        @using (Html.BeginForm("Index", "BandejaEntrada", FormMethod.Post, new { Id = "form-BuscarProyecto" }))
+        {
+            <fieldset>
+
+                <legend>Historial de Estados</legend>
+                <div class="form-group">
+                    <label id="lblNombreProyecto" class="col-lg-2 control-label">Organización</label>
+                    <div class="col-md-8">
+                        @*             @Html.TextBoxFor(p => p.Documento, new { @class = "form-control", @value = Model.Documento })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="lbl_idProyecto" class="col-lg-2 control-label">Proyecto</label>
+                    <div class="col-xs-3">
+                        @*                 @Html.TextBoxFor(p => p.Observacion, new { @class = "form-control" })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="lbl_idProyecto" class="col-lg-2 control-label">Fecha</label>
+                    <div class="col-xs-3">
+                        @*                 @Html.TextBoxFor(p => p.Observacion, new { @class = "form-control" })*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 col-md-2">
+                        <div class="pull-right">
+                            @Html.ActionLink("volver", "Index", null, new { @class = "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Volver a la Bandeja de Entrada" })
+
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+        }
+    </div>
+
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { idProyecto = 1 }, new { @class = "fa fa-file-excel-o fa-2x", @data_toggle = "tooltip", @title = "Descargar Documento Excel" }).ToHtmlString().Replace("[replacetext]", ""))
+        @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { idProyecto = 1 }, new { @class = "fa fa-file-pdf-o  fa-2x", @data_toggle = "tooltip", @title = "Descargar Documento PDF" }).ToHtmlString().Replace("[replacetext]", ""))
+    </div>
+</div>
+<div id="area_tabla">
+    <table class="table table-condensed table-bordered table-hover">
+        <tr>
+            <th>
+                Nombre Archivo
+            </th>
+            <th>
+                Fecha de Carga
+            </th>
+            <th>
+                Observacion
+            </th>
+            <th>
+                Usuario de Carga
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Documento
+            </th>
+            <th>
+                Acción
+            </th>
+
+        </tr>
+
+        @*@foreach (var row in Model.getListaProyecto)
+            {*@
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>
+                @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { idProyecto = 1 }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Motivo de Cambio" }).ToHtmlString().Replace("[replacetext]", ""))
+            </td>
+
+
+        </tr>
+        @*}*@
+    </table>
+</div>

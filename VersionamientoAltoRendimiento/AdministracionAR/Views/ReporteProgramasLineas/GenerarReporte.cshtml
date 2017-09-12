@@ -1,0 +1,39 @@
+﻿@model AltoRendimiento.Administracion.Models.ReporteProgramasLineasModel
+@{
+    ViewBag.Title = "Generar Reporte General.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Reporte General por Líneas</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12" id="mensaje"></div>
+        <iframe id="iReporte" class="col-sm-12" height="400px" frameborder="0" scrolling="no" src="@ViewBag.url"></iframe>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" id="btnVolver" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>
+
+<script>
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#iReporte").attr("style", "display:none;");
+        }
+    }
+</script>

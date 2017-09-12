@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Bandeja de Entrada.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AltoRendimiento.Administracion.Models.BandejaEntradaModel
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var mensaje = '@ViewData["mensaje"]';
+        var tipoAlerta = '@ViewData["tipoAlterta"]';
+        if (tipoAlerta == "" || tipoAlerta == null) {
+            tipoAlerta = "success";
+        }
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+
+        //$('#CodigoProyecto').keyup(function () {
+        //    this.value = (this.value + '').replace(/[^0-9]/g, '');
+        //});
+
+        //$('#Rut').keyup(function () {
+        //    this.value = (this.value + '').replace(/[^0-9]/g, '');
+        //});
+
+        $("#btnBuscar").click(function () {
+            $("#form-BuscarProyecto").reset();
+            HTMLFormElement.reset()
+        });
+    });
+
+</script>
+
+
+<div id="mensaje">
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "BandejaEntrada", FormMethod.Post, new { Id = "form-BuscarProyecto" }))
+            {
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="form-group">
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.Rut)</label>
+                            <div class="col-xs-5">
+                                @Html.TextBoxFor(p => p.Rut, new { @class = "form-control", size = "2", @maxlength = "8", @onkeypress = "return permite(event, 'numeros');", @placeholder = "Rut de la Federación 12345678" })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.Concurso)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdConcurso, Model.ListConcurso, new { @id = "Concurso-DropdownID", @onchange = "buscaLineas()", @class = "form-control", @data_toggle = "tooltip", @title = "Concurso Asociado al Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.CodigoProyecto)</label>
+                            <div class="col-xs-5">
+                                @Html.TextBoxFor(p => p.CodigoProyecto, "--Seleccione--", new { @class = "form-control", @maxlength = "10", @onkeypress = "return permite(event, 'numeros');", @placeholder = "Codigo del Proyecto", @data_toggle = "tooltip", @title = "Codigo del Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.Linea)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdLinea, Model.ListLinea, "--Seleccione--", new { @id = "Linea-DropdownID", @class = "form-control", @data_toggle = "tooltip", @title = "Filtra por cuota del Proyecto." })
+                            </div>
+                            <label class="col-xs-1 control-label" for="label">@Html.LabelFor(p => p.Estado)</label>
+                            <div class="col-xs-5">
+                                @Html.DropDownListFor(model => model.IdEstado, Model.ListEstadoProyecto, "--Seleccione--", new { @id = "Estado-DropdownID", @class = "form-control" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="pull-right">
+                                <input id="btnBuscar" type="submit" class="btn btn-sm btn btn-success" @((@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnBuscar == false) ? "disabled" : "") value="Buscar" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-7">
+                            <div class="pull-right">
+                                <a href="BandejaEntrada" class="btn btn-primary">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+    <div class="col-xs-12 col-md-12">*@
+@Html.Partial("Proyecto", Model)
+@*</div>
+    </div>*@
+
+<script>
+    function buscaLineas() {
+        var nIdConcurso = $("#Concurso-DropdownID").val();
+        $("#Linea-DropdownID").html("");
+
+        $.ajax({
+            url: "BandejaEntrada/buscaLineas"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idConcurso: nIdConcurso }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    bootbox.alert({ message: info.Mensaje, backdrop: false });
+                } else {
+                    $("#Linea-DropdownID").append($("<option />", {
+                        value: 0,
+                        text: "Seleccione..."
+                    }));
+                    $.each(info.Datos, function (index, concurso) {
+                        $("#Linea-DropdownID").append($("<option />", {
+                            value: concurso.idLinea,
+                            text: concurso.linNombre
+                        }));
+                    });
+                    $("#Linea-DropdownID").focus();
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,435 @@
+﻿@{
+    ViewBag.Title = "EvaluacionProyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+<div class="container">
+    <div id='myModal' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="~/Scripts/modalform.js">
+
+</script>
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        $('#div_Carta').hide();
+        $("#FechaEvaluacion").val("");
+        var carta = '@Model.getCarta'
+
+
+        if (carta == 1) {
+            $('#div_Carta').show();
+            $("#hid_idTipoAnulacion").val('@Model.idTipoAnulacion');
+        }
+        else {
+            $('#div_Carta').hide();
+            $("#hid_idTipoAnulacion").val('@Model.idTipoAnulacion');
+        }
+
+
+
+        $('#drp_motivoAnulacion').change(function () {
+
+            var selectedValue = $(this).val();
+            var url = '@Url.Action("PostCarta")';
+
+            $("#hid_idTipoAnulacion").val(selectedValue);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { intValor: selectedValue },
+                success: OnSuccess,
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            function OnSuccess(response) {
+
+                if (response == 1) {
+                    $('#div_Carta').show();
+                }
+                else {
+                    $('#div_Carta').hide();
+                }
+
+            }
+
+        });
+
+        var mensaje = '@ViewData["mensaje"]';
+        var tipoAlerta = '@ViewData["tipoAlterta"]';
+        if (tipoAlerta == "" || tipoAlerta == null)
+        {
+            tipoAlerta = "success";
+        }
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+
+        }
+
+        var mensajePre = '@ViewData["mensajePresupuesto"]';
+
+
+        var Resolucion = '@ViewData["Resolucion"]';
+        if (Resolucion != "") {
+            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + Resolucion + '</div>';
+            $("#mensajeresolucion").append(mensajeUsuario);
+        }
+
+
+        var adm = '@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.admin';
+
+        if (adm == 'False') {
+            $('#Administracion').addClass("hide");
+        }
+
+
+        $('#frm-Resolucion').validate({
+            rules: {
+
+                NumeroResolucion: {
+                    required: true, equalTo: '#NumeroResolucion'
+                },
+                FechaResolucion: {
+                    required: true, equalTo: '#FechaResolucion'
+                },
+                ArchivoResolucion: {
+                    required: true, equalTo: '#ArchResolucion'
+                }
+
+
+            },
+            messages: {
+                NumeroResolucion: {
+                    required: "Campo Obligatorio",
+
+                },
+                FechaResolucion: {
+                    required: "Campo Obligatorio",
+
+                },
+                FechaResolucion: {
+                    required: "Campo Obligatorio",
+
+                }
+            }
+        });
+
+
+
+        $('#btnCambiarEstadoAnulado').click(function () {
+
+            var url = '@Url.Action("CambiarEstado")';
+            var model = $('#frmCambiarEstado').serialize();
+
+            console.log("Entro en el btnCambiarEstadoAnulado");
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    console.log(data);
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    //alert("error");
+                }
+            });
+        });
+
+
+    });
+</script>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.es.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Información Proyecto</div>
+    <br />
+    <div id="mensaje">
+    </div>
+    <div id="mensajePresupuesto" class="alert-danger">
+    </div>
+    <div class="form-horizontal">
+        <fieldset disabled>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Proyecto, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Proyecto, new { @class = "form-control", @value = Model.Proyecto })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Codigo, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Codigo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Rut, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Rut, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Postulante, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.TipoEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.TipoEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DetalleEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.DetalleEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.CorreoElectronico, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.CorreoElctronico, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RegistroIND, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.NumeroRegistroInd, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Leyconstitucion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.LeyConstitucion, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RendicionCuentaPendiente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneRendicionPendiente, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DirectorioVigente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneDirectorioVigente, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.FechaEvaluacion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.FechaEvaluacion, new { @id = "FechaEvaluacion", @class = "form-control" })
+                </div>
+            </div>
+
+
+        </fieldset>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Motivo Anulación</div>
+        <div class="form-horizontal">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        <label class="col-lg-2 control-label">Motivo Anulación</label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.ValidationMessageFor(model => model.idTipoAnulacion)
+                        @Html.DropDownListFor(model => model.idTipoAnulacion, Model.TipoAnulacion, new { @id = "drp_motivoAnulacion", @class = "form-control required" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm("GuardarDocumentoCarta", "BandejaEntrada", FormMethod.Post, new { @id = "frm-Resolucion", enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div id="div_Carta" class="panel panel-default">
+                <div class="panel-heading">Carta</div>
+                <div id="mensajeresolucion" class="alert-success">
+                </div>
+                <div class="form-horizontal">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="lblFechaResolucion" class="col-lg-2 control-label">Fecha Carta</label>
+                            <div class="col-lg-7">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input id="Proyecto_FechaResolucion" type="text" class="form-control" value="@Model.FechaDocumento">
+                                    @Html.HiddenFor(P => P.FechaDocumento, new { @id = "FechaDocumento" })
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lblArchiResolucion" class="col-lg-2 control-label">Adjuntar Carta</label>
+                            <div class="col-lg-7">
+                                @Html.TextBoxFor(p => p.Documento, new { @class = "form-control", @type = "file", @id = "ArchResolucion" })
+                                <br />
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { IdProyecto = Model.IdProyecto, IdDocumento = Model.IdDocumento }, new { @class = "fa fa-file-o fa-lg", @data_toggle = "tooltip", @title = "Documentos del Proyecto", @style = Model.Documento == string.Empty ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", Model.Documento))
+                                @Html.HiddenFor(p => p.IdProyecto)
+                                @Html.HiddenFor(p => p.IdWorkflow)
+                                @Html.HiddenFor(p => p.IdTipoDocumento)
+                                @Html.HiddenFor(p => p.idTipoAnulacion, new { @value = @Model.idTipoAnulacion, @id = "hid_idTipoAnulacion" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-primary" id="btnGuardarResolucionEvaluacionSelecionado" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnGuardarResolucionEvaluacionSelecionado == false) ? "disabled" : "")>Guardar Carta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @using (Html.BeginForm("GuardarDocumentoArchResolucionAnular", "BandejaEntrada", FormMethod.Post, new { @id = "frm-Resolucion", enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="panel panel-default">
+                <div class="panel-heading">Resolución</div>
+                <div id="mensajeresolucion" class="alert-success">
+                </div>
+                <div class="form-horizontal">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="NumResolucion" class="col-lg-2 control-label">Numero Resolución</label>
+                            <div class="col-lg-3">
+                                @Html.TextBoxFor(p => p.NumeroResolucion, new { @class = "form-control", @maxlength = "6", id = "NumeroResolucion", @value = Model.NumeroResolucion })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lblFechaResolucion" class="col-lg-2 control-label">Fecha Resolución</label>
+                            <div class="col-lg-7">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input id="Proyecto_FechaResolucion" type="text" class="form-control" value="@Model.FechaResolucion">
+                                    @Html.HiddenFor(P => P.FechaResolucion, new { @id = "FechaResolucion" })
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lblArchiResolucion" class="col-lg-2 control-label">Adjuntar Resolucion</label>
+                            <div class="col-lg-7">
+                                @Html.TextBoxFor(p => p.ArchResolucion, new { @class = "form-control", @type = "file", @id = "ArchResolucion" })
+                                <br />
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { IdProyecto = Model.IdProyecto, IdDocumento = Model.IdDocumentoResolucion }, new { @class = "fa fa-file-o fa-lg", @data_toggle = "tooltip", @title = "Documentos del Proyecto", @style = Model.NombreDocumentoResolucion == string.Empty ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", Model.NombreDocumentoResolucion))
+                                @Html.HiddenFor(p => p.IdProyecto)
+                                @Html.HiddenFor(p => p.IdWorkflow)
+                                @Html.HiddenFor(p => p.IdDocumentoResolucion)
+                                @Html.HiddenFor(p => p.idTipoAnulacion, new { @value = @Model.idTipoAnulacion, @id = "hid_idTipoAnulacionResolucion" })
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-primary" id="btnGuardarResolucionEvaluacionSelecionado" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnGuardarResolucionEvaluacionSelecionado == false) ? "disabled" : "")>Guardar Resolución</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @using (Html.BeginForm("CambiarEstado", "BandejaEntrada", FormMethod.Post, new { id = "frmCambiarEstado", enctype = "multipart/form-data" }))
+        {        @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="form-inline">
+                                <div class="row">
+                                    <fieldset>
+                                        <legend>Estado</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-warning" })
+                                            </div>
+                                            @Html.HiddenFor(p => p.IdProyecto)
+                                            @Html.HiddenFor(p => p.IdWorkflow)
+                                            @Html.HiddenFor(p => p.IdDocumentoResolucion)
+                                            @Html.HiddenFor(p => p.InformeFinanciero)
+                                            @Html.HiddenFor(p => p.InformeTecnico)
+                                            @Html.HiddenFor(p => p.Vista, new { @value = Model.Vista })
+                                            @Html.HiddenFor(p => p.NumeroResolucion, new { @id = "NumeroResolucion", @value = Model.NumeroResolucion })
+                                            @Html.HiddenFor(p => p.FechaResolucion, new { @id = "FechaResolucion", @value = Model.FechaResolucion })
+                                            @Html.HiddenFor(p => p.Codigo)
+                                            @Html.HiddenFor(p => p.idTipoAnulacion, new { @value = @Model.idTipoAnulacion, @id = "hid_idTipoAnulacion" })
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-success" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnCambiarEstadoProyectoSelecionado == false) ? "disabled" : "") id="btnCambiarEstadoAnulado">Cambiar Estado</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    @section Scripts {
+
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/bootstrap")
+
+    }

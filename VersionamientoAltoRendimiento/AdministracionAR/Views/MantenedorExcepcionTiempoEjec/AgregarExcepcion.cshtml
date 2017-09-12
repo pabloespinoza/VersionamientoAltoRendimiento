@@ -1,0 +1,349 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionTiempoEjecModel
+
+@{
+    ViewBag.Title = "Crear Excepción.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Excepción</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+
+            @Html.ValidationSummary(true)
+            @Html.Hidden("IdExcepcionTiempoEjecucion")
+            <div class="form-group">
+                @Html.LabelFor(model => model.idOrganizacion, "Federación", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaFederacion, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idOrganizacion", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.idProyecto, "Proyecto", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idProyecto, Model.ListaProyecto, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idProyecto", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.idProducto, "Producto", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idProducto, Model.ListaProducto, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idProducto", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div id="contenedor" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+
+                        Identificación del Producto
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreTipoProducto, "Tipo Producto", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.LabelFor(model => model.NombreTipoProducto, new { @class = "control-label", id = "tipoProducto" })
+                                @Html.HiddenFor(model => model.NombreTipoProducto)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreLinea, "Nombre Línea", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.LabelFor(model => model.NombreLinea, new { @class = "control-label", id = "nombreLinea" })
+                                @Html.HiddenFor(model => model.NombreLinea)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MesInicioProducto, "Mes Inicio", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.MesInicioProducto, new { @class = "control-label", id = "mesInicio" })
+                                @Html.HiddenFor(model => model.MesInicioProducto)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MesFinOrginalProducto, "Mes Fin Orginial", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.MesFinOrginalProducto, new { @class = "control-label", id = "mesFin" })
+                                @Html.HiddenFor(model => model.MesFinOrginalProducto)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AnioExcepcionProducto, "Año Actual", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.RadioButton("AnioExcepcionProducto", DateTime.Now.Year, false, new { id = "anioActual" })
+                                @*Html.ValidationMessage("AnioExcepcionProducto", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AnioExcepcionProducto, "Siguiente Año", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.RadioButton("AnioExcepcionProducto", DateTime.Now.Year + 1, false, new { id = "siguienteAnio" })
+                                @Html.ValidationMessage("AnioExcepcionProducto", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idMesExcepcion, "Mes Fin Excepción", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(model => model.idMesExcepcion, (SelectList)ViewBag.ListaMesExcepcion, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("idMesExcepcion", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JustificacionExcepcion, "Justificación", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(model => model.JustificacionExcepcion, new { @class = "form-control", @maxlength = "10000", @style = "resize:none;", @rows = "5" })
+                                @Html.ValidationMessage("JustificacionExcepcion", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnGuardar" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+<script>
+
+    if ($("#NombreTipoProducto").val() != "" || $("#NombreTipoProducto").val() != null) {
+        $("#tipoProducto").text($("#NombreTipoProducto").val());
+    }
+
+    if ($("#NombreLinea").val() != "" || $("#NombreLinea").val() != null) {
+        $("#nombreLinea").text($("#NombreLinea").val());
+    }
+
+    if ($("#MesInicioProducto").val() != "" || $("#MesInicioProducto").val() != null) {
+        $("#mesInicio").text($("#MesInicioProducto").val());
+    }
+
+    if ($("#MesFinOrginalProducto").val() != "" || $("#MesFinOrginalProducto").val() != null) {
+        $("#mesFin").text($("#MesFinOrginalProducto").val());
+    }
+
+
+    if ($("#idProducto option:selected").index() == 0) {
+        $("#contenedor").attr("style", "display:none;")
+    } else {
+        $("#contenedor").attr("style", "display:block;")
+    }
+
+    $("#idOrganizacion").change(function () {
+        $("#idProyecto").html("");
+        $("#idProyecto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+
+        $("#idProducto").html("");
+        $("#idProducto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+        if ($(this).val() == "" || $(this).val() == "0" || $(this).val() == null) {
+            $("#contenedor").attr("style", "display:none;");
+        } else {
+            $.ajax({
+                url: "MantenedorExcepcionTiempoEjec/BuscarProyectos"
+                , method: "POST"
+                , dataType: "JSON"
+                , data: { idOrganizacion: $(this).val() }
+                , success: function (info) {
+                    $.each(info.Datos, function (index, proyecto) {
+                        $("#idProyecto").append($("<option/>", {
+                            value: proyecto.idProyecto,
+                            text: proyecto.proNombre
+                        }));
+                    });
+                }
+            })
+        };
+    })
+
+    $("#idProyecto").change(function () {
+        $("#idProducto").html("");
+        $("#idProducto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+        if ($(this).val() == "" || $(this).val() == "0" || $(this).val() == null) {
+            $("#contenedor").attr("style", "display:none;");
+        } else {
+            $.ajax({
+                url: "MantenedorExcepcionTiempoEjec/BuscarProductos"
+                , method: "POST"
+                , dataType: "JSON"
+                , data: { idProyecto: $(this).val() }
+                , success: function (info) {
+                    $.each(info.Datos, function (index, producto) {
+                        $("#idProducto").append($("<option/>", {
+                            value: producto.idProducto,
+                            text: producto.prdNombre
+                        }));
+                    });
+                }
+            })
+        };
+    })
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)';
+
+    $("#idProducto").change(function () {
+        var ano = "";
+
+        if ($("#AnioExcepcionProducto:checked").val() == "" || $("#AnioExcepcionProducto:checked").val() == null) {
+            ano = (new Date).getFullYear();
+        }
+        else {
+            ano = $("#AnioExcepcionProducto:checked").val();
+        }
+        if ($(this).val() == "" || $(this).val() == "0" || $(this).val() == null) {
+            $("#contenedor").attr("style", "display:none;");
+        } else {
+
+
+            $.ajax({
+                url: "MantenedorExcepcionTiempoEjec/ObtenerProducto"
+                , method: "POST"
+                , dataType: "JSON"
+                , data: { idProducto: $(this).val(), idProyecto: $("#idProyecto option:selected").val(), anio: ano }
+                , success: function (info) {
+                    var producto = info.Datos[0];
+                    if (info.Codigo == 0) {
+                        var tipoProducto = producto.NombreTipoProducto;
+                        var nombreLinea = producto.NombreLinea;
+                        var mesInicio = producto.MesInicioProducto;
+                        var mesFinOriginal = producto.MesFinOrginalProducto;
+                        var anioExcepcion = producto.AnioExcepcionProducto;
+                        var mesExcepcion = producto.idMesExcepcion;
+                        var meses = producto.meses;
+                        var justiFicacionExcepcion = producto.JustificacionExcepcion;
+                        var idMesHastaProducto = producto.idMesHastaProducto;
+                        var IdExcepcionTiempoEjecucion = producto.IdExcepcionTiempoEjecucion;
+                        var anio = (new Date).getFullYear();
+
+                        var anioSiguiente = parseInt(anio) + 1;
+
+                        $("#IdExcepcionTiempoEjecucion").val(IdExcepcionTiempoEjecucion);
+
+                        $("#anioActual").removeAttr("disabled");
+                        $("#siguienteAnio").removeAttr("disabled");
+                        $("#anioActual").removeAttr("checked");
+                        $("#siguienteAnio").removeAttr("checked");
+
+                        if ((parseInt(anio) + 1) == anioExcepcion) {
+                            $("#anioActual").prop("disabled", "disabled");
+                            $("#siguienteAnio").prop("checked", true);
+                        }
+                        else {
+
+                            if (parseInt(idMesHastaProducto) == 12) {
+                                $("#anioActual").prop("disabled", "disabled");
+                                $("#siguienteAnio").prop("checked", true);
+
+                            } else {
+                                $("#anioActual").prop("checked", true);
+                            }
+                        }
+
+                        $("#idMesExcepcion").empty();
+
+                        $("#idMesExcepcion").append($("<option/>", {
+                            value: "",
+                            text: "--Seleccione"
+                        }));
+
+                        $.each(meses, function (index, mes) {
+                            var op = new Option(mes.Nombre, mes.Id);
+
+                            if (mes.Id == mesExcepcion) {
+                                op.selected = true;
+                            }
+
+                            $("#idMesExcepcion").append(op);
+                        });
+
+
+                        $("#tipoProducto").text(tipoProducto);
+                        $("#NombreTipoProducto").val(tipoProducto);
+                        $("#nombreLinea").text(nombreLinea);
+                        $("#NombreLinea").val(nombreLinea);
+                        $("#mesInicio").text(mesInicio);
+                        $("#MesInicioProducto").val(mesInicio);
+                        $("#mesFin").text(mesFinOriginal);
+                        $("#MesFinOrginalProducto").val(mesFinOriginal);
+                        $("#justificacionExcepcion").text(justiFicacionExcepcion);
+                        $("#JustificacionExcepcion").val(justiFicacionExcepcion);
+                        $("#contenedor").attr("style", "display:block;");
+                    } else {
+                        $("#contenedor").attr("style", "display:none;");
+                        codError = info.Codigo;
+                        mensajeRespuesta = info.Mensaje;
+                    }
+                }
+            })
+        };
+    })
+
+    $("input[name='AnioExcepcionProducto']").change(function () {
+        $.ajax({
+            url: "MantenedorExcepcionTiempoEjec/ObtenerMesesDisponibles"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { anio: $(this).val(), idProducto: $("#idProducto option:selected").val() }
+            , success: function (info) {
+                var meses = info.Datos;
+                $("#idMesExcepcion").empty();
+
+                $("#idMesExcepcion").append($("<option/>", {
+                    value: "",
+                    text: "--Seleccione"
+                }));
+
+                $.each(meses, function (index, mes) {
+                    $("#idMesExcepcion").append($("<option/>", {
+                        value: mes.Id,
+                        text: mes.Nombre
+                    }));
+                });
+            }
+        });
+    })
+
+    var tipoEstilo = "";
+
+    if (codError != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnGuardar").attr("disabled", "disabled");
+            $("#idOrganizacion").attr("disabled", "disabled");
+            $("#idProyecto").attr("disabled", "disabled");
+            $("#idProducto").attr("disabled", "disabled");
+            $("#JustificacionExcepcion").attr("disabled", "disabled");
+            $("#idMesExcepcion").attr("disabled", "disabled");
+            $("#btnCancelar").html("Cerrar");
+        } else {
+            tipoEstilo = "alert-danger";
+
+        }
+        if (mensajeRespuesta != "") {
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+    }
+
+</script>

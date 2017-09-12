@@ -1,0 +1,42 @@
+﻿@model AltoRendimiento.Administracion.Models.RolModel
+
+@{
+    ViewBag.Title = "Detalle Rol.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Rol</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Rol
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.rolNombre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.rolNombre
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.rolDescripcion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.rolDescripcion
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>

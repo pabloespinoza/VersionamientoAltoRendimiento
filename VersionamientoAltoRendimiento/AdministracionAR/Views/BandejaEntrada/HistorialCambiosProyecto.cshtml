@@ -1,0 +1,107 @@
+﻿@model AltoRendimiento.Administracion.Models.HistorialProyectoModel
+
+@Styles.Render("~/Content/TimeLine.css")
+
+<div class="modal-body">
+    <div class="form-horizontal">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Historial de Cambios
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proNombreProyecto, new { @class = "col-md-4" })
+                    <div class="col-md-8">
+                        @Model.proNombreProyecto
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.proFolioProyecto, new { @class = "col-md-4" })
+                    <div class="col-md-8">
+                        @Model.proFolioProyecto
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.orgNombre, new { @class = "col-md-4" })
+                    <div class="col-md-8">
+                        @Model.orgNombre
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <a href="#" onclick="VerProyecto(@Model.idProyecto)"" @((@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnVerProyecto == false) ? "display:none" : "display:block")>Ver Proyecto Actual</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divMensaje"></div>
+<div id="divHistorial">
+    <div class="container">
+        <div class="page-header">
+            <h3 id="timeline">Historial de Cambios</h3>
+        </div>
+        <ul class="timeline">
+            @foreach (var item in Model.listaHistorial)
+            {
+                if (@item.nPosicion == 0)
+                {
+                    <li>
+                        <div class="timeline-badge"><img data-toggle='tooltip' title='Historial' src='~/Images/check-box.png' /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title"><b>Usuario: </b>@item.usuNombre</h4>
+                                <p><b>Organización: </b> @item.orgNombre</p>
+                                <p><b>Fecha: </b> @item.oprFechaCreacion</p>
+                            </div>
+                            <div class="timeline-body">
+                                <p><b>Estado: </b> @item.eprDestino</p>                             
+                                @if (@item.sTipoAnulacion.Length > 0)
+                                {
+                                    <p><b>Tipo Anulación: </b>@item.sTipoAnulacion</p>
+                                }
+                                <p><b>Observación: </b>@item.oprObservacion</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge"><img data-toggle='tooltip' title='Historial' src='~/Images/check-box.png' /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title"><b>Usuario: </b>@item.usuNombre</h4>
+                                <p><b>Fecha: </b> @item.oprFechaCreacion</p>
+                            </div>
+                            <div class="timeline-body">
+                                <p><b>Estado: </b> @item.eprDestino</p>
+                                @if (@item.sTipoAnulacion.Length > 0)
+                                {
+                                    <p><b>Tipo Anulación: </b>@item.sTipoAnulacion</p>
+                                }
+                                <p><b>Observación: </b>@item.oprObservacion</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    if (codRespuesta != '0') {
+        var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>';
+        $("#divMensaje").append(mensajeUsuario);
+        $("#divHistorial").attr("style", "display:none;");
+    }
+
+    function VerProyecto(idProyecto) {
+        var url = "http://www.proyectosdeportivos.cl/AltoRendimiento/IndReportes/Default.aspx?idreporte=1&idproyecto=" + idProyecto;
+        window.open(url);
+    }
+</script>

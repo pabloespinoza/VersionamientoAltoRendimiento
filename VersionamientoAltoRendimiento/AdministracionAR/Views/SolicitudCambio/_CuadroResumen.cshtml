@@ -1,0 +1,525 @@
+﻿@model AltoRendimiento.Administracion.Models.CuadroResumenModel
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script src="~/Scripts/modalform.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        $("#TableRendicion").DataTable({
+            "language":
+              {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "Último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+              }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+        $("#TableMovimiento").DataTable({
+            "language":
+              {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "Último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+              }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+
+
+    });
+</script>
+
+<div class="panel-group" id="accordion">
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <!-- panel-heading -->
+            <h4 class="panel-title">
+                <!-- title 1 -->
+                <a data-toggle="collapse" data-parent="#accordion" href="#accordionOne">
+                    Proyecto
+                </a>
+            </h4>
+        </div>
+        <!-- panel body -->
+        <div id="accordionOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <fieldset disabled>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Proyecto.First().Nombre , new { @class = "col-lg-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(p => p.Proyecto.First().Nombre , new { @class = "form-control" , @value = Model.Proyecto })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Proyecto.First().Proyecto , new { @class = "col-lg-2 control-label" })
+                            <div class="col-xs-3">
+                                @Html.TextBoxFor(p => p.Proyecto.First().Proyecto , new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div class="form-group">
+                                <div class="col-xs-11">
+                                    <table class="table table-condensed table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-lg-1">
+                                                    Gasto 01
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 02
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 03
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 04
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 05
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 06
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 07
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 08
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 09
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Gasto 10
+                                                </th>
+                                                <th class="col-lg-1">
+                                                    Total
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+
+                                            <tr>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto01)
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto02)
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto03)
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto04)
+
+
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto05)
+
+
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto06)
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto07)
+
+
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto08)
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto09)
+
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().DetalleGasto10)
+                                                </td>
+                                                <td>
+                                                    @string.Format("{0:C0}" , @Model.Proyecto.First().Monto)
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            @*<table class="table table-condensed table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Flujo 01
+                                        </th>
+                                        <th>
+                                            Flujo 02
+                                        </th>
+                                        <th>
+                                            Flujo 03
+                                        </th>
+                                        <th>
+                                            Flujo 04
+                                        </th>
+                                        <th>
+                                            Flujo 05
+                                        </th>
+                                        <th>
+                                            Flujo 06
+                                        </th>
+                                        <th>
+                                            Flujo 07
+                                        </th>
+                                        <th>
+                                            Flujo 08
+                                        </th>
+                                        <th>
+                                            Flujo 09
+                                        </th>
+                                        <th>
+                                            Flujo 10
+                                        </th>
+                                        <th>
+                                            Flujo 11
+                                        </th>
+                                        <th>
+                                            Flujo 12
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja01)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja02)
+
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja03)
+
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja04)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja05)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja06)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja07)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja08)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja09)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja10)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja11)
+                                        </td>
+                                        <td>
+                                            @string.Format("{0:C0}" , @Model.Proyecto.First().FlujoCaja12)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>*@
+
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-success">
+
+        <div class="panel-heading">
+            <!-- panel-heading -->
+            <h4 class="panel-title">
+                <!-- title 1 -->
+                <a data-toggle="collapse" data-parent="#accordion" href="#accordionDos">
+                    Movimiento
+                </a>
+            </h4>
+        </div>
+        <!-- panel body -->
+        <div id="accordionDos" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table id="TableMovimiento" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-lg-1">
+                                Fecha Movimiento
+                            </th>
+                            <th class="col-lg-1">
+                                Proyecto
+                            </th>
+                            <th class="col-lg-1">
+                                Rut
+                            </th>
+                            <th class="col-lg-1">
+                                Cuenta
+                            </th>
+                            <th class="col-lg-1">
+                                N° Asiento
+                            </th>
+                            <th class="col-lg-1">
+                                Fecha Cheque
+                            </th>
+                            <th class="col-lg-1">
+                                N° Cheque
+                            </th>
+                            <th class="col-lg-1">
+                                Monto
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var row in Model.ListarMovimiento)
+                        {
+
+                            <tr>
+                                <td>
+                                    @row.FECHA_MOVIMIENTO
+                                </td>
+                                <td>
+                                    @row.PROYECTO
+                                </td>
+                                <td>
+                                    @row.RUT_ENTIDAD
+                                </td>
+                                <td>
+                                    @row.CUENTA
+
+                                </td>
+                                <td>
+                                    @row.NRO_ASIENTO
+
+                                </td>
+                                <td>
+                                    @row.FECHA_CHEQUE
+                                </td>
+                                <td>
+                                    @row.NRO_CHEQUE
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.MONTO)
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-success">
+
+        <div class="panel-heading">
+            <!-- panel-heading -->
+            <h4 class="panel-title">
+                <!-- title 1 -->
+                <a data-toggle="collapse" data-parent="#accordion" href="#accordionTres">
+                    Rendicion
+                </a>
+            </h4>
+        </div>
+        <!-- panel body -->
+        <div id="accordionTres" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table id="TableRendicion" class="table table-condensed table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-lg-1">
+                                Fecha Rendicion
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                REN010
+                            </th>
+                            <th>
+                                REN020
+                            </th>
+                            <th>
+                                REN030
+                            </th>
+                            <th>
+                                REN040
+                            </th>
+                            <th>
+                                REN050
+                            </th>
+                            <th>
+                                REN060
+                            </th>
+                            <th>
+                                REN070
+                            </th>
+                            <th>
+                                REN080
+                            </th>
+                            <th>
+                                REN090
+                            </th>
+                            <th>
+                                REN100
+                            </th>
+                            <th>
+                                Rendido
+                            </th>
+                            <th>
+                                Aceptado
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var row in Model.ListaRendicion)
+                        {
+
+                            <tr>
+                                <td>
+                                    @row.FECHA_GRABACION
+                                </td>
+                                <td>
+                                    @row.TIPO_MOVIMIENTO
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN010)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN020)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN030)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN040)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN050)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN060)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN070)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN080)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN090)
+
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.REN100)
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.MONTO_MOVIMIENTO)
+                                </td>
+                                <td>
+                                    @string.Format("{0:C0}" , row.TOTAL_ACEPTADO)
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

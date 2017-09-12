@@ -1,0 +1,50 @@
+﻿@model AltoRendimiento.Administracion.Models.BeneficiarioModel
+
+@{
+    int correlativo = 0;
+}
+
+@foreach (var gastoPer in Model.listaGastosPer)
+{
+    <div class="panel-group" id="accordeonDetalleGastosPerSol@((gastoPer.idGasto) + "_" + (correlativo))">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordeonDetalleGastosPerSol@((gastoPer.idGasto) + "_" + (correlativo))" href="#collapseGastosPerDetalleSol@((gastoPer.idGasto) + "_" + (correlativo))" @(gastoPer.esNuevo == true ? "class= alert-danger" : string.Empty)>
+                    Tipo de Gasto :@Html.DisplayFor(g => gastoPer.tipoGasto)
+                </a>
+            </div>
+            <div id="collapseGastosPerDetalleSol@((gastoPer.idGasto) + "_" + (correlativo))" class="panel-collapse collapse">
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoPer.mesInicio) :
+                        @String.Format("{0:dd/MM/yyyyy}", gastoPer.mesInicio)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoPer.mesFin) :
+                        @String.Format("{0:dd/MM/yyyyy}", gastoPer.mesFin)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoPer.costo) :
+                        @String.Format("{0:C0}", gastoPer.costo)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoPer.costoTotal) :
+                        @String.Format("{0:C0}", gastoPer.costoTotal)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => gastoPer.objetivo) :
+                        @Html.DisplayFor(g => gastoPer.objetivo)
+                    </li>
+                </ul>
+                @if (gastoPer.listaGeo.Count() > 0)
+                {
+                    @Html.Partial("_PartialGeoSol", gastoPer)
+                }
+            </div>
+        </div>
+    </div>
+    correlativo++;
+}
+
+

@@ -1,0 +1,177 @@
+﻿@model AltoRendimiento.Administracion.Models.AlertaModel
+@using AltoRendimiento.Administracion.Enums
+@{
+    ViewBag.Title = "Editar Alerta Campo.";
+    var hidden = "";
+    if (Model.aleTipoAlerta == (int)TipoAlerta.ProcesoBatch)
+    {
+        hidden = "hidden"; 
+    }
+}
+
+<div class="modal-header">
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#aleHtmlBody',
+            language: 'es',
+            height: 300,
+            statusbar: false,
+            plugins: [
+            "link image code preview textcolor"
+            ],
+            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect | preview | code | image | forecolor backcolor ",
+            menubar: "edit| insert",
+            image_prepend_url: "www.ind.cl/wp-content/themes/mindep-2014/images/",
+            image_caption: true,
+            image_list: [
+                 { title: 'Logo1', value: 'logo.png' },
+                 { title: 'Logo2', value: 'logo-alt.png' }
+            ]
+            });
+    </script>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Editar Plantilla Correo Alerta</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idAlerta)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Plantilla Correo Alerta
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleNombre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.aleNombre, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.aleNombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleTipoAlerta, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.aleTipoAlerta, Model.ListaTipoAlerta, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.aleTipoAlerta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div id="divIdWorkFlowInicio" class="form-group @hidden">
+                        @Html.LabelFor(model => model.idWorkFlowInicio, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.idWorkFlowInicio, Model.ListaEstadoInicialProyecto, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.idWorkFlowInicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div id="divIdWorkFlowDestino" class="form-group @hidden">
+                        @Html.LabelFor(model => model.idWorkFlowDestino, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.idWorkFlowDestino, Model.ListaEstadoDestinoProyecto, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.idWorkFlowDestino, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleAdjuntaArchivo, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.aleAdjuntaArchivo, Model.ListaAdjuntaArchivo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.aleAdjuntaArchivo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleSubject, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.aleSubject, new { @class = "form-control", @maxlength = "100" })
+                            @Html.ValidationMessageFor(model => model.aleSubject, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.LabelFor(model => model.aleHeader, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.aleHeader, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.aleHeader, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleBody, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.aleBody, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.aleBody, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleFooter, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.aleFooter, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.aleFooter, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleHtmlBody, new { @class = "col-md-4" })
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.aleHtmlBody, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.aleHtmlBody, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span>Variables</span>
+                            @Html.Label("@fecha, @federacion, @contador, @analistas, @proyecto, @motivo, @producto, @estadoSolicitud, @observacion")
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEditar" class="btn btn-sm btn-success">Guardar</button>
+    </div>
+}
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnGrabar").attr("disabled", "disabled");
+            $("#btnCancelar").html("Cerrar");
+            $("#aleNombre").attr("disabled", "disabled");
+            $("#idWorkFlowInicio").attr("disabled", "disabled");
+            $("#idWorkFlowDestino").attr("disabled", "disabled");
+			$("#aleAdjuntaArchivo").attr("disabled", "disabled");
+            $("#aleSubject").attr("disabled", "disabled");
+            $("#aleHeader").attr("disabled", "disabled");
+			$("#aleBody").attr("disabled", "disabled");
+            $("#aleFooter").attr("disabled", "disabled");
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+
+    var PROCESO_BATCH = "PROCESO BATCH";
+    var CAMBIO_ESTADO = "CAMBIO DE ESTADO";
+
+    $("#aleTipoAlerta").change(function () {
+        var tipoAlertaSelected = $("#aleTipoAlerta :selected").text().toUpperCase().trim();
+        if (tipoAlertaSelected == PROCESO_BATCH) {
+            $("#divIdWorkFlowInicio").addClass("hidden");
+            $("#divIdWorkFlowDestino").addClass("hidden");
+            $("#divIdWorkFlowInicio").val(0);
+            $("#divIdWorkFlowDestino").val(0);
+        }
+        if (tipoAlertaSelected == CAMBIO_ESTADO) {
+            $("#divIdWorkFlowInicio").removeClass("hidden");
+            $("#divIdWorkFlowDestino").removeClass("hidden");
+        }
+
+    });
+</script>

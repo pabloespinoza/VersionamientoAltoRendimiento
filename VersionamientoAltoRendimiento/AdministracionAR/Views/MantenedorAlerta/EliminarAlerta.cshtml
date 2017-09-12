@@ -1,0 +1,126 @@
+﻿@model AltoRendimiento.Administracion.Models.AlertaModel
+@using AltoRendimiento.Administracion.Enums
+@{
+    ViewBag.Title = "Eliminar Plantilla Correo Alerta.";
+}
+
+<div class="modal-header">
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#aleHtmlBody',
+            language: 'es',
+            height: 300,
+            readonly: 1,
+            statusbar: false,
+            plugins: [
+            "code", "preview"
+            ],
+            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect | preview | code "
+        });
+    </script>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar Campo Alerta?</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idAlerta)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Plantilla Correo Alerta
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleNombre, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.aleNombre
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleTipoAlerta, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.sTipoAlerta
+                        </div>
+                    </div>
+                        @if (Model.aleTipoAlerta == (int)TipoAlerta.CambioEstado)
+                        { 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sWorkFlowInicio, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.sWorkFlowInicio
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sWorkFlowDestino, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.sWorkFlowDestino
+                        </div>
+                    </div>
+                        }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sAdjuntaArchivo, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.sAdjuntaArchivo
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleSubject, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Model.aleSubject
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        @Html.LabelFor(model => model.aleHeader, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.aleHeader, new { @class = "form-control", @disabled = "disabled", @style = "resize:none;", @rows = "5" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleBody, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.aleBody, new { @class = "form-control", @disabled = "disabled", @style = "resize:none;", @rows = "5" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleFooter, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.aleFooter, new { @class = "form-control", @disabled = "disabled", @style = "resize:none;", @rows = "5" })
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.aleHtmlBody, new { @class = "col-md-3" })
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(model => model.aleHtmlBody, new { @class = "form-control", @disabled = "disabled", @style = "resize:none;", @rows = "5" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEliminar" class="btn btn-sm btn-success">Eliminar</button>
+    </div>
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnEliminar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>
+

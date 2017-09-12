@@ -1,0 +1,134 @@
+﻿@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var mensaje = '@ViewData["mensaje"]';
+
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+
+
+        $('#frm-CambioEstado').validate({
+            rules: {
+
+                Observacion: {
+                    required: true, equalTo: '#Observacion'
+                },
+                SelectName: {
+                    required: true, equalTo: '#edrp_idWorkflow'
+                }
+            },
+            messages: {
+                Observacion: {
+                    required: "Campo Obligatorio",
+
+                },
+                SelectName: {
+                    required: "Campo Obligatorio",
+                }
+            }
+        });
+
+    });
+
+</script>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
+}
+<script src="~/Scripts/modalform.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("GuardarEstadoProyecto" , "BandejaEntrada" , FormMethod.Post , new { Id = "frm-CambioEstado" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+
+        <div class="form-group">
+
+            <div id="mensaje" class="alert-success">
+            </div>
+            @using (Html.BeginForm("Aprobacion" , "Reprocesar" , FormMethod.Post , new { @id = "frm-Resolucion" , enctype = "multipart/form-data" }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+                <div class="panel panel-default">
+                    <div class="panel-heading">Resolución</div>
+                    <div id="mensajeresolucion" class="alert-success">
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="NumResolucion" class="col-lg-2 control-label">Numero Resolución</label>
+                                <div class="col-lg-3">
+                                    @Html.TextBoxFor(p => p.NumeroResolucion , new { @class = "form-control required" , @maxlength = "6" , id = "NumeroResolucion" , @value = Model.NumeroResolucion })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lblFechaResolucion" class="col-lg-2 control-label">Fecha Resolución</label>
+                                <div class="col-lg-7">
+                                    <div class="input-group date" data-provide="datepicker">
+                                        <input id="Proyecto_FechaResolucion" type="text" class="form-control required" value="@Model.FechaResolucion">
+                                        @Html.HiddenFor(P => P.FechaResolucion , new { @id = "FechaResolucion" })
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+
+        @Html.HiddenFor(p => p.IdProyecto , new { @value = Model.IdProyecto })
+        @Html.HiddenFor(p => p.IdWorkflow , new { @value = Model.IdWorkflow })
+        @Html.HiddenFor(p => p.EstadoEvaluacion , new { @value = Model.EstadoEvaluacion })
+        @Html.HiddenFor(p => p.IdUsuario , new { @value = Model.IdUsuario })
+        @Html.HiddenFor(p => p.Vista , new { @value = Model.Vista })
+
+
+
+        @Html.HiddenFor(p => p.FechaResolucion , new { @value = Model.FechaResolucion })
+        @Html.HiddenFor(p => p.NumeroResolucion , new { @value = Model.NumeroResolucion })
+        <div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" id="btnGuardarEstadoPopUp" class="btn btn-sm btn-success ">Aprobar</button>
+        <button type="button" class="btn btn-sm btn-warning pull-left" data-dismiss="modal">Cancelar</button>
+    </div>
+}

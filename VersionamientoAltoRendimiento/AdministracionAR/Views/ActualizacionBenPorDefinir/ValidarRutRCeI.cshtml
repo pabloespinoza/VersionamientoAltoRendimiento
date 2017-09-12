@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Crear Organizacion.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Validar Rut Registro Civil</h4>
+</div>
+<div class="modal-body">
+    <div class="form-horizontal">
+        <div id="mensaje">
+        </div>
+        <div class="panel panel-default">
+            @if (ViewBag.codigoRespuesta == "0")
+            {
+                <div class="panel-body">
+                    Se ha validado el Rut, con la base de datos del Registro Civil con Éxito
+                    El rut corresponde a: @ViewBag.NombreBeneficiario
+                </div>
+            }
+            else
+            {
+                <div class="panel-body">
+                    Error al validar Rut: @ViewBag.NombreBeneficiario
+                </div>
+            }
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Aceptar</button>
+    </div>
+</div>
+
+<script>
+    codError = '@ViewBag.codigoRespuesta';
+</script>

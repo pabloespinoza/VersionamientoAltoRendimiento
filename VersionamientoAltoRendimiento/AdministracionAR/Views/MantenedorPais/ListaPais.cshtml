@@ -1,0 +1,44 @@
+﻿@model AltoRendimiento.Administracion.Models.PaisModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "CrearPais", "MantenedorPais", null, new { data_modal = "", id = "btnAgregarPais", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblPais" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.paiNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sNombreZona)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaPaises)
+            {
+                <tr>
+                    <td>
+                        @item.paiNombre
+                    </td>
+                    <td>
+                        @item.sNombreZona
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetallePais", new { id = item.idPais }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarPais", new { id = item.idPais }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarPais", new { id = item.idPais }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaPaises.PageCount < Model.listaPaises.PageNumber ? 0 : Model.listaPaises.PageNumber) de @Model.listaPaises.PageCount
+        @Html.PagedListPager(Model.listaPaises, page => Url.Action("Index", new { page }))
+    </div>
+</div>

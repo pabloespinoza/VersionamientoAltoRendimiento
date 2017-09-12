@@ -1,0 +1,57 @@
+﻿@model AltoRendimiento.Administracion.Models.OrganizacionLineaModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+</div>
+<br />
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.sAsociacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.linNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.orgNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.linDescripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.oliPresupuesto)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaOrganizacionLinea)
+            {
+                <tr>
+                    <td>
+                        @item.sAsociacion
+                    </td>
+                    <td>
+                        @item.linNombre
+                    </td>
+                    <td>
+                        @item.orgNombre
+                    </td>
+                    <td>
+                        @item.linDescripcion
+                    </td>
+                    <td>
+                        @item.oliPresupuesto
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "AsignarPresupuesto", new { id = item.idOrganizacionLinea, idOrganizacion = item.idOrganizacion, idLinea = item.idLinea, idConcurso = item.idConcurso, idCategoria = item.idCategoria }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarOrganizacionLinea", new { id = item.idOrganizacionLinea, idOrganizacion = item.idOrganizacion, idLinea = item.idLinea, idConcurso = item.idConcurso, idCategoria = item.idCategoria }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

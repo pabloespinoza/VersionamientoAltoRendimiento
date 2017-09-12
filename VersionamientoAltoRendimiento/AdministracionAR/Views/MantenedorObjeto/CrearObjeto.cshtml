@@ -1,0 +1,79 @@
+﻿@model AltoRendimiento.Administracion.Models.ObjetoModel
+
+@{
+    ViewBag.Title = "Nuevo Objeto.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Objeto</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Objeto
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.idPadre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.idPadre, Model.ListaPadres, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.idPadre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.idTipoObjeto, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.idTipoObjeto, Model.ListaTipoObjetos, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.idTipoObjeto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.objNombreFisico, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.objNombreFisico, new { @class = "form-control", @maxlength = "128" })
+                            @Html.ValidationMessageFor(model => model.objNombreFisico, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.objDescripcion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.objDescripcion, new { @class = "form-control", @maxlength = "250", @style = "resize:none;", @rows = "5" })
+                            @Html.ValidationMessageFor(model => model.objDescripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEditar" class="btn btn-sm btn-success">Guardar</button>
+    </div>
+}
+
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnEditar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        $("#idPadre").attr("disabled", "disabled");
+		$("#idTipoObjeto").attr("disabled", "disabled");
+		$("#objNombreFisico").attr("disabled", "disabled");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>

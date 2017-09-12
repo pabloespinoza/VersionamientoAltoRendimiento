@@ -1,0 +1,240 @@
+﻿@{
+    ViewBag.Title = "EvaluacionProyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+
+    <div id='myModal' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+
+<script src="~/Scripts/modalform.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    
+
+        var adm = '@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.admin';
+
+        if (adm == 'False') {
+            $('#Administracion').addClass("hide");
+        }
+
+
+        var mensaje = '@ViewData["mensaje"]';
+        if (mensaje != "") {
+            var mensajeUsuario = '<div  id="mensaje" class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+
+            
+        }
+        var mensaje = '@ViewData["mensaje_alerta"]';
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert alert-danger ' + "" + ' alert-dismissable" style="text-align:center"><h3>' + mensaje + '</h3></div>';
+            $("#mensaje").append(mensajeUsuario);
+
+
+        }
+
+               
+
+
+
+        $('#btnCambiarEstadoEvaluarProyecto').click(function () {
+
+            var url = '@Url.Action("CambiarEstado")';
+            var model = $('form').serialize();
+         
+            console.log("entro a la funcion");
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    console.log(data);
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+
+
+
+        });
+    });
+</script>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Información Proyecto</div>
+
+    <div id="mensaje" class="alert-success"></div>   
+ 
+   
+    <br />
+    
+    <div class="form-horizontal">
+        <fieldset disabled>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Proyecto, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Proyecto, new { @class = "form-control", @value = Model.Proyecto })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Codigo, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Codigo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Rut, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Rut, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Postulante, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.TipoEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.TipoEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DetalleEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.DetalleEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.CorreoElectronico, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.CorreoElctronico, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RegistroIND, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.NumeroRegistroInd, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Leyconstitucion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.LeyConstitucion, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RendicionCuentaPendiente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneRendicionPendiente, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DirectorioVigente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneDirectorioVigente, new { @class = "form-control" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(p => p.MontoProyecto , new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">                                  
+                    @Html.TextBox(string.Format("{0:C0}" , Model.MontoProyecto) , string.Format("{0:C0}" , Model.MontoProyecto) , new { @class = "form-control" })                   
+                </div>
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(p => p.FechaEvaluacion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.FechaEvaluacion, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+        </fieldset>
+    </div>
+
+    @using (Html.BeginForm("GuardarProyecto", "BandejaEntrada", FormMethod.Post, new { @id = "form-GuardarEstado" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <form class="form-horizontal has-warning" role="form">
+            <div class="panel-body panel panel-default">             
+                <fieldset>
+                    <legend>Evaluación</legend>
+                    <div class="col-lg-10">
+
+                        <div class="col-lg-12">
+                            <label class="control-label">Informe Técnico</label>
+                            <br />
+                            @Html.Raw(Html.ValidationMessageFor(model => model.InformeTecnico, "", new { @class = "control-label", @for = "inputError"}))
+                            @Html.Raw(Html.TextAreaFor(p => p.InformeTecnico, new { @class = "form-control textArea", @rows = 8, @id = "txt_informeTecnico", @maxlength = "50000", @resize = "none" }))
+                            <br />
+                            <label class="control-label">Informe Financiero</label>
+                            @Html.Raw(Html.ValidationMessageFor(model => model.InformeFinanciero, "", new { @class = "has-error" }))
+                            @Html.Raw(Html.TextAreaFor(p => p.InformeFinanciero, new { @class = "form-control textArea", @id = "txt_informeFinanciero", @rows = 8, @maxlength = "50000", @resize = "none" }))
+                        </div>
+                    </div>
+                    <br />
+                </fieldset>
+            </div>
+          
+            @Html.HiddenFor(p => p.IdProyecto, new { @Id = "hdhIdproyecto" })
+            @Html.HiddenFor(p => p.IdWorkflow, new { @id = "hdhIdWorkflow" })
+            @Html.HiddenFor(p => p.ValidaPaso, new { @id = "hdhValidaPaso" })
+            @Html.HiddenFor(p => p.Vista, new {@id="Vista",@value=Model.Vista })
+            @*@Html.HiddenFor(p=>p.IdConcurso)*@
+
+            <div class="panel-body form-inline">
+
+                <fieldset>
+                    <legend>Estado</legend>
+                    <div class="btn-group btn-toolbar" role="group" aria-label="...">
+
+                        <div class="btn-group" role="group">
+                            <div class="col-md-2">
+                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-warning" })
+                            </div>
+                        </div>
+
+                        <div class="btn-group" role="group">
+                            <div class="col-md-2">
+                                <button type="submit" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnGuardarEvaluarProyecto == false) ? "disabled" : "") @((Model.okPresupuesto == false) ? "disabled" : "") class="btn btn-primary" id="btnGuardarEvaluarProyecto">Guardar</button>
+                            </div>
+                        </div>
+
+                        <div class="btn-group" role="group">
+                            <div class="col-md-2">
+                                <button type="button" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnCambiarEstadoEvaluarProyecto == false) ? "disabled" : "") @((Model.ValidaPaso == false) ? "disabled" : "") class="btn btn-success" id="btnCambiarEstadoEvaluarProyecto">Cambiar Estado</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </form>
+    }
+
+</div>

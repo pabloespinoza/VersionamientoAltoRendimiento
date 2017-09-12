@@ -1,0 +1,44 @@
+﻿@model AltoRendimiento.Administracion.Models.PaisModel
+
+@{
+    ViewBag.Title = "Detalle País.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">País</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes País
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.paiNombre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.paiNombre
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.sNombreZona, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.sNombreZona
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>

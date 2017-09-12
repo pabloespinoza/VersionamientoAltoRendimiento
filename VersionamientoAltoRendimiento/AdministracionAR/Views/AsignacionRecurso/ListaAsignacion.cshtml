@@ -1,0 +1,89 @@
+﻿@model AltoRendimiento.Administracion.Models.AsignacionRecurso
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+</div>
+<br />
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th colspan="2"></th>
+                <th colspan="3" style="text-align: center">Converge</th>
+                <th></th>
+                <th style="text-align: center">Converge</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ctaNumeroCuenta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.linNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sPresupuestoVigenteCuenta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sAsignadoLinea)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sAsignadoEntidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sComprometido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sEjecutado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sDisponible)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaAsignaciones)
+            {
+                <tr>
+                    <td>
+                        @item.ctaNumeroCuenta
+                    </td>
+                    <td>
+                        @item.linNombre
+                    </td>
+                    <td>
+                        @item.sPresupuestoVigenteCuenta
+                    </td>
+                    <td>
+                        @item.sAsignadoLinea
+                    </td>
+                    <td>
+                        @item.sAsignadoEntidad
+                    </td>
+                    <td>
+                        @item.sComprometido
+                    </td>
+                    <td>
+                        @item.sEjecutado
+                    </td>
+                    <td>
+                        @item.sDisponible
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleComprometido", new { idOrganizacionLinea = item.idOrganizacionLinea, sComprometido = item.sComprometido, dComprometido = item.dComprometido }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle Comprometido' src=\"Images/dollar-bill.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleDisponible", new { idOrganizacionLinea = item.idOrganizacionLinea, dAsignadoEntidad = item.dAsignadoEntidad }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle Disponible' src=\"Images/funds.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "HistorialAsignacion", new { idOrganizacionLinea = item.idOrganizacionLinea }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Historial' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarAsignacion", new { id = item.idOrganizacionLinea, idOrganizacion = item.idOrganizacion, dPresupuestoVigenteCuenta = item.dPresupuestoVigenteCuenta, linNombre = item.linNombre, dAsignadoLinea = item.dAsignadoLinea, oliPresupuestoInicial = item.oliPresupuestoInicial, idConcurso = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorLineaTipoProducto", new { idOrganizacionLinea = item.idOrganizacionLinea, linNombre = item.linNombre, idOrganizacion = item.idOrganizacion }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Tipo Producto' src=\"Images/circledPlus.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaAsignaciones.PageCount < Model.ListaAsignaciones.PageNumber ? 0 : Model.ListaAsignaciones.PageNumber) de @Model.ListaAsignaciones.PageCount
+        @Html.PagedListPager(Model.ListaAsignaciones, page => Url.Action("Index", new { page }))
+    </div>
+</div>

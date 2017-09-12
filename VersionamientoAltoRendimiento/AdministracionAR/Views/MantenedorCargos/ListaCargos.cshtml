@@ -1,0 +1,47 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorCargoModel
+
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarCargo", "MantenedorCargos", null, new { data_modal = "", id = "btnAgregarCargo", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+
+<div class="table-responsive">
+    <table id="tblCargos" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new AltoRendimiento.Administracion.Models.MantenedorCargoModel { SortOrder = ViewBag.NombreSortParm, Page = Model.Page, NombreBuscar = Model.NombreBuscar })
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaCargos)
+            {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Descripcion
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarCargo", new { id = item.IdCargo }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarCargo", new { id = item.IdCargo }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaCargos.PageCount < Model.ListaCargos.PageNumber ? 0 : Model.ListaCargos.PageNumber) de @Model.ListaCargos.PageCount
+        @Html.PagedListPager(Model.ListaCargos, page => Url.Action("Index", new AltoRendimiento.Administracion.Models.MantenedorCargoModel { Page = page, SortOrder = ViewBag.CurrentSort, NombreBuscar = Model.NombreBuscar }))
+    </div>
+</div>

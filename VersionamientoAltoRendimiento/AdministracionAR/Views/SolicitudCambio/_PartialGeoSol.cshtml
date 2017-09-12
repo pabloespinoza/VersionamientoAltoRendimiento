@@ -1,0 +1,51 @@
+﻿@model  AltoRendimiento.Administracion.Models.GastosModel
+
+@{
+    int correlativo = 0;
+}
+
+@foreach (var geo in Model.listaGeo)
+{
+    <div class="panel-default">
+        <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordeonGeoSol@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))" href="#collapseGeoSol@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))" @(geo.esNuevo == true ? "class = alert-danger" : string.Empty)>
+                GeoLocalizacion: @Html.DisplayFor(g => geo.nombreRecinto)
+            </a>
+        </div>
+        <div id="collapseGeoSol@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))" class="panel-collapse collapse">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.dirRecinto) :
+                    @Html.DisplayFor(g => geo.dirRecinto)
+                </li>
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoDescripcion) :
+                    @Html.DisplayFor(g => geo.geoDescripcion)
+                </li>
+                <li>
+                    <iframe src="mapa?coordenadaX=@Html.Raw(geo.geoCoorX)&coordenadaY=@Html.Raw(geo.geoCoorY)" style="width: 459px; height: 350px; margin-bottom: 5px;" scrolling="no"></iframe>
+                </li>
+
+                @*<li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoCoorX) :
+                    @Html.DisplayFor(g => geo.geoCoorX)
+                </li>
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoCoorY) :
+                    @Html.DisplayFor(g => geo.geoCoorY)
+                </li>*@
+            </ul>
+            @if (geo.listaHorarios.Count() > 0)
+            {
+                @Html.Partial("_PartialHorariosSol", geo)
+            }
+        </div>
+    </div>
+    
+    correlativo++;
+}
+
+
+
+
+

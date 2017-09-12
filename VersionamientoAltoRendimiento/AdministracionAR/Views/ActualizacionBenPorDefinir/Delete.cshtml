@@ -1,0 +1,184 @@
+﻿@model AltoRendimiento.Administracion.Models.Beneficiario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Beneficiario</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.benEsdeportista)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benEsdeportista)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benRutBeneficiario)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benRutBeneficiario)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benDv)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benDv)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benNombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benNombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benApellidoPaterno)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benApellidoPaterno)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benApellidoMaterno)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benApellidoMaterno)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benFechaNacimiento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benFechaNacimiento)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benGenero)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benGenero)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benCorreo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benCorreo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benEstado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benEstado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benFechaCreacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benFechaCreacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benUsuarioCreacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benUsuarioCreacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benFechaModificacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benFechaModificacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benUsuarioModificacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benUsuarioModificacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benExtranjero)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benExtranjero)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.benPorDefinir)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.benPorDefinir)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Disciplina.disNombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Disciplina.disNombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nacionalidad.nacNombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nacionalidad.nacNombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Organizacion.orgDv)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Organizacion.orgDv)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

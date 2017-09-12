@@ -1,0 +1,83 @@
+﻿@model AltoRendimiento.Administracion.Models.ConcursoModel
+
+@{
+    ViewBag.Title = "Eliminar Concurso.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar Concurso?</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idConcurso)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Concurso
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.conAno, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.conAno
+                            @Html.HiddenFor(model => model.conAno)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.conNombre, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.conNombre
+                            @Html.HiddenFor(model => model.conNombre)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.conInicioPostulacion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.conInicioPostulacion
+                            @Html.HiddenFor(model => model.conInicioPostulacion)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.conFinPostulacion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.conFinPostulacion
+                            @Html.HiddenFor(model => model.conFinPostulacion)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.conDescripcion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Model.conDescripcion
+                            @Html.HiddenFor(model => model.conDescripcion)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnEliminar" class="btn btn-sm btn-success">Eliminar</button>
+    </div>
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnEliminar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>

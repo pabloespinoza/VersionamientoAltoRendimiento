@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "EvaluacionProyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/modalform.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var adm = '@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.admin';
+
+        if (adm == 'False') {
+            $('#Administracion').addClass("hide");
+        }
+
+
+        var mensaje = '@ViewData["mensaje"]';
+        var tipoAlerta = '@ViewData["tipoAlterta"]';
+        if (tipoAlerta == "" || tipoAlerta == null)
+        {
+            tipoAlerta = "success";
+        }
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+            $('#btnCambiarEstadoPreselecionado')
+        }
+
+
+
+
+
+        $('#btnCambiarEstadoPreselecionado').click(function () {
+
+            var url = '@Url.Action("CambiarEstado")';
+            var model = $('form').serialize();
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: model,
+                success: function (data) {
+                    console.log(data);
+                    $('#myModalContent').html(data);
+
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        });
+    });
+</script>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Informacion Proyecto Pre-Seleccionado</div>
+    <br />
+    <div id="mensaje">
+    </div>
+    <div class="form-horizontal">
+        <fieldset disabled>
+
+
+            <div class="form-group">
+                @Html.LabelFor(p => p.Proyecto, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Proyecto, new { @class = "form-control", @value = Model.Proyecto })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Codigo, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Codigo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Rut, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Rut, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Postulante, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.TipoEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.TipoEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DetalleEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.DetalleEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.CorreoElectronico, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.CorreoElctronico, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RegistroIND, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.NumeroRegistroInd, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Leyconstitucion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.LeyConstitucion, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RendicionCuentaPendiente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneRendicionPendiente, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DirectorioVigente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneDirectorioVigente, new { @class = "form-control" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(p => p.MontoProyecto , new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBox(string.Format("{0:C0}" , Model.MontoProyecto) , string.Format("{0:C0}" , Model.MontoProyecto) , new { @class = "form-control" })
+                </div>
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(p => p.FechaEvaluacion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.FechaEvaluacion, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+        </fieldset>
+    </div>
+
+    @using (Html.BeginForm("GuardarCambios", "BandejaEntrada", FormMethod.Post, new { Id = "form-CambiarEstado" }))
+    {
+        <form class="form-horizontal" role="form">
+
+            <div class="panel-body">
+                <fieldset>
+                    <legend>Evaluacion</legend>
+                    <div class="col-lg-10">
+                        <div class="col-lg-12">
+                            <label>Informe Tecnico</label>
+                            <br />
+                            @Html.Raw(@Html.TextAreaFor(p => p.InformeTecnico, new { @class = "form-control textArea", @rows = 8, @readonly = true }))
+                            <br />
+                            <label>Informe Financiero</label>
+                            @Html.Raw(@Html.TextAreaFor(p => p.InformeFinanciero, new { @class = "form-control textArea", @rows = 8, @readonly = true }))
+                        </div>
+                    </div>
+                    <br />
+                </fieldset>
+            </div>
+            @Html.HiddenFor(p => p.IdWorkflow)
+            @Html.HiddenFor(p => p.IdWorkflowDestino)
+            @Html.HiddenFor(p => p.IdProyecto)
+            @Html.HiddenFor(p => p.Vista)
+
+            <div class="panel-body">
+                @*<div class="panel-heading">Estado</div>*@
+                <fieldset>
+                    <legend>Estado</legend>
+                    <div class="btn-group btn-toolbar" role="group" aria-label="...">
+
+                        <div class="btn-group" role="group">
+                            <div class="col-md-2">
+                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-warning" })
+                            </div>
+                        </div>
+
+                        <div class="btn-group" role="group">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success" id="btnCambiarEstadoPreselecionado" @((AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnCambiarEstadoPreselecionado == false) ? "disabled" : "") @((Model.ValidaPaso == false) ? "disabled" : "")>Cambiar estado</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+            </div>
+
+
+
+        </form>
+    }
+</div>
+
+
+
+

@@ -1,0 +1,96 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorTipoProductoCargoModel
+
+@{
+    ViewBag.Title = "Buscar Cargos Relacionados.";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Administración de Cargos Relacionados a Productos</li>
+        </ol>
+    </div>
+</div>
+<h3>Administración de Cargos Relacionados a Productos</h3>
+
+<div id="mensaje"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "MantenedorTipoProductoCargo"))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idTipoProducto, "Tipo de Producto", new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.idTipoProducto, Model.ListaTipoProducto, "--Seleccione--", new { @class = "form-control" })
+                                @Html.ValidationMessage("idTipoProducto", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.NombreCargoBuscar, "Nombre de Cargo", new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.NombreCargoBuscar, new { @class = "form-control", @maxlength = "128" })
+                                @Html.ValidationMessage("NombreCargoBuscar", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Buscar" id="btnBuscar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="MantenedorTipoProductoCargo" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaTipoProductoCargo", Model)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if ($("#idTipoProducto:selected").val() > 0) {
+        if (mensajeRespuesta != "") {
+            if (codError == '0') {
+                tipoEstilo = "alert-success";
+            } else {
+                tipoEstilo = "alert-danger";
+            }
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+            if (codError == '2') {
+                $("#tblNiveles").attr("style", "display:none;");
+                $("#dvInfoPaginacion").attr("style", "display:none;");
+            }
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+</script>

@@ -1,0 +1,58 @@
+﻿@model AltoRendimiento.Administracion.Models.ProyectoVersionModel
+
+<div id="area_tabla">
+    <table class="table table-condensed table-bordered table-hover">
+        <tr>
+            <th>
+                Versión de Proyecto
+            </th>
+            <th>
+                Fecha de Creación
+            </th>
+            <th>
+                Usuario de Carga
+            </th>
+            <th>
+                Documento
+            </th>
+        </tr>
+
+        @if(Model.LisProHistorial.Count() > 0)
+        { 
+        foreach (var row in Model.LisProHistorial)
+        {
+            <tr>
+                <td>
+                    @row.prvNumeroVersion
+                </td>
+                <td>
+                    @row.prvFechaCreacion
+                </td>
+                <td>
+                    @foreach (var usuario in Model.UsuarioVersion)
+                    {
+                        if (@row.prvUsuarioCreacion == usuario.idUsuario)
+                        {
+                            @usuario.usuNombre
+                        }
+                    }
+
+                </td>
+                <td>
+                    @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = row.idProyecto, Idproyectoversion = row.idProyectoVersion }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Descargar Documento" }).ToHtmlString().Replace("[replacetext]", ""))
+                </td>
+
+
+            </tr>
+        }
+        }else
+        {
+            <tr>
+                <td colspan="4">
+                    No se encontraron versiones
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

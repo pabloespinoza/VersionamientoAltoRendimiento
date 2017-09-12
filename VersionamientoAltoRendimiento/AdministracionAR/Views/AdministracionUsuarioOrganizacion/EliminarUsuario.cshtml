@@ -1,0 +1,146 @@
+﻿@model AltoRendimiento.Administracion.Models.UsuarioOrganizacionModel
+
+@{
+    ViewBag.Title = "Eliminar Usuario.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">¿Está seguro que desea eliminar el usuario?</h4>
+</div>
+<style>
+    #lblApePaterno {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.idUsuario)
+            @Html.HiddenFor(model => model.idTipoOrganizacion)
+            <div class="form-group">
+                @Html.LabelFor(model => model.TipoOrganizacion, "Tipo de Organización", new { @class = "col-sm-3" })
+                <div class="col-sm-9">
+                    @Model.TipoOrganizacion
+                    @Html.HiddenFor(model => model.TipoOrganizacion)
+                </div>
+            </div>
+            <div id="contenedor" class="panel panel-default">
+                <div class="panel-heading">
+
+                    Identificación del Usuario
+
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Rut, "Rut", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.Rut
+                            @Html.HiddenFor(model => model.Rut)
+                        </div>
+                        <div id="dvUsuario">
+                            @Html.LabelFor(model => model.NombreUsuario, "Usuario", new { @class = "col-sm-2" })
+                            <div class="col-sm-4">
+                                @Model.NombreUsuario
+                                @Html.HiddenFor(model => model.NombreUsuario)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Organizacion, "Organización", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.Organizacion
+                            @Html.HiddenFor(model => model.Organizacion)
+                        </div>
+                        @Html.LabelFor(model => model.Rol, "Rol", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.Rol
+                            @Html.HiddenFor(model => model.Rol)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dvAntecedentes" class="panel panel-default">
+                <div class="panel-heading">
+
+                    Antecedentes personales
+
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nombre, "Nombre", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.Nombre
+                            @Html.HiddenFor(model => model.Nombre)
+                        </div>
+
+                        @Html.LabelFor(model => model.ApellidoPaterno, "Apellido Paterno", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.ApellidoPaterno
+                            @Html.HiddenFor(model => model.ApellidoPaterno)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ApellidoMaterno, "Apellido Materno", new { @class = "col-sm-2", id = "lblApePaterno" })
+                        <div class="col-sm-4">
+                            @Model.ApellidoMaterno
+                            @Html.HiddenFor(model => model.ApellidoMaterno)
+                        </div>
+
+                        @Html.LabelFor(model => model.Email, "E-mail", new { @class = "col-sm-2" })
+                        <div class="col-sm-4">
+                            @Model.Email
+                            @Html.HiddenFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Direccion, "Dirección", new { @class = "col-sm-2" })
+                        <div class="col-sm-10">
+                            @Model.Direccion
+                            @Html.HiddenFor(model => model.Direccion)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+            <button value="Eliminar" id="btnEliminar" class="btn btn-sm btn-success">Eliminar</button>
+        </div>
+    </div>
+}
+<script>
+    if ('@Model.idTipoOrganizacion' == "2") {
+        $("#dvAntecedentes").attr("style", "display:none;");
+        $("#dvUsuario").attr("style", "display:block;");
+    }
+    else {
+        $("#dvAntecedentes").attr("style", "display:block;");
+        $("#dvUsuario").attr("style", "display:none;");
+    }
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (codError != "") {
+        $("#btnEliminar").attr("disabled", "disabled");
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnCancelar").html("Cerrar");
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        if (mensajeRespuesta != "") {
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+
+    }
+</script>

@@ -1,0 +1,82 @@
+﻿@model AltoRendimiento.Administracion.Models.ConsultaExcepcionesModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Excepciones Tiempo de Ejecución</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+                        @foreach (var s in Model.ListaExTiempoEjecucion)
+                        {
+                            var panelid = "#panel" + @s.ExcepxionId;
+                            var collapseId = "#collapse" + @s.ExcepxionId;
+                            var divCollapse = "collapse" + @s.ExcepxionId;
+                            
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-parent=@panelid href=@collapseId>
+                            Excepcion Id: @s.ExcepxionId
+                        </a>
+                       
+                    </div>
+                    <div id=@divCollapse class="panel-collapse collapse">
+                        <div class="panel-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MesFinOriginal, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.MesFinOriginal
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MesFinExcepcion, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.MesFinExcepcion
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AgnoExcepcion, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.AgnoExcepcion
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ModificaFinProyecto, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.ModificaFinProyecto
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Usuario, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.Usuario
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Fecha, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.Fecha
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Justificacion, new { @class = "col-md-4" })
+                                <div class="col-md-8">
+                                    @s.Justificacion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        }
+
+        </div>
+    </div>
+}
+<div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-info pull-left" data-dismiss="modal">Volver</button>
+</div>
+
+

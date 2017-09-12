@@ -1,0 +1,44 @@
+﻿@model AltoRendimiento.Administracion.Models.RolModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "CrearRol", "MantenedorRol", null, new { data_modal = "", id = "btnAgregarRol", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.rolNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.rolDescripcion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaRoles)
+            {
+                <tr>
+                    <td>
+                        @item.rolNombre
+                    </td>
+                    <td>
+                        @item.rolDescripcion
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleRol", new { id = item.idRol }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarRol", new { id = item.idRol }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarRol", new { id = item.idRol }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.ListaRoles.PageCount < Model.ListaRoles.PageNumber ? 0 : Model.ListaRoles.PageNumber) de @Model.ListaRoles.PageCount
+        @Html.PagedListPager(Model.ListaRoles, page => Url.Action("Index", new { page }))
+    </div>
+</div>

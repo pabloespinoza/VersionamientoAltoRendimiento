@@ -1,0 +1,145 @@
+﻿@model  AltoRendimiento.Administracion.Models.GastosModel
+
+@{
+    int correlativo = 0;
+}
+
+@foreach (var geo in Model.listaGeo)
+{
+    <div class="panel-default">
+        <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordeonGeoOrg@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))" href="#collapseGeoOrg@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))">
+                GeoLocalizacion: @Html.DisplayFor(g => geo.nombreRecinto)
+            </a>
+        </div>
+        <div id="collapseGeoOrg@((geo.idGeolocalizacion) + "_" + (correlativo) + "_" + (Model.idGasto))" class="panel-collapse collapse">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.dirRecinto) :
+                    @Html.DisplayFor(g => geo.dirRecinto)
+                </li>
+                @*<li class="list-group-item">
+                    <script src="//maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+                    <div id="map_canvas" style="width: auto; height: 300px;">
+                    </div>
+                </li>*@
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoDescripcion) :
+                    @Html.DisplayFor(g => geo.geoDescripcion)
+                </li>
+                <li>
+                    <iframe src="mapa?coordenadaX=@Html.Raw(geo.geoCoorX)&coordenadaY=@Html.Raw(geo.geoCoorY)" style="width: 459px; height: 350px; margin-bottom: 5px;" scrolling="no"></iframe>
+                </li>
+                @*<li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoCoorX) :
+                    @Html.DisplayFor(g => geo.geoCoorX)
+                </li>
+                <li class="list-group-item">
+                    @Html.DisplayNameFor(g => geo.geoCoorY) :
+                    @Html.DisplayFor(g => geo.geoCoorY)
+                </li>*@
+            </ul>
+            @if (geo.listaHorarios.Count() > 0)
+            {
+                @Html.Partial("_PartialHorariosOrg", geo)
+            }
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+
+    //$('#geoCoorX').attr('readonly', true);
+    //$('#geoCoorY').attr('readonly', true);
+
+    //var geocoder;
+    //var map;
+    //var marker;
+
+    //initialize();
+
+    //function initialize() {
+    //    // Creating map object
+    //    geocoder = new google.maps.Geocoder();
+
+    //    map = new google.maps.Map(document.getElementById('map_canvas'), {
+    //        zoom: 14,
+    //        center: new google.maps.LatLng(-33.447641, -70.667227),
+    //        mapTypeId: google.maps.MapTypeId.ROADMAP
+    //    });
+
+    //    // creates a draggable marker to the given coords
+    //    marker = new google.maps.Marker({
+    //        position: new google.maps.LatLng(-33.447641, -70.667227),
+    //        draggable: true
+    //    });
+
+    //    // adds a listener to the marker
+    //    // gets the coords when drag event ends
+    //    // then updates the input with the new coords
+    //    google.maps.event.addListener(marker, 'dragend', function (evt) {
+    //        $("#geoCoordenadaX").val(evt.latLng.lat().toFixed(6));
+    //        $("#geoCoordenadaY").val(evt.latLng.lng().toFixed(6));
+    //        geocoder.geocode({ 'latLng': evt.latLng }, function (results) {
+    //        });
+    //        map.panTo(evt.latLng);
+    //    });
+
+    //    // centers the map on markers coords
+    //    map.setCenter(marker.position);
+
+    //    // adds the marker on the map
+    //    marker.setMap(map);
+
+    //    centrarGeo();
+
+    //}
+
+    //function centrarGeo() {
+    //    var X = $('#geoCoorX').val();
+    //    var Y = $('#geoCoorY').val();
+    //    if (parseInt(X).length > 0 && parseInt(Y).length > 0) {
+
+    //        // Creating map object
+    //        geocoder = new google.maps.Geocoder();
+
+    //        map = new google.maps.Map(document.getElementById('map_canvas'), {
+    //            zoom: 14,
+    //            center: new google.maps.LatLng(X, Y),
+    //            mapTypeId: google.maps.MapTypeId.ROADMAP
+    //        });
+
+    //        // creates a draggable marker to the given coords
+    //        marker = new google.maps.Marker({
+    //            position: new google.maps.LatLng(X, Y),
+    //            draggable: true
+    //        });
+
+    //        // adds a listener to the marker
+    //        // gets the coords when drag event ends
+    //        // then updates the input with the new coords
+    //        google.maps.event.addListener(marker, 'dragend', function (evt) {
+    //            $("#geoCoorX").val(evt.latLng.lat().toFixed(6));
+    //            $("#geoCoorY").val(evt.latLng.lng().toFixed(6));
+    //            geocoder.geocode({ 'latLng': evt.latLng }, function (results) {
+    //            });
+    //            map.panTo(evt.latLng);
+    //        });
+
+    //        map.setCenter(marker.position);
+
+    //        // adds the marker on the map
+    //        marker.setMap(map);
+    //    }
+    //}
+
+</script>
+
+
+

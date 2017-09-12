@@ -1,0 +1,87 @@
+﻿@model AltoRendimiento.Administracion.Models.ReporteProyectoModel
+@using PagedList.Mvc;
+
+<br />
+<div class="table-responsive">
+    @if (Model.listaProyectos != null)
+    {
+        <table id="tblProyectos" class="table table-condensed table-bordered  table-hover">
+            <thead>
+                <tr>
+                    <th class="col-xs-2">
+                        Nombre Proyecto
+                    </th>
+                    <th>
+                        Federación
+                    </th>
+                    <th class="col-xs-1">
+                        Folio Proyecto
+                    </th>
+                    <th class="col-xs-1">
+                        Estado
+                    </th>
+                    <th>
+                        Línea Financiera
+                    </th>
+                    <th>
+                        Monto Proyecto
+                    </th>
+                    <th>
+                        Monto Reintegro
+                    </th>
+                    <th>
+                        Giros
+                    </th>
+                    <th class="col-xs-1">
+                        Primera Giro
+                    </th>
+                    <th class="col-xs-1">
+                        Ultimo Giro
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listaProyectos)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreProyecto)
+                        </td>
+                        <td class="col-xs-2">
+                            @Html.DisplayFor(modelItem => item.FederacionProyecto)
+                        </td>
+                        <td>
+                            @Math.Round(item.FolioProyecto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoProyecto)
+                        </td>
+                        <td class="col-xs-1">
+                            @Html.DisplayFor(modelItem => item.NombreCuenta)
+                        </td>
+                        <td class="col-xs-1">
+                            @string.Format("{0:C0}" , item.MontoVigenteProyecto)
+                        </td>
+                        <td class="col-xs-1">
+                            @string.Format("{0:C0}" , item.MontoReintegroProyecto)
+                        </td>
+                        <td class="col-xs-1">
+                            @item.CantidadGiros
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PrimeraFechaPago)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SegundaFechaPago)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div id="dvInfoPaginacion">
+            Página @(Model.listaProyectos.PageCount < Model.listaProyectos.PageNumber ? 0 : Model.listaProyectos.PageNumber) de @Model.listaProyectos.PageCount
+            @Html.PagedListPager(Model.listaProyectos , page => Url.Action("Index" , new AltoRendimiento.Administracion.Models.ReporteProyectoModel { Page = page , IdLinea = Model.IdLinea , IdOrganizacionFed = Model.IdOrganizacionFed , IdEstadoProy = Model.IdEstadoProy }))
+        </div>
+    }
+</div>

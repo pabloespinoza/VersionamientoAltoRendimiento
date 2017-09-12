@@ -1,0 +1,87 @@
+﻿@model AltoRendimiento.Administracion.Models.CuentaModel
+
+@{
+    ViewBag.Title = "Nueva Cuenta.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Cuenta</h4>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="divMensaje">
+            </div>
+            @Html.ValidationSummary(true)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Antecedentes Cuenta
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.regNumeroRegion, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.regNumeroRegion, Model.ListaCentroFinanciero, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.regNumeroRegion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ctaAno, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ctaAno, new { @class = "form-control", @maxlength = "4" })
+                            @Html.ValidationMessageFor(model => model.ctaAno, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ctaNumeroCuenta, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ctaNumeroCuenta, new { @class = "form-control", @maxlength = "20" })
+                            @Html.ValidationMessageFor(model => model.ctaNumeroCuenta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ctaNombreCuenta, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ctaNombreCuenta, new { @class = "form-control", @maxlength = "256" })
+                            @Html.ValidationMessageFor(model => model.ctaNombreCuenta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ctaPresupuestoVigente, new { @class = "col-md-4" })
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ctaPresupuestoVigente, new { @class = "form-control", @maxlength = "20" })
+                            @Html.ValidationMessageFor(model => model.ctaPresupuestoVigente, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnGrabar" class="btn btn-sm btn-success">Guardar</button>
+    </div>
+}
+<script>
+    var codRespuesta = '@(ViewBag.codRespuesta)';
+    var msgRespuesta = '@(ViewBag.msgRespuesta)';
+    var tipoEstilo = "";
+    if (msgRespuesta != "") {
+        $("#btnGrabar").attr("disabled", "disabled");
+        $("#btnCancelar").html("Cerrar");
+        $("#regNumeroRegion").attr("disabled", "disabled");
+        $("#ctaAno").attr("disabled", "disabled");
+        $("#ctaNumeroCuenta").attr("disabled", "disabled");
+		$("#ctaNombreCuenta").attr("disabled", "disabled");
+		$("#ctaPresupuestoVigente").attr("disabled", "disabled");
+        if (codRespuesta == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        $("#divMensaje").append('<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msgRespuesta + '</div>');
+    }
+</script>

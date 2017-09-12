@@ -1,0 +1,63 @@
+﻿@model AltoRendimiento.Administracion.Models.ConcursoModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "CrearConcurso", "MantenedorConcurso", null, new { data_modal = "", id = "btnAgregarConcurso", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.conAno)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.conNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.conInicioPostulacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.conFinPostulacion)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.conDescripcion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaConcursos)
+            {
+                <tr>
+                    <td>
+                        @item.conAno
+                    </td>
+                    <td>
+                        @item.conNombre
+                    </td>
+                    <td>
+                        @item.conInicioPostulacion
+                    </td>
+                    <td>
+                        @item.conFinPostulacion
+                    </td>
+                    <td>
+                        @item.conDescripcion
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaConcursos.PageCount < Model.listaConcursos.PageNumber ? 0 : Model.listaConcursos.PageNumber) de @Model.listaConcursos.PageCount
+        @Html.PagedListPager(Model.listaConcursos, page => Url.Action("Index", new { page }))
+    </div>
+</div>

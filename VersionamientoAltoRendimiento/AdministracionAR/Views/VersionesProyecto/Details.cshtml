@@ -1,0 +1,66 @@
+﻿@model AltoRendimiento.Administracion.Models.Proyecto_Versiones
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Proyecto_Versiones</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.prvNumeroVersion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prvNumeroVersion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prvDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prvDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prvEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prvEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prvUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prvUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prvFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prvFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proyecto.proNombreProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proyecto.proNombreProyecto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idProyectoVersion }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

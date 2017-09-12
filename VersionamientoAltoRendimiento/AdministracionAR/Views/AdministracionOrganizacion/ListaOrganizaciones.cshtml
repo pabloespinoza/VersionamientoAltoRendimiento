@@ -1,0 +1,56 @@
+﻿@model AltoRendimiento.Administracion.Models.AdministracionOrganizacionModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "AgregarOrganizacion", "AdministracionOrganizacion", null, new { data_modal = "", id = "btnAgregarOrganizacion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblOrganizaciones" class="table table-condensed table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rut)
+                </th>
+                <th>
+                    @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NombreSortParm, RutBuscar = Model.RutBuscar, NombreBuscar = Model.NombreBuscar })
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaOrganizaciones)
+            {
+                <tr>
+                    <td>
+                        @item.Rut
+                    </td>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Direccion
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleOrganizacion", new { id = item.idOrganizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarOrganizacion", new { id = item.idOrganizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarOrganizacion", new { id = item.idOrganizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaOrganizaciones.PageCount < Model.listaOrganizaciones.PageNumber ? 0 : Model.listaOrganizaciones.PageNumber) de @Model.listaOrganizaciones.PageCount
+        @Html.PagedListPager(Model.listaOrganizaciones, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, RutBuscar = Model.RutBuscar, NombreBuscar = Model.NombreBuscar }))
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Versión de Proyectos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AltoRendimiento.Administracion.Models.ProyectoVersionModel
+
+
+
+<script type="text/javascript">
+
+    @*$(document).ready(function () {
+
+        var mensaje = '@ViewData["Mensaje"]';
+        console.log(mensaje);
+        if (mensaje != "") {
+            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
+            $("#mensajeresolucion").append(mensajeUsuario);
+
+        }
+
+        $('#CodigoProyecto').keyup(function () {
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+
+        $("#btnBuscar").click(function () {
+            $("#form-BuscarProyecto").reset();
+            HTMLFormElement.reset()
+        });
+    });*@
+
+
+
+
+</script>
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="label">
+                            Folio Proyecto:
+                        </label>
+                        <div class="form-group col-md-9">
+                            @Html.TextBoxFor(p => p.folioProyecto, Model.folioProyecto.ToString(), new { @disabled = "disabled", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="label">
+                            Nombre Proyecto:
+                        </label>
+                        <div class="form-group col-md-9">
+                            @Html.TextBoxFor(p => p.nombreProyecto, Model.nombreProyecto.ToString(), new { @disabled = "disabled", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group col-md-3 control-label" for=" label">
+                            Fecha Creación:
+                        </label>
+                        <div class="form-group col-md-9">
+                            @Html.TextBoxFor(p => p.fechaCreacionProyecto, Model.fechaCreacionProyecto.ToShortDateString(), new { @disabled = "disabled", @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("_ListHistorial", Model)

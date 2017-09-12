@@ -1,0 +1,278 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionSCModel
+
+@{
+    ViewBag.Title = "Crear Excepción.";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Excepción</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div id="mensaje">
+            </div>
+
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.idOrganizacion, "Federación", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaFederacion, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idOrganizacion", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.idProyecto, "Proyecto", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idProyecto, Model.ListaProyecto, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idProyecto", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.idProducto, "Producto", new { @class = "control-label col-sm-2" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.idProducto, Model.ListaProducto, "--Seleccione--", new { @class = "form-control" })
+                    @Html.ValidationMessage("idProducto", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div id="contenedor" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+
+                        Identificación del Producto
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreTipoProducto, "Tipo Producto", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.LabelFor(model => model.NombreTipoProducto, new { @class = "control-label", id = "tipoProducto" })
+                                @Html.HiddenFor(model => model.NombreTipoProducto)
+                            </div>
+                            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreLinea, "Nombre Línea", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.LabelFor(model => model.NombreLinea, new { @class = "control-label", id = "nombreLinea" })
+                                @Html.HiddenFor(model => model.NombreLinea)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaInicioProducto, "Mes Inicio", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.FechaInicioProducto, new { @class = "control-label", id = "mesInicio" })
+                                @Html.HiddenFor(model => model.FechaInicioProducto)
+                                @Html.Hidden("glosaFechaInicio")
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FechaFinProducto, "Mes Fin", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.FechaFinProducto, new { @class = "control-label", id = "mesFin" })
+                                @Html.HiddenFor(model => model.FechaFinProducto)
+                                @Html.Hidden("glosaFechaFin")
+                            </div>
+                        </div>
+                        <div id="dvAnioExcepcion" class="form-group">
+                            @Html.LabelFor(model => model.AnioExcepcionProducto, "Año Fin Producto", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-3">
+                                @Html.LabelFor(model => model.AnioExcepcionProducto, new { @class = "control-label", id = "anioExcepcionProducto" })
+                                @Html.HiddenFor(model => model.AnioExcepcionProducto)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MontoProducto, "Monto", new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.LabelFor(model => model.MontoProducto, new { @class = "control-label", id = "montoProducto" })
+                                @Html.HiddenFor(model => model.MontoProducto)
+                                @Html.Hidden("glosaMontoProducto")
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JustificacionExcepcion, "Justificación", new { @class = "col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(model => model.JustificacionExcepcion, new { @class = "form-control", @maxlength = "10000", @style = "resize:none;", @rows = "5" })
+                                @Html.ValidationMessage("JustificacionExcepcion", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnCancelar" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="submit" id="btnGuardar" class="btn btn-sm btn-success ">Guardar</button>
+    </div>
+}
+<script>
+
+    if ($("#NombreTipoProducto").val() != "" || $("#NombreTipoProducto").val() != null) {
+        $("#tipoProducto").text($("#NombreTipoProducto").val());
+    }
+
+    if ($("#NombreLinea").val() != "" || $("#NombreLinea").val() != null) {
+        $("#nombreLinea").text($("#NombreLinea").val());
+    }
+
+    if ($("#glosaFechaInicio").val() != "" || $("#glosaFechaInicio").val() != null) {
+        $("#mesInicio").text($("#glosaFechaInicio").val());
+    }
+
+    if ($("#glosaFechaFin").val() != "" || $("#glosaFechaFin").val() != null) {
+        $("#mesFin").text($("#glosaFechaFin").val());
+    }
+
+    if ($("#glosaMontoProducto").val() != "" || $("#glosaMontoProducto").val() != null) {
+        $("#montoProducto").text($("#glosaMontoProducto").val());
+    }
+
+    if ($("#AnioExcepcionProducto").val() != "" || $("#AnioExcepcionProducto").val() != null) {
+        $("#anioExcepcionProducto").text($("#AnioExcepcionProducto").val());
+    }
+
+    $("#dvAnioExcepcion").hide();
+
+    if ($("#idProducto option:selected").index() == 0) {
+        $("#contenedor").attr("style", "display:none;")
+    } else {
+        $("#contenedor").attr("style", "display:block;")
+    }
+
+    $("#idOrganizacion").change(function () {
+        $("#idProyecto").html("");
+        $("#idProyecto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+
+        $("#idProducto").html("");
+        $("#idProducto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+        $.ajax({
+            url: "MantenedorExcepcionSC/BuscarProyectos"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idOrganizacion: $(this).val() }
+            , success: function (info) {
+                $.each(info.Datos, function (index, proyecto) {
+                    $("#idProyecto").append($("<option/>", {
+                        value: proyecto.idProyecto,
+                        text: proyecto.proNombre
+                    }));
+                });
+            }
+        });
+    })
+
+    $("#idProyecto").change(function () {
+        $("#idProducto").html("");
+        $("#idProducto").append($("<option/>", {
+            value: "",
+            text: "--Seleccione--"
+        }));
+        $.ajax({
+            url: "MantenedorExcepcionSC/BuscarProductos"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idProyecto: $(this).val() }
+            , success: function (info) {
+                $.each(info.Datos, function (index, producto) {
+                    $("#idProducto").append($("<option/>", {
+                        value: producto.idProducto,
+                        text: producto.prdNombre
+                    }));
+                });
+            }
+        });
+    })
+
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)';
+
+    $("#idProducto").change(function () {
+        $.ajax({
+            url: "MantenedorExcepcionSC/ObtenerProducto"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idProducto: $(this).val(), idProyecto: $("#idProyecto option:selected").val() }
+            , success: function (info) {
+                var producto = info.Datos[0];
+                if (info.Codigo == 0) {
+                    var tipoProducto = producto.TipoProducto;
+                    var nombreLinea = producto.NombreLinea;
+                    var mesInicio = producto.MesInicio;
+                    var glosaFechaInicio = producto.glosaFechaInicio;
+                    var mesFin = producto.MesFin;
+                    var glosaFechaFin = producto.glosaFechaFin;
+                    var idMesInicio = producto.idMesInicio;
+                    var idMesFin = producto.idMesFin;
+                    var montoProducto = producto.MontoProducto;
+                    var glosaMontoProducto = producto.glosaMontoProducto;
+                    var montoProductoSinFormat = producto.MontoProductoSinFormat;
+                    
+                    var anioProducto = producto.AnioExcepcion;
+                    
+                    $("#tipoProducto").text(tipoProducto);
+                    $("#NombreTipoProducto").val(tipoProducto);
+                    $("#nombreLinea").text(nombreLinea);
+                    $("#NombreLinea").val(nombreLinea);
+                    $("#mesInicio").text(mesInicio);
+                    $("#glosaFechaInicio").val(glosaFechaInicio);
+                    $("#FechaInicioProducto").val(idMesInicio);
+                    $("#mesFin").text(mesFin);
+                    $("#glosaFechaFin").val(glosaFechaFin);
+                    $("#FechaFinProducto").val(idMesFin);
+                    $("#montoProducto").text(montoProducto);
+                    $("#glosaMontoProducto").val(glosaMontoProducto);
+                    $("#MontoProducto").val(montoProductoSinFormat);
+
+
+                    var anio = (new Date).getFullYear();
+
+                    if (anioProducto != "0" && anio < anioProducto) {
+                        $("#anioExcepcionProducto").text(anioProducto);
+                        $("#AnioExcepcionProducto").val(anioProducto);
+                        $("#dvAnioExcepcion").show();
+                    } else {
+                        $("#anioExcepcionProducto").text("");
+                        $("#AnioExcepcionProducto").val("");
+                        $("#dvAnioExcepcion").hide();
+                    }
+                    $("#contenedor").attr("style", "display:block;");
+                } else {
+                    $("#contenedor").attr("style", "display:none;");
+                    codError = info.Codigo;
+                    mensajeRespuesta = info.Mensaje;
+                }
+            }
+        });
+    })
+    var tipoEstilo = "";
+
+    if (codError != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+            $("#btnGuardar").attr("disabled", "disabled");
+            $("#idOrganizacion").attr("disabled", "disabled");
+            $("#idProyecto").attr("disabled", "disabled");
+            $("#idProducto").attr("disabled", "disabled");
+            $("#JustificacionExcepcion").attr("disabled", "disabled");
+            $("#btnCancelar").html("Cerrar");
+        } else {
+            tipoEstilo = "alert-danger";
+
+        }
+        if (mensajeRespuesta != "") {
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#mensaje").append(mensajeUsuario);
+        }
+    }
+
+</script>

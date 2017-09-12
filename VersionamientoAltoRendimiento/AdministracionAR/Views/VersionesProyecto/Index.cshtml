@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cargar Versiones Proyecto</h2>
+
+@if (ViewData["proysCargados"] == null)
+{
+    using (Html.BeginForm("CargarVersiones", "VersionesProyecto"))
+    {
+        <button value="Cargar Versiones" id="btnFiltrar" class="btn btn-sm btn-success">Cargar Versiones</button>
+    }
+}
+else
+{
+    <div id="divProysCargados">
+        <div class="alert-success alert-dismissable">Se han cargado los siguientes id de Proyectos: @ViewData["proysCargados"].ToString()</div>
+    </div>
+    <br />
+}
+
+@if (ViewData["proysNoCargados"] != null)
+{
+    <div id="divProysNoCargados">
+        <div class="alert-danger alert-dismissable">NO se han cargado los siguientes id de Proyectos: @ViewData["proysNoCargados"].ToString()</div>
+    </div>
+    <br />
+}
+
+@if (ViewData["proysYaCargados"] != null)
+{
+    <div id="divProysYaCargados">
+        <div class="alert-info alert-dismissable">Los siguientes id de Proyectos ya se encontraban cargados: @ViewData["proysYaCargados"].ToString()</div>
+    </div>
+    <br />
+}
+
+
+<br />
+<br /><br />
+@Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })

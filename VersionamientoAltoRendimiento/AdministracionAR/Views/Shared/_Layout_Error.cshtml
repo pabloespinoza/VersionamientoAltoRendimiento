@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    @*<link rel="shortcut icon" href="logo.ico">*@
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Instituto Nacional del Deporte</title>
+    @Styles.Render("~/bundles/Content")
+    @Styles.Render("~/bundles/fonts")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/bundles/DatePicker")
+
+
+
+    @Scripts.Render("~/bundles/datetime")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="container">
+
+        <div class="row" style="margin-top:5px;">
+            <div class="col-md-2 col-sx-2">
+                <img src="~/Images/logo-alt.png" class="logo-img" alt="Logo">
+            </div>
+            <div class="col-md-10 col-sx-10" style="padding-left:50px;">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                @RenderSection("featured", required: false)
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+  
+
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        window.onload = function () {
+            $('body').removeClass('preloader-overflow');
+        }
+    </script>
+
+
+
+
+
+</body>
+</html>

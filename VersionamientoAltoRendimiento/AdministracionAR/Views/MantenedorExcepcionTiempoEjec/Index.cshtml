@@ -1,0 +1,153 @@
+﻿@model AltoRendimiento.Administracion.Models.MantenedorExcepcionTiempoEjecModel
+
+@{
+    ViewBag.Title = "Mantenedor Excepción de Tiempo de Ejecución";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Administración de Excepción de Tiempo de Ejecución</li>
+        </ol>
+    </div>
+</div>
+<h3>Administración de Excepción de Tiempo de Ejecución</h3>
+
+<div id="mensaje"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "MantenedorExcepcionTiempoEjec"))
+            {
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idOrganizacion, "Federación", new { @class = "control-label col-md-1" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(model => model.idOrganizacion, Model.ListaFederacion, "--Seleccione--", new { @class = "form-control", @id = "idOrganizacion" })
+                                @Html.ValidationMessage("idOrganizacion", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.idProyecto, "Proyecto", new { @class = "control-label col-md-1" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(model => model.idProyecto, Model.ListaProyecto, "--Seleccione--", new { @class = "form-control", @id = "idProyecto" })
+                                @Html.ValidationMessage("idProyecto", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.idProducto, "Producto", new { @class = "control-label col-md-1  col-md-offset-6" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(model => model.idProducto, Model.ListaProducto, "--Seleccione--", new { @class = "form-control", @id = "idProducto" })
+                                @Html.ValidationMessage("idProducto", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group pull-right">
+                            <div class="col-md-12">
+                                <button value="Buscar" id="btnBuscar" class="btn btn-sm btn-success">Buscar</button>
+                                <a href="MantenedorExcepcionSC" class="btn btn-sm btn-default">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Partial("ListaExcepciones", Model)
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+
+<script>
+    var codError = '@(ViewBag.codError)';
+    var mensajeRespuesta = '@(ViewBag.respuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#mensaje").append(mensajeUsuario);
+        if (codError == '2') {
+            $("#tblNiveles").attr("style", "display:none;");
+            $("#dvInfoPaginacion").attr("style", "display:none;");
+        }
+    }
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    $("#idOrganizacion").change(function () {
+            $("#idProyecto").html("");
+            $("#idProyecto").append($("<option/>", {
+                value: "",
+                text: "--Seleccione--"
+            }));
+
+            $("#idProducto").html("");
+            $("#idProducto").append($("<option/>", {
+                value: "",
+                text: "--Seleccione--"
+            }));
+            $.ajax({
+                url: "MantenedorExcepcionSC/BuscarProyectos"
+                , method: "POST"
+                , dataType: "JSON"
+                , data: { idOrganizacion: $(this).val() }
+                , success: function (info) {
+                    $.each(info.Datos, function (index, proyecto) {
+                        $("#idProyecto").append($("<option/>", {
+                            value: proyecto.idProyecto,
+                            text: proyecto.proNombre
+                        }));
+                    });
+                }
+            });
+    })
+
+    $("#idProyecto").change(function () {
+            $("#idProducto").html("");
+            $("#idProducto").append($("<option/>", {
+                value: "",
+                text: "--Seleccione--"
+            }));
+            $.ajax({
+                url: "MantenedorExcepcionSC/BuscarProductos"
+                , method: "POST"
+                , dataType: "JSON"
+                , data: { idProyecto: $(this).val() }
+                , success: function (info) {
+                    $.each(info.Datos, function (index, producto) {
+                        $("#idProducto").append($("<option/>", {
+                            value: producto.idProducto,
+                            text: producto.prdNombre
+                        }));
+                    });
+                }
+            });
+    })
+</script>
+
+

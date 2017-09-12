@@ -1,0 +1,62 @@
+﻿@model AltoRendimiento.Administracion.Models.LineaModel
+@using PagedList.Mvc;
+<div class="text-right">
+    @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+    @Html.ActionLink("Nueva", "CrearLinea", "MantenedorLinea", null, new { data_modal = "", id = "btnAgregarLinea", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+</div>
+<br />
+<div class="table-responsive">
+    <table id="tblData" class="table table-condensed table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Programa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sLineaClasificacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.linNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.linDescripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ctaPresupuestoVigente)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.listaLineas)
+            {
+                <tr>
+                    <td>
+                        @item.Programa
+                    </td>
+                    <td>
+                        @item.sLineaClasificacion
+                    </td>
+                    <td>
+                        @item.linNombre
+                    </td>
+                    <td>
+                        @item.linDescripcion
+                    </td>
+                    <td>
+                        @item.ctaPresupuestoVigente
+                    </td>
+                    <td>
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleLinea", new { id = item.idLinea }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarLinea", new { id = item.idLinea }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarLinea", new { id = item.idLinea }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="dvInfoPaginacion">
+        Página @(Model.listaLineas.PageCount < Model.listaLineas.PageNumber ? 0 : Model.listaLineas.PageNumber) de @Model.listaLineas.PageCount
+        @Html.PagedListPager(Model.listaLineas, page => Url.Action("Index", new { page }))
+    </div>
+</div>

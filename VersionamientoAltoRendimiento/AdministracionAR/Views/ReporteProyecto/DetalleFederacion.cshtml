@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "EvaluacionProyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AltoRendimiento.Administracion.Models.ProyectoModel
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Organización</div>
+    <br />
+    <div id="mensaje" class="alert-success">
+    </div>
+    <div class="form-horizontal">
+        <fieldset disabled>
+            <div class="form-group">               
+                <label class="col-lg-2 control-label">Organización</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.Nombre , new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Rut, new { @class = "col-lg-2 control-label" })
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(p => p.Rut, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(p => p.TipoEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.TipoEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DetalleEntidad, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.DetalleEntidad, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.CorreoElectronico, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.CorreoElctronico, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RegistroIND, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(p => p.Organizacion.NumeroRegistroInd, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.Leyconstitucion, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(p => p.Organizacion.LeyConstitucion, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.RendicionCuentaPendiente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneRendicionPendiente, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.DirectorioVigente, new { @class = "col-lg-2 control-label" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(p => p.Organizacion.TieneDirectorioVigente, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+        </fieldset>
+    </div>
+
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Proyectos Postulados</div>
+    <br />
+    
+</div>
+
+
