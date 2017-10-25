@@ -29,7 +29,14 @@
 
         $("#bgaFechaInicio").val("1" + "-" + idFechaInicio.toString() + "-" + ano.toString());
 
-        funcionCostoTotal();
+        if ($("#rdCostoPorPersona").is(":checked"))
+            funcionCostoTotal();
+        else if ($("#rdCostoTotal").is(":checked"))
+            funcionCostoPersona();
+
+
+
+
     });
     $("#idFecHasta").change(function () {
 
@@ -47,7 +54,10 @@
 
             $("#bgaFechaFin").val("1" + "-" + idFechaFin.toString() + "-" + ano.toString());
 
-            funcionCostoTotal();
+            if ($("#rdCostoPorPersona").is(":checked"))
+                funcionCostoTotal();
+            else if ($("#rdCostoTotal").is(":checked"))
+                funcionCostoPersona();
         }
         else {
 
@@ -60,8 +70,68 @@
 
     });
 
-    function funcionCostoTotal() {
+    function funcionCostoPersona() {
+        valorTotal = parseInt($("#txtTotal").val());
+        var TotalPersona = 0;
+        if (valorTotal <= 0) {
+            return;
+        }
+        var hiddenVal = document.getElementById("idTgaNombre").value;
 
+        if (hiddenVal == "3") {
+
+            idFechaInicio = parseInt($("#idFecDesde").val());
+            idFechaFin = parseInt($("#idFecHasta").val());
+            var cantMeses = idFechaFin - idFechaInicio + 1;
+
+            if (parseInt(cantMeses) <= 0) {
+                //alert("Debe seleccionar Mes Inicio y Mes Fin");
+                return;
+            } else {
+                TotalPersona = valorTotal / cantMeses;
+            }
+
+        } else {
+            cantDias = parseInt($("#txtDias").val());
+            if (parseInt(cantDias) <= 0) {
+                //alert("Debe seleccionar Fecha Inicio y Fecha Fin");
+                return;
+            } else {
+                TotalPersona = valorTotal / cantDias;
+            }
+        }
+
+        if (hiddenVal == "1" || hiddenVal == "3") {
+            var anioConcurso = "@(((AltoRendimiento.Models.Proyecto)ViewBag.proyecto).Organizacion_Linea.Concurso_categoria.Concurso.conAno)";
+            if (anioConcurso != 2016) {
+                var cantBeneficiarios = $('#my-select').searchableOptionList().getSelection().length;
+                if (cantBeneficiarios <= 0) {
+                    alert("Debe seleccionar al menos un Beneficiario");
+                    return;
+                }
+                //aproxima el valor
+                TotalPersona = Math.round(TotalPersona / cantBeneficiarios);
+            }
+        }
+
+        if (TotalPersona > 0) {
+            var viaticoPermitido = parseInt($("#hddValorViatico").val());
+            if (viaticoPermitido > 0 && TotalPersona > viaticoPermitido) {
+                alert($("#lblValorViatico").text());
+                $("#txtValor").val(viaticoPermitido);
+                funcionCostoTotal();
+            } else {
+                $("#txtValor").val(Math.round(TotalPersona));
+                //alert("valorTotal" + valorTotal)
+                $("#hdnCostoTotal").val(Math.round(valorTotal));
+            }
+        } else {
+            $("#txtValor").val(0);
+            $("#hdnCostoTotal").val(0);
+        }
+    }
+
+    function funcionCostoTotal() {
         valor = parseInt($("#txtValor").val());
         cantDias = parseInt($("#txtDias").val());
         //Pablo Espinoza
@@ -133,12 +203,23 @@
         funcionCostoTotal();
     });
     $("#txtDias").change(function () {
-        funcionCostoTotal();
+        if ($("#rdCostoPorPersona").is(":checked"))
+            funcionCostoTotal();
+        else if ($("#rdCostoTotal").is(":checked"))
+            funcionCostoPersona();
     });
 
     $("#txtTotal").change(function () {
-        valorTxtTotal = $("#txtTotal").val();
-        $("#hdnCostoTotal").val(valorTxtTotal);
+        if ($("#rdCostoPorPersona").is(":checked"))
+            funcionCostoTotal();
+        else if ($("#rdCostoTotal").is(":checked"))
+            funcionCostoPersona();
+        else {
+            valorTxtTotal = $("#txtTotal").val();
+            $("#hdnCostoTotal").val(valorTxtTotal);
+        }
+        /*valorTxtTotal = $("#txtTotal").val();
+        $("#hdnCostoTotal").val(valorTxtTotal);*/
     })
 
     //$("#idTipoGastoAdministracion").change(function () {
@@ -175,10 +256,15 @@
                     $("#divGeo").show();
                     $("#dvTxtTotal").attr("class", "col-md-2");
                     document.getElementById("txtTotal").disabled = true;
+                    document.getElementById("txtValor").disabled = true;
+                    $("#rdCostoPorPersona").removeAttr("checked");
+                    $("#rdCostoTotal").removeAttr("checked");
+                    $("#lblAprox").hide();
 
                     $("#txtFechaInicio").val("");
                     $("#txtFechaFin").val("");
                     //$("#txtDias").val("");
+                    $("#divCostoPor").show();
                 } else if (options == 3) {
 
                     $("#divBeneficiario").show();
@@ -193,10 +279,15 @@
                     $("#divGeo").hide();
                     $("#dvTxtTotal").attr("class", "col-md-2");
                     document.getElementById("txtTotal").disabled = true;
+                    document.getElementById("txtValor").disabled = true;
+                    $("#rdCostoPorPersona").removeAttr("checked");
+                    $("#rdCostoTotal").removeAttr("checked");
+                    $("#lblAprox").hide();
 
                     $("#txtFechaInicio").val("");
                     $("#txtFechaFin").val("");
                     //$("#txtDias").val("");
+                    $("#divCostoPor").show();
                 } else {
                     $("#divBeneficiario").hide();
                     $("#divFechas").hide();
@@ -216,6 +307,7 @@
                     $("#txtFechaInicio").val(myDate);
                     $("#txtFechaFin").val(myDate);
                     $("#txtDias").val(dia);
+                    $("#divCostoPor").hide();
                 }
                 //Pablo Espinoza 12-12-2016
                 //alert(options);
@@ -249,10 +341,27 @@
             $("#hdnDias").val(diffDays + 1);
         }
         //Pablo Espinoza
-        funcionCostoTotal();
+        if ($("#rdCostoPorPersona").is(":checked"))
+            funcionCostoTotal();
+        else if ($("#rdCostoTotal").is(":checked"))
+            funcionCostoPersona();
         //Pablo Espinoza
     };
 
+    $("#rdCostoPorPersona").change(function () {
+        if (this.checked) {
+            document.getElementById("txtTotal").disabled = true;
+            document.getElementById("txtValor").disabled = false;
+            $("#lblAprox").hide();
+        }
+    })
+    $("#rdCostoTotal").change(function () {
+        if (this.checked) {
+            document.getElementById("txtTotal").disabled = false;
+            document.getElementById("txtValor").disabled = true;
+            $("#lblAprox").show();
+        }
+    })
 </script>
 
 
@@ -324,7 +433,7 @@
                         @Html.LabelFor(model => model.idBeneficiarioProductoCargo, "Beneficiario", new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             <!--Pablo Espinoza 09-02-2016-->
-                            @Html.DropDownList("listaBeneficiarios", (IEnumerable<SelectListItem>)ViewBag.BeneficiarioProd, null, new { @id = "my-select", @name = "character", @multiple = "multiple"})
+                            @Html.DropDownList("listaBeneficiarios", (IEnumerable<SelectListItem>)ViewBag.BeneficiarioProd, null, new { @id = "my-select", @name = "character", @multiple = "multiple" })
                             <!--Pablo Espinoza 09-02-2016-->
                             @Html.ValidationMessageFor(model => model.idBeneficiarioProductoCargo)
                         </div>
@@ -336,7 +445,7 @@
             <div class="form-group" id="divDescripcion">
                 @Html.LabelFor(model => model.bgaDescripcion, "Descripción", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.bgaDescripcion, new { @class = "form-control", @rows = 4, @style = "resize:none;", @maxLength="2048" })
+                    @Html.TextAreaFor(model => model.bgaDescripcion, new { @class = "form-control", @rows = 4, @style = "resize:none;", @maxLength = "2048" })
                     @Html.ValidationMessageFor(model => model.bgaDescripcion)
                 </div>
             </div>
@@ -405,21 +514,36 @@
                 }).on('changeDate', function (ev) {
                     checkout.hide();
                 }).data('datepicker');
-
             </script>
+
+            <div class="form-group">
+                <div id="divCostoPor" style="display:none;">
+                    <div class="col-md-8 col-md-push-4">
+                        <label for="rdCostoPorPersona" class="col-md-4">Costo beneficiario</label>
+                        <input type="radio" id="rdCostoPorPersona" name="rdCosto" value="1" class="radio-inline col-md-2" />
+                        <label for="rdCostoTotal" class="col-md-4">Costo Total</label>
+                        <input type="radio" id="rdCostoTotal" name="rdCosto" value="2" class="radio-inline col-md-2" />
+                    </div>
+                </div>
+            </div>
             @*Pablo Espinoza 12-12-2016*@
             <div class="form-group">
                 <div id="divDias">
-                    @Html.LabelFor(model => model.bgaDias, "Días", new { @class = "control-label col-md-2", id = "diasMeses" })
+                    @Html.LabelFor(model => model.bgaDias, "Días", new { @class = "control-label col-md-1", id = "diasMeses" })
                     <div class="col-md-2">
                         @Html.TextBoxFor(model => model.bgaDias, new { @class = "form-control", @rows = 3, @id = "txtDias", @Disabled = "true" })
                         @Html.ValidationMessageFor(model => model.bgaDias)
                     </div>
                 </div>
                 <div id="divValor">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Valor por Beneficiario</label>
-                    <div class="col-md-2">
-                        <input type="text" id="txtValor" value="@ViewBag.valorPorBen" class="form-control" onkeypress="return permite(event, 'numeros'); return false;" placeholder="0" maxlength="10">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Valor Beneficiario</label>
+                    <div class="col-md-3">
+                        <div class="col-md-7">
+                            <input type="text" id="txtValor" value="@ViewBag.valorPorBen" class="form-control" onkeypress="return permite(event, 'numeros'); return false;" placeholder="0" maxlength="10" />
+                        </div>
+                        <div class="col-md-5">
+                            <label id="lblAprox" class="control-label">Aprox.</label>
+                        </div>
                         <!--Pablo Espinoza-->
                         <label id="lblValorViatico" style="font-size:x-small"></label>
 
@@ -490,8 +614,6 @@
 
 
 <script type="text/javascript">
-
-
     //Pablo Espinoza 09-02-2016
     $(function () {
         // initialize sol
@@ -499,12 +621,18 @@
         $('#my-select').searchableOptionList({
             maxHeight: '200px',
             showSelectAll: true,
-            texts:{
+            texts: {
                 noItemsAvailable: "Favor de agregar Beneficiarios al producto, previo al crear un Gasto"
             },
             events: {
                 onRendered: function (sol) {
                     $(".sol-container").css("width", "auto");
+                },
+                onChange: function () {
+                    if ($("#rdCostoPorPersona").is(":checked"))
+                        funcionCostoTotal();
+                    else if ($("#rdCostoTotal").is(":checked"))
+                        funcionCostoPersona();
                 }
             }
 
@@ -562,7 +690,7 @@
                     $("span[data-valmsg-for=bgaFechaFin]").attr("class", "field-validation-valid");
                 }
             }
-            if ($("#txtTotal").val() == "" || $("#txtTotal").val() == "0") {
+            if ($("#txtTotal").val() == "" || parseInt($("#txtTotal").val()) == 0) {
                 $("span[data-valmsg-for=bgaTotal]").text("Debe ingresar el valor o fechas para que se calcule el total.");
                 $("span[data-valmsg-for=bgaTotal]").attr("class", "field-validation-error");
                 exito = false;
@@ -698,10 +826,15 @@
                     $("#dvTxtTotal").attr("class", "col-md-2");
                     $("#Recintos-DropdownID").prop('selectedIndex', 0);
                     document.getElementById("txtTotal").disabled = true;
+                    document.getElementById("txtValor").disabled = true;
+                    $("#rdCostoPorPersona").removeAttr("checked");
+                    $("#rdCostoTotal").removeAttr("checked");
+                    $("#lblAprox").hide();
 
                     $("#txtFechaInicio").val("");
                     $("#txtFechaFin").val("");
                     $("#txtDias").val("");
+                    $("#divCostoPor").show();
                 } else if (options == 3) {
                     $("#divBeneficiario").show();
                     $("#divChkBeneficiarios").hide();
@@ -717,10 +850,15 @@
                     $("#dvTxtTotal").attr("class", "col-md-2");
                     $("#Recintos-DropdownID").prop('selectedIndex', 0);
                     document.getElementById("txtTotal").disabled = true;
+                    document.getElementById("txtValor").disabled = true;
+                    $("#rdCostoPorPersona").removeAttr("checked");
+                    $("#rdCostoTotal").removeAttr("checked");
+                    $("#lblAprox").hide();
 
                     $("#txtFechaInicio").val("");
                     $("#txtFechaFin").val("");
                     $("#txtDias").val("");
+                    $("#divCostoPor").show();
                 } else {
                     var anioConcurso = "@(((AltoRendimiento.Models.Proyecto)ViewBag.proyecto).Organizacion_Linea.Concurso_categoria.Concurso.conAno)";
                     if (anioConcurso != "2016") {
@@ -747,6 +885,7 @@
                     $("#txtFechaInicio").val(myDate);
                     $("#txtFechaFin").val(myDate);
                     $("#txtDias").val(dia);
+                    $("#divCostoPor").hide();
                 }
                 //Pablo Espinoza 12-12-2016
 
