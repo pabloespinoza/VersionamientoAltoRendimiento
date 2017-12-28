@@ -1,0 +1,276 @@
+﻿@model AltoRendimiento.Administracion.Models.OrganizacionLineaModel
+
+@{
+    ViewBag.Title = "Asignar Recursos";
+}
+<div id="dvInfoPasoTres">
+    <div id='myModalLoadPasoTres' class='modal fade in'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'>
+                    <div id="loader" class=" alert" style="display:block">
+                        Loading...<img src="~/Images/owl-carousel/AjaxLoader.gif" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divMensajePasoTres"></div>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+
+    @using (Ajax.BeginForm("PasoTres", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.ReplaceWith,
+    LoadingElementId = "myModalLoadPasoTres",
+    UpdateTargetId = "dvInfoPasoTres",
+    OnSuccess = "MostrarOrganizaciones"
+}))
+    {
+        @Html.Hidden("anioConcurso")
+        <div class="form-group">
+            @Html.LabelFor(model => model.idLinea, new { @class = "col-md-2" })
+            <div class="col-md-4">
+                <div id="dvLineas">
+                    @Html.DropDownListFor(model => model.idLinea, Model.ListaLineas, new { @class = "form-control", @onchange = "$(this.form).submit();" })
+                </div>
+                @Html.ValidationMessageFor(model => model.idLinea, "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("lblPresupuesto", "Asignado a Línea", new { @class = "col-md-2" })
+            <div class="col-md-4">
+                <div id="prespuesto">
+                    @Html.LabelFor(model => model.oliPresupuesto, Model.oliPresupuesto, new { id = "lblPresupuesto" })
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div id="dvOrganizaciones" class="table-responsive">
+        <table id="tblOrganizaciones" class="table table-condensed table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.orgNombre)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Presupuesto Anterior")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nuevo Presupuesto")
+                    </th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listaOrganizacionLinea)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.orgNombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.oliPresupuestoAnterior)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => item.oliPresupuesto, new { @class = "form-control", @maxlength = "15", @onkeypress = "return permite(event, 'numeros');", @onkeyup = "formatearMiles(this);", @id = "txtPresupuestoVigente" + item.idOrganizacion })
+                        </td>
+                        <td>
+                            @if (string.IsNullOrEmpty(item.oliPresupuesto))
+                            {
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-check-circle fa-lg", fila = item.idOrganizacion, data_ajax_agregar_tres = item.idOrganizacion }))
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-pencil fa-lg", fila = item.idOrganizacion, data_ajax_editar_tres = item.idOrganizacion, style = "display:none;" }))
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-times-circle fa-lg", fila = item.idOrganizacion, data_ajax_eliminar_tres = item.idOrganizacion, style = "display:none;" }))
+                            }
+                            else
+                            {
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-check-circle fa-lg", fila = item.idOrganizacion, data_ajax_agregar_tres = item.idOrganizacion, style = "display: none;" }))
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-pencil fa-lg", fila = item.idOrganizacion, data_ajax_editar_tres = item.idOrganizacion }))
+                                @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-times-circle fa-lg", fila = item.idOrganizacion, data_ajax_eliminar_tres = item.idOrganizacion }))
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <button id="btnSiguientePasoTres" class="btn btn-success">Siguiente</button>
+</div>
+<script>
+    $("#anioConcurso").val($("#conAno").val())
+
+    function mensajePasoTres(codError, mensajeRespuesta) {
+
+        //var codError = '@*(ViewBag.codRespuesta)*@';
+        //var mensajeRespuesta = '@*(ViewBag.msgRespuesta)*@'
+        $("#divMensajePasoTres").empty();
+        var tipoEstilo = "";
+        if (mensajeRespuesta != "") {
+            if (codError == '0') {
+                tipoEstilo = "alert-success";
+            } else {
+                tipoEstilo = "alert-danger";
+            }
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#divMensajePasoTres").append(mensajeUsuario);
+
+        }
+    }
+
+
+    function MostrarOrganizaciones() {
+        if ($("#idLinea option:selected").val() == "" || $("#idLinea option:selected").val() == "0")
+            $("#dvOrganizaciones").css("display", "none");
+        else
+            $("#dvOrganizaciones").css("display", "block");
+        
+        if (parseInt($("#paso").val()) > 4) {
+            $("#dvOrganizaciones input[type='text']").attr("disabled", "disabled");
+            $("#dvOrganizaciones a[class^='fa']").css("display", "none");
+            $("button[class^='btn']").attr("disabled", "disabled");
+        }
+
+        $("#tblOrganizaciones").DataTable({
+            "language":
+                {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                      },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                      }
+                  }
+            }).on("draw.dt", function () {
+            addEventClickDataModal();
+            });
+
+    }
+
+    $("a[data-ajax-agregar-tres]").on("click", function (e) {
+
+        var fila = $(this).attr("fila");
+
+        var valor = 0;
+        if ($.trim($("#txtPresupuestoVigente" + fila).val()) != "" && parseInt($("#txtPresupuestoVigente" + fila).val()) != "0") {
+            valor = $("#txtPresupuestoVigente" + fila).val().replace(/\./g, '');
+        } else {
+            mensajePasoTres("0", "Debe ingresar un nuevo presupuesto");
+            return false;
+        }
+
+        var url = '@Url.Action("AgregarOrganizacionLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idConcurso: $("#idConcurso").val(), idOrganizacion: fila, idLinea: $("#idLinea").val(), nuevoPresupuesto: valor },
+            success: function (data) {
+                mensajePasoTres(data.Codigo, data.Mensaje);
+                if (data.Codigo == '0') {
+                    $("a[data-ajax-agregar-tres=" + fila + "]").hide();
+                    $("a[data-ajax-editar-tres=" + fila + "]").show();
+                    $("a[data-ajax-eliminar-tres=" + fila + "]").show();
+
+                }
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+        return false;
+    });
+
+    $("a[data-ajax-editar-tres]").on("click", function (e) {
+        fila = $(this).attr("fila");
+
+        var valor = 0;
+        if ($.trim($("#txtPresupuestoVigente" + fila).val()) != "" && parseInt($("#txtPresupuestoVigente" + fila).val()) != "0") {
+            valor = $("#txtPresupuestoVigente" + fila).val().replace(/\./g, '');
+        } else {
+            mensajePasoDos("0", "Debe ingresar un nuevo presupuesto");
+            return false;
+        }
+
+        var url = '@Url.Action("EditarOrganizacionLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idOrganizacion: fila, idLinea: $("#idLinea").val(), nuevoPresupuesto: valor },
+            success: function (data) {
+                mensajePasoTres(data.Codigo, data.Mensaje);
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+        return false;
+    });
+
+    $("a[data-ajax-eliminar-tres]").on("click", function (e) {
+        fila = $(this).attr("fila");
+
+        var url = '@Url.Action("EliminarOrganizacionLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idOrganizacion: fila, idLinea: $("#idLinea").val() },
+            success: function (data) {
+                mensajePasoTres(data.Codigo, data.Mensaje);
+
+                if (data.Codigo == '0') {
+                    $("a[data-ajax-agregar-tres=" + fila + "]").show();
+                    $("a[data-ajax-editar-tres=" + fila + "]").hide();
+                    $("a[data-ajax-eliminar-tres=" + fila + "]").hide();
+
+                    $("#txtPresupuestoVigente" + fila).val("")
+                }
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+        return false;
+    });
+
+    $("#btnSiguientePasoTres").on("click", function (e) {
+        ActivarPasoCuatro();
+    });
+
+    function ActivarPasoCuatro() {
+        var data = pasarSiguiente(4, function (output) {
+            if (output.Codigo == '0') {
+                $('ul.setup-panel li:eq(3)').removeClass('disabled');
+                $('ul.setup-panel li a[href="#paso-4"]').trigger('click');
+            } else {
+                var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + output.Mensaje + '</div>';
+                $("#divMensajePasoTres").append(mensajeUsuario);
+            }
+            CargarPasoCuatro();
+        });
+    }
+
+</script>

@@ -1,0 +1,139 @@
+﻿@model AltoRendimiento.Administracion.Models.ConcursoModel
+
+@{
+    ViewBag.Title = "Crear Concurso";
+}
+<div id="dvInfoPasoUno">
+    @using (Ajax.BeginForm("PasoUno", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.ReplaceWith,
+    LoadingElementId = "myModalLoadPasoUno",
+    UpdateTargetId = "dvInfoPasoUno",
+    OnSuccess = "ActivarPasoDos"
+}))
+    {
+        @Html.AntiForgeryToken()
+        <div id='myModalLoadPasoUno' class='modal fade in'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'>
+                        <div id="loader" class=" alert" style="display:block">
+                            Loading...<img src="~/Images/owl-carousel/AjaxLoader.gif" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divMensajePasoUno"></div>
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.idConcurso)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.conNombre, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.conNombre, new { @class = "form-control", @maxlength = "128" })
+                    @Html.ValidationMessageFor(model => model.conNombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.conInicioPostulacion, new { @class = "col-md-2" })
+                <div class="col-md-3">
+                    <div class="input-group input-append date" id="dvFechaInicio" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.conInicioPostulacion, new { @class = "form-control", @maxlength = "10" })
+                        <span class="input-group-addon glyphicon glyphicon-calendar" style="top:0;"></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.conInicioPostulacion, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.conFinPostulacion, new { @class = "col-md-2 col-md-push-2" })
+                <div class="col-md-3 col-md-push-2">
+                    <div class="input-group input-append date" id="dvFechaFin" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.conFinPostulacion, new { @class = "form-control", @maxlength = "10" })
+                        <span class="input-group-addon glyphicon glyphicon-calendar" style="top:0;"></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.conFinPostulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.conAno, new { @class = "col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.conAno, new { @class = "form-control", @maxlength = "4" })
+                    @Html.ValidationMessageFor(model => model.conAno, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.idCategoria, new { @class = "col-md-2 col-md-push-2" })
+                <div class="col-md-3 col-md-push-2">
+                    @Html.DropDownListFor(model => model.idCategoria, new SelectList(Model.listaCategoria, "idCategoria", "catNombre", Model.idCategoria), "Seleccione", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idCategoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.conDescripcion, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.conDescripcion, new { @class = "form-control", @maxlength = "2048", @style = "resize:none;", @rows = "5" })
+                    @Html.ValidationMessageFor(model => model.conDescripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <button id="btnSiguientePasoUno" class="btn btn-success">Siguiente</button>
+    }
+</div>
+<script>
+    $("#idConcurso").val(@Model.idConcurso)
+    var checkin = $('#dvFechaInicio').datepicker({
+        language: 'es'
+    }).on('changeDate', function (ev) {
+        checkin.hide();
+    }).data('datepicker');
+
+    var checkout = $('#dvFechaFin').datepicker({
+        language: 'es'
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
+
+    function ActivarPasoDos() {
+        if ("@(ViewBag.codRespuesta ?? "null")" == "0") {
+
+            var data = pasarSiguiente(2, function (output) {
+                if (output.Codigo == '0') {
+                    var url = '@Url.Action("PasoDos")';
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: { anioConcurso: $("#conAno").val() },
+                        success: function (data) {
+                            $("#dvPasoDos").html(data)
+                        },
+                        error: function () {
+                            //alert("error");
+                        }
+                    });
+
+                    $('ul.setup-panel li:eq(1)').removeClass('disabled');
+                    $('ul.setup-panel li a[href="#paso-2"]').trigger('click');
+                } else {
+                    var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + output.Mensaje + '</div>';
+                    $("#divMensajePasoUno").append(mensajeUsuario);
+                }
+            });
+        }
+    }
+
+    var codError = '@(ViewBag.codRespuesta)';
+    var mensajeRespuesta = '@(ViewBag.msgRespuesta)'
+    var tipoEstilo = "";
+    if (mensajeRespuesta != "") {
+        if (codError == '0') {
+            tipoEstilo = "alert-success";
+        } else {
+            tipoEstilo = "alert-danger";
+        }
+        var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+        $("#divMensajePasoUno").append(mensajeUsuario);
+    }
+</script>

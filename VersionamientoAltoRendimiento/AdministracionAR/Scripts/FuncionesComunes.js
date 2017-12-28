@@ -38,3 +38,16 @@
             break;
     }
 }
+
+function formatearMiles(input) {
+    var numeroMiles = input.value.replace(/\.|\,|\$|\s/g, '');//.replace(/\,/g, "").replace("$", "").replace(/\s/g,"");
+    if (!isNaN(numeroMiles)) {
+        numeroMiles = numeroMiles.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+        numeroMiles = numeroMiles.split('').reverse().join('').replace(/^[\.]/, '');
+        input.value = numeroMiles;
+    }
+    else {
+        alert('Solo se permiten numeros');
+        input.value = input.value.replace(/[^\d\.]*/g, '');
+    }
+}

@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="AltoRendimiento.Categoria" Width="1.5" PointX="1.5" PointY="82" />
         <EntityTypeShape EntityType="AltoRendimiento.Ciudad" Width="1.5" PointX="6" PointY="51.625" />
         <EntityTypeShape EntityType="AltoRendimiento.Comuna" Width="1.5" PointX="6" PointY="29.875" />
-        <EntityTypeShape EntityType="AltoRendimiento.Concurso" Width="1.5" PointX="1.5" PointY="85.75" />
         <EntityTypeShape EntityType="AltoRendimiento.Concurso_categoria" Width="1.5" PointX="1.5" PointY="78" />
         <EntityTypeShape EntityType="AltoRendimiento.Cuenta" Width="1.5" PointX="1.5" PointY="90.75" />
         <EntityTypeShape EntityType="AltoRendimiento.Detalle_Programacion_Gasto" Width="1.5" PointX="12.75" PointY="68.625" />
@@ -118,7 +117,6 @@
         <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Categoría" />
         <AssociationConnector Association="AltoRendimiento.FK_Ciudad_Pais" />
         <AssociationConnector Association="AltoRendimiento.FK_Comuna_Provincia" />
-        <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Concurso" />
         <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Concurso_categoria" />
         <AssociationConnector Association="AltoRendimiento.FK_Linea_Cuenta_Cuenta" />
         <AssociationConnector Association="AltoRendimiento.FK_Detalle_Programacion_Gasto_Historial_Detalle_Programacion_Gasto" />
@@ -259,6 +257,8 @@
         <AssociationConnector Association="AltoRendimiento.FK_Linea_Linea_Clasificacion" />
         <AssociationConnector Association="AltoRendimiento.FK_Linea_Programa" />
         <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Linea" />
+        <EntityTypeShape EntityType="AltoRendimiento.Concurso" Width="1.5" PointX="1.5" PointY="86" />
+        <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Concurso" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

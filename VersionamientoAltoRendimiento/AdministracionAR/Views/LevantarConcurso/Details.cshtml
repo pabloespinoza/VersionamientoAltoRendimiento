@@ -1,0 +1,99 @@
+﻿@model AltoRendimiento.Administracion.Models.Concurso
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Concurso</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.conAno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conAno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conInicioPostulacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conInicioPostulacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conFinPostulacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conFinPostulacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.conUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.conUsuarioModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idConcurso }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 <div class="text-right">
     @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
-    @Html.ActionLink("Nuevo", "CrearConcurso", "MantenedorConcurso", null, new { data_modal = "", id = "btnAgregarConcurso", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+    @Html.ActionLink("Nuevo", "Index", "LevantarConcurso", new { idConcurso = 0, anioConcurso = 0, idLinea = 0 }, new { id = "btnAgregarConcurso", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
 </div>
 <br />
 <div class="table-responsive">
@@ -25,7 +25,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.conDescripcion)
                 </th>
-                <th></th>
+                <th>
+                    Estado
+                </th>
+                <th>Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -48,9 +51,26 @@
                         @item.conDescripcion
                     </td>
                     <td>
+                        @if (int.Parse(item.conAno) < DateTime.Now.Year)
+                        {
+                            @Html.Label("lblEstado", "Inactivo")
+                        }
+                        else if (item.paso < 5)
+                        {
+                            @Html.Label("lblEstado", "Pendiente")
+                        }
+                        else
+                        {
+                            @Html.Label("lblEstado", "Activo")
+                        }
+                    </td>
+                    <td>
                         @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "EditarConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                        @if (item.paso < 5 && int.Parse(item.conAno) >= DateTime.Now.Year)
+                        {
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "LevantarConcurso", new { idConcurso = item.idConcurso, anioConcurso = @item.conAno, @idLinea = 0 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarConcurso", new { id = item.idConcurso }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))
+                        }
                     </td>
                 </tr>
             }

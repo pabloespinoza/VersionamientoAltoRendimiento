@@ -64,22 +64,25 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-2">
+                                @Html.LabelFor(model => model.IdConcurso, "Concurso:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.IdConcurso, Model.Concursos, "--Seleccione--", new { @class = "form-control", @onchange = "buscaLineas()" })
+                                @Html.ValidationMessage("IdConcurso", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-2">
                                 @Html.LabelFor(model => model.IdLinea , "Línea Presupuestaria:" , new { @class = "control-label" })
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.IdLinea , Model.LineasPresupuestarias , "--Seleccione--" , new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.IdLinea, Model.LineasPresupuestarias, new { @class = "form-control" })
                                 @Html.ValidationMessage("IdLinea" , new { @class = "text-danger" })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.LabelFor(model => model.NumProyecto , "N° Proyecto:" , new { @class = "control-label" })
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.NumProyecto , new { @class = "form-control" , @maxlength = "11" })
                             </div>
                         </div>
                     </div>
                     <br />
                     <div class="row">
+
                         <div class="form-group">
                             <div class="col-md-2">
                                 @Html.LabelFor(model => model.IdOrganizacionFed , "Federación:" , new { @class = "control-label" })
@@ -88,9 +91,13 @@
                                 @Html.DropDownListFor(model => model.IdOrganizacionFed , Model.Federaciones , "--Seleccione--" , new { @class = "form-control" })
                                 @Html.ValidationMessage("IdOrganizacionFed" , new { @class = "text-danger" })
                             </div>
-                            <div class="col-md-6">
-                                <label></label>
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.NumProyecto, "N° Proyecto:", new { @class = "control-label" })
                             </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.NumProyecto, new { @class = "form-control", @maxlength = "11" })
+                            </div>
+
                         </div>
                     </div>
                     <br />
@@ -147,5 +154,34 @@
             $("#dvInfoPaginacion").attr("style", "display:none;");
             $("#btnGenerarReporte").attr("style", "display:none;");
         }
-        }
+    }
+
+    function buscaLineas() {
+        var nIdConcurso = $("#IdConcurso").val();
+        $("#IdLinea").html("");
+
+        $.ajax({
+            url: "BandejaEntrada/buscaLineas"
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { idConcurso: nIdConcurso }
+            , success: function (info) {
+                if (info.Codigo == 0) {
+                    bootbox.alert({ message: info.Mensaje, backdrop: false });
+                } else {
+                    $("#IdLinea").append($("<option />", {
+                        value: 0,
+                        text: "--Seleccione--"
+                    }));
+                    $.each(info.Datos, function (index, concurso) {
+                        $("#IdLinea").append($("<option />", {
+                            value: concurso.idLinea,
+                            text: concurso.linNombre
+                        }));
+                    });
+                    $("#IdLinea").focus();
+                }
+            }
+        });
+    }
 </script>

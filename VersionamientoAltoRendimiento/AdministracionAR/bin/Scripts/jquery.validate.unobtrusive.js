@@ -77,7 +77,8 @@
             list.empty();
             container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
 
-            $.each(validator.errorList, function () {
+            
+(validator.errorList, function () {
                 $("<li />").html(this.message).appendTo(list);
             });
         }

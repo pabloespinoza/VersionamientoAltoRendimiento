@@ -1,0 +1,97 @@
+﻿@model AltoRendimiento.Administracion.Models.AsignacionRecurso
+
+@{
+    ViewBag.Title = "Finalizar";
+}
+
+<div id="divMensajePasoCuatro"></div>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.conNombre, Model.conNombre, new { @class = "col-md-12" })
+    </div>
+
+    <table class="table table-condensed table-bordered  table-hover ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.linNombre)
+            </th>
+            <th>
+                @Html.DisplayName("Asignado en Línea")
+            </th>
+            <th>
+                @Html.DisplayName("Asignado a Federaciones")
+            </th>
+            <th>@Html.DisplayName("Pendiente")</th>
+        </tr>
+
+        @foreach (var item in Model.ListaAsignaciones1)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.linNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sPresupuestoVigenteCuenta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sAsignadoEntidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sDisponible)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="alert alert-success alert-dismissable">NOTA: Una vez autorizado el concurso, este estará disponible para el total de las Federaciones.</div>
+
+    <button id="btnAutorizarPasoCuatro" class="btn btn-success">Autorizar</button>
+</div>
+
+
+<script>
+    if(parseInt($("#paso").val()) >= 5)
+    $("#btnAutorizarPasoCuatro").attr("disabled", "disabled");
+
+
+    $("#btnAutorizarPasoCuatro").on("click", function (e) {
+        Autorizar();
+    });
+
+    function Autorizar() {
+        var data = pasarSiguiente(5, function (output) {
+            if (output.Codigo == '0') {
+                mensajePasoCuatro(output.Codigo, output.Mensaje)
+                $("#paso").val(5);
+                $("input[type='text']").attr("disabled", "disabled");
+                $("textarea").attr("disabled", "disabled");
+                $("#idCategoria").attr("disabled", "disabled");
+                $("a[class^='fa']").css("display", "none");
+                $("button[class^='btn']").attr("disabled", "disabled");
+            } else {
+                var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + output.Mensaje + '</div>';
+                $("#divMensajePasoCuatro").append(mensajeUsuario);
+            }
+        });
+    }
+
+    function mensajePasoCuatro(codError, mensajeRespuesta) {
+
+        //var codError = '@*(ViewBag.codRespuesta)*@';
+        //var mensajeRespuesta = '@*(ViewBag.msgRespuesta)*@'
+        $("#divMensajePasoCuatro").empty();
+        var tipoEstilo = "";
+        if (mensajeRespuesta != "") {
+            if (codError == '0') {
+                tipoEstilo = "alert-success";
+            } else {
+                tipoEstilo = "alert-danger";
+            }
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#divMensajePasoCuatro").append(mensajeUsuario);
+
+        }
+    }
+</script>

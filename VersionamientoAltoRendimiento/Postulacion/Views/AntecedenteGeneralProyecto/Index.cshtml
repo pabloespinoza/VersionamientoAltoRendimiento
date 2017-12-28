@@ -229,7 +229,7 @@
                             @Html.Raw(@Html.ActionLink("[replacetext]", "URLProducto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Producto' src=\"../Images/List.png\" ... />"))
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver o Editar' src=\"../Images/Edit.png\" ... />"))
 
-                            if (((codWorkflow == (int)EnumEstados.Ingresada && (item.estadoIngresado == 2 || item.estadoIngresado == 3)) || codWorkflow == (int)EnumEstados.Incompleto || codWorkflow == (int)EnumEstados.Objetada) && item.anioConcurso == DateTime.Now.Year)
+                            if (((codWorkflow == (int)EnumEstados.Ingresada && (item.estadoIngresado == 2 || item.estadoIngresado == 3)) || codWorkflow == (int)EnumEstados.Incompleto || codWorkflow == (int)EnumEstados.Objetada) && item.anioConcurso >= DateTime.Now.Year)
                             {
                                 @Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
                             }

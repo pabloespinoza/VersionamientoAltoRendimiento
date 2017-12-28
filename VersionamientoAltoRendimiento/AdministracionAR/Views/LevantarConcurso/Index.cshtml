@@ -1,0 +1,199 @@
+﻿@model AltoRendimiento.Administracion.Models.ConcursoModel
+
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "BandejaEntrada")</li>
+            <li>Levantar Concurso</li>
+        </ol>
+    </div>
+</div>
+<h3>Levantar Concurso</h3>
+@Html.HiddenFor(model => model.paso)
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="disabled">
+                    <a href="#paso-1" paso1="paso1">
+                        <h4 class="list-group-item-heading">Paso 1</h4>
+                        <p class="list-group-item-text">Crear Concurso</p>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="#paso-2" paso2="paso2">
+                        <h4 class="list-group-item-heading">Paso 2</h4>
+                        <p class="list-group-item-text">Asociar Líneas</p>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="#paso-3" paso3="paso3">
+                        <h4 class="list-group-item-heading">Paso 3</h4>
+                        <p class="list-group-item-text">Asignar Recursos</p>
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a href="#paso-4" paso4="paso4">
+                        <h4 class="list-group-item-heading">Paso 4</h4>
+                        <p class="list-group-item-text">Finalizar</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row setup-content" id="paso-1">
+        <div class="col-xs-12 panel panel-default">
+            <div class="col-md-12 panel-body text-center">
+                @Html.Action("PasoUno")
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="paso-2">
+        <div class="col-xs-12 panel panel-default">
+            <div id="dvPasoDos" class="col-md-12 panel-body text-center">
+                @Html.Action("PasoDos")
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="paso-3">
+        <div class="col-xs-12 panel panel-default">
+            <div class="col-md-12 panel-body text-center">
+                @Html.Action("PasoTres")
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="paso-4">
+        <div class="col-xs-12 panel panel-default">
+            <div id="dvPasoCuatro" class="col-md-12 panel-body text-center">
+                @Html.Action("PasoCuatro")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/FuncionesComunes.js")
+}
+
+<script>
+    $(document).ready(function () {
+
+        var pasoConcurso = parseInt('@Model.paso');
+
+        if (pasoConcurso > 4) {
+            $("input[type='text']").attr("disabled", "disabled");
+            $("textarea").attr("disabled", "disabled");
+            $("#idCategoria").attr("disabled", "disabled");
+            $("a[class^='fa']").css("display", "none");
+            $("button[class^='btn']").attr("disabled", "disabled");
+        }
+
+        var list = $('ul.setup-panel li'),
+            navListItems = $('ul.setup-panel li a'),
+            allWells = $('.setup-content');
+
+        if (pasoConcurso == 0) {
+            $(list[0]).removeClass('disabled').addClass('active');
+        }
+        for (pasoConcurso < 1; pasoConcurso--;)
+            $(list[pasoConcurso]).removeClass('disabled').addClass('active');
+
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this).closest('li');
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.closest('li').removeClass('active');
+                $item.addClass('active');
+                allWells.hide();
+                $target.show();
+            }
+
+            if ($(this).attr("paso3")) {
+                CargarListaLineas();
+            }
+            if ($(this).attr("paso4")) {
+                CargarPasoCuatro();
+            }
+
+            if (pasoConcurso > 4) {
+                $("input[type='text']").attr("disabled", "disabled");
+                $("textarea").attr("disabled", "disabled");
+                $("#idCategoria").attr("disabled", "disabled");
+                $("a[class^='fa']").css("display", "none");
+                $("button[class^='btn']").attr("disabled", "disabled");
+            }
+
+        });
+
+        $('ul.setup-panel li.active a').trigger('click');
+    });
+
+    function pasarSiguiente(paso, output) {
+        var url = '@Url.Action("PasarSiguiente")';
+        if (paso > parseInt('@Model.paso')) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { idConcurso: $("#idConcurso").val(), paso: paso },
+                success: function (data) {
+                    output(data);
+                },
+                error: function () {
+                    //alert("error");
+                }
+            });
+        } else {
+            output({ Codigo: '0', Mensaje: '' });
+        }
+    }
+
+    function CargarPasoCuatro() {
+        var url = '@Url.Action("PasoCuatro")';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { anioConcurso: $("#anioConcurso").val() },
+            success: function (data) {
+                $("#dvPasoCuatro").html(data)
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+    }
+</script>

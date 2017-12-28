@@ -95,10 +95,10 @@
                 if (info.Codigo == 0) {
                     bootbox.alert({ message: info.Mensaje, backdrop: false });
                 } else {
-                    $("#idConcurso").append($("<option/>", {
-                        value: 0,
-                        text: "Seleccione..."
-                    }));
+                    //$("#idConcurso").append($("<option/>", {
+                    //    value: 0,
+                    //    text: "Seleccione..."
+                    //}));
                     $.each(info.Datos, function (index, concurso) {
                         $("#idConcurso").append($("<option/>", {
                             value: concurso.idConcurso,

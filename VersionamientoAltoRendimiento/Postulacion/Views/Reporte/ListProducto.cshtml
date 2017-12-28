@@ -504,10 +504,16 @@
                             @row.carNombre
                         </td>
                         <td>
-                            @row.fechaInicio.ToShortDateString()
+                            @if (row.tgaNumeroGastoAdministracion != "2")
+                            {
+                                @row.fechaInicio.ToShortDateString()
+                            }
                         </td>
                         <td>
-                            @row.fechaFin.ToShortDateString()
+                            @if (row.tgaNumeroGastoAdministracion != "2")
+                            {
+                                @row.fechaFin.ToShortDateString()
+                            }
                         </td>
                         <td>
                             <p class="text-right">@String.Format("{0:N0}", @row.bgaTotal)</p>

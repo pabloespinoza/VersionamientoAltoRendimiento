@@ -49,7 +49,6 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<CategoriaDeporte_Producto_Historial> CategoriaDeporte_Producto_Historial { get; set; }
         public DbSet<Ciudad> Ciudad { get; set; }
         public DbSet<Comuna> Comuna { get; set; }
-        public DbSet<Concurso> Concurso { get; set; }
         public DbSet<Concurso_categoria> Concurso_categoria { get; set; }
         public DbSet<Correo_Distribucion> Correo_Distribucion { get; set; }
         public DbSet<Cuenta> Cuenta { get; set; }
@@ -147,6 +146,7 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Objeto> Objeto { get; set; }
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<CategoriaDeporte_Producto_Copia> CategoriaDeporte_Producto_Copia { get; set; }
+        public DbSet<Concurso> Concurso { get; set; }
     
         public virtual ObjectResult<SP_LISTAR_PERMISOS_Result> SP_LISTAR_PERMISOS(Nullable<decimal> iD_ROL)
         {

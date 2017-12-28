@@ -1,0 +1,289 @@
+﻿@model IEnumerable<AltoRendimiento.Administracion.Models.LineaModel>
+
+@{
+    ViewBag.Title = "Asociar Líneas";
+}
+
+<div id='myModalLoad' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'>
+                <div id="loader" class=" alert" style="display:block">
+                    Loading...<img src="~/Images/owl-carousel/AjaxLoader.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divMensajePasoDos"></div>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-condensed table-bordered  table-hover ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.linNombre)
+            </th>
+            <th>
+                @Html.DisplayName("Presupuesto " + Model.First().sCuentaAnio)
+            </th>
+            <th>
+                @Html.DisplayName("Nuevo Presupuesto")
+            </th>
+            <th>Acción</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.linNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presupuestoAnterior)
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => item.ctaPresupuestoVigente, new { @class = "form-control", @maxlength = "15", @onkeypress = "return permite(event, 'numeros');", @onkeyup = "formatearMiles(this);", @id = "txtPresupuestoVigente" + item.idLinea })
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(item.ctaPresupuestoVigente))
+                    {
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-check-circle fa-lg", fila = item.idLinea, data_ajax_agregar = item.idLinea }))
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-pencil fa-lg", fila = item.idLinea, data_ajax_editar = item.idLinea, style = "display:none;" }))
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-times-circle fa-lg", fila = item.idLinea, data_ajax_eliminar = item.idLinea, style = "display:none;" }))
+                    }
+                    else
+                    {
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-check-circle fa-lg", fila = item.idLinea, data_ajax_agregar = item.idLinea, style = "display: none;" }))
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-pencil fa-lg", fila = item.idLinea, data_ajax_editar = item.idLinea }))
+                        @Html.Raw(Html.ActionLink(" ", "#", null, new { @class = "fa fa-times-circle fa-lg", fila = item.idLinea, data_ajax_eliminar = item.idLinea }))
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+    <button id="btnSiguientePasoDos" class="btn btn-success">Siguiente</button>
+}
+else
+{
+    <script>
+        $(document).ready(function(){mensajePasoDos("1", "No se encontraron líneas en el concurso anterior.");})
+    </script>
+}
+<script type="text/javascript">
+
+    $("#btnSiguientePasoDos").on("click", function (e) {
+        ActivarPasoTres();
+    });
+
+    $("a[data-ajax-agregar]").on("click", function (e) {
+
+        var fila = $(this).attr("fila");
+
+        var valor = 0;
+        if ($.trim($("#txtPresupuestoVigente" + fila).val()) != "" && parseInt($("#txtPresupuestoVigente" + fila).val()) != "0") {
+            valor = $("#txtPresupuestoVigente" + fila).val().replace(/\./g, '');
+        } else {
+            mensajePasoDos("1", "Debe ingresar un nuevo presupuesto");
+            return false;
+        }
+
+        var url = '@Url.Action("AgregarLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idConcurso: $("#idConcurso").val(), idLinea: fila, nuevoPresupuesto: valor },
+            success: function (data) {
+                if (data.Codigo > 0) {
+                    mensajePasoDos("0", data.Mensaje);
+                    $("a[data-ajax-agregar=" + fila + "]").hide();
+                    $("a[data-ajax-editar=" + fila + "]").show();
+                    $("a[data-ajax-eliminar=" + fila + "]").show();
+
+                    $("a[data-ajax-agregar=" + fila + "]").attr("data-ajax-agregar", data.Codigo).attr("fila", data.Codigo);
+                    $("a[data-ajax-editar=" + fila + "]").attr("data-ajax-editar", data.Codigo).attr("fila", data.Codigo);
+                    $("a[data-ajax-eliminar=" + fila + "]").attr("data-ajax-eliminar", data.Codigo).attr("fila", data.Codigo);
+                } else {
+                    mensajePasoDos("1", data.Mensaje);
+                }
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+
+        //var rexp = new RegExp(/^([0-9])+\-([kK0-9])+$/);
+        //if ($("#rutBeneficiario" + fila).val().match(rexp)) {
+        //    $('#myModalContentValidar').load(this.href + "?rutBeneficiario=" + $("#rutBeneficiario" + fila).val(), function () {
+
+        //        $('#myModalValidar').modal({
+        //            /*backdrop: 'static',*/
+        //            keyboard: true
+        //        }, 'show');
+
+        //        bindForm(this);
+        //    });
+        //} else {
+        //    alert("Debe ingresar un rut valido")
+        //    return false;
+        //}
+
+        return false;
+    });
+
+    $("a[data-ajax-editar]").on("click", function (e) {
+        fila = $(this).attr("fila");
+
+        var valor = 0;
+        if ($.trim($("#txtPresupuestoVigente" + fila).val()) != "" && parseInt($("#txtPresupuestoVigente" + fila).val()) != "0") {
+            valor = $("#txtPresupuestoVigente" + fila).val().replace(/\./g, '');;
+        } else {
+            mensajePasoDos("1", "Debe ingresar un nuevo presupuesto");
+            return false;
+        }
+
+        var url = '@Url.Action("EditarLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idLinea: fila, nuevoPresupuesto: valor },
+            success: function (data) {
+                mensajePasoDos(data.Codigo, data.Mensaje);
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+        //var rexp = new RegExp(/^([0-9])+\-([kK0-9])+$/);
+        //if ($("#rutBeneficiario" + fila).val().match(rexp)) {
+        //    $('#myModalContentValidar').load(this.href + "?rutBeneficiario=" + $("#rutBeneficiario" + fila).val(), function () {
+
+        //        $('#myModalValidar').modal({
+        //            /*backdrop: 'static',*/
+        //            keyboard: true
+        //        }, 'show');
+
+        //        bindForm(this);
+        //    });
+        //} else {
+        //    alert("Debe ingresar un rut valido")
+        //    return false;
+        //}
+
+        return false;
+    });
+
+
+    $("a[data-ajax-eliminar]").on("click", function (e) {
+        fila = $(this).attr("fila");
+
+        var url = '@Url.Action("EliminarLinea")';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { idLinea: fila },
+            success: function (data) {
+                mensajePasoDos(data.Codigo, data.Mensaje);
+
+                if (data.Codigo == '0') {
+                    $("a[data-ajax-agregar=" + fila + "]").show();
+                    $("a[data-ajax-editar=" + fila + "]").hide();
+                    $("a[data-ajax-eliminar=" + fila + "]").hide();
+
+                    $("#txtPresupuestoVigente" + fila).val("")
+                }
+            },
+            error: function () {
+                //alert("error");
+            }
+        });
+
+        //var rexp = new RegExp(/^([0-9])+\-([kK0-9])+$/);
+        //if ($("#rutBeneficiario" + fila).val().match(rexp)) {
+        //    $('#myModalContentValidar').load(this.href + "?rutBeneficiario=" + $("#rutBeneficiario" + fila).val(), function () {
+
+        //        $('#myModalValidar').modal({
+        //            /*backdrop: 'static',*/
+        //            keyboard: true
+        //        }, 'show');
+
+        //        bindForm(this);
+        //    });
+        //} else {
+        //    alert("Debe ingresar un rut valido")
+        //    return false;
+        //}
+
+        return false;
+    });
+
+
+
+    function mensajePasoDos(codError, mensajeRespuesta) {
+
+        //var codError = '@*(ViewBag.codRespuesta)*@';
+        //var mensajeRespuesta = '@*(ViewBag.msgRespuesta)*@'
+        $("#divMensajePasoDos").empty();
+        var tipoEstilo = "";
+        if (mensajeRespuesta != "") {
+            if (codError == '0') {
+                tipoEstilo = "alert-success";
+            } else {
+                tipoEstilo = "alert-danger";
+            }
+            var mensajeUsuario = '<div class="alert ' + tipoEstilo + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensajeRespuesta + '</div>';
+            $("#divMensajePasoDos").append(mensajeUsuario);
+
+
+        }
+    }
+
+    function CargarListaLineas() {
+
+        var url = '@Url.Action("CargarLineas")';
+
+        $.ajax({
+            url: url
+            , method: "POST"
+            , dataType: "JSON"
+            , data: { anioConcurso: $("#conAno").val() }
+            , success: function (info) {
+                if (info.Codigo > 0) {
+                    $("#dvOrganizaciones").css("display", "none");
+                    $("#idLinea").empty();
+
+                    $.each(info.lineas, function (index, lineas) {
+                        $("#idLinea").append($("<option/>", {
+                            value: lineas.Value,
+                            text: lineas.Text
+                        }));
+                    });
+                    $("#lblPresupuesto").text(info.prespuestoLinea)
+                } else {
+                    mensajePasoTres(info.Codigo, info.Mensaje);
+                }
+            }
+        });
+    }
+
+
+
+    function ActivarPasoTres() {
+
+        pasarSiguiente(3, function (output) {
+            if (output.Codigo == '0') {
+                $("#anioConcurso").val($("#conAno").val())
+                $('ul.setup-panel li:eq(2)').removeClass('disabled');
+                $('ul.setup-panel li a[href="#paso-3"]').trigger('click');
+            } else {
+                var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + output.Mensaje + '</div>';
+                $("#divMensajePasoDos").append(mensajeUsuario);
+            }
+        });
+    }
+
+</script>

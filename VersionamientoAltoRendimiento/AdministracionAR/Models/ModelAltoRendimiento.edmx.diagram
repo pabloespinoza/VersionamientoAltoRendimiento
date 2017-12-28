@@ -27,7 +27,6 @@
         <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Historial" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="IND0012Model.Ciudad" Width="1.5" PointX="6" PointY="45" />
         <EntityTypeShape EntityType="IND0012Model.Comuna" Width="1.5" PointX="6" PointY="32.875" />
-        <EntityTypeShape EntityType="IND0012Model.Concurso" Width="1.5" PointX="1.5" PointY="81" />
         <EntityTypeShape EntityType="IND0012Model.Concurso_categoria" Width="1.5" PointX="1.5" PointY="73.25" />
         <EntityTypeShape EntityType="IND0012Model.Correo_Distribucion" Width="1.5" PointX="7.75" PointY="4.75" />
         <EntityTypeShape EntityType="IND0012Model.Cuenta" Width="1.5" PointX="1.5" PointY="110.5" />
@@ -163,7 +162,6 @@
         <AssociationConnector Association="IND0012Model.FK_Producto_Ciudad" />
         <AssociationConnector Association="IND0012Model.FK_Comuna_Provincia" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Comuna" />
-        <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Concurso" />
         <AssociationConnector Association="IND0012Model.FK_Organizacion_Linea_Concurso_categoria" />
         <AssociationConnector Association="IND0012Model.FK_Historial_Cuenta_Cuenta" />
         <AssociationConnector Association="IND0012Model.FK_Linea_Cuenta_Cuenta" />
@@ -265,6 +263,8 @@
         <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Copia" Width="1.5" PointX="18.5" PointY="69.25" />
         <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_Copia_CategoriaDeporte" />
         <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_ProductoCopia" />
+        <EntityTypeShape EntityType="IND0012Model.Concurso" Width="1.5" PointX="1.5" PointY="81" />
+        <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Concurso" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
