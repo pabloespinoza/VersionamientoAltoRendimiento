@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="_Default, App_Web_w54inhy3" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="_Default, App_Web_emrcfn05" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <%@ Register Src="~/Control/ctrMensaje.ascx" TagPrefix="uc1" TagName="ctrMensaje" %>
@@ -17,7 +17,7 @@
             <uc1:ctrMensaje runat="server" ID="ctrMensaje" Visible="false" />
             <rsweb:ReportViewer ID="rptVisor" runat="server" Height="600px"
                 ProcessingMode="Remote" ShowBackButton="True" ShowFindControls="False"
-                ShowRefreshButton="True" Width="100%">
+                ShowRefreshButton="True" Width="100%" PageCountMode="Actual">
             </rsweb:ReportViewer>
         </div>
     </form>

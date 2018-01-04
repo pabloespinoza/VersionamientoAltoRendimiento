@@ -6,22 +6,25 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.60583cm</Width>
+              <Width>2.20895cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.02438cm</Width>
+              <Width>1.91855cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.0502cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.79584cm</Width>
+              <Width>2.23542cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.39417cm</Width>
+              <Width>2.65813cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.44708cm</Width>
+              <Width>2.15605cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.15604cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.49458cm</Width>
@@ -30,7 +33,7 @@
               <Width>1.65333cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.23542cm</Width>
+              <Width>1.94438cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.99729cm</Width>
@@ -132,6 +135,41 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox12">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Número Línea</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox12</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -486,7 +524,37 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NumeroLinea.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -726,6 +794,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -741,7 +810,7 @@
         <DataSetName>dtBeneficiario</DataSetName>
         <Top>1.16099cm</Top>
         <Height>1.2cm</Height>
-        <Width>22.69812cm</Width>
+        <Width>22.47291cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -784,7 +853,7 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>8.93627in</Width>
+  <Width>8.8476in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
@@ -867,6 +936,10 @@
         <Field Name="carNombre">
           <DataField>carNombre</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumeroLinea">
+          <DataField>NumeroLinea</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

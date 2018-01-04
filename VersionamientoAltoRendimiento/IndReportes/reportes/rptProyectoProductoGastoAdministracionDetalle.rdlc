@@ -59,7 +59,7 @@
                           <Width>17.30871cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
-                            <Hidden>= Iif (CountRows() &gt; 0, false, true)</Hidden>
+                            <Hidden>= IIf(CountRows() &gt; 0, false, true)</Hidden>
                           </Visibility>
                           <Style>
                             <Border>
@@ -696,7 +696,7 @@
                           <Width>17.30872cm</Width>
                           <ZIndex>2</ZIndex>
                           <Visibility>
-                            <Hidden>= Iif (CountRows() &gt; 0, false, true)</Hidden>
+                            <Hidden>= IIf(CountRows() &gt; 0, false, true)</Hidden>
                           </Visibility>
                           <Style>
                             <Border>
@@ -710,7 +710,7 @@
                       </PageBreak>
                       <KeepTogether>true</KeepTogether>
                       <Visibility>
-                        <Hidden>= Iif (CountRows() &gt; 0, false, true)</Hidden>
+                        <Hidden>= IIf(CountRows() &gt; 0, false, true)</Hidden>
                       </Visibility>
                       <Style>
                         <Border>
@@ -718,6 +718,7 @@
                         </Border>
                       </Style>
                     </Rectangle>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -748,7 +749,7 @@
         <Height>5.41913cm</Height>
         <Width>17.30871cm</Width>
         <Visibility>
-          <Hidden>= Iif (CountRows() &gt; 0, false, true)</Hidden>
+          <Hidden>=IIf(CountRows() &gt; 0, false, true)</Hidden>
         </Visibility>
         <Style>
           <Border>
@@ -762,12 +763,12 @@
   </Body>
   <Width>173.0871mm</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>27.94cm</PageHeight>
+    <PageWidth>21.59cm</PageWidth>
     <LeftMargin>1cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

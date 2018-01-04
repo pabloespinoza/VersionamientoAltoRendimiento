@@ -1,11 +1,8 @@
 ﻿@model AltoRendimiento.Administracion.Models.ReporteProgramasLineasModel
-@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Reporte General por Líneas";
 }
-
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <!-- modal placeholder-->
 <div id='myModal' class='modal fade'>
@@ -25,10 +22,55 @@
     </div>
 </div>
 <h2>Reporte General por Líneas</h2>
-    @Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProgramasLineas", new { idPrograma = Model.IdPrograma }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
+@Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProgramasLineas", new { idPrograma = Model.IdPrograma, anio = Model.anioPresupuesto, cuenta=Model.NumeroCuenta }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
 <br />
 <br />
 <div id="mensaje"></div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Filtros</div>
+            @using (Html.BeginForm("Index", "ReporteProgramasLineas", FormMethod.Post, new { Id = "form-BuscarProgramas" }))
+            {
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label" for="label">@Html.LabelFor(p => p.anioPresupuesto)</label>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(p => p.anioPresupuesto, new { @class = "form-control", @maxlength = "4", @onkeypress = "return permite(event, 'numeros');", @placeholder = "1234" })
+                            </div>
+                            <label class="col-xs-2 control-label" for="label">@Html.LabelFor(p => p.NumeroCuenta)</label>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(p => p.NumeroCuenta, new { @class = "form-control", @maxlength = "13", @onkeypress = "return permite(event, 'numeros');", @placeholder = "1234567890123" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="pull-right">
+                                <input id="btnBuscar" type="submit" class="btn btn-sm btn btn-success" value="Buscar" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-7">
+                            <div class="pull-right">
+                                <a href="ReporteProgramasLineas" class="btn btn-primary">Limpiar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 <div id="dvProgramas">
     <h3>Cuentas Presupuestarias</h3>
     <div class="table-responsive">
@@ -70,23 +112,19 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Ver Línea", null, null, new { onClick = "verLineas(" + item.IdPrograma + ", ''); return false;" })
+                            @Html.ActionLink("Ver Línea", null, null, new { onClick = "verLineas(" + item.IdPrograma + "); return false;" })
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <div id="dvInfoPaginacion">
-            Página @(Model.ListaProgramas.PageCount < Model.ListaProgramas.PageNumber ? 0 : Model.ListaProgramas.PageNumber) de @Model.ListaProgramas.PageCount
-            @Html.PagedListPager(Model.ListaProgramas, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort }))
-        </div>
     </div>
 </div>
 
 <div id="dvLineas" style="display:none;">
     <h3>Cuentas Presupuestarias</h3>
     <div class="table-responsive">
-        <table id="tblOrganizaciones" class="table table-condensed table-bordered  table-hover">
+        <table id="tblLineas" class="table table-condensed table-bordered  table-hover">
             <thead id="tbhListaLineas">
             </thead>
             <tbody id="tbdListaLineas"></tbody>
@@ -100,19 +138,49 @@
     @Scripts.Render("~/bundles/modalform")
 
     <script>
-        var idPrograma = "";
-        var ordenNombreLinea = "";
-        var ordenPresupuestoLinea = "presuLinea";
+        $(document).ready(function () {
+            $("#tblProgramas").DataTable({
+                "language":
+                    {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+            }).on("draw.dt", function () {
+                addEventClickDataModal();
+            });
+        });
 
-        function verLineas(programa, sortOrder) {
+
+
+        var idPrograma = "";
+
+        function verLineas(programa) {
             $("#mensaje").html("");
             idPrograma = programa;
-            ordenNombreLinea = sortOrder == "" ? "nomLinea_desc" : "";
-            ordenPresupuestoLinea = sortOrder == "presuLinea" ? "presuLinea_desc" : "presuLinea";
 
             $.getJSON(
                  "@Url.Action("ObtenerLineasPorPrograma")",// URL a la acción
-                { paramUno: idPrograma, paramDos: sortOrder },                  // Objeto JSON con parámetros
+                { paramUno: idPrograma },                  // Objeto JSON con parámetros
                 function (data) {                    // Función de retorno exitoso
                     $("#tbhListaLineas").html("");
                     $("#tbdListaLineas").html("");
@@ -122,16 +190,16 @@
                     if (obJson.length > "0") {
                         var urlReporte = '@Url.Action("GenerarReporte", "ReporteProgramasLineas", new { idPrograma = "paramIdPrograma" })';
                         urlReporte = urlReporte.replace("paramIdPrograma", encodeURIComponent(idPrograma));
-                            $("#btnGenerarReporte").attr("href", urlReporte);
+                        $("#btnGenerarReporte").attr("href", urlReporte);
                         var filaTitulo = "<tr>";
                         filaTitulo += "<th>";
                         filaTitulo += "Número Línea";
                         filaTitulo += "</th>";
                         filaTitulo += "<th>";
-                        filaTitulo += "    <a href='@Url.Action("")' onclick='verLineas(\"" + idPrograma + "\", \"" + ordenNombreLinea + "\"); return false;'>Nombre de Línea</a>";
+                        filaTitulo += "    Nombre de Línea";
                         filaTitulo += "</th>";
                         filaTitulo += "<th>";
-                        filaTitulo += "    <a href='@Url.Action("")' onclick='verLineas(\"" + idPrograma + "\", \"" + ordenPresupuestoLinea + "\"); return false;'>Presupuesto</a>";
+                        filaTitulo += "    Presupuesto";
                         filaTitulo += "</th>";
                         filaTitulo += "<th>";
                         filaTitulo += "    Comprometido";
@@ -187,6 +255,35 @@
                         var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>El programa seleccionado no tiene Líneas asociadas.</div>';
                         $("#mensaje").html(mensajeUsuario);
                     }
+                    $("#tblLineas").DataTable({
+                        "language":
+                            {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                }
+                            }
+                    }).on("draw.dt", function () {
+                        addEventClickDataModal();
+                    });
                 });
         }
     </script>
