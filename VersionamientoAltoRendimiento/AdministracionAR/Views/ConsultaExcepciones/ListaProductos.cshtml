@@ -1,46 +1,85 @@
 ﻿@model AltoRendimiento.Administracion.Models.ConsultaExcepcionesModel
-@using PagedList.Mvc;
 
-<div class="table-responsive">
-    <table id="tblData" class="table table-condensed table-bordered table-hover">
-        <thead>
-            <tr>
-                @*<th>
-                    @Html.DisplayNameFor(m=>m.ProductoId)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(m=>m.sProducto)
-                </th>
-                <th>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $("#tblData").DataTable({
+            "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaProductos)
-            {
+        if ('@Model.ListaProductos.Count()' == '0') {
+            $("#dvData").hide();
+        } else {
+            $("#dvData").show();
+        }
+    });
+</script>
+
+<div id="dvData" class="table-responsive">
+        <table id="tblData" class="table table-condensed table-bordered table-hover">
+            <thead>
                 <tr>
-                    @*<td>
-                        @item.ProductoId
-                    </td>*@
-                    <td>
-                        @item.sProducto
-                    </td>
-                    <td>
-                        @if (item.ExTiempoEjecucion)
-                        {
-                            @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExTiempoEjecucion", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Tiempo de Ejecucion' src=\"Images/Reporte.png\" ... />"))
-                        }
-                        @if (item.ExSolicitudCambio)
-                        {
-                           @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExSolicitudCambio", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"Images/Solicitud_Cambio.png\" ... />"))
-                        }
-                    </td>
-                </tr> 
-            }
-        </tbody>
-    </table>
-    <div id="dvInfoPaginacion">
-        Página @(Model.ListaProductos.PageCount<Model.ListaProductos.PageNumber ? 0 : Model.ListaProductos.PageNumber) de @Model.ListaProductos.PageCount
+                    @*<th>
+                            @Html.DisplayNameFor(m=>m.ProductoId)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(m => m.sProducto)
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaProductos)
+                {
+                    <tr>
+                        @*<td>
+                                @item.ProductoId
+                            </td>*@
+                        <td>
+                            @item.sProducto
+                        </td>
+                        <td>
+                            @if (item.ExTiempoEjecucion)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExTiempoEjecucion", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Tiempo de Ejecucion' src=\"Images/Reporte.png\" ... />"))
+                            }
+                            @if (item.ExSolicitudCambio)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "ListaExSolicitudCambio", new { ProductoId = item.ProductoId }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"Images/Solicitud_Cambio.png\" ... />"))
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</div>

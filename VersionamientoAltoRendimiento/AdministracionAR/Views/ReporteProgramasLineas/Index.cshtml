@@ -22,7 +22,7 @@
     </div>
 </div>
 <h2>Reporte General por Líneas</h2>
-@Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProgramasLineas", new { idPrograma = Model.IdPrograma, anio = Model.anioPresupuesto, cuenta=Model.NumeroCuenta }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
+@Html.ActionLink("Exportar a Excel", "GenerarReporte", "ReporteProgramasLineas", new { idPrograma = Model.IdPrograma, anio = Model.anioPresupuesto, cuenta = Model.NumeroCuenta }, new { data_modal = "", id = "btnGenerarReporte", @class = "btn btn-sm btn-info pull-right", @style = "color:White" })
 <br />
 <br />
 <div id="mensaje"></div>
@@ -112,7 +112,7 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Ver Línea", null, null, new { onClick = "verLineas(" + item.IdPrograma + "); return false;" })
+                            @Html.ActionLink("Ver Línea", null, null, new { onClick = "verLineas(" + item.IdPrograma + ", '" + Model.anioPresupuesto + "', '" + Model.NumeroCuenta + "'); return false;" })
                         </td>
                     </tr>
                 }
@@ -123,12 +123,8 @@
 
 <div id="dvLineas" style="display:none;">
     <h3>Cuentas Presupuestarias</h3>
-    <div class="table-responsive">
-        <table id="tblLineas" class="table table-condensed table-bordered  table-hover">
-            <thead id="tbhListaLineas">
-            </thead>
-            <tbody id="tbdListaLineas"></tbody>
-        </table>
+    <div id="dvTblLineas" class="table-responsive">
+
     </div>
 </div>
 
@@ -165,31 +161,38 @@
                             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                         }
                     }
-            }).on("draw.dt", function () {
-                addEventClickDataModal();
             });
         });
 
 
 
         var idPrograma = "";
+        var anio = "";
+        var cuenta = "";
 
-        function verLineas(programa) {
+        function verLineas(programa, parAnio, parCuenta) {
             $("#mensaje").html("");
             idPrograma = programa;
+            anio = parAnio;
+            cuenta = parCuenta;
 
             $.getJSON(
                  "@Url.Action("ObtenerLineasPorPrograma")",// URL a la acción
                 { paramUno: idPrograma },                  // Objeto JSON con parámetros
                 function (data) {                    // Función de retorno exitoso
-                    $("#tbhListaLineas").html("");
-                    $("#tbdListaLineas").html("");
+                    $("#dvTblLineas").empty();
                     var obJson = JSON.parse(data);
                     var inicioEtiqueta = "<td>";
                     var finEtiqueta = "</td>";
                     if (obJson.length > "0") {
-                        var urlReporte = '@Url.Action("GenerarReporte", "ReporteProgramasLineas", new { idPrograma = "paramIdPrograma" })';
-                        urlReporte = urlReporte.replace("paramIdPrograma", encodeURIComponent(idPrograma));
+                        $("#dvTblLineas").append('<table id="tblLineas" class="table table-condensed table-bordered  table-hover">' +
+                                                    '<thead id="tbhListaLineas">' +
+                                                    '</thead>' +
+                                                    '<tbody id="tbdListaLineas"></tbody>' +
+                                                '</table>');
+
+                        var urlReporte = '@Url.Action("GenerarReporte", "ReporteProgramasLineas", new { idPrograma = "paramIdPrograma", anio = "paramAnio", cuenta="paramCuenta" })';
+                        urlReporte = urlReporte.replace(/&amp;/g, "&").replace("paramIdPrograma", encodeURIComponent(idPrograma)).replace("paramAnio", encodeURIComponent(anio)).replace("paramCuenta", encodeURIComponent(cuenta));
                         $("#btnGenerarReporte").attr("href", urlReporte);
                         var filaTitulo = "<tr>";
                         filaTitulo += "<th>";
@@ -251,39 +254,41 @@
                             $("#tbdListaLineas").append(fila);
                         });
                         $("#dvLineas").attr("style", "display:block;");
+
+                        var config = {
+                            "language":
+                                {
+                                    "sProcessing": "Procesando...",
+                                    "sLengthMenu": "Mostrar _MENU_ registros",
+                                    "sZeroRecords": "No se encontraron resultados",
+                                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                    "sInfoPostFix": "",
+                                    "sSearch": "Buscar:",
+                                    "sUrl": "",
+                                    "sInfoThousands": ",",
+                                    "sLoadingRecords": "Cargando...",
+                                    "oPaginate": {
+                                        "sFirst": "Primero",
+                                        "sLast": "último",
+                                        "sNext": "Siguiente",
+                                        "sPrevious": "Anterior"
+                                    },
+                                    "oAria": {
+                                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                    }
+                                }
+                        }
+
+                        var table = $("#tblLineas").DataTable(config);
+
                     } else {
                         var mensajeUsuario = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>El programa seleccionado no tiene Líneas asociadas.</div>';
                         $("#mensaje").html(mensajeUsuario);
                     }
-                    $("#tblLineas").DataTable({
-                        "language":
-                            {
-                                "sProcessing": "Procesando...",
-                                "sLengthMenu": "Mostrar _MENU_ registros",
-                                "sZeroRecords": "No se encontraron resultados",
-                                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                                "sInfoPostFix": "",
-                                "sSearch": "Buscar:",
-                                "sUrl": "",
-                                "sInfoThousands": ",",
-                                "sLoadingRecords": "Cargando...",
-                                "oPaginate": {
-                                    "sFirst": "Primero",
-                                    "sLast": "último",
-                                    "sNext": "Siguiente",
-                                    "sPrevious": "Anterior"
-                                },
-                                "oAria": {
-                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                                }
-                            }
-                    }).on("draw.dt", function () {
-                        addEventClickDataModal();
-                    });
                 });
         }
     </script>

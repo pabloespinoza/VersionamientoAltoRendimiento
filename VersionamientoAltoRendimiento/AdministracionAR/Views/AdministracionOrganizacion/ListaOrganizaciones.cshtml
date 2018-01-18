@@ -1,11 +1,54 @@
 ﻿@model AltoRendimiento.Administracion.Models.AdministracionOrganizacionModel
-@using PagedList.Mvc;
+
 <div class="text-right">
     @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
     @Html.ActionLink("Nuevo", "AgregarOrganizacion", "AdministracionOrganizacion", null, new { data_modal = "", id = "btnAgregarOrganizacion", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
 </div>
 <br />
-<div class="table-responsive">
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $("#tblOrganizaciones").DataTable({
+            "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+        if ('@Model.listaOrganizaciones.Count()' == '0') {
+            $("#dvData").hide();
+        } else {
+            $("#dvData").show();
+        }
+    });
+</script>
+
+<div id="dvData" class="table-responsive">
     <table id="tblOrganizaciones" class="table table-condensed table-bordered  table-hover">
         <thead>
             <tr>
@@ -13,7 +56,7 @@
                     @Html.DisplayNameFor(model => model.Rut)
                 </th>
                 <th>
-                    @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NombreSortParm, RutBuscar = Model.RutBuscar, NombreBuscar = Model.NombreBuscar })
+                    Nombre
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
@@ -49,8 +92,4 @@
             }
         </tbody>
     </table>
-    <div id="dvInfoPaginacion">
-        Página @(Model.listaOrganizaciones.PageCount < Model.listaOrganizaciones.PageNumber ? 0 : Model.listaOrganizaciones.PageNumber) de @Model.listaOrganizaciones.PageCount
-        @Html.PagedListPager(Model.listaOrganizaciones, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, RutBuscar = Model.RutBuscar, NombreBuscar = Model.NombreBuscar }))
-    </div>
 </div>

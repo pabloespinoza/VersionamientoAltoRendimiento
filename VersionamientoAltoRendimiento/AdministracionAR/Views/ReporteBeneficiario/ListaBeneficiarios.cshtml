@@ -1,104 +1,143 @@
 ﻿@model AltoRendimiento.Administracion.Models.ReporteBeneficiarioModel
-@using PagedList.Mvc;
+
 <br />
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $("#tblBeneficiarios").DataTable({
+            "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+        @*if ('@Model.listaBeneficiarios' != 'null')
+            $("#dvData").hide();
+        else
+            $("#dvData").hide();*@
+
+    });
+</script>
+
 @if (Model.listaBeneficiarios != null)
-{ 
-<div class="table-responsive">
-    <table id="tblBeneficiarios" class="table table-condensed table-bordered  table-hover">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rut)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TipoBeneficiario)
-                </th>
-                @*//Pablo Espinoza 27-11-2017*@
-                <th>
-                    @Html.DisplayNameFor(model => model.NumeroLinea)
-                </th>
-                @*//Pablo Espinoza 27-11-2017*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Federacion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Proyecto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Producto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cargo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Genero)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nivel)
-                </th>
-                @*Pablo Espinoza 02-06-2016
-        <th>
-        @Html.DisplayNameFor(model => model.MontoVigenteProyecto)
-    </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.MontoProducto)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.listaBeneficiarios)
-            {
+{
+    <div id="dvData" class="table-responsive">
+        <table id="tblBeneficiarios" class="table table-condensed table-bordered  table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @item.Nombre
-                    </td>
-                    <td>
-                        @item.Rut
-                    </td>
-                    <td>
-                        @item.TipoBeneficiario
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rut)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoBeneficiario)
+                    </th>
                     @*//Pablo Espinoza 27-11-2017*@
-                    <td>
-                        @item.NumeroLinea
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroLinea)
+                    </th>
                     @*//Pablo Espinoza 27-11-2017*@
-                    <td>
-                        @item.Federacion
-                    </td>
-                    <td>
-                        @item.Proyecto
-                    </td>
-                    <td>
-                        @item.Producto
-                    </td>
-                    <td>
-                        @item.Cargo
-                    </td>
-                    <td>
-                        @item.Genero
-                    </td>
-                    <td>
-                        @item.Nivel
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Federacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Proyecto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Producto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cargo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Genero)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nivel)
+                    </th>
                     @*Pablo Espinoza 02-06-2016
-        <td>
-        @item.MontoVigenteProyecto
-    </td>*@
-                    <td>
-                        @item.MontoProducto
-                    </td>
+                            <th>
+                            @Html.DisplayNameFor(model => model.MontoVigenteProyecto)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.MontoProducto)
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div id="dvInfoPaginacion">
-        Página @(Model.listaBeneficiarios.PageCount < Model.listaBeneficiarios.PageNumber ? 0 : Model.listaBeneficiarios.PageNumber) de @Model.listaBeneficiarios.PageCount
-        @Html.PagedListPager(Model.listaBeneficiarios, page => Url.Action("Index", new { page, Rut = Model.Rut, IdTipoBeneficiario = Model.IdTipoBeneficiario, IdTipoProducto = Model.IdTipoProducto/*, IdCategoria = Model.IdCategoria*/, IdConcurso = Model.IdConcurso, IdFederacion = Model.IdFederacion }))
+            </thead>
+            <tbody>
+                @foreach (var item in Model.listaBeneficiarios)
+                {
+                    <tr>
+                        <td>
+                            @item.Nombre
+                        </td>
+                        <td>
+                            @item.Rut
+                        </td>
+                        <td>
+                            @item.TipoBeneficiario
+                        </td>
+                        @*//Pablo Espinoza 27-11-2017*@
+                        <td>
+                            @item.NumeroLinea
+                        </td>
+                        @*//Pablo Espinoza 27-11-2017*@
+                        <td>
+                            @item.Federacion
+                        </td>
+                        <td>
+                            @item.Proyecto
+                        </td>
+                        <td>
+                            @item.Producto
+                        </td>
+                        <td>
+                            @item.Cargo
+                        </td>
+                        <td>
+                            @item.Genero
+                        </td>
+                        <td>
+                            @item.Nivel
+                        </td>
+                        @*Pablo Espinoza 02-06-2016
+                                <td>
+                                @item.MontoVigenteProyecto
+                            </td>*@
+                        <td>
+                            @item.MontoProducto
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</div>
 }
 

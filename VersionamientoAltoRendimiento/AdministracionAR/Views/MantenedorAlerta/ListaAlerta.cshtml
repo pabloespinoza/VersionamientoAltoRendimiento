@@ -1,5 +1,5 @@
 ﻿@model AltoRendimiento.Administracion.Models.AlertaModel
-@using PagedList.Mvc;
+
 <div class="text-right">
     @Html.ActionLink("Volver", "Index", "BandejaEntrada", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
     @Html.ActionLink("Nueva", "CrearAlerta", "MantenedorAlerta", null, new { data_modal = "", id = "btnAgregar", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
@@ -12,6 +12,9 @@
         </div>
     </div>
 </div>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -37,8 +40,47 @@
 
         });
     });
+
+    $(document).ready(function () {
+        $("#tblData").DataTable({
+            "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+        if ('@Model.ListaAlertas.Count()' == '0') {
+            $("#dvData").hide();
+        } else {
+            $("#dvData").show();
+        }
+    });
 </script>
-<div class="table-responsive">
+
+<div id="dvData" class="table-responsive">
     <table id="tblData" class="table table-condensed table-bordered table-hover">
         <thead>
             <tr>
@@ -78,9 +120,9 @@
                     <td>
                         @Html.Raw(@Html.ActionLink("[replacetext]", "DetalleAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Detalle' src=\"Images/Reporte.png\" ... />"))
                         @*@Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaPlantillaCampo", new { idAlerta = item.idAlerta }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Campos Alerta' src=\"Images/arroba-sign.png\" ... />"))
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaExclusionUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Excluir Usuario de Correo Alerta' src=\"Images/delete-user.png\" ... />"))
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaRol", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Roles' src=\"Images/people.png\" ... />"))
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Usuario' src=\"Images/interface.png\" ... />"))*@
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaExclusionUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Excluir Usuario de Correo Alerta' src=\"Images/delete-user.png\" ... />"))
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaRol", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Roles' src=\"Images/people.png\" ... />"))
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "MantenedorAlertaUsuario", new { idAlerta = item.idAlerta, aleNombre = item.aleNombre }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Agregar Usuario' src=\"Images/interface.png\" ... />"))*@
                         @Html.Raw(@Html.ActionLink("[replacetext]", "EditarAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"Images/Edit.png\" ... />"))
                         @*@Html.Raw(@Html.ActionLink("[replacetext]", "EliminarAlerta", new { id = item.idAlerta }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"Images/Trash.png\" ... />"))*@
                         @*@Html.Raw(@Html.ActionLink("[replacetext]" , "VistaPreliminar" , "MantenedorAlerta" , new { plantilla = item.idAlerta } , new { @id = "Preliminar" }))*@
@@ -91,8 +133,4 @@
             }
         </tbody>
     </table>
-    <div id="dvInfoPaginacion">
-        Página @(Model.ListaAlertas.PageCount < Model.ListaAlertas.PageNumber ? 0 : Model.ListaAlertas.PageNumber) de @Model.ListaAlertas.PageCount
-        @Html.PagedListPager(Model.ListaAlertas, page => Url.Action("Index", new { page }))
-    </div>
 </div>
