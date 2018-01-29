@@ -33,6 +33,7 @@
     var ValidoGastoPersonal = ViewBag.ValidoGastoPersonal;
     var ValidoGastoAdministrativo = ViewBag.ValidoGastoAdministrativo;
     var ValidarGeolocalizacion = ViewBag.ValidarGeolocalizacion;
+    var ValidarGeolocalizacionHorario = ViewBag.ValidarGeolocalizacionHorario;
     var PresupuestoProyecto = ViewBag.PresupuestoProyecto;
     //Solicitud de Cambio
     var valido5porciento = false;
@@ -172,7 +173,7 @@
                     @if (!ValidarGeolocalizacion)
                     {
                         <br />
-                        <label style="font-size:small">Existen beneficiarios que no poseen al menos una geolocalización</label>
+                        <label style="font-size:small">Existen beneficiarios que no poseen geolocalización</label>
                         <!--Pablo Espinoza 22-02-2016-->
                         //if (ValidoGastoPersonal)
                         //{
@@ -198,6 +199,43 @@
                 <td>
                     @{
                         if (ValidarGeolocalizacion && ValidoGastoPersonal)
+                        {
+                            <img src="../Images/True.png" />
+                        }
+                        else
+                        {
+                            <img src="../Images/False.png" />
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Horario
+                    @if (!ValidarGeolocalizacionHorario)
+                    {
+                        <br />
+                        <label style="font-size:small">Existen Geolocalizaciones que no poseen Horario</label>
+                        <!--Pablo Espinoza 22-02-2016-->
+                        //if (ValidoGastoPersonal)
+                        //{
+                        @*using (Html.BeginForm("BeneficiarioSinGeolocalizacion", "Proyecto", FormMethod.Post, new { @style = "float:right;" }))
+                        {
+                            @Html.Hidden("idProyecto", TempData["idProyecto"])
+                            <button type="submit" class="btn btn-xs btn-danger pull-right">Ver Detalle +</button>
+                        }*@
+                        //}
+                        <!--Pablo Espinoza 22-02-2016-->
+                    }
+                    @*@if (!validoBeneficiarios)
+                {
+                <br />
+                <label style="font-size:small">Existen productos que no poseen beneficiarios con gastos asignados a una geolocalización</label>
+                }*@
+                </td>
+                <td>
+                    @{
+                        if (ValidarGeolocalizacionHorario)
                         {
                             <img src="../Images/True.png" />
                         }
@@ -464,9 +502,14 @@
         var Plurianual = '@validoPlurianual';
         var GastoPersonal = '@ValidoGastoPersonal';
         var Geolocalizacion = '@ValidarGeolocalizacion';
+        var GeolocalizacionHorario = '@ValidarGeolocalizacionHorario';
         var Presupuesto = '@PresupuestoProyecto';
 
-        if (Plurianual.toLowerCase() == 'true' && GastoPersonal.toLowerCase() == 'true' && Geolocalizacion.toLowerCase() == 'true' && Presupuesto.toLowerCase() == 'true') {
+        if (Plurianual.toLowerCase() == 'true'
+            && GastoPersonal.toLowerCase() == 'true'
+            && Geolocalizacion.toLowerCase() == 'true'
+            && Presupuesto.toLowerCase() == 'true'
+            && GeolocalizacionHorario.toLowerCase() == 'true') {
             return input.form.submit();
         } else {
 
@@ -483,9 +526,14 @@
         var Plurianual = '@validoPlurianual';
         var GastoPersonal = '@ValidoGastoPersonal';
         var Geolocalizacion = '@ValidarGeolocalizacion';
+        var GeolocalizacionHorario = '@ValidarGeolocalizacionHorario';
         var Presupuesto = '@PresupuestoProyecto';
 
-        if (Plurianual.toLowerCase() == 'true' && GastoPersonal.toLowerCase() == 'true' && Geolocalizacion.toLowerCase() == 'true' && Presupuesto.toLowerCase() == 'true') {
+        if (Plurianual.toLowerCase() == 'true'
+            && GastoPersonal.toLowerCase() == 'true'
+            && Geolocalizacion.toLowerCase() == 'true'
+            && Presupuesto.toLowerCase() == 'true'
+            && GeolocalizacionHorario.toLowerCase() == 'true') {
             return input.form.submit();
         } else {
             $("#txtMensaje").text("No es posible postular, favor revisar Resumen General");
