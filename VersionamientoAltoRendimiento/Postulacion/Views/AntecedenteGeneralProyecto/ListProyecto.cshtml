@@ -15,6 +15,11 @@
 }
 <table class="table table-condensed table-bordered table-hover">
     <tr>
+        @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+        <th>
+            Línea
+        </th>
+        @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
         <th>
             Proyecto
         </th>
@@ -27,6 +32,11 @@
         <th>
             Fin
         </th>
+        @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+        <th>
+            Monto
+        </th>
+        @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
         <th>
             Estado
         </th>
@@ -37,6 +47,11 @@
         foreach (var item in Model)
         {
             <tr>
+                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombreLinea)
+                </td>
+                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                 <td>
                     @{
             var folio = string.Format("{0:G}", item.proFolioProyecto);
@@ -60,6 +75,11 @@
                 <td>
                     @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesTermino)
                 </td>
+                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                <td>
+                    @Html.DisplayFor(modelItem => string.Format("0:C0", item.proMonto))
+                </td>
+                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                 <td>
                     @Html.DisplayFor(modelItem => item.estNombre)
                 </td>
@@ -81,34 +101,34 @@
                 @Html.Raw(@Html.ActionLink("[replacetext]", "EliminarProyecto", new { id = item.idProyecto }, new { @class = "anchor-edit", data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
             }
             @*Para realizar la solicitud de cambio es necesario descomentar la sección de código que viene a continuación.*@
-            @*if (Utilitarios.Instance.PuedeGenerarSolicitud(item.proMesTermino))
-            {
-                if (codWorkflow == (int)EnumEstados.Aprobada)
-                {
-                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
-                } if ((codWorkflow == (int)EnumEstados.AprobadoSC && ViewBag.Solicitud != null))
-                {
-                    int cont = 0;
+                        @*if (Utilitarios.Instance.PuedeGenerarSolicitud(item.proMesTermino))
+                            {
+                                if (codWorkflow == (int)EnumEstados.Aprobada)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                } if ((codWorkflow == (int)EnumEstados.AprobadoSC && ViewBag.Solicitud != null))
+                                {
+                                    int cont = 0;
 
-                    foreach (var itemSC in ViewBag.Solicitud)
-                    {
+                                    foreach (var itemSC in ViewBag.Solicitud)
+                                    {
 
-                        if (itemSC.scaPendiente == true && item.idProyecto == itemSC.idProyecto)
-                        {
-                            cont++;
-                        }
-                    }
-                    if (cont == 0)
-                    {
-                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
-                        //@Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
-                    }
-                }
-                else if (codWorkflow == (int)EnumEstados.AprobadoSCRevision)
-                {
-                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
-                }
-            }*@
+                                        if (itemSC.scaPendiente == true && item.idProyecto == itemSC.idProyecto)
+                                        {
+                                            cont++;
+                                        }
+                                    }
+                                    if (cont == 0)
+                                    {
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                        //@Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
+                                    }
+                                }
+                                else if (codWorkflow == (int)EnumEstados.AprobadoSCRevision)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
+                                }
+                            }*@
                     }
 
                 </td>

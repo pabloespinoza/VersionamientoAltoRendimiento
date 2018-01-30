@@ -175,6 +175,11 @@
                 <table id="dtProyecto" class="table table-condensed table-bordered table-hover">
                     <thead>
                         <tr>
+                            @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                            <th>
+                                Línea
+                            </th>
+                            @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                             <th>
                                 Proyecto
                             </th>
@@ -187,6 +192,11 @@
                             <th>
                                 Fin
                             </th>
+                            @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                            <th>
+                                Monto
+                            </th>
+                            @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                             <th>
                                 Estado
                             </th>
@@ -197,6 +207,11 @@
                         @foreach (var item in ViewBag.ProyectosBusqueda)
                         {
                             <tr>
+                                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                                <td>
+                                    @(item.nombreLinea + " - " + item.anioConcurso.ToString())
+                                </td>
+                                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                                 <td>
                                     @{
                             var folio = string.Format("{0:G}", item.proFolioProyecto);
@@ -220,6 +235,11 @@
                                 <td>
                                     @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.proMesTermino)
                                 </td>
+                                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
+                                <td>
+                                    @string.Format("{0:C0}", item.proMonto)
+                                </td>
+                                @*Pablo Espinoza - 29-01-2018 - Se agregan campos Linea y monto a la grilla de bandeja de entrada*@
                                 <td>
                                     @item.estNombre
                                 </td>
