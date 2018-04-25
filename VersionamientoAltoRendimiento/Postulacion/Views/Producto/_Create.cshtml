@@ -104,7 +104,6 @@
         </div>
     </div>
 
-
     <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
         <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
@@ -113,10 +112,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }
 
 
 <script type="text/javascript">
+
     $(document).ready(function () {
         texto = $("#TipoProducto-DropdownID option:selected").text().toUpperCase();
         @*if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN') {
@@ -135,7 +136,7 @@
             $("label[for = lblRegionPais]").text("Región");
             $("label[for = lblCiudadComuna]").text("Comuna");
         } if (texto == 'Internacional') {
-            $("label[for = lblRegionPais]").text("Pais");
+            $("label[for = lblRegionPais]").text("País");
             $("label[for = lblCiudadComuna]").text("Ciudad");
 
         }
@@ -381,7 +382,7 @@
             $("label[for = lblRegionPais]").text("Región");
             $("label[for = lblCiudadComuna]").text("Comuna");
         } if (texto == 'Internacional') {
-            $("label[for = lblRegionPais]").text("Pais");
+            $("label[for = lblRegionPais]").text("País");
             $("label[for = lblCiudadComuna]").text("Ciudad");
 
         }
@@ -396,7 +397,7 @@
                     options += '<option value="' + value.id + '">' + value.nombre + '</option>';
                 });
                 $("#PaisContainer-DropdownID").html(options);
-                $("#RegionContainer-DropdownID").html('<option value="">--Seleccione Pais/Region--</option>');
+                $("#RegionContainer-DropdownID").html('<option value="">--Seleccione País/Región--</option>');
             },
             error: function () {
             }

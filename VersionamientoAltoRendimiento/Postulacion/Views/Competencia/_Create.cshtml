@@ -1,0 +1,244 @@
+﻿@model AltoRendimiento.Models.Competencia
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Create";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("es-Es");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Nueva Competencia</h4>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    
+    <div class="modal-body">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            @Html.Hidden("idProducto", TempData["idProducto"])
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.comNombre, "Nombre Competencia", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.comNombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.comNombre)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.comFechaInicio, "Fecha Inicio", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8 input-group input-append date" id="dvFechaInicio" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.comFechaInicio, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.comFechaInicio)
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.comFechaFin, "Fecha Fin", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8 input-group input-append date" id="dvFechaFin" data-date-format="dd-mm-yyyy">
+                        @Html.TextBoxFor(model => model.comFechaFin, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.comFechaFin)
+                </div>
+            </div>
+
+            <label for="InfoProd" id="InfoProd" class="col-md-9 col-md-offset-3" style="font-size:x-small">Información: El producto comienza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesDesde) y finaliza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesHasta)</label><br />
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.comHoraInicio, "Hora Inicio", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8 input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                        @Html.TextBoxFor(model => model.comHoraInicio, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.comHoraInicio)
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.comHoraFin, "Hora Fin", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8 input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                        @Html.TextBoxFor(model => model.comHoraFin, new { @class = "form-control" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.comHoraFin)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.comDescripcion, "Descripción", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.comDescripcion, new { @class = "form-control", @rows = 4, @style = "resize:none;" })
+                    @Html.ValidationMessageFor(model => model.comDescripcion)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div id="map_canvas" style="width: auto; height: 300px;">
+                    </div>
+                    <span style="color:red;">Desplaza el icono para una mayor precisión.</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.comDireccion, "Dirección", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model=>model.comDireccion, new { @class = "form-control" })
+                    @Html.ValidationMessage("comDireccion")
+                </div>
+            </div>
+
+            <div class="form-group" id="divCoords">
+                <label for="comCoordenadaX" class="col-md-2 control-label">Coordenadas</label>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.comCoordenadaX, new { @class = "form-control" })
+                </div>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.comCoordenadaY, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="text-danger col-md-offset-1 ">@ViewData["Mensaje"]</div><br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+                <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var fechaInicio = $("#dvFechaInicio").datepicker({
+            language: 'es'
+        }).on('changeDate', function (ev) {
+            fechaInicio.hide();
+        }).data('datepicker');
+        var fechaFin = $("#dvFechaFin").datepicker({
+            language: 'es'
+        }).on('changeDate', function (ev) {
+            fechaFin.hide();
+        }).data('datepicker');
+
+        $(".clockpicker").clockpicker();
+
+        $("#divCoords").hide();
+
+        $('html').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        });
+
+        $('#comCoordenadaX').attr('readonly', true);
+        $('#comCoordenadaY').attr('readonly', true);
+    });
+
+
+    var geocoder;
+    var map;
+    var marker;
+    function initialize() {
+        // Creating map object
+        geocoder = new google.maps.Geocoder();
+
+        var coordenadaX;
+        var coordenadaY;
+
+        if ($('#comCoordenadaX').val().trim() != "")
+            coordenadaX = $('#comCoordenadaX').val();
+        else
+            coordenadaX = -33.447641;
+
+        if ($('#comCoordenadaY').val().trim() != "")
+            coordenadaY = $('#comCoordenadaY').val();
+        else
+            coordenadaY = -70.667227;
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 14,
+            center: new google.maps.LatLng(coordenadaX, coordenadaY),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creates a draggable marker to the given coords
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coordenadaX, coordenadaY),
+            draggable: true
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#comCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#comCoordenadaY").val(evt.latLng.lng().toFixed(6));
+            geocoder.geocode({ 'latLng': evt.latLng }, function (results) {
+                $("#comDireccion").val(results[0].formatted_address);
+            });
+            map.panTo(evt.latLng);
+        });
+
+        // centers the map on markers coords
+        map.setCenter(marker.position);
+
+        // adds the marker on the map
+        marker.setMap(map);
+
+    }
+    initialize();
+
+    function codeAddressIngreso(direccion) {
+        
+        geocoder.geocode({ 'address': direccion }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker.setPosition(results[0].geometry.location);
+                $("#comCoordenadaX").val(marker.getPosition().lat());
+                $("#comCoordenadaY").val(marker.getPosition().lng());
+
+            } else {
+                $("#resultadoMapa").text("Error no se logro geolocalizar la dirección registrada");
+            }
+        });
+
+        // adds a listener to the marker
+        // gets the coords when drag event ends
+        // then updates the input with the new coords
+        google.maps.event.addListener(marker, 'dragend', function (evt) {
+            $("#comCoordenadaX").val(evt.latLng.lat().toFixed(6));
+            $("#comCoordenadaY").val(evt.latLng.lng().toFixed(6));
+            map.panTo(evt.latLng);
+        });
+    }
+
+    $("#comDireccion").keyup(function () {
+        codeAddressIngreso($(this).val());
+    });
+</script>
+<style>
+    .popover {
+        z-index: 999999;
+    }
+
+    .clockpicker-popover {
+        z-index: 999999;
+    }
+</style>

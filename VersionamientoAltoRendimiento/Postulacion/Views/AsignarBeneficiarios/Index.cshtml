@@ -246,7 +246,7 @@
                                     }
                                     @Html.Raw(@Html.ActionLink("[replacetext]", "URLDocumentoBeneficiario", new { id = item.idBeneficiario, prod = TempData["idProducto"] }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Documentos Adjuntos' src=\"../Images/Reporte.png\" ... />"))
 
-                                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                                    @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
                                     {
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idBeneficiarioProductoCargo }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
 

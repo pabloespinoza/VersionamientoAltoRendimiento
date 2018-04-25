@@ -60,7 +60,7 @@
             Tipo Gasto
         </th>
         <th>
-            Beneficiario
+            Beneficiario(s)
         </th>
         <th>
             Días
@@ -131,7 +131,6 @@
                 @if (((AltoRendimiento.Models.Proyecto)ViewBag.Proyecto).Organizacion_Linea.Concurso_categoria.Concurso.conAno != 2016)
                 {
                     @Html.DisplayFor(modelItem => item.cantBeneficiarios)
-                    @(" Beneficiarios");
                 }
                 else
                 {
@@ -141,7 +140,10 @@
             </td>
             @*Pablo Espinoza 12-12-2016*@
             <td>
-                @Html.DisplayFor(modelItem => item.bgaDias)
+                @if (item.Tipo_Gasto_Administracion.tgaNumeroGastoAdministracion != "2")
+                {
+                    @Html.DisplayFor(modelItem => item.bgaDias)
+                }
             </td>
             @*Pablo Espinoza 12-12-2016*@
             <td width="130">

@@ -124,6 +124,23 @@
         </ul>
         <!--</div>-->
     </div>
+
+    @if (Model.productoOriginal.listaCompetencias.Count() > 0)
+    {
+        <div class="panel-group" id="accordeonCompetenciasOrg">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonCompetenciasOrg" href="#collapseCompetenciasOrg">Competencias</a>
+                </div>
+                <div id="collapseCompetenciasOrg" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialCompetenciasOrg", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (Model.productoOriginal.listaBeneficiarios.Count() > 0)
     {
         <div class="panel-group" id="accordeonBeneficiariosOrg">
@@ -206,6 +223,33 @@
         </ul>
         <!--</div>-->
     </div>
+
+    @if (Model.productoSolicitud.listaCompetencias.Count() > 0)
+    {
+        bool tienenuevosB = false;
+
+        foreach (var item in Model.productoSolicitud.listaCompetencias)
+        {
+            if (item.esNuevo == true)
+            {
+                tienenuevosB = true;
+            }
+        }
+
+        <div class="panel-group" id="accordeonCompetenciasSol">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#accordeonCompetenciasSol" href="#collapseCompetenciasSol" @(tienenuevosB == true ? "class= alert-danger" : string.Empty)>Competencias</a>
+                </div>
+                <div id="collapseCompetenciasSol" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        @Html.Partial("_PartialCompetenciasSol", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (Model.productoSolicitud.listaBeneficiarios.Count() > 0)
     {
         bool tienenuevosB = false;

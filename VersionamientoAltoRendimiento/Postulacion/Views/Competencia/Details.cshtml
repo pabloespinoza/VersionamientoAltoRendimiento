@@ -1,0 +1,99 @@
+﻿@model AltoRendimiento.Models.Competencia
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Competencia</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.comNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comFechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comFechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comFechaFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comFechaFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comUsuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comUsuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comFechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comFechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comUsuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comUsuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comFechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comFechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Producto.prdNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Producto.prdNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proyecto.proNombreProyecto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proyecto.proNombreProyecto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idCompetencia }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

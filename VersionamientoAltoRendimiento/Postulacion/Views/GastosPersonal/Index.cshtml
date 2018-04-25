@@ -167,7 +167,7 @@ else
                         </td>
                         <td>
 
-                            @Html.Raw(@Html.ActionLink("[replacetext]", "URLGeolocalizacion", new { id = item.idBeneficiarioGastoPersonal, pendientes = 0 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Geolocalizacion' src=\"../Images/Mundo.png\" ... />"))
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "URLGeolocalizacion", new { id = item.idBeneficiarioGastoPersonal, pendientes = 0 }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Geolocalización' src=\"../Images/Mundo.png\" ... />"))
 
                             @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
                             {

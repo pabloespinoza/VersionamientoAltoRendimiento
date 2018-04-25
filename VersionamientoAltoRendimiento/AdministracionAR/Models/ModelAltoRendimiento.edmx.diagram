@@ -265,6 +265,14 @@
         <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_ProductoCopia" />
         <EntityTypeShape EntityType="IND0012Model.Concurso" Width="1.5" PointX="1.5" PointY="81" />
         <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Concurso" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia" Width="1.5" PointX="20.5" PointY="39.25" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia_Copia" Width="1.5" PointX="22.75" PointY="70.375" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia_Historial" Width="1.5" PointX="22.75" PointY="39.5" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Competencia" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Historial_Competencia" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Producto" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Proyecto" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Producto_Copia" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

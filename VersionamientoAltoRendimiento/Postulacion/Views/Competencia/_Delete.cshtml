@@ -1,30 +1,36 @@
-﻿@model AltoRendimiento.Models.Geolocalizacion_Horario
+﻿@model AltoRendimiento.Models.Competencia
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="myModalLabel">¿Esta seguro que desea eliminar este registro?</h4>
 </div>
 
-
 <div class="modal-body">
 
     <dl class="dl-horizontal">
         <dt>
+            Nombre Competencia
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.comNombre)
+        </dd>
+
+        <dt>
             Fecha Inicio
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ghoFechaInicio)
+            @Html.DisplayName(Model.comFechaInicio.ToString("dd-MM-yyyy"))
         </dd>
         <dt>
             Fecha Fin
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ghoFechaFin)
+            @Html.DisplayName(Model.comFechaFin.ToString("dd-MM-yyyy"))
         </dd>
         <dt>
             Horario
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ghoHoraInicio) - @Html.DisplayFor(model => model.ghoHoraFin)
+            @Html.DisplayFor(model => model.comHoraInicio) - @Html.DisplayFor(model => model.comHoraFin)
         </dd>
 
     </dl>
@@ -32,14 +38,13 @@
 
 </div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("idTipoGasto", TempData["idTipoGasto"])
-    @Html.Hidden("idBeneficiarioGastoPersonal", TempData["idBeneficiarioGastoPersonal"])
-    @Html.Hidden("pendientes", TempData["pendientes"])
-    <div class="modal-footer">
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.idCompetencia);
+        
+        <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-sm btn-success" id="btnCreate">Aceptar</button>
     </div>
-}
+    }

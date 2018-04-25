@@ -1,11 +1,13 @@
-﻿@model PagedList.IPagedList<AltoRendimiento.Models.Beneficiario>
+﻿@model IEnumerable<AltoRendimiento.Models.Beneficiario>
 
 
 @{
     ViewBag.Title = "Index";
 }
-@using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
 
 @Html.Action(actionName: "TempMessage", controllerName: "Message")
 
@@ -82,8 +84,50 @@
 
         <div id="divResultado" hidden="hidden" class="alert alert-success" role="alert">...</div>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+
+
+                $("#tblBeneficiarios").DataTable({
+                    "language":
+                      {
+                          "sProcessing": "Procesando...",
+                          "sLengthMenu": "Mostrar _MENU_ registros",
+                          "sZeroRecords": "No se encontraron resultados",
+                          "sEmptyTable": "Ningún dato disponible en esta tabla",
+                          "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                          "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                          "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                          "sInfoPostFix": "",
+                          "sSearch": "Buscar:",
+                          "sUrl": "",
+                          "sInfoThousands": ",",
+                          "sLoadingRecords": "Cargando...",
+                          "oPaginate": {
+                              "sFirst": "Primero",
+                              "sLast": "último",
+                              "sNext": "Siguiente",
+                              "sPrevious": "Anterior"
+                          },
+                          "oAria": {
+                              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                          }
+                      }
+                }).on("draw.dt", function () {
+                    addEventClickDataModal();
+                });
+
+
+
+            });
+        </script>
+
+        <br />
+        <br />
         <div class="table-responsive">
-            <table class="table table-condensed table-bordered  table-hover">
+            <table id="tblBeneficiarios" class="table table-condensed table-bordered  table-hover">
 
                 @* <table class="table table-condensed table-bordered table-striped table-hover" style="table-layout:fixed;word-wrap:break-word">*@
                 <thead>
@@ -93,12 +137,12 @@
                         </th>
                         <th>
                             <!--Pablo Espinoza 17-02-2016-->
-                            @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NombreSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            Nombre
                             <!--Pablo Espinoza 17-02-2016-->
                         </th>
                         <th>
                             <!--Pablo Espinoza 17-02-2016-->
-                            @Html.ActionLink("Ap. Paterno", "Index", new { sortOrder = ViewBag.ApellidoSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            Ap. Paterno
                             <!--Pablo Espinoza 17-02-2016-->
                         </th>
                         <th>
@@ -106,7 +150,7 @@
                         </th>
                         <th>
                             <!--Pablo Espinoza 17-02-2016-->
-                            @Html.ActionLink("Fecha Nacimiento  ", "Index", new { sortOrder = ViewBag.DateSortParm, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM })
+                            Fecha Nacimiento
                             <!--Pablo Espinoza 17-02-2016-->
                         </th>
                         <th>
@@ -163,11 +207,6 @@
                     }
                 </tbody>
             </table>
-
-            Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-             new { page, sortOrder = ViewBag.CurrentSort, searchNombre = ViewBag.SearchNombre, searchApellidoP = ViewBag.SearchApellidoP, searchApellidoM = ViewBag.SearchApellidoM }))
         @*@Html.Raw(Html.Paginator<AltoRendimiento.Models.Beneficiario>())
             <div class="panel-footer">@Model.Count() Registro(s)</div>*@
     </div>

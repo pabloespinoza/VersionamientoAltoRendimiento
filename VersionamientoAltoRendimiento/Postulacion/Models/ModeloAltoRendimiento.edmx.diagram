@@ -201,19 +201,8 @@
         <EntityTypeShape EntityType="AltoRendimiento.Categoria_Deporte" Width="1.5" PointX="22" PointY="27.375" />
         <EntityTypeShape EntityType="AltoRendimiento.CategoriaDeporte_Producto" Width="1.5" PointX="26.5" PointY="33.875" />
         <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_CategoriaDeporte" />
-        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion" Width="1.5" PointX="26.5" PointY="42.375" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Beneficiario_Producto_Cargo" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Tipo_Gasto_Administracion" />
-        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Beneficiario_Gasto_Administracion" />
         <EntityTypeShape EntityType="AltoRendimiento.CategoriaDeporte_Producto_Historial" Width="1.5" PointX="10.375" PointY="12.75" />
-        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Copia" Width="1.5" PointX="24" PointY="54.375" />
-        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Historial" Width="1.5" PointX="28.75" PointY="43" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Historial_Beneficiario_Gasto_Administracion" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Beneficiario_Producto_Cargo_Copia" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Tipo_Gasto_Administracion" />
-        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Copia_Beneficiario_Gasto_Administracion_Copia" />
         <EntityTypeShape EntityType="AltoRendimiento.Producto" Width="1.5" PointX="24.25" PointY="36" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Producto" />
         <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Producto" />
         <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Producto" />
         <AssociationConnector Association="AltoRendimiento.FK_CategoriaDeporteProducto_Producto" />
@@ -228,7 +217,6 @@
         <AssociationConnector Association="AltoRendimiento.FK_Producto_Producto_Nivel" />
         <AssociationConnector Association="AltoRendimiento.FK_Programacion_gasto_producto_Producto" />
         <EntityTypeShape EntityType="AltoRendimiento.Producto_Copia" Width="1.5" PointX="26.5" PointY="26.875" />
-        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_ProductoCopia" />
         <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Personal_Copia_ProductoCopia" />
         <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Producto_Cargo_Copia_ProductoCopia" />
         <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Copia_Producto_Copia" />
@@ -259,6 +247,26 @@
         <AssociationConnector Association="AltoRendimiento.FK_Organizacion_Linea_Linea" />
         <EntityTypeShape EntityType="AltoRendimiento.Concurso" Width="1.5" PointX="1.5" PointY="86" />
         <AssociationConnector Association="AltoRendimiento.FK_Concurso_categoria_Concurso" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion" Width="1.5" PointX="26.5" PointY="42.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Historial" Width="1.5" PointX="28.75" PointY="42.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Historial_Beneficiario_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Beneficiario_Gasto_Administracion" />
+        <EntityTypeShape EntityType="AltoRendimiento.Beneficiario_Gasto_Administracion_Copia" Width="1.5" PointX="31.75" PointY="42" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Beneficiario_Producto_Cargo_Copia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_ProductoCopia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Beneficiario_Gasto_Administracion_Copia_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="AltoRendimiento.FK_Geolocalizacion_Gasto_Administracion_Copia_Beneficiario_Gasto_Administracion_Copia" />
+        <EntityTypeShape EntityType="AltoRendimiento.Competencia" Width="1.5" PointX="31.5" PointY="30.5" />
+        <EntityTypeShape EntityType="AltoRendimiento.Competencia_Historial" Width="1.5" PointX="33.75" PointY="27.875" />
+        <AssociationConnector Association="AltoRendimiento.FK_Competencia_Historial_Competencia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Competencia_Producto" />
+        <AssociationConnector Association="AltoRendimiento.FK_Competencia_Proyecto" />
+        <EntityTypeShape EntityType="AltoRendimiento.Competencia_Copia" Width="1.5" PointX="36.75" PointY="28.75" />
+        <AssociationConnector Association="AltoRendimiento.FK_Competencia_Copia_Competencia" />
+        <AssociationConnector Association="AltoRendimiento.FK_Competencia_Copia_Producto_Copia" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

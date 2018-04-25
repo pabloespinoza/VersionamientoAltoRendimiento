@@ -132,7 +132,7 @@
                         Fecha Fin
                     </th>
                     <th>
-                        Dias
+                        Días
                     </th>
 
                     <th>
@@ -167,7 +167,13 @@
                             if (dia != "")
                             {
                                 var DiaInicio = culture.DateTimeFormat.GetDayName((DayOfWeek)(((int)int.Parse(dia)) % 7));
-                                @Html.DisplayName(" - " + DiaInicio)
+                                if(Dias.FirstOrDefault() == dia)
+                                {
+                                     @Html.DisplayName(DiaInicio)   
+                                }else
+                                {
+                                 @Html.DisplayName(" - " + DiaInicio)   
+                                }
                             }
                         }
                     }

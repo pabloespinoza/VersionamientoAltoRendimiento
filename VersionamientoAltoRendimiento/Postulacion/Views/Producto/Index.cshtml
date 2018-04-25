@@ -59,7 +59,7 @@
                         <th>Tipo de Producto</th>
                         <th>Actividad</th>
                         <th>Nivel</th>
-                        <th>Región/Pais</th>
+                        <th>Región/País</th>
                         <th>Comuna/Ciudad</th>
                         <th>Mes Inicio</th>
                         <th>Mes Fin</th>
@@ -114,10 +114,15 @@
                                      @monthAbbr*@
                                 @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesHasta)
                             </td>
-                            <td width="140">
+                            <td width="140" class="">
 
                                 @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && (item.Proyecto.estadoIngresado == 2 || item.Proyecto.estadoIngresado == 3)) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
                                 {
+                                    if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 1 && item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
+                                    {
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLCompetencias", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' style='width: 13px;' title='Competencias' class='fa fa-trophy fa-lg' ... />&nbsp;"))
+                                    }
+
                                     @Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
 
                                     if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
@@ -142,11 +147,17 @@
                                             foreach (var sc in ViewBag.Solicitud)
                                             {
                                                 if (sc.Producto_Copia.idProducto == item.idProducto && sc.scaPendiente == null)
-                                                {@Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
+                                                {
+                                                    if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 1 && item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
+                                                    {
+                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLCompetencias", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' style='width: 13px;' title='Competencias' src=\"../Images/loc-marker.png\" ... />"))
+                                                    }
+
+                                                    @Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
 
                                                     if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
                                                     {
-                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gasto Administracion' src=\"../Images/Gasto_Administrativo.png\" ... />"))
+                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gastos en Bienes y Servicios' src=\"../Images/Gasto_Administrativo.png\" ... />"))
                                                     }
                                                     @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
                                                     //@Html.Raw(@Html.ActionLink("[replacetext]", "verProductoCopia", "ProductoCopia", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ver Producto Original sin cambio' src=\"../Images/Postular.png\" ... />"))

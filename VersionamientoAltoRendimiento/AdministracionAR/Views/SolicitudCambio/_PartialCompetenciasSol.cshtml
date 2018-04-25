@@ -1,0 +1,39 @@
+﻿@model AltoRendimiento.Administracion.Models.ResumenSolicitudCambioModel
+
+@{
+    int correlativo = 0;
+}
+
+@foreach (var competencia in Model.productoSolicitud.listaCompetencias)
+{
+    <div class="panel-group" id="accordeonDetalleCompetenciaSol@((competencia.idCompetencia) + "_" + (correlativo))">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <a data-toggle="collapse" data-parent="#accordeonDetalleCompetenciaSol@((competencia.idCompetencia) + "_" + (correlativo))" href="#collapseCompetenciaDetalleSol@((competencia.idCompetencia) + "_" + (correlativo))" @(competencia.esNuevo == true ? "class= alert-danger" : string.Empty)>
+                    Competencia :@Html.DisplayFor(g => competencia.NombreCompetencia)
+                </a>
+            </div>
+            <div id="collapseCompetenciaDetalleSol@((competencia.idCompetencia) + "_" + (correlativo))" class="panel-collapse collapse">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => competencia.FechaInicio) :
+                        @Html.DisplayFor(g => competencia.FechaInicio)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => competencia.FechaFin) :
+                        @Html.DisplayFor(g => competencia.FechaFin)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => competencia.Direccion) :
+                        @Html.DisplayFor(g => competencia.Direccion)
+                    </li>
+                    <li class="list-group-item">
+                        @Html.DisplayNameFor(g => competencia.Descripcion) :
+                        @Html.DisplayFor(g => competencia.Descripcion)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+                correlativo++;
+}

@@ -147,6 +147,9 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<CategoriaDeporte_Producto_Copia> CategoriaDeporte_Producto_Copia { get; set; }
         public DbSet<Concurso> Concurso { get; set; }
+        public DbSet<Competencia> Competencia { get; set; }
+        public DbSet<Competencia_Copia> Competencia_Copia { get; set; }
+        public DbSet<Competencia_Historial> Competencia_Historial { get; set; }
     
         public virtual ObjectResult<SP_LISTAR_PERMISOS_Result> SP_LISTAR_PERMISOS(Nullable<decimal> iD_ROL)
         {

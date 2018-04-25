@@ -1,0 +1,185 @@
+﻿@using AltoRendimiento.App_Code
+@model IEnumerable<AltoRendimiento.Models.Competencia>
+
+@using System.Threading;
+@using System.Globalization;
+@{
+    ViewBag.Title = "Competencia";
+    var culture = new System.Globalization.CultureInfo("es-CL");
+}
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE6d9eFFJXfQVwVjQ_dA8rqE-IpNOa2Rc"
+        type="text/javascript"></script>
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@*TODO:Ver como levantar el popup*@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "AntecedenteGeneralProyecto")</li>
+            <li>@Html.ActionLink("Proyecto " + (string)ViewBag.Producto.Proyecto.proNombreProyecto, "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Producto.Proyecto.idProyecto }, null) </li>
+
+            <li><b>Competencias</b></li>
+        </ol>
+    </div>
+</div>
+
+<h4>Nombre Producto: @ViewBag.Producto.prdNombre</h4>
+
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        @*Botones de la pagina*@
+        <div class="text-right">
+            @Html.ActionLink("Volver", "URLProducto", "AntecedenteGeneralProyecto", new { id = ViewBag.Producto.Proyecto.idProyecto }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
+
+            @if ((ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && ViewBag.Producto.Proyecto.estadoIngresado == 2) || @ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+            {
+                @Html.ActionLink("Nueva Competencia", "Create", "Competencia", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-rigth", @style = "color:White" })
+            }
+            else if (@ViewBag.Solicitud != null)
+            {
+                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                {
+                    @Html.ActionLink("Nueva Competencia", "Create", "Competencia", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-rigth", @style = "color:White" })
+                }
+            }
+            else
+            {
+
+                <br />
+            }
+        </div>
+        <br />
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+
+
+                $("#dtCompetencia").DataTable({
+                    "language":
+                      {
+                          "sProcessing": "Procesando...",
+                          "sLengthMenu": "Mostrar _MENU_ registros",
+                          "sZeroRecords": "No se encontraron resultados",
+                          "sEmptyTable": "Ningún dato disponible en esta tabla",
+                          "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                          "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                          "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                          "sInfoPostFix": "",
+                          "sSearch": "Buscar:",
+                          "sUrl": "",
+                          "sInfoThousands": ",",
+                          "sLoadingRecords": "Cargando...",
+                          "oPaginate": {
+                              "sFirst": "Primero",
+                              "sLast": "último",
+                              "sNext": "Siguiente",
+                              "sPrevious": "Anterior"
+                          },
+                          "oAria": {
+                              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                          }
+                      }
+                }).on("draw.dt", function () {
+                    addEventClickDataModal();
+                });
+
+
+
+            });
+        </script>
+
+
+
+
+        @*Tabla de Competencia*@
+        <table id="dtCompetencia" class="table table-condensed table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        N°
+                    </th>
+                    <th>
+                        Competencia
+                    </th>
+                    <th>
+                        Inicio
+                    </th>
+                    <th>
+                        Fin
+                    </th>
+                    <th>
+                        Lugar
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td >
+                            @Html.DisplayFor(modelItem => item.comSecuencia)
+                        </td>
+                        <td >
+                            @Html.DisplayFor(modelItem => item.comNombre)
+                        </td>
+                        <td class="col-md-1">
+                            @Html.DisplayName(item.comFechaInicio.ToShortDateString())
+                            @Html.DisplayName(item.comHoraInicio.ToString(@"hh\:mm\:ss"))
+                        </td>
+                        <td class="col-md-1">
+                            @Html.DisplayName(item.comFechaFin.ToShortDateString())
+                            @Html.DisplayName(item.comHoraFin.ToString(@"hh\:mm\:ss"))
+                        </td>
+                        <td >
+                            @Html.DisplayFor(modelItem => item.comDireccion)
+                        </td>
+                        <td >
+                            @Html.DisplayFor(modelItem => item.comDescripcion)
+                        </td>
+                        <td>
+                            @if ((ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && item.Producto.Proyecto.estadoIngresado == 2) || @ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                            {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idCompetencia }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idCompetencia }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
+                            }@if (@ViewBag.Solicitud != null)
+                            {
+                                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idCompetencia }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="panel-footer">@Model.Count() Registro(s)</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker-es.js")
+}
