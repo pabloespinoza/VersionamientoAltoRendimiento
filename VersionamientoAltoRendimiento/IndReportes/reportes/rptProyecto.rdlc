@@ -3616,6 +3616,82 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
+                    <Tablix Name="Tablix8">
+                      <TablixBody>
+                        <TablixColumns>
+                          <TablixColumn>
+                            <Width>5.75806cm</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>5.75806cm</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>5.75806cm</Width>
+                          </TablixColumn>
+                        </TablixColumns>
+                        <TablixRows>
+                          <TablixRow>
+                            <Height>0.6cm</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Subreport Name="rptProyectoProductoCompetencia">
+                                    <ReportName>rptProyectoProductoCompetencia</ReportName>
+                                    <Parameters>
+                                      <Parameter Name="idProducto">
+                                        <Value>=Fields!idProducto.Value</Value>
+                                      </Parameter>
+                                    </Parameters>
+                                    <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Subreport>
+                                  <ColSpan>3</ColSpan>
+                                  <rd:Selected>true</rd:Selected>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell />
+                              <TablixCell />
+                            </TablixCells>
+                          </TablixRow>
+                        </TablixRows>
+                      </TablixBody>
+                      <TablixColumnHierarchy>
+                        <TablixMembers>
+                          <TablixMember />
+                          <TablixMember />
+                          <TablixMember />
+                        </TablixMembers>
+                      </TablixColumnHierarchy>
+                      <TablixRowHierarchy>
+                        <TablixMembers>
+                          <TablixMember />
+                        </TablixMembers>
+                      </TablixRowHierarchy>
+                      <ZIndex>2</ZIndex>
+                      <Visibility>
+                        <Hidden>=IIf(Fields!prdNombre.Value &lt;&gt; "", False, True)</Hidden>
+                      </Visibility>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Tablix>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
                     <Tablix Name="Tablix4">
                       <TablixBody>
                         <TablixColumns>
@@ -3791,6 +3867,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
@@ -3801,7 +3878,7 @@
         </PageBreak>
         <Top>23.4418cm</Top>
         <Left>0.49493cm</Left>
-        <Height>7.8cm</Height>
+        <Height>8.4cm</Height>
         <Width>17.27419cm</Width>
         <ZIndex>6</ZIndex>
         <Visibility>
@@ -3814,7 +3891,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>312.418mm</Height>
+    <Height>325.64717mm</Height>
     <Style />
   </Body>
   <Width>178.61413mm</Width>
