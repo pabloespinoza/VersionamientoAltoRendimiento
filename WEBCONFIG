@@ -1,12 +1,12 @@
  <appSettings>
-    <add key="LogFile" value="D:\www\AltoRendimiento\indAR" />
+    <add key="LogFile" value="C:\Log\indAR" />
     <add key="webpages:Version" value="3.0.0.0" />
     <add key="webpages:Enabled" value="false" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
-    <add key="ExpiracionContraseña" value="30" />
+    <add key="ExpiracionContraseña" value="2880" />
     <!--Variables de Correo IND-->
-    <add key="ServidorSmtpGps" value="ind.zboxapp.com" />
+    <add key="ServidorSmtpGps" value="ind.zbox.cl" />
     <add key="PuertoSmtpGps" value="587" />
     <add key="nombreDespliegaCorreo" value="IND" />
     <add key="correoFromGps" value="send_mail@ind.cl" />
@@ -18,51 +18,52 @@
     <add key="correoFromGps" value="felipe.pena@kibernum.com" />
     <add key="correoPassword" value="kibernum2015 " />-->
     <add key="UrlSitio" value="http://www.proyectosdeportivos.cl/AltoRendimiento" />
-    <add key="UrlWebService" value="http://www.proyectosdeportivos.cl/AltoRendimiento/WS/Api/OrganizacionRNO" />
-    <add key="UrlWebServiceRecinto" value="http://www.proyectosdeportivos.cl/AltoRendimiento/WS/Api/Recintos" />
+    <add key="UrlWebService" value="http://10.15.1.51/AltoRendimientoServices/Api/OrganizacionRNO" />
+    <add key="UrlWebServiceRecinto" value="http://10.15.1.51/AltoRendimientoServices/Api/Recintos" />
     <add key="UrlWebServiceRendicion" value="http://www.proyectosdeportivos.cl/WebServices/Rendicion/ObtenerCantidadPendientesPorRut" />
-    <add key="UrlReportingServices" value="http://www.proyectosdeportivos.cl/AltoRendimiento" />
+    <add key="UrlReportingServices" value="http://10.15.1.51" />
     <!--Variables de Correo
             Smtp = 1,
             Gmail = 2       -->
     <add key="TipoCorreo" value="2" />
-    <add key="reCaptchaPublicKey" value="6LcyQhUTAAAAAGHBtnEQvoKXQ3HhA6snjrUhdS4r" />
-    <add key="reCaptchaPrivateKey" value="6LcyQhUTAAAAAPvpGXy9015nH1-_e7Su04DSbfw2" />
-
-
-
+    <!--Desa-->
+    <add key="reCaptchaPublicKey" value="6LcA7igTAAAAAE0JeKAhMMRiXInY6E7vBElPnuNo" />
+    <add key="reCaptchaPrivateKey" value="6LcA7igTAAAAAO7eN-PbMTDN_onwf6SZIh5sBRfk" />
+    <!--Prod-->
+    <!--<add key="reCaptchaPublicKey" value="6LcTog8TAAAAANWIrnYvdFPI2noTeNlC5sc-5I8I" />
+    <add key="reCaptchaPrivateKey" value="6LcTog8TAAAAAPnQFxKtcKek2UW_NKl8_kxsYL80" />-->
     <add key="idCiudadComodin" value="2" />
     <add key="idComunaComodin" value="1" />
     <add key="idTipoGastoPersonal" value="1" />
-    <add key="idCategoria" value="1" />
     <add key="idTipoGastoAdministracion" value="2" />
-
+    <add key="idCategoria" value="1" />
     <!-- CONFIGURACIONES WS REGISTRO CIVIL -->
     <add key="wsCommonName" value="Cesar Augusto Villegas Correa" />
     <add key="wsUserName" value="IND" />
     <add key="wsPassword" value="k9erg2els" />
     <add key="wsUrl" value="https://www.pisee.cl/SRCeIInformacionPersonalINDProxy" />
     <add key="wsSoapAction" value="https://www.pisee.cl/SRCeIInformacionPersonalINDProxy?wsdl" />
-
     <!-- Sobre -->
-    <add key="wsCodigoInstitucion" value="200301"/>
-    <add key="wsCodigoTramite" value="0002"/>
-    <add key="wsProveedor" value="SRCeI"/>
-    <add key="wsServicio" value="INFORMACION PERSONAL"/>
-    <add key="wsTramite" value="ANTECEDENTES DE LOS BENEFICIARIOS"/>
-    <!-- Validador mes extemporaneo setear el value en 1 para que permita postular proyectos desde enero en adelante, value = 0 para que solo tome en el mes en curso hasta diciembre-->
-    <add key="InicioMesAnio" value="0"/>
-    
+    <add key="wsCodigoInstitucion" value="200301" />
+    <add key="wsCodigoTramite" value="0002" />
+    <add key="wsProveedor" value="SRCeI" />
+    <add key="wsServicio" value="INFORMACION PERSONAL" />
+    <add key="wsTramite" value="ANTECEDENTES DE LOS BENEFICIARIOS" />
     <!-- Datos Tabla Parametros -->
     <add key="SCxProducto" value="4" />
     <add key="SCPorcentaje" value="8" />
-    <add key="idCargoDeportista" value="47"/>
-
-    <!--Apoyo especial a deportistas-->
-    <add key="Apoyo1" value="Apoyo Especial a Deportistas"/>
-    <add key="Apoyo2" value="ADO-Chile Apoyo Deportistas"/>
-    <add key="Apoyo3" value="Apoyo Especial a deportistas paralímpicos"/>
+    <add key="idCargoDeportista" value="47" />
+    <!--1=todos los meses; 0=mes actual hacia adelante-->
+    <add key="InicioMesAnio" value="0" />
+    <!--Hoy > dia/mes/año = mes actual hacia adelante-->
+    <add key="diaMesInicio" value="16" />
+    <add key="MesMesInicio" value="03" />
+    <add key="AnioMesInicio" value="2018" />
+    <!--Apoyo especial a deportistas
+    -->
+    <add key="Apoyo1" value="Apoyo Especial a Deportistas" />
+    <add key="Apoyo2" value="ADO-Chile Apoyo Deportistas" />
+    <add key="Apoyo3" value="Apoyo Especial a deportistas paralímpicos" />
+    
+    
   </appSettings>
-
-
-
