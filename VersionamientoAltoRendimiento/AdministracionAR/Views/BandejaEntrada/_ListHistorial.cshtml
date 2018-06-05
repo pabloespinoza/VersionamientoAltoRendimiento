@@ -1,58 +1,129 @@
 ﻿@model AltoRendimiento.Administracion.Models.ProyectoVersionModel
 
-<div id="area_tabla">
-    <table class="table table-condensed table-bordered table-hover">
-        <tr>
-            <th>
-                Versión de Proyecto
-            </th>
-            <th>
-                Fecha de Creación
-            </th>
-            <th>
-                Usuario de Carga
-            </th>
-            <th>
-                Documento
-            </th>
-        </tr>
+@Styles.Render("~/Content/TimeLine.css")
 
-        @if(Model.LisProHistorial.Count() > 0)
-        { 
-        foreach (var row in Model.LisProHistorial)
-        {
-            <tr>
-                <td>
-                    @row.prvNumeroVersion
-                </td>
-                <td>
-                    @row.prvFechaCreacion
-                </td>
-                <td>
-                    @foreach (var usuario in Model.UsuarioVersion)
-                    {
-                        if (@row.prvUsuarioCreacion == usuario.idUsuario)
-                        {
-                            @usuario.usuNombre
-                        }
-                    }
+<div class="container">
 
-                </td>
-                <td>
-                    @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = row.idProyecto, Idproyectoversion = row.idProyectoVersion }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Descargar Documento" }).ToHtmlString().Replace("[replacetext]", ""))
-                </td>
+    @if (Model.LisProHistorial.Count() > 0)
+    {
+        int cant = Model.LisProHistorial.Count();
+        <div class="page-header">
+            <h3 id="timeline">Historial de versiones proyecto</h3>
+        </div>
+        <ul class="timeline">
+            @foreach (var item in Model.LisProHistorial)
+            {
+                if (@item.posicion == 0)
+                {
+                    <li>
+                        <div class="timeline-badge"><img data-toggle='tooltip' title='Historial' src='~/Images/check-box.png' /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title"><b>Producto afectado: </b>@item.productoSecuenciaNombre</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>
+                                    <b>Motivo: </b>
+                                    <span id="motivoCorto-@cant"></span>
+                                    <span id="motivo-@cant">@item.motivoOrganizacion</span>
+                                    <a id="motivoVerMas-@cant" href="#" mas="0" onclick="verMas('motivo', @cant); return false;"> Ver Más...</a>
+                                </p>
+                                <p><b>Responsable: </b> @item.UsuarioVersion</p>
+                                <p><b>Fecha: </b> @item.fechaCreacionProyecto</p>
+                                <p>
+                                    <b>Observación Analista: </b>
+                                    <span id="observacionCorto-@cant"></span>
+                                    <span id="observacion-@cant">@item.observacionAnalista</span>
+                                    <a id="observacionVerMas-@cant" href="#" mas="0" onclick="verMas('observacion', @cant); return false;"> Ver Más...</a>
+                                </p>
+                                <p>@Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = item.idProyecto, Idproyectoversion = item.idProyectoVersion }, new { @class = "button btn-info btn-sm", @data_toggle = "tooltip", @title = "Ver Proyecto" }).ToHtmlString().Replace("[replacetext]", "Ver proyecto"))</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge"><img data-toggle='tooltip' title='Historial' src='~/Images/check-box.png' /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title"><b>Producto afectado: </b>@item.productoSecuenciaNombre</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>
+                                    <b>Motivo: </b>
+                                    <span id="motivoCorto-@cant"></span>
+                                    <span id="motivo-@cant">@item.motivoOrganizacion</span>
+                                    <a id="motivoVerMas-@cant" href="#" mas="0" onclick="verMas('motivo', @cant); return false;"> Ver Más...</a>
+                                </p>
+                                <p><b>Responsable: </b> @item.UsuarioVersion</p>
+                                <p><b>Fecha: </b> @item.fechaCreacionProyecto</p>
+                                <p>
+                                    <b>Observación Analista: </b>
+                                    <span id="observacionCorto-@cant"></span>
+                                    <span id="observacion-@cant">@item.observacionAnalista</span>
+                                    <a id="observacionVerMas-@cant" href="#" mas="0" onclick="verMas('observacion', @cant); return false;"> Ver Más...</a>
+                                </p>
+                                <p>@Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = item.idProyecto, Idproyectoversion = item.idProyectoVersion }, new { @class = "button btn-info btn-sm", @data_toggle = "tooltip", @title = "Ver Proyecto" }).ToHtmlString().Replace("[replacetext]", "Ver proyecto"))</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+                cant--;
+            }
+        </ul>
+    }
+    else
+    {
 
+    }
+</div>
+<script type="text/javascript">
 
-            </tr>
+    var largoMaximo = 59;
+    var cantidadVersiones = '@Model.LisProHistorial.Count()';
+    $(document).ready(function () {
+        for (var i = parseInt(cantidadVersiones); i > 0; i--) {
+            cortarTexto($("#motivoCorto-" + i), $("#motivo-" + i), $("#motivoVerMas-" + i));
+            cortarTexto($("#observacionCorto-" + i), $("#observacion-" + i), $("#observacionVerMas-" + i));
         }
+
+    });
+
+    function cortarTexto(objTextoCorto, objTexto, objVerMas)
+    {
+        if(objTexto.text().length > largoMaximo)
+        {
+            objTextoCorto.text(objTexto.text().substring(0, largoMaximo));
+            objTextoCorto.css("display", "block");
+            objTexto.css("display", "none");
+            objVerMas.css("display", "block");
         }else
         {
-            <tr>
-                <td colspan="4">
-                    No se encontraron versiones
-                </td>
-            </tr>
+            objTextoCorto.css("display", "none");
+            objTexto.css("display", "block");
+            objVerMas.css("display", "none");
         }
-    </table>
-</div>
+    }
 
+    function verMas(tipo, puntero){
+        var verMas = document.getElementById(tipo + "VerMas-" + puntero);
+        
+        if(parseInt(verMas.getAttribute("mas")) == 0)
+        {
+            $("#" + tipo + "Corto-" + puntero).css("display", "none");
+            $("#" + tipo + "-" + puntero).css("display", "block");
+            verMas.setAttribute("mas", "1");
+            verMas.innerHTML = "Ver Menos...";
+        }else
+        {
+            $("#" + tipo + "Corto-" + puntero).css("display", "block");
+            $("#" + tipo + "-" + puntero).css("display", "none");
+            verMas.setAttribute("mas", "0");
+            verMas.innerHTML = "Ver Más...";
+        }
+
+
+    }
+
+</script>

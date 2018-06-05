@@ -3,7 +3,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#btnGuardarEstado').click(function () {
-
             $('#form-GuardarSolicitudCambio').validate({
                 rules: {
                     ObservacionCambio: {
@@ -23,6 +22,8 @@
                 },
                 errorClass: 'text-danger',
                 submitHandler: function () {
+
+                    $("#btnGuardarEstado").prop("disabled", true);
                     var url = '@Url.Action("GuardarSolicitud")';
                     var model = $('form').serialize();
                     console.log(model);

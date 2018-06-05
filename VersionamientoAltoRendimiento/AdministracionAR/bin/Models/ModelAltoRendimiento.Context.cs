@@ -46,9 +46,14 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Categoria_Deporte> Categoria_Deporte { get; set; }
         public DbSet<CategoriaDeporte_Producto> CategoriaDeporte_Producto { get; set; }
+        public DbSet<CategoriaDeporte_Producto_Copia> CategoriaDeporte_Producto_Copia { get; set; }
         public DbSet<CategoriaDeporte_Producto_Historial> CategoriaDeporte_Producto_Historial { get; set; }
         public DbSet<Ciudad> Ciudad { get; set; }
+        public DbSet<Competencia> Competencia { get; set; }
+        public DbSet<Competencia_Copia> Competencia_Copia { get; set; }
+        public DbSet<Competencia_Historial> Competencia_Historial { get; set; }
         public DbSet<Comuna> Comuna { get; set; }
+        public DbSet<Concurso> Concurso { get; set; }
         public DbSet<Concurso_categoria> Concurso_categoria { get; set; }
         public DbSet<Correo_Distribucion> Correo_Distribucion { get; set; }
         public DbSet<Cuenta> Cuenta { get; set; }
@@ -93,6 +98,7 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Notificacion_Destinatario> Notificacion_Destinatario { get; set; }
         public DbSet<Notificacion_Enviada> Notificacion_Enviada { get; set; }
         public DbSet<Notificacion_Enviada_Usuario> Notificacion_Enviada_Usuario { get; set; }
+        public DbSet<Objeto> Objeto { get; set; }
         public DbSet<Observaciones_Proyecto> Observaciones_Proyecto { get; set; }
         public DbSet<Organizacion> Organizacion { get; set; }
         public DbSet<Organizacion_Linea> Organizacion_Linea { get; set; }
@@ -113,6 +119,7 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Programacion_Gasto_Producto> Programacion_Gasto_Producto { get; set; }
         public DbSet<Programacion_Gasto_Producto_Historial> Programacion_Gasto_Producto_Historial { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
+        public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Proyecto_Versiones> Proyecto_Versiones { get; set; }
         public DbSet<Recinto> Recinto { get; set; }
         public DbSet<Recinto_Organizacion> Recinto_Organizacion { get; set; }
@@ -143,13 +150,6 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Dispacher> Dispacher { get; set; }
         public DbSet<EstadoWebServiceRegistroCivil> EstadoWebServiceRegistroCivil { get; set; }
         public DbSet<LogInicializacionFolio> LogInicializacionFolio { get; set; }
-        public DbSet<Objeto> Objeto { get; set; }
-        public DbSet<Proyecto> Proyecto { get; set; }
-        public DbSet<CategoriaDeporte_Producto_Copia> CategoriaDeporte_Producto_Copia { get; set; }
-        public DbSet<Concurso> Concurso { get; set; }
-        public DbSet<Competencia> Competencia { get; set; }
-        public DbSet<Competencia_Copia> Competencia_Copia { get; set; }
-        public DbSet<Competencia_Historial> Competencia_Historial { get; set; }
     
         public virtual ObjectResult<SP_LISTAR_PERMISOS_Result> SP_LISTAR_PERMISOS(Nullable<decimal> iD_ROL)
         {

@@ -4,123 +4,130 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b5651bb7630e4bb9b03dae4b4e52c6e2" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="IND0012Model.Alerta" Width="1.5" PointX="11.25" PointY="76.875" />
-        <EntityTypeShape EntityType="IND0012Model.Alerta_Historial" Width="1.5" PointX="13.5" PointY="81.875" />
-        <EntityTypeShape EntityType="IND0012Model.Archivo_Solicitud_Cambio" Width="1.5" PointX="15" PointY="95.25" />
-        <EntityTypeShape EntityType="IND0012Model.Auditoria" Width="1.5" PointX="5.75" PointY="5.75" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario" Width="1.5" PointX="8.25" PointY="72.75" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion" Width="1.5" PointX="10.5" PointY="52.375" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion_Copia" Width="1.5" PointX="18" PointY="100.875" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion_Historial" Width="1.5" PointX="12.75" PointY="43" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal" Width="1.5" PointX="15.75" PointY="54.5" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal_Copia" Width="1.5" PointX="21" PointY="101" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal_Historial" Width="1.5" PointX="18" PointY="58.75" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo" Width="1.5" PointX="10.5" PointY="58.875" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo_Copia" Width="1.5" PointX="15.75" PointY="101.375" />
-        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo_Historial" Width="1.5" PointX="12.75" PointY="72.25" />
-        <EntityTypeShape EntityType="IND0012Model.Cargo" Width="1.5" PointX="0.75" PointY="49.375" />
-        <EntityTypeShape EntityType="IND0012Model.Cargo_Producto" Width="1.5" PointX="3" PointY="49.25" />
-        <EntityTypeShape EntityType="IND0012Model.Categoria" Width="1.5" PointX="1.5" PointY="77.375" />
-        <EntityTypeShape EntityType="IND0012Model.Categoria_Deporte" Width="1.5" PointX="11.25" PointY="33.5" />
-        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto" Width="1.5" PointX="13.5" PointY="53.375" />
-        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Historial" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IND0012Model.Ciudad" Width="1.5" PointX="6" PointY="45" />
-        <EntityTypeShape EntityType="IND0012Model.Comuna" Width="1.5" PointX="6" PointY="32.875" />
-        <EntityTypeShape EntityType="IND0012Model.Concurso_categoria" Width="1.5" PointX="1.5" PointY="73.25" />
-        <EntityTypeShape EntityType="IND0012Model.Correo_Distribucion" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="IND0012Model.Cuenta" Width="1.5" PointX="1.5" PointY="110.5" />
-        <EntityTypeShape EntityType="IND0012Model.Detalle_Programacion_Gasto" Width="1.5" PointX="12.75" PointY="67.75" />
-        <EntityTypeShape EntityType="IND0012Model.Detalle_Programacion_Gasto_Historial" Width="1.5" PointX="15" PointY="67.75" />
-        <EntityTypeShape EntityType="IND0012Model.Disciplina" Width="1.5" PointX="6" PointY="72.625" />
-        <EntityTypeShape EntityType="IND0012Model.Disciplina_Organizacion" Width="1.5" PointX="8.25" PointY="87.5" />
-        <EntityTypeShape EntityType="IND0012Model.DistribucionConverge" Width="1.5" PointX="6" PointY="68.375" />
-        <EntityTypeShape EntityType="IND0012Model.Documento_Beneficiario" Width="1.5" PointX="13.5" PointY="76.875" />
-        <EntityTypeShape EntityType="IND0012Model.Documentos_Proyecto" Width="1.5" PointX="14.25" PointY="32.625" />
-        <EntityTypeShape EntityType="IND0012Model.Estado_Proyecto" Width="1.5" PointX="1.5" PointY="39.5" />
-        <EntityTypeShape EntityType="IND0012Model.Evaluacion_Proyecto" Width="1.5" PointX="17.25" PointY="34.125" />
-        <EntityTypeShape EntityType="IND0012Model.Excepcion_Solicitud_Cambio" Width="1.5" PointX="10.5" PointY="48" />
-        <EntityTypeShape EntityType="IND0012Model.Excepcion_Tiempo_Ejecucion" Width="1.5" PointX="16.5" PointY="49.875" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion" Width="1.5" PointX="13.5" PointY="47.625" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Copia" Width="1.5" PointX="12.75" PointY="101.125" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion" Width="1.5" PointX="18.75" PointY="51" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion_Copia" Width="1.5" PointX="23.25" PointY="101.75" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion_Historial" Width="1.5" PointX="7.75" PointY="8.75" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal" Width="1.5" PointX="21" PointY="52" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal_Copia" Width="1.5" PointX="26.25" PointY="101.75" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal_Historial" Width="1.5" PointX="23.25" PointY="52.125" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Historial" Width="1.5" PointX="15.75" PointY="60.875" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario" Width="1.5" PointX="15.75" PointY="44.625" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario_Copia" Width="1.5" PointX="15" PointY="106" />
-        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario_Historial" Width="1.5" PointX="18" PointY="44.875" />
-        <EntityTypeShape EntityType="IND0012Model.HDA_PROYECTO" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Asignacion_Linea" Width="1.5" PointX="3" PointY="68.875" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Cuenta" Width="1.5" PointX="3.75" PointY="110.625" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Evaluacion_Proyecto" Width="1.5" PointX="19.5" PointY="34.25" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Programa" Width="1.5" PointX="3.75" PointY="92.25" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Proyecto" Width="1.5" PointX="8.25" PointY="39.125" />
-        <EntityTypeShape EntityType="IND0012Model.Historial_Workflow" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="IND0012Model.Linea" Width="1.5" PointX="1.5" PointY="86.625" />
-        <EntityTypeShape EntityType="IND0012Model.Linea_Clasificacion" Width="1.5" PointX="1.5" PointY="96.375" />
-        <EntityTypeShape EntityType="IND0012Model.Linea_Cuenta" Width="1.5" PointX="3.75" PointY="87.125" />
-        <EntityTypeShape EntityType="IND0012Model.LogError" Width="1.5" PointX="2.75" PointY="9.75" />
-        <EntityTypeShape EntityType="IND0012Model.Montos_Organizacion_Linea" Width="1.5" PointX="3" PointY="65.25" />
-        <EntityTypeShape EntityType="IND0012Model.Nacionalidad" Width="1.5" PointX="6" PointY="76.25" />
-        <EntityTypeShape EntityType="IND0012Model.Nivel" Width="1.5" PointX="3.75" PointY="61.375" />
-        <EntityTypeShape EntityType="IND0012Model.Notificacion" Width="1.5" PointX="9" PointY="29.875" />
-        <EntityTypeShape EntityType="IND0012Model.Notificacion_Destinatario" Width="1.5" PointX="11.25" PointY="29.375" />
-        <EntityTypeShape EntityType="IND0012Model.Notificacion_Enviada" Width="1.5" PointX="17.25" PointY="29.375" />
-        <EntityTypeShape EntityType="IND0012Model.Notificacion_Enviada_Usuario" Width="1.5" PointX="20.5" PointY="46" />
-        <EntityTypeShape EntityType="IND0012Model.Observaciones_Proyecto" Width="1.5" PointX="16.25" PointY="39" />
-        <EntityTypeShape EntityType="IND0012Model.Organizacion" Width="1.5" PointX="1.5" PointY="99.875" />
-        <EntityTypeShape EntityType="IND0012Model.Organizacion_Linea" Width="1.5" PointX="0.75" PointY="65.625" />
-        <EntityTypeShape EntityType="IND0012Model.Organizacion_Linea_Tipo_Producto" Width="1.5" PointX="3" PointY="53.25" />
-        <EntityTypeShape EntityType="IND0012Model.Pais" Width="1.5" PointX="3.75" PointY="45" />
-        <EntityTypeShape EntityType="IND0012Model.Pais_Region" Width="1.5" PointX="15" PointY="29" />
-        <EntityTypeShape EntityType="IND0012Model.Parametro" Width="1.5" PointX="4.75" PointY="9.75" />
-        <EntityTypeShape EntityType="IND0012Model.Perfil_IND" Width="1.5" PointX="11.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IND0012Model.Permiso" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="IND0012Model.Plan_Plurianual" Width="1.5" PointX="3.75" PointY="101" />
-        <EntityTypeShape EntityType="IND0012Model.Plantilla_Email" Width="1.5" PointX="0.75" PointY="6" />
-        <EntityTypeShape EntityType="IND0012Model.Producto" Width="1.5" PointX="8.25" PointY="51.125" />
-        <EntityTypeShape EntityType="IND0012Model.Producto_Copia" Width="1.5" PointX="10.5" PointY="100.5" />
-        <EntityTypeShape EntityType="IND0012Model.Producto_Historial" Width="1.5" PointX="10.5" PointY="95.375" />
-        <EntityTypeShape EntityType="IND0012Model.Producto_Nivel" Width="1.5" PointX="6" PointY="53.25" />
-        <EntityTypeShape EntityType="IND0012Model.Producto_Tipo_Gasto_administracion" Width="1.5" PointX="3" PointY="57.375" />
-        <EntityTypeShape EntityType="IND0012Model.Programa" Width="1.5" PointX="1.5" PointY="92.125" />
-        <EntityTypeShape EntityType="IND0012Model.Programacion_Gasto_Producto" Width="1.5" PointX="10.5" PointY="66" />
-        <EntityTypeShape EntityType="IND0012Model.Programacion_Gasto_Producto_Historial" Width="1.5" PointX="12.75" PointY="64.25" />
-        <EntityTypeShape EntityType="IND0012Model.Provincia" Width="1.5" PointX="3.75" PointY="32.875" />
-        <EntityTypeShape EntityType="IND0012Model.Proyecto_Versiones" Width="1.5" PointX="8.25" PointY="47.25" />
-        <EntityTypeShape EntityType="IND0012Model.Recinto" Width="1.5" PointX="11.25" PointY="37.75" />
-        <EntityTypeShape EntityType="IND0012Model.Recinto_Organizacion" Width="1.5" PointX="15.5" PointY="72.125" />
-        <EntityTypeShape EntityType="IND0012Model.Region" Width="1.5" PointX="1.5" PointY="32.875" />
-        <EntityTypeShape EntityType="IND0012Model.Reporting_Services" Width="1.5" PointX="6.75" PointY="28.375" />
-        <EntityTypeShape EntityType="IND0012Model.Resolucion" Width="1.5" PointX="8.25" PointY="35.25" />
-        <EntityTypeShape EntityType="IND0012Model.Resolucion_Proyecto" Width="1.5" PointX="19.5" PointY="30" />
-        <EntityTypeShape EntityType="IND0012Model.Rol" Width="1.5" PointX="6" PointY="61.5" />
-        <EntityTypeShape EntityType="IND0012Model.Solicitud_Cambio" Width="1.5" PointX="12.75" PointY="94.5" />
-        <EntityTypeShape EntityType="IND0012Model.sysdiagrams" Width="1.5" PointX="11.75" PointY="4.75" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Anulacion" Width="1.5" PointX="11.75" PointY="7.75" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Archivo_Solicitud_Cambio" Width="1.5" PointX="12.75" PointY="90.875" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Documento_Beneficiario" Width="1.5" PointX="11.25" PointY="82.5" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Documento_Proyecto" Width="1.5" PointX="12" PointY="25.375" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Gasto_Administracion" Width="1.5" PointX="8.25" PointY="67.25" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Gasto_Personal" Width="1.5" PointX="13.5" PointY="38.25" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Notificacion" Width="1.5" PointX="3" PointY="6" />
+      <Diagram DiagramId="b5651bb7630e4bb9b03dae4b4e52c6e2" Name="Diagram1" ZoomLevel="28">
+        <EntityTypeShape EntityType="IND0012Model.Alerta" Width="1.5" PointX="14.25" PointY="92.5" />
+        <EntityTypeShape EntityType="IND0012Model.Alerta_Historial" Width="1.5" PointX="16.5" PointY="92.5" />
+        <EntityTypeShape EntityType="IND0012Model.Archivo_Solicitud_Cambio" Width="1.5" PointX="18" PointY="100.5" />
+        <EntityTypeShape EntityType="IND0012Model.Auditoria" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario" Width="1.5" PointX="11.25" PointY="45.375" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion" Width="1.5" PointX="10.5" PointY="57" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion_Copia" Width="1.5" PointX="15.75" PointY="105.125" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Administracion_Historial" Width="1.5" PointX="12.75" PointY="53.25" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal" Width="1.5" PointX="10.5" PointY="69" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal_Copia" Width="1.5" PointX="12.75" PointY="99.125" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Gasto_Personal_Historial" Width="1.5" PointX="12.75" PointY="80.375" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo" Width="1.5" PointX="13.5" PointY="68.5" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo_Copia" Width="1.5" PointX="12.75" PointY="111.625" />
+        <EntityTypeShape EntityType="IND0012Model.Beneficiario_Producto_Cargo_Historial" Width="1.5" PointX="15.75" PointY="73.875" />
+        <EntityTypeShape EntityType="IND0012Model.Cargo" Width="1.5" PointX="3.75" PointY="54" />
+        <EntityTypeShape EntityType="IND0012Model.Cargo_Producto" Width="1.5" PointX="6" PointY="61.875" />
+        <EntityTypeShape EntityType="IND0012Model.Categoria" Width="1.5" PointX="1.5" PointY="83.875" />
+        <EntityTypeShape EntityType="IND0012Model.Categoria_Deporte" Width="1.5" PointX="14.25" PointY="44" />
+        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto" Width="1.5" PointX="16.5" PointY="64" />
+        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Copia" Width="1.5" PointX="15.75" PointY="100.875" />
+        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Historial" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="IND0012Model.Ciudad" Width="1.5" PointX="6" PointY="70.625" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia" Width="1.5" PointX="10.5" PointY="62.875" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia_Copia" Width="1.5" PointX="12.75" PointY="86.125" />
+        <EntityTypeShape EntityType="IND0012Model.Competencia_Historial" Width="1.5" PointX="12.75" PointY="74" />
+        <EntityTypeShape EntityType="IND0012Model.Comuna" Width="1.5" PointX="6" PointY="49.25" />
+        <EntityTypeShape EntityType="IND0012Model.Concurso" Width="1.5" PointX="1.5" PointY="87.5" />
+        <EntityTypeShape EntityType="IND0012Model.Concurso_categoria" Width="1.5" PointX="1.5" PointY="71.875" />
+        <EntityTypeShape EntityType="IND0012Model.Correo_Distribucion" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="IND0012Model.Cuenta" Width="1.5" PointX="1.5" PointY="122.5" />
+        <EntityTypeShape EntityType="IND0012Model.Detalle_Programacion_Gasto" Width="1.5" PointX="12.75" PointY="116.25" />
+        <EntityTypeShape EntityType="IND0012Model.Detalle_Programacion_Gasto_Historial" Width="1.5" PointX="15" PointY="116.375" />
+        <EntityTypeShape EntityType="IND0012Model.Disciplina" Width="1.5" PointX="9" PointY="48.75" />
+        <EntityTypeShape EntityType="IND0012Model.Disciplina_Organizacion" Width="1.5" PointX="15.25" PointY="78.5" />
+        <EntityTypeShape EntityType="IND0012Model.DistribucionConverge" Width="1.5" PointX="1.5" PointY="53.5" />
+        <EntityTypeShape EntityType="IND0012Model.Documento_Beneficiario" Width="1.5" PointX="17.5" PointY="51.5" />
+        <EntityTypeShape EntityType="IND0012Model.Documentos_Proyecto" Width="1.5" PointX="11.25" PointY="33.25" />
+        <EntityTypeShape EntityType="IND0012Model.Estado_Proyecto" Width="1.5" PointX="1.5" PointY="43.125" />
+        <EntityTypeShape EntityType="IND0012Model.Evaluacion_Proyecto" Width="1.5" PointX="17.25" PointY="42.75" />
+        <EntityTypeShape EntityType="IND0012Model.Excepcion_Solicitud_Cambio" Width="1.5" PointX="13.5" PointY="58.625" />
+        <EntityTypeShape EntityType="IND0012Model.Excepcion_Tiempo_Ejecucion" Width="1.5" PointX="13.5" PointY="63.5" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion" Width="1.5" PointX="16.5" PointY="58.25" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Copia" Width="1.5" PointX="18.75" PointY="105.375" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion" Width="1.5" PointX="21.75" PointY="61.375" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion_Copia" Width="1.5" PointX="24" PointY="105.875" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Administracion_Historial" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal" Width="1.5" PointX="18.75" PointY="65.5" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal_Copia" Width="1.5" PointX="21" PointY="100.875" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Gasto_Personal_Historial" Width="1.5" PointX="21" PointY="65.75" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Historial" Width="1.5" PointX="18.75" PointY="61.5" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario" Width="1.5" PointX="18.75" PointY="56.25" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario_Copia" Width="1.5" PointX="21" PointY="105.25" />
+        <EntityTypeShape EntityType="IND0012Model.Geolocalizacion_Horario_Historial" Width="1.5" PointX="21" PointY="56.5" />
+        <EntityTypeShape EntityType="IND0012Model.HDA_PROYECTO" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Asignacion_Linea" Width="1.5" PointX="3" PointY="117.5" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Cuenta" Width="1.5" PointX="3.75" PointY="122.625" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Evaluacion_Proyecto" Width="1.5" PointX="19.5" PointY="42.875" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Programa" Width="1.5" PointX="3.75" PointY="112.625" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Proyecto" Width="1.5" PointX="8.25" PointY="34.75" />
+        <EntityTypeShape EntityType="IND0012Model.Historial_Workflow" Width="1.5" PointX="6.75" PointY="8.75" />
+        <EntityTypeShape EntityType="IND0012Model.Linea" Width="1.5" PointX="1.5" PointY="103.625" />
+        <EntityTypeShape EntityType="IND0012Model.Linea_Clasificacion" Width="1.5" PointX="1.5" PointY="109" />
+        <EntityTypeShape EntityType="IND0012Model.Linea_Cuenta" Width="1.5" PointX="3.75" PointY="104" />
+        <EntityTypeShape EntityType="IND0012Model.LogError" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="IND0012Model.Montos_Organizacion_Linea" Width="1.5" PointX="3" PointY="78.875" />
+        <EntityTypeShape EntityType="IND0012Model.Nacionalidad" Width="1.5" PointX="9" PointY="45.25" />
+        <EntityTypeShape EntityType="IND0012Model.Nivel" Width="1.5" PointX="0.75" PointY="66" />
+        <EntityTypeShape EntityType="IND0012Model.Notificacion" Width="1.5" PointX="6" PointY="35.5" />
+        <EntityTypeShape EntityType="IND0012Model.Notificacion_Destinatario" Width="1.5" PointX="8.25" PointY="31" />
+        <EntityTypeShape EntityType="IND0012Model.Notificacion_Enviada" Width="1.5" PointX="14.25" PointY="34.125" />
+        <EntityTypeShape EntityType="IND0012Model.Notificacion_Enviada_Usuario" Width="1.5" PointX="16.5" PointY="37.625" />
+        <EntityTypeShape EntityType="IND0012Model.Objeto" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="IND0012Model.Observaciones_Proyecto" Width="1.5" PointX="14.25" PointY="38.625" />
+        <EntityTypeShape EntityType="IND0012Model.Organizacion" Width="1.5" PointX="1.5" PointY="91.875" />
+        <EntityTypeShape EntityType="IND0012Model.Organizacion_Linea" Width="1.5" PointX="0.75" PointY="78.25" />
+        <EntityTypeShape EntityType="IND0012Model.Organizacion_Linea_Tipo_Producto" Width="1.5" PointX="3" PointY="65.875" />
+        <EntityTypeShape EntityType="IND0012Model.Pais" Width="1.5" PointX="3.75" PointY="70.625" />
+        <EntityTypeShape EntityType="IND0012Model.Pais_Region" Width="1.5" PointX="15" PointY="54" />
+        <EntityTypeShape EntityType="IND0012Model.Parametro" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="IND0012Model.Perfil_IND" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="IND0012Model.Permiso" Width="1.5" PointX="11.25" PointY="20.25" />
+        <EntityTypeShape EntityType="IND0012Model.Plan_Plurianual" Width="1.5" PointX="3.75" PointY="93" />
+        <EntityTypeShape EntityType="IND0012Model.Plantilla_Email" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="IND0012Model.Producto" Width="1.5" PointX="8.25" PointY="61.625" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_Copia" Width="1.5" PointX="10.5" PointY="104.5" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_Historial" Width="1.5" PointX="10.5" PointY="111.25" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_Nivel" Width="1.5" PointX="3" PointY="61.875" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_Tipo_Gasto_administracion" Width="1.5" PointX="3" PointY="58" />
+        <EntityTypeShape EntityType="IND0012Model.Programa" Width="1.5" PointX="1.5" PointY="112.5" />
+        <EntityTypeShape EntityType="IND0012Model.Programacion_Gasto_Producto" Width="1.5" PointX="10.5" PointY="118.125" />
+        <EntityTypeShape EntityType="IND0012Model.Programacion_Gasto_Producto_Historial" Width="1.5" PointX="12.75" PointY="120.125" />
+        <EntityTypeShape EntityType="IND0012Model.Provincia" Width="1.5" PointX="3.75" PointY="49.375" />
+        <EntityTypeShape EntityType="IND0012Model.Proyecto" Width="1.5" PointX="6" PointY="41.125" />
+        <EntityTypeShape EntityType="IND0012Model.Proyecto_Versiones" Width="1.5" PointX="8.25" PointY="56.75" />
+        <EntityTypeShape EntityType="IND0012Model.Recinto" Width="1.5" PointX="14.25" PointY="48.375" />
+        <EntityTypeShape EntityType="IND0012Model.Recinto_Organizacion" Width="1.5" PointX="18.5" PointY="73.375" />
+        <EntityTypeShape EntityType="IND0012Model.Region" Width="1.5" PointX="1.5" PointY="49.375" />
+        <EntityTypeShape EntityType="IND0012Model.Reporting_Services" Width="1.5" PointX="3.75" PointY="36.125" />
+        <EntityTypeShape EntityType="IND0012Model.Resolucion" Width="1.5" PointX="8.25" PointY="52.625" />
+        <EntityTypeShape EntityType="IND0012Model.Resolucion_Proyecto" Width="1.5" PointX="16.5" PointY="47.125" />
+        <EntityTypeShape EntityType="IND0012Model.Rol" Width="1.5" PointX="9" PointY="40" />
+        <EntityTypeShape EntityType="IND0012Model.Solicitud_Cambio" Width="1.5" PointX="12.75" PointY="104.625" />
+        <EntityTypeShape EntityType="IND0012Model.sysdiagrams" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Anulacion" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Archivo_Solicitud_Cambio" Width="1.5" PointX="15.75" PointY="111.125" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Documento_Beneficiario" Width="1.5" PointX="15.25" PointY="30.125" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Documento_Proyecto" Width="1.5" PointX="9" PointY="27.125" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Gasto_Administracion" Width="1.5" PointX="0.75" PointY="56.5" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Gasto_Personal" Width="1.5" PointX="8.25" PointY="70.625" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Notificacion" Width="1.5" PointX="8" PointY="1" />
         <EntityTypeShape EntityType="IND0012Model.Tipo_Objeto" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Organizacion" Width="1.5" PointX="1.5" PointY="106.25" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Producto" Width="1.5" PointX="0.75" PointY="53.125" />
-        <EntityTypeShape EntityType="IND0012Model.Tipo_Solicitud_Cambio" Width="1.5" PointX="10.5" PointY="91.875" />
-        <EntityTypeShape EntityType="IND0012Model.Usuario" Width="1.5" PointX="8.25" PointY="60.125" />
-        <EntityTypeShape EntityType="IND0012Model.Workflow" Width="1.5" PointX="3.75" PointY="38.875" />
-        <EntityTypeShape EntityType="IND0012Model.Workflow_Ruta" Width="1.5" PointX="6" PointY="49.125" />
-        <EntityTypeShape EntityType="IND0012Model.Zona" Width="1.5" PointX="8.25" PointY="79.875" />
-        <EntityTypeShape EntityType="IND0012Model.Zona_Pais" Width="1.5" PointX="17.5" PointY="65.375" />
-        <EntityTypeShape EntityType="IND0012Model.Zona_Tipo_Gasto_Administracion" Width="1.5" PointX="10.5" PointY="70.625" />
-        <EntityTypeShape EntityType="IND0012Model.Dispacher" Width="1.5" PointX="13.5" PointY="57.875" />
-        <EntityTypeShape EntityType="IND0012Model.EstadoWebServiceRegistroCivil" Width="1.5" PointX="11.75" PointY="11.75" />
-        <EntityTypeShape EntityType="IND0012Model.LogInicializacionFolio" Width="1.5" PointX="6.75" PointY="12.75" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Organizacion" Width="1.5" PointX="1.5" PointY="98.125" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Producto" Width="1.5" PointX="0.75" PointY="61.75" />
+        <EntityTypeShape EntityType="IND0012Model.Tipo_Solicitud_Cambio" Width="1.5" PointX="10.5" PointY="100.125" />
+        <EntityTypeShape EntityType="IND0012Model.Usuario" Width="1.5" PointX="11.25" PointY="38.75" />
+        <EntityTypeShape EntityType="IND0012Model.Workflow" Width="1.5" PointX="3.75" PointY="42.625" />
+        <EntityTypeShape EntityType="IND0012Model.Workflow_Ruta" Width="1.5" PointX="6" PointY="56.75" />
+        <EntityTypeShape EntityType="IND0012Model.Zona" Width="1.5" PointX="3.75" PointY="75.125" />
+        <EntityTypeShape EntityType="IND0012Model.Zona_Pais" Width="1.5" PointX="6" PointY="74.75" />
+        <EntityTypeShape EntityType="IND0012Model.Zona_Tipo_Gasto_Administracion" Width="1.5" PointX="6" PointY="65.875" />
+        <EntityTypeShape EntityType="IND0012Model.Dispacher" Width="1.5" PointX="16.5" PointY="68.5" />
+        <EntityTypeShape EntityType="IND0012Model.EstadoWebServiceRegistroCivil" Width="1.5" PointX="11.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IND0012Model.LogInicializacionFolio" Width="1.5" PointX="12.75" PointY="0.75" />
         <AssociationConnector Association="IND0012Model.FK_Alerta_Historial_Alerta" />
         <AssociationConnector Association="IND0012Model.FK_Dispacher_Alerta" />
         <AssociationConnector Association="IND0012Model.FK_Archivo_Solicitud_Cambio_Solicitud_Cambio" />
@@ -157,11 +164,19 @@
         <AssociationConnector Association="IND0012Model.FK_Cargo_producto_Tipo_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Categoría" />
         <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_CategoriaDeporte" />
+        <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_Copia_CategoriaDeporte" />
         <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_Producto" />
+        <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_ProductoCopia" />
         <AssociationConnector Association="IND0012Model.FK_Ciudad_Pais" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Ciudad" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Competencia" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Historial_Competencia" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Producto" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Proyecto" />
+        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Producto_Copia" />
         <AssociationConnector Association="IND0012Model.FK_Comuna_Provincia" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Comuna" />
+        <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Concurso" />
         <AssociationConnector Association="IND0012Model.FK_Organizacion_Linea_Concurso_categoria" />
         <AssociationConnector Association="IND0012Model.FK_Historial_Cuenta_Cuenta" />
         <AssociationConnector Association="IND0012Model.FK_Linea_Cuenta_Cuenta" />
@@ -172,9 +187,11 @@
         <AssociationConnector Association="IND0012Model.FK_Tipo_Gasto_Administracion_Tipo_Gasto_Administracion_DistribucionConverge" />
         <AssociationConnector Association="IND0012Model.FK_Tipo_Gasto_Personal_Tipo_Gasto_Personal_DistribuacionConverge" />
         <AssociationConnector Association="IND0012Model.FK_Documento_Beneficiario_Tipo_Documento_Beneficiario" />
+        <AssociationConnector Association="IND0012Model.FK_Documentos_Proyecto_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Documentos_Proyecto_Tipo_Documento_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Resolucion_Proyecto_Documentos_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Workflow_EstadoProyecto" />
+        <AssociationConnector Association="IND0012Model.FK_Evaluacion_Proyecto_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Evaluacion_Proyecto_Workflow" />
         <AssociationConnector Association="IND0012Model.FK_Historial_Evaluacion_Proyecto_Evaluacion_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Excepcion_Solicitud_Cambio_Producto" />
@@ -196,6 +213,7 @@
         <AssociationConnector Association="IND0012Model.FK_Geolocalizacion_Horario_Historial_Geolocalizacion_Horario" />
         <AssociationConnector Association="IND0012Model.FK_Historial_Asignacion_Linea_Organizacion_Linea" />
         <AssociationConnector Association="IND0012Model.FK_Historial_Programa_Programa" />
+        <AssociationConnector Association="IND0012Model.FK_Historial_Proyecto_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Linea_Cuenta_Linea" />
         <AssociationConnector Association="IND0012Model.FK_Linea_Linea_Clasificacion" />
         <AssociationConnector Association="IND0012Model.FK_Linea_Programa" />
@@ -207,8 +225,13 @@
         <AssociationConnector Association="IND0012Model.FK_Correo_Workflow" />
         <AssociationConnector Association="IND0012Model.FK_Correo_Workflow_02" />
         <AssociationConnector Association="IND0012Model.FK_Correos_Enviados_Correo" />
+        <AssociationConnector Association="IND0012Model.FK_Notificacion_Enviada_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Notificacion_Enviada_Usuario_Notificacion_Enviada" />
         <AssociationConnector Association="IND0012Model.FK_Notificacion_Enviada_Usuario_Usuario" />
+        <AssociationConnector Association="IND0012Model.FK_Objeto_Objeto" />
+        <AssociationConnector Association="IND0012Model.FK_Objeto_Tipo_Objeto" />
+        <AssociationConnector Association="IND0012Model.FK_Permiso_Objeto" />
+        <AssociationConnector Association="IND0012Model.FK_Observaciones_Proyecto_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Observaciones_Proyecto_Workflow" />
         <AssociationConnector Association="IND0012Model.FK_Observaciones_Proyecto_Workflow_02" />
         <AssociationConnector Association="IND0012Model.FK__Recinto_O__idOrg__4D9552F2" />
@@ -217,16 +240,19 @@
         <AssociationConnector Association="IND0012Model.FK_Plan_PluriAnual_Organizacion" />
         <AssociationConnector Association="IND0012Model.FK_Usuario_Organizacion" />
         <AssociationConnector Association="IND0012Model.FK_Organizacion_Linea_Tipo_Producto_Organizacion_Linea" />
+        <AssociationConnector Association="IND0012Model.FK_Proyecto_Organizacion_Linea" />
         <AssociationConnector Association="IND0012Model.FK_Organizacion_Linea_Tipo_Producto_Tipo_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Organizacion_Linea_Tipo_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Pais_Region_Pais" />
         <AssociationConnector Association="IND0012Model.FK_Zona_Pais_Pais" />
         <AssociationConnector Association="IND0012Model.FK_Pais_Region_Region" />
+        <AssociationConnector Association="IND0012Model.FK_Permiso_Rol" />
         <AssociationConnector Association="IND0012Model.FK_Tipo_Notificacion_Plantilla_Email" />
         <AssociationConnector Association="IND0012Model.fk_dispacher_producto" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Copia_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Historial_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Producto_Nivel" />
+        <AssociationConnector Association="IND0012Model.FK_Producto_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK_Programacion_gasto_producto_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Solicitud_Cambio_Producto_Copia" />
         <AssociationConnector Association="IND0012Model.FK_Producto_Nivel_Tipo_Producto" />
@@ -234,6 +260,11 @@
         <AssociationConnector Association="IND0012Model.FK_Producto_Tipo_Gasto_administracion_Tipo_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Programacion_Gasto_Producto_Historial_Programacion_Gasto_Producto" />
         <AssociationConnector Association="IND0012Model.FK_Provincia_Region" />
+        <AssociationConnector Association="IND0012Model.fk_dispacher_proyecto" />
+        <AssociationConnector Association="IND0012Model.FK_Proyecto_Proyecto_Version" />
+        <AssociationConnector Association="IND0012Model.FK_Proyecto_Workflow" />
+        <AssociationConnector Association="IND0012Model.FK_Resolucion_Proyecto" />
+        <AssociationConnector Association="IND0012Model.FK_Solicitud_Cambio_Proyecto" />
         <AssociationConnector Association="IND0012Model.FK__Recinto_O__idRec__4CA12EB9" />
         <AssociationConnector Association="IND0012Model.FK_Resolucion_Proyecto_Resolucion" />
         <AssociationConnector Association="IND0012Model.FK_Usuario_Rol" />
@@ -242,37 +273,6 @@
         <AssociationConnector Association="IND0012Model.FK_Workflow_Ruta_Workflow" />
         <AssociationConnector Association="IND0012Model.FK_Zona_Pais_Zona" />
         <AssociationConnector Association="IND0012Model.FK_Zona_Tipo_Gasto_Administracion_Zona" />
-        <EntityTypeShape EntityType="IND0012Model.Objeto" Width="1.5" PointX="3" PointY="1" />
-        <AssociationConnector Association="IND0012Model.FK_Objeto_Objeto" />
-        <AssociationConnector Association="IND0012Model.FK_Objeto_Tipo_Objeto" />
-        <AssociationConnector Association="IND0012Model.FK_Permiso_Objeto" />
-        <AssociationConnector Association="IND0012Model.FK_Permiso_Rol" />
-        <EntityTypeShape EntityType="IND0012Model.Proyecto" Width="1.5" PointX="6" PointY="37.125" />
-        <AssociationConnector Association="IND0012Model.FK_Documentos_Proyecto_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Evaluacion_Proyecto_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Historial_Proyecto_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Notificacion_Enviada_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Observaciones_Proyecto_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Proyecto_Organizacion_Linea" />
-        <AssociationConnector Association="IND0012Model.FK_Producto_Proyecto" />
-        <AssociationConnector Association="IND0012Model.fk_dispacher_proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Proyecto_Proyecto_Version" />
-        <AssociationConnector Association="IND0012Model.FK_Proyecto_Workflow" />
-        <AssociationConnector Association="IND0012Model.FK_Resolucion_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Solicitud_Cambio_Proyecto" />
-        <EntityTypeShape EntityType="IND0012Model.CategoriaDeporte_Producto_Copia" Width="1.5" PointX="18.5" PointY="69.25" />
-        <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_Copia_CategoriaDeporte" />
-        <AssociationConnector Association="IND0012Model.FK_CategoriaDeporteProducto_ProductoCopia" />
-        <EntityTypeShape EntityType="IND0012Model.Concurso" Width="1.5" PointX="1.5" PointY="81" />
-        <AssociationConnector Association="IND0012Model.FK_Concurso_categoria_Concurso" />
-        <EntityTypeShape EntityType="IND0012Model.Competencia" Width="1.5" PointX="20.5" PointY="39.25" />
-        <EntityTypeShape EntityType="IND0012Model.Competencia_Copia" Width="1.5" PointX="22.75" PointY="70.375" />
-        <EntityTypeShape EntityType="IND0012Model.Competencia_Historial" Width="1.5" PointX="22.75" PointY="39.5" />
-        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Competencia" />
-        <AssociationConnector Association="IND0012Model.FK_Competencia_Historial_Competencia" />
-        <AssociationConnector Association="IND0012Model.FK_Competencia_Producto" />
-        <AssociationConnector Association="IND0012Model.FK_Competencia_Proyecto" />
-        <AssociationConnector Association="IND0012Model.FK_Competencia_Copia_Producto_Copia" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,16 +8,17 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="myModalLabel">Nueva Solicitud de Cambio</h4>
+    <h4 class="modal-title" id="myModalLabel">Editar Solicitud de Cambio</h4>
 </div>
 
-@using (Html.BeginForm("GuardaSolicitud", "ProductoCopia", FormMethod.Post, new { id = "form-GuardarSolicitudCambio", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditarSolicitudGuardar", "ProductoCopia", FormMethod.Post, new { id = "form-GuardarSolicitudCambio", enctype = "multipart/form-data" }))
 {
     @*@Html.AntiForgeryToken()*@
     <div class="modal-body">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.idProducto, new { @value = ViewData["idProducto"] })
         @Html.HiddenFor(model => model.idProyecto, ViewData["idProyecto"])
+        @Html.HiddenFor(model => model.idSolicitudCambio)
 
         @Html.Hidden("idproducto", ViewData["idProducto"], new { @id = "Id_Producto" })
 
@@ -109,7 +110,7 @@
             $('#form-GuardarSolicitudCambio').valid();
 
 
-            var url = '@Url.Action("GuardarSolicitud")';
+            var url = '@Url.Action("EditarSolicitudGuardar")';
             var model = $('form').serialize();
             var idproducto = $('#Id_Producto').val();
             //ni idea para que se usa
@@ -137,7 +138,7 @@
                     $("#div_Mensaje_Error").show();
                 }
             });
-
+            return false;
         });
     });
 

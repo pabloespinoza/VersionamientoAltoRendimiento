@@ -350,6 +350,8 @@
                                         {
                                             @*Direcciona al Producto*@
                                             @Html.Raw(@Html.ActionLink("[replacetext]", "RedireccionaEdicion", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ir a Producto' src=\"../Images/List.png\" ... />"))
+                                            @*Editar el motivo de Solicitud de cambio*@
+                                            @Html.Raw(@Html.ActionLink("[replacetext]", "EditarSolicitud", new { idProducto = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar Solicitud Cambio' src=\"../Images/Edit.png\" ... />"))
                                             @*Subir archivo para la solicitud de cambio*@
                                             @Html.Raw(@Html.ActionLink("[replacetext]", "SubirArchivo", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Subir Archivo Respaldo Solicitud de Cambio' src=\"../Images/SubirArchivo.png\" ... />"))
                                             @*Eliminar Solicitud en construcción.*@

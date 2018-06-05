@@ -32,8 +32,7 @@
 
 
 </script>
-
-
+ 
 <div class="row">
     <div class="col-xs-12 col-md-12">
         <div class="panel panel-default">
@@ -42,27 +41,35 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="label">
+                        <label class="col-md-2 control-label" for="label">
                             Folio Proyecto:
                         </label>
-                        <div class="form-group col-md-9">
-                            @Html.TextBoxFor(p => p.folioProyecto, Model.folioProyecto.ToString(), new { @disabled = "disabled", @class = "form-control" })
+                        <div class="form-group col-md-10">
+                            @Html.LabelFor(p => p.folioProyecto, Model.folioProyecto.ToString(), new { @class = "control-label" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="label">
+                        <label class="col-md-2 control-label" for="label">
                             Nombre Proyecto:
                         </label>
-                        <div class="form-group col-md-9">
-                            @Html.TextBoxFor(p => p.nombreProyecto, Model.nombreProyecto.ToString(), new { @disabled = "disabled", @class = "form-control" })
+                        <div class="form-group col-md-10">
+                            @Html.LabelFor(p => p.nombreProyecto, Model.nombreProyecto.ToString(), new { @class = "control-label" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-group col-md-3 control-label" for=" label">
+                        <label class="form-group col-md-2 control-label" for=" label">
                             Fecha Creación:
                         </label>
-                        <div class="form-group col-md-9">
-                            @Html.TextBoxFor(p => p.fechaCreacionProyecto, Model.fechaCreacionProyecto.ToShortDateString(), new { @disabled = "disabled", @class = "form-control" })
+                        <div class="form-group col-md-10">
+                            @Html.LabelFor(p => p.fechaCreacionProyecto, Model.fechaCreacionProyecto.ToShortDateString(), new { @class = "control-label" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group col-md-2 control-label" for=" label">
+                            Ver Reporte:
+                        </label>
+                        <div class="form-group col-md-10">
+                            <p>@Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = Model.idProyecto, Idproyectoversion = Model.idProyectoVersion }, new { @class = "button btn-info btn-sm", @data_toggle = "tooltip", @title = "Ver Proyecto", @style = Model.idProyectoVersion == 0 ? "display:none;" : "" }).ToHtmlString().Replace("[replacetext]", "Descargar"))</p>
                         </div>
                     </div>
                 </div>
@@ -71,5 +78,11 @@
     </div>
 </div>
 
+@Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-warning pull-right" })
 
+@if (Model.idProyectoVersion > 0)
+{
 @Html.Partial("_ListHistorial", Model)
+}else{
+    <h4>No hay versiones disponibles para este proyecto</h4>
+}
