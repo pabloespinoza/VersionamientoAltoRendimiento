@@ -57,14 +57,14 @@
             var url = '@Url.Action("CambiarEstado")';
             var model = $('form').serialize();
          
-            console.log("entro a la funcion");
+            //console.log("entro a la funcion");
 
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: model,
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $('#myModalContent').html(data);
                     $('#myModal').modal('show');
                 },
@@ -202,7 +202,8 @@
           
             @Html.HiddenFor(p => p.IdProyecto, new { @Id = "hdhIdproyecto" })
             @Html.HiddenFor(p => p.IdWorkflow, new { @id = "hdhIdWorkflow" })
-            @Html.HiddenFor(p => p.ValidaPaso, new { @id = "hdhValidaPaso" })
+            <input type="hidden" id="ValidaPaso" name="ValidaPaso" value="@Model.ValidaPaso.ToString()" />
+            
             @Html.HiddenFor(p => p.Vista, new {@id="Vista",@value=Model.Vista })
             @*@Html.HiddenFor(p=>p.IdConcurso)*@
 

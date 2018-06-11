@@ -59,12 +59,12 @@
 
         var Resolucion = '@ViewData["Resolucion"]';
         if (Resolucion != "") {
-            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + Resolucion + '</div>';
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + Resolucion + '</div>';
             $("#mensajeresolucion").append(mensajeUsuario);
         }
         var convenio = '@ViewData["Convenio"]';
         if (convenio != "") {
-            var mensajeUsuario = '<div class="alert ' + "" + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + convenio + '</div>';
+            var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + convenio + '</div>';
             $("#mensajeconvenio").append(mensajeUsuario);
         }
 
@@ -121,7 +121,7 @@
                 type: 'POST',
                 data: model,
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $('#myModalContent').html(data);
                     $('#myModal').modal('show');
                 },
@@ -384,7 +384,7 @@
                                         @Html.HiddenFor(p => p.Vista, new { @value = Model.Vista })
                                         @Html.HiddenFor(p => p.NumeroResolucion, new { @id = "NumeroResolucion", @value = Model.NumeroResolucion })
                                         @Html.HiddenFor(p => p.FechaResolucion, new { @id = "FechaResolucion", @value = Model.FechaResolucion })
-
+                                        <input type="hidden" id="ValidaPaso" name="ValidaPaso" value="@Model.ValidaPaso.ToString()" />
 
 
                                     </div>

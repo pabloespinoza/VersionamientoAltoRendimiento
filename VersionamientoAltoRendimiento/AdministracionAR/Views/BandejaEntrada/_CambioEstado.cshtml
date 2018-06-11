@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+        
         var mensaje = '@ViewData["mensaje"]';
         var tipoAlerta = '@ViewData["tipoAlterta"]';
         if (tipoAlerta == "" || tipoAlerta == null) {
@@ -11,6 +11,9 @@
         if (mensaje != "") {
             var mensajeUsuario = '<div class="alert alert-' + tipoAlerta + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button>' + mensaje + '</div>';
             $("#mensaje").append(mensajeUsuario);
+            if (tipoAlerta == "danger") {
+                $("#btnGuardarEstadoPopUp").prop("disabled", true);
+            }
         }
 
 
@@ -32,6 +35,11 @@
                 SelectName: {
                     required: "Campo Obligatorio",
                 }
+            },
+            submitHandler: function () {
+
+                $("#btnGuardarEstadoPopUp").prop("disabled", true);
+                $('#frm-CambioEstado').submit();
             }
         });
 
