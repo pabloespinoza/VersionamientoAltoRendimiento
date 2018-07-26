@@ -74,6 +74,58 @@
 <div class="panel-default">
     @Html.Partial("_CuadroResumen", Model.CuadroResumen)
 </div>
+
+@if (Model.ArchivosSolicitudCambio.Count > 0)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="accordeonCuatro">
+            <div class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordeonCuatro" href="#collapseCuatro">
+                    Archivos y Documentos
+                </a>
+            </div>
+        </div>
+        <div class="panel-collapse collapse in" id="collapseCuatro">
+            <div class="panel-body">
+                <fieldset disabled>
+                    <table class="table table-condensed table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nombre Documento
+                                </th>
+                                <th>
+                                    Tipo Documento
+                                </th>
+                                <th>
+                                    Acción
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var archivo in Model.ArchivosSolicitudCambio)
+                            {
+                                <tr>
+                                    <td>
+                                        @archivo.ascNombreArchivo
+                                    </td>
+                                    <td>
+                                        @archivo.Tipo_Archivo_Solicitud_Cambio.tasNombre
+                                    </td>
+                                    <td>
+                                        @Html.Raw(@Html.ActionLink("[replacetext]", "DescargaArchivo", "SolicitudCambio", new { idArchivoSolicitud = archivo.idArchivoSolicitudCambio, idSolicitud = archivo.idSolicitudCambio }, new { @class = "fa fa-download fa-lg", @data_toggle = "tooltip", @title = "Descargar" }).ToHtmlString().Replace("[replacetext]", ""))
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+
+    </div>
+}
+
 <div class="col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -120,6 +172,12 @@
                 @Html.Raw("Ciudad:&nbsp;");
                 @Html.DisplayFor(m => m.productoOriginal.ciudad);
                 @Html.Raw("</li>");
+            }
+            @if (!string.IsNullOrEmpty(Model.productoOriginal.fedBeneficiada))
+            {
+                <li class="list-group-item">
+                    Federación beneficiada:&nbsp;@Html.DisplayFor(m => m.productoOriginal.fedBeneficiada)
+                </li>
             }
         </ul>
         <!--</div>-->
@@ -219,6 +277,12 @@
                 @Html.Raw("Ciudad:&nbsp;");
                 @Html.DisplayFor(m => m.productoSolicitud.ciudad);
                 @Html.Raw("</li>");
+            }
+            @if (!string.IsNullOrEmpty(Model.productoSolicitud.fedBeneficiada))
+            {
+                <li class="list-group-item">
+                    Federación beneficiada:&nbsp;@Html.DisplayFor(m => m.productoSolicitud.fedBeneficiada)
+                </li>
             }
         </ul>
         <!--</div>-->

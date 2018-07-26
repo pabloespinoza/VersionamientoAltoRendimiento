@@ -17,8 +17,8 @@
             {
                 @Html.Hidden("idProyecto", TempData["IdProyecto"])
             }
-            
-            @Html.HiddenFor(p=>p.prdSecuencia)
+
+            @Html.HiddenFor(p => p.prdSecuencia)
 
             @Html.HiddenFor(model => model.idProducto)
             @if (ViewData["Mensaje"] != null)
@@ -32,6 +32,19 @@
                     @Html.ValidationMessageFor(model => model.idOrganizacionLineaTipoProducto)
                 </div>
             </div>
+
+            @*//Pablo Espinoza - 28-06-2018 - Para el caso de ADO - COCH y paralimpica se agrega la federacion a la que se le ingresa el producto.*@
+            @if (ViewBag.FederacionesBeneficiar != null)
+            {
+                <div class="form-group">
+                    <label for="inputFedBeneficiar" class="col-sm-4 control-label">Federación a Beneficiar</label>
+                    <div id="FedBeneficiarContainer" class="col-sm-8">
+                        @Html.DropDownList("idFedBenef", (SelectList)ViewBag.FederacionesBeneficiar, "--Seleccione--", new { @id = "FederacionBeneficiadaContainer-DropdownID", @class = "form-control" })
+                        @Html.ValidationMessage("idFedBenef")
+                    </div>
+                </div>
+            }
+            @*//Pablo Espinoza - 28-06-2018 - Para el caso de ADO - COCH y paralimpica se agrega la federacion a la que se le ingresa el producto.*@
 
             <div id="dvCategoriaDeporte" class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Categoria</label>
@@ -86,10 +99,10 @@
                 <label for="inputEmail3" class="col-sm-4 control-label">Mes Inicio</label>
                 <div class="col-md-8">
                     @*Pablo Espinoza 25-04-2016 - Solicitud de Cambio: Fecha inicio no puede ser modificada
-                      Pablo Espinoza 12-07-2017 - Solicitud de Cambio: Se habilita mes inicio para que se permita modificarla del mes en curso en adelante.*@
+                        Pablo Espinoza 12-07-2017 - Solicitud de Cambio: Se habilita mes inicio para que se permita modificarla del mes en curso en adelante.*@
                     @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
                     {
-                        @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control"})
+                        @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control" })
                     }
                     else
                     {
@@ -164,7 +177,7 @@
                                         $(obj).attr("disabled", "disabled");
                                     }
                                 } else if ($(data).val() == "0" && !$(data).is(':checked')) {
-                                    $(obj).removeProp("checked");
+                                    $(obj).removeAttr("checked");
                                     $(obj).removeAttr("disabled");
                                 } else if ($(data).val() != "0" && !$(data).is(':checked') && $(data).val() == $(obj).val() && todas) {
                                     $(obj).prop("checked", "checked");

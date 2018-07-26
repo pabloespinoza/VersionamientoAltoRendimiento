@@ -184,7 +184,7 @@
         <AssociationConnector Association="AltoRendimiento.FK_Historial_Cuenta_Cuenta" />
         <EntityTypeShape EntityType="AltoRendimiento.Excepcion_Tiempo_Ejecucion" Width="1.5" PointX="22.5" PointY="31.375" />
         <EntityTypeShape EntityType="AltoRendimiento.LogInicializacionFolio" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="AltoRendimiento.Programa" Width="1.5" PointX="0.75" PointY="66.75" />
+        <EntityTypeShape EntityType="AltoRendimiento.Programa" Width="1.5" PointX="0.625" PointY="64" />
         <AssociationConnector Association="AltoRendimiento.FK_Historial_Programa_Programa" />
         <EntityTypeShape EntityType="AltoRendimiento.Archivo_Solicitud_Cambio" Width="1.5" PointX="23" PointY="49" />
         <AssociationConnector Association="AltoRendimiento.FK_Archivo_Solicitud_Cambio_Tipo_Archivo_Solicitud_Cambio" />
@@ -267,6 +267,15 @@
         <EntityTypeShape EntityType="AltoRendimiento.Competencia_Copia" Width="1.5" PointX="36.75" PointY="28.75" />
         <AssociationConnector Association="AltoRendimiento.FK_Competencia_Copia_Competencia" />
         <AssociationConnector Association="AltoRendimiento.FK_Competencia_Copia_Producto_Copia" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_FederacionBeneficiada" Width="1.5" PointX="26.5" PointY="48" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_FederacionBeneficiada_Copia" Width="1.5" PointX="31.75" PointY="37.375" />
+        <EntityTypeShape EntityType="AltoRendimiento.Producto_FederacionBeneficiada_Historial" Width="1.5" PointX="14.375" PointY="0.75" />
+        <AssociationConnector Association="AltoRendimiento.FK__Producto___idOrg__77E09279" />
+        <AssociationConnector Association="AltoRendimiento.FK__Producto___idOrg__7BB1235D" />
+        <AssociationConnector Association="AltoRendimiento.FK__Producto___idPro__76EC6E40" />
+        <AssociationConnector Association="AltoRendimiento.FK__Producto___idPro__7ABCFF24" />
+        <EntityTypeShape EntityType="AltoRendimiento.Proyecto_Versiones" Width="1.5" PointX="8.25" PointY="43.625" />
+        <AssociationConnector Association="AltoRendimiento.FK_Proyecto_Proyecto_Version" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

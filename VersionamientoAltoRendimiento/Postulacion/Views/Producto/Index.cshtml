@@ -58,6 +58,10 @@
                         <th>N°</th>
                         <th>Tipo de Producto</th>
                         <th>Actividad</th>
+                        @if (Model.Where(m => m.Producto_FederacionBeneficiada.Count > 0).FirstOrDefault() != null)
+                        {
+                            <th>Federación Beneficiada</th>
+                        }
                         <th>Nivel</th>
                         <th>Región/País</th>
                         <th>Comuna/Ciudad</th>
@@ -81,6 +85,12 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.prdNombre)
                             </td>
+                            @if (Model.Where(m => m.Producto_FederacionBeneficiada.Count > 0).FirstOrDefault() != null)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Producto_FederacionBeneficiada.FirstOrDefault().Organizacion.orgNombre)
+                                </td>
+                            }
                             <td>
                                 @Html.DisplayFor(modelItem => item.Producto_Nivel.Nivel.nivNombre)
                             </td>

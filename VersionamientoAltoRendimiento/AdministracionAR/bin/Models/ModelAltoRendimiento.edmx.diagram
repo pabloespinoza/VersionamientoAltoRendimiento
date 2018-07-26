@@ -273,6 +273,12 @@
         <AssociationConnector Association="IND0012Model.FK_Workflow_Ruta_Workflow" />
         <AssociationConnector Association="IND0012Model.FK_Zona_Pais_Zona" />
         <AssociationConnector Association="IND0012Model.FK_Zona_Tipo_Gasto_Administracion_Zona" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_FederacionBeneficiada" Width="1.5" PointX="10.5" PointY="78.25" />
+        <EntityTypeShape EntityType="IND0012Model.Producto_FederacionBeneficiada_Copia" Width="1.5" PointX="18.75" PointY="95.75" />
+        <AssociationConnector Association="IND0012Model.FK__Producto___idOrg__77E09279" />
+        <AssociationConnector Association="IND0012Model.FK__Producto___idOrg__7BB1235D" />
+        <AssociationConnector Association="IND0012Model.FK__Producto___idPro__76EC6E40" />
+        <AssociationConnector Association="IND0012Model.FK__Producto___idPro__7ABCFF24" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

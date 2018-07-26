@@ -115,6 +115,9 @@
             //ni idea para que se usa
             //console.log(model);
 
+            $("#txtMotivoSolicitud").attr("disabled", "disabled");
+            $("#btnGuardar").attr("disabled", "disabled");
+
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -123,16 +126,21 @@
                     if (data.success == true) {
                         $("#div_Mensaje").show();
                         //$("#TipoSolicitud-DropdownID").prop("disabled", true);
-                        $("#txtMotivoSolicitud").attr("disabled", "disabled");
-                        $("#btnGuardar").attr("disabled", "disabled");
+                        $("#div_Mensaje_Error").hide();
                     }
                     else {
+                        $("#txtMotivoSolicitud").removeAttr("disabled");
+                        $("#btnGuardar").removeAttr("disabled");
+
                         $("#txtErrror").prop("text", "No es posible Realizar la solicitud");
                         $("#div_Mensaje_Error").show();
 
                     }
                 },
                 error: function () {
+                    $("#txtMotivoSolicitud").removeAttr("disabled");
+                    $("#btnGuardar").removeAttr("disabled");
+
                     $("#txtErrror").prop("text", "ha ocurrido un error, si el problema persiste comuniquese con el administrador.");
                     $("#div_Mensaje_Error").show();
                 }

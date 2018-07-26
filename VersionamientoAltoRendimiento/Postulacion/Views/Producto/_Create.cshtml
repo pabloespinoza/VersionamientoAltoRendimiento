@@ -17,7 +17,7 @@
     {
         @Html.Hidden("idProyecto", TempData["IdProyecto"])
     }
-    
+
     <div class="modal-body">
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
@@ -29,15 +29,27 @@
                     @Html.ValidationMessageFor(model => model.idOrganizacionLineaTipoProducto)
                 </div>
             </div>
+            @*//Pablo Espinoza - 28-06-2018 - Para el caso de ADO - COCH y paralimpica se agrega la federacion a la que se le ingresa el producto.*@
+            @if (ViewBag.FederacionesBeneficiar != null)
+            {
+                <div class="form-group">
+                    <label for="inputFedBeneficiar" class="col-sm-4 control-label">Federación a Beneficiar</label>
+                    <div id="FedBeneficiarContainer" class="col-sm-8">
+                        @Html.DropDownList("idFedBenef", (SelectList)ViewBag.FederacionesBeneficiar, "--Seleccione--", new { @id = "FederacionBeneficiadaContainer-DropdownID", @class = "form-control" })
+                        @Html.ValidationMessage("idFedBenef")
+                    </div>
+                </div>
+            }
+            @*//Pablo Espinoza - 28-06-2018 - Para el caso de ADO - COCH y paralimpica se agrega la federacion a la que se le ingresa el producto.*@
 
             <div id="dvCategoriaDeporte" class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Categoria</label>
                 <div id="CategoriaDeporteContainer" class="col-sm-8">
-                    @Html.DropDownList("idCategoriaDeporte", (SelectList)ViewBag.listCategoriaDeporte, new { @id = "CategoriaDeporteContainer-DropdownID", @multiple = "multiple" })
+                    @Html.DropDownList("idCategoriaDeporte", (MultiSelectList)ViewBag.listCategoriaDeporte, new { @id = "CategoriaDeporteContainer-DropdownID", @multiple = "multiple" })
                     @Html.ValidationMessage("idCategoriaDeporte")
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-4 control-label">Nivel</label>
                 <div id="NivelContainer" class="col-sm-8">
@@ -278,45 +290,37 @@
         $('#CategoriaDeporteContainer-DropdownID').searchableOptionList({
             maxHeight: '200px',
             showSelectAll: false,
-            events:{
-                onChange: function(sol, data)
-                {
-                    if($(data).val() == "1")
-                    {
+            events: {
+                onChange: function (sol, data) {
+                    if ($(data).val() == "1") {
                         if ($(data).is(':checked')) {
                             $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
                                 if ($(obj).val() != "1") {
                                     $(obj).attr("disabled", "disabled");
                                 }
                             })
-                        }else
-                        {
+                        } else {
                             $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
                                 $(obj).removeAttr("disabled");
                             })
                         }
-                    }else
-                    {
+                    } else {
                         var checked = false;
                         var todas = false;
                         $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
-                            if($(obj).val() == "0")
-                            {
+                            if ($(obj).val() == "0") {
                                 todas = $(obj).is(":checked");
                             }
                             if ($(obj).val() == "1") {
                                 $(obj).attr("disabled", "disabled");
-                            }else
-                            {
-                                if ($(data).val() == "0" && $(data).is(':checked'))
-                                {
+                            } else {
+                                if ($(data).val() == "0" && $(data).is(':checked')) {
                                     $(obj).prop("checked", "checked");
                                     if ($(obj).val() != "0") {
                                         $(obj).attr("disabled", "disabled");
                                     }
-                                } else if ($(data).val() == "0" && !$(data).is(':checked'))
-                                {
-                                    $(obj).removeProp("checked");
+                                } else if ($(data).val() == "0" && !$(data).is(':checked')) {
+                                    $(obj).removeAttr("checked");
                                     $(obj).removeAttr("disabled");
                                 } else if ($(data).val() != "0" && !$(data).is(':checked') && $(data).val() == $(obj).val() && todas) {
                                     $(obj).prop("checked", "checked");
@@ -330,6 +334,35 @@
                         if (!checked) {
                             $("input:checkbox[name=idCategoriaDeporte]").removeAttr("disabled");
                         }
+                    }
+                },
+                onInitialized: function (sol, items) {
+
+                    //alert($("input:checkbox[value=1]").is(":checked"))
+                    if ($("input:checkbox[value=1]").is(":checked")) {
+                        $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+
+                            //alert($(this).val())
+                            if ($(obj).val() != "1") {
+                                $(obj).attr("disabled", "disabled");
+                            }
+                        })
+                    } else {
+                        var todas = false;
+                        $("input:checkbox[name=idCategoriaDeporte]").each(function (item, obj) {
+                            if ($(obj).is(":checked")) {
+
+                                $("input:checkbox[value=1]").attr("disabled", "disabled");
+                            }
+
+                            if ($(obj).is(":checked") && $(obj).val() == "0") {
+                                todas = true;
+                            }
+                            if ($(obj).val() != "0" && todas) {
+                                $(obj).prop("checked", "checked");
+                                $(obj).attr("disabled", "disabled");
+                            }
+                        })
                     }
                 }
             }
@@ -350,12 +383,10 @@
             document.getElementById("idFecDesde").removeAttribute("disabled");
             document.getElementById("idFecHasta").removeAttribute("disabled");
         }*@
-        if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN')
-        {
+        if (texto == 'ADMINISTRACION' || texto == 'ADMINISTRACIÓN') {
             $("#dvCategoriaDeporte").hide();
-            
-        } else
-        {
+
+        } else {
             $("#dvCategoriaDeporte").show();
         }
         $.ajax({

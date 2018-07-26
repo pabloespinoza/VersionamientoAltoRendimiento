@@ -83,8 +83,9 @@
 
     <div class="panel-heading">
         @Html.ActionLink("volver", "Index", null, new { @class = "btn btn-sm btn-warning", @data_toggle = "tooltip", @title = "Volver a la Bandeja de Entrada" })
-        @Html.ActionLink("Documentos Beneficiarios", "DocumentosProyecto", new { IdProyecto = Model.IdProyecto, idTipoInformacion = 2 }, new { @class = "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Documentos de Beneficiarios" })
-        @Html.ActionLink("Informe Avance / Otros", "DocumentosProyecto", new { IdProyecto = Model.IdProyecto, idTipoInformacion = 3 }, new { @class = "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Informe Avance / Otros" })
+        @Html.ActionLink("Documentos Beneficiarios", "DocumentosProyecto", new { IdProyecto = Model.IdProyecto, idTipoInformacion = 2 }, new { @class = Model.idTipoInformacion == 2 ? "btn btn-sm btn-info" : "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Documentos de Beneficiarios" })
+        @Html.ActionLink("Acreditación Saldo", "DocumentosProyecto", new { IdProyecto = Model.IdProyecto, idTipoInformacion = 52 }, new { @class = Model.idTipoInformacion == 52 ? "btn btn-sm btn-info" : "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Acreditación de Saldo" })
+        @Html.ActionLink("Informe Avance / Otros", "DocumentosProyecto", new { IdProyecto = Model.IdProyecto, idTipoInformacion = 3 }, new { @class = Model.idTipoInformacion == 3 ? "btn btn-sm btn-info" : "btn btn-sm btn-success", @data_toggle = "tooltip", @title = "Informe Avance / Otros" })
 
     </div>
 </div>
@@ -360,6 +361,92 @@
 
                         </tr>
                     }
+            </table>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tblAcreditacionSaldo").DataTable({
+            "language":
+              {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron documentos de Informe de avance y Otros.",
+                  "sEmptyTable": "No se encontraron documentos de Informe de avance y Otros.",
+                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                  "sInfoPostFix": "",
+                  "sSearch": "Buscar:",
+                  "sUrl": "",
+                  "sInfoThousands": ",",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                  },
+                  "oAria": {
+                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                  }
+              }
+        }).on("draw.dt", function () {
+            addEventClickDataModal();
+        });
+
+
+
+    });
+</script>
+@if (Model.idTipoInformacion == 52)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">Acreditación de Saldo</div>
+        <br />
+        <div id="area_tabla" class="panel-body">
+            <table id="tblAcreditacionSaldo" class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre Documento
+                        </th>
+                        <th>
+                            Nombre Archivo
+                        </th>
+                        <th>
+                            Fecha de Carga
+                        </th>
+                        <th>
+                            Usuario de Carga
+                        </th>
+                        <th>
+                            Tipo
+                        </th>
+
+                        <th>
+                            Documento
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var row in Model.ListaArchivoSCAcreditarSaldo)
+                {
+                    <tr>
+                        <td>@row.NombreIdentificacion</td>
+                        <td>@row.Nombre</td>
+                        <td>@row.FechaCreacion</td>
+                        <td>@row.NombreUsuario</td>
+                        <td>@row.TipoDocumento</td>
+                        <td>
+                            @Html.Raw(@Html.ActionLink("[replacetext]", "DescargaArchivo", "SolicitudCambio", new { idSolicitud = row.IdProyecto, idArchivoSolicitud = row.IdDocumento }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Descargar Documento" }).ToHtmlString().Replace("[replacetext]", ""))
+                        </td>
+
+
+                    </tr>
+                }
             </table>
         </div>
     </div>

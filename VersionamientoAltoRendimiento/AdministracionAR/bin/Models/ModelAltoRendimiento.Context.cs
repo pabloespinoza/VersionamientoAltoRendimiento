@@ -150,6 +150,8 @@ namespace AltoRendimiento.Administracion.Models
         public DbSet<Dispacher> Dispacher { get; set; }
         public DbSet<EstadoWebServiceRegistroCivil> EstadoWebServiceRegistroCivil { get; set; }
         public DbSet<LogInicializacionFolio> LogInicializacionFolio { get; set; }
+        public DbSet<Producto_FederacionBeneficiada> Producto_FederacionBeneficiada { get; set; }
+        public DbSet<Producto_FederacionBeneficiada_Copia> Producto_FederacionBeneficiada_Copia { get; set; }
     
         public virtual ObjectResult<SP_LISTAR_PERMISOS_Result> SP_LISTAR_PERMISOS(Nullable<decimal> iD_ROL)
         {
