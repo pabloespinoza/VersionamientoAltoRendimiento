@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+    @using System.Configuration;
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     @*<link rel="shortcut icon" href="logo.ico">*@
@@ -126,6 +127,9 @@
                                         <li><a href="ReporteProyecto">Proyecto</a></li>
                                         <li><a href="ReporteProductoFiscalizacion">Productos Fiscalización</a></li>
                                         <li><a href="ActualizacionBenPorDefinir">Actualización Beneficiario por Definir</a></li>
+                                        <li><a target="_blank" href="@(ConfigurationManager.AppSettings["urlReporte"] + "/Default.aspx?idReporte=9")">Federación Beneficiada</a></li>
+                                        <li><a target="_blank" href="@(ConfigurationManager.AppSettings["urlReporte"] + "/Default.aspx?idReporte=10")">Rendición Federación</a></li>
+
                                     </ul>
                                 </li>
                             </ul>
