@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="_Default, App_Web_k0svoqqm" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="_Default, App_Web_hu2njbhx" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <%@ Register Src="~/Control/ctrMensaje.ascx" TagPrefix="uc1" TagName="ctrMensaje" %>
