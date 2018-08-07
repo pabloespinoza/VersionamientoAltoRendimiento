@@ -56,7 +56,8 @@
         <div class="text-right">
             @Html.ActionLink("Volver", "Index", "AntecedenteGeneralProyecto", null, new { @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
             @*<button class="btn btn-primary text-right"> Guardar Datos Definitivos </button>*@
-            @Html.ActionLink("Nuevo", "Create", "Beneficiario", null, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+            <a class="btn btn-sm btn-primary text-right" data-modal="" href="../Beneficiario/Create" id="btnCreate" style="color:White">Nuevo</a>
+            @*Html.ActionLink("Nuevo", "Create", "Beneficiario", null, new { data_modal = "data_modal", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })*@
         </div>
         <br />
         @using (Html.BeginForm("Index", "Beneficiario", FormMethod.Get))
