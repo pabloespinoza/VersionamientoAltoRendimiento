@@ -50,7 +50,7 @@
             }
             else if (@ViewBag.Solicitud != null)
             {
-                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
                 {
                     @Html.ActionLink("Nueva Competencia", "Create", "Competencia", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-rigth", @style = "color:White" })
                 }
@@ -162,7 +162,7 @@
                                 @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idCompetencia }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
                             }@if (@ViewBag.Solicitud != null)
                             {
-                                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                if (@ViewBag.Producto.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
                                 {
                                     @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idCompetencia }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
                                 }

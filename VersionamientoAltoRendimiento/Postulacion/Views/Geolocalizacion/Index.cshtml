@@ -127,7 +127,7 @@
             }
             else if (@ViewBag.Solicitud != null)
             {
-                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
                 {
                     @Html.ActionLink("Nuevo Recinto", "CreateRecinto", "Geolocalizacion", new { tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] }, new { data_modal = "", id = "btnCreateRecinto", @class = "btn btn-sm btn-success text-right", @style = "color:White" })
                     @Html.Raw("&nbsp;&nbsp;")
@@ -211,7 +211,7 @@
                             }
                             @if (@ViewBag.Solicitud != null)
                             {
-                                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
                                 {
                                     <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion, tipoGasto = TempData["idTipoGasto"], beneficiarioGP = TempData["idBeneficiarioGastoPersonal"], pendientes = TempData["pendientes"] })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
                                     //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad

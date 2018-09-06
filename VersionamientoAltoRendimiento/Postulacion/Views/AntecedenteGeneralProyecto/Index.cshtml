@@ -268,7 +268,7 @@
                                 {
                                     @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
                                 }
-                                if (codWorkflow == (int)EnumEstados.AprobadoSC || codWorkflow == (int)EnumEstados.AprobadoSCRevision)
+                                if (codWorkflow == (int)EnumEstados.AprobadoSC || codWorkflow == (int)EnumEstados.AprobadoSCRevision || codWorkflow == (int)EnumEstados.AprobadoSCObjetado)
                                 {
                                     int cont = 0;
                                     foreach (var itemSC in ViewBag.Solicitud)

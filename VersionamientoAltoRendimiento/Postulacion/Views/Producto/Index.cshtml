@@ -156,7 +156,7 @@
                                         {
                                             foreach (var sc in ViewBag.Solicitud)
                                             {
-                                                if (sc.Producto_Copia.idProducto == item.idProducto && sc.scaPendiente == null)
+                                                if (sc.Producto_Copia.idProducto == item.idProducto && (sc.scaPendiente == null || sc.scaPendiente == false))
                                                 {
                                                     if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 1 && item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
                                                     {

@@ -54,9 +54,9 @@
                     @Html.ValidationMessageFor(model => model.comFechaFin)
                 </div>
             </div>
-            
+
             <label for="InfoProd" id="InfoProd" class="col-md-9 col-md-offset-3" style="font-size:x-small">Información: El producto comienza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesDesde) y finaliza en @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(@ViewBag.Producto.prdMesHasta)</label><br />
-            
+
             <div class="form-group">
                 <div class="col-md-6">
                     @Html.LabelFor(model => model.comHoraInicio, "Hora Inicio", new { @class = "control-label col-md-4" })
@@ -112,7 +112,10 @@
                     @Html.TextBoxFor(model => model.comCoordenadaY, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="text-danger col-md-offset-1 ">@ViewData["Mensaje"]</div><br />
+            @if (ViewData["Mensaje"] != null)
+            {
+                <div class="alert alert-danger alert-dismissable">@ViewData["Mensaje"]</div><br />
+            }
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
                 <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>

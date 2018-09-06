@@ -143,8 +143,11 @@
                 </div>
             </div>
         </div>
+        @if (ViewData["Mensaje"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">@ViewData["Mensaje"]</div><br />
+        }
     </div>
-    <div class="text-danger col-md-offset-4">@ViewData["errorNuevoGasto"]</div><br />
     <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
         <button id="Guardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
@@ -162,7 +165,7 @@
 
 
     });
-    
+
     @*Validacion monto de producto por soicitud de cambio, no deberia verse mas que cuando valida el monto total del producto*@
     function funcionMuestraMensajesMonto() {
         var mensajeMontoOriginal = "@TempData["MontoTotalOriginal"]";

@@ -79,8 +79,7 @@
         if (hiddenVal == "1") {
             cantDias = $("#txtDias").val();
             Total = tot / cantDias;
-        } else if (hiddenVal == "3")
-        {
+        } else if (hiddenVal == "3") {
             cantDias = parseInt($("#txtDias").val());
             Total = tot / (cantDias + 1);
         }
@@ -460,6 +459,10 @@
             </div>
             @*Fin Mensajes Alertas Solicitud de cambio*@
 
+            @if (ViewData["Mensaje"] != null)
+            {
+                <div class="alert alert-danger alert-dismissable">@ViewData["Mensaje"]</div><br />
+            }
 
             <div class="form-group">
                 @Html.LabelFor(model => model.idTipoGastoAdministracion, "Tipo Gasto", new { @class = "control-label col-md-2" })

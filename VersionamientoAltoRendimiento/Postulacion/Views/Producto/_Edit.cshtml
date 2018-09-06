@@ -61,7 +61,7 @@
                             <option value="">-- Seleccione Nivel -- </option>
                         </select>*@
                     @Html.DropDownList("Nivel", (SelectList)ViewBag.idNivel, "--Seleccione--", new { @id = "NivelContainer-DropdownID", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.idProductoNivel)
+                    @Html.ValidationMessage("Nivel")
                 </div>
             </div>
 
@@ -70,8 +70,8 @@
                 <div class="col-md-8">
                     @* @Html.DropDownList("RegionPais", (SelectList)ViewBag.idPais, "--Seleccione--", new { @id = "PaisContainer-DropdownID", @class = "form-control" })*@
 
-                    @Html.DropDownList("RegionPais", (IEnumerable<SelectListItem>)ViewBag.idRegionPais, "--Seleccione Nivel--", new { @id = "PaisContainer-DropdownID", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.idCiudad)
+                    @Html.DropDownList("RegionPais", (IEnumerable<SelectListItem>)ViewBag.idRegionPais, "--Seleccione--", new { @id = "PaisContainer-DropdownID", @class = "form-control" })
+                    @Html.ValidationMessage("RegionPais")
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label id="lblCiudadComuna" for="lblCiudadComuna" class="col-sm-4 control-label">Ciudad/Comuna</label>
                 <div class="col-md-8">
-                    @Html.DropDownList("CiudadComuna", (IEnumerable<SelectListItem>)ViewBag.idCiudadComuna, "--Seleccione Pais/Region--", new { @id = "RegionContainer-DropdownID", @class = "form-control" })
+                    @Html.DropDownList("CiudadComuna", (IEnumerable<SelectListItem>)ViewBag.idCiudadComuna, "--Seleccione--", new { @id = "RegionContainer-DropdownID", @class = "form-control" })
                     @Html.ValidationMessage("CiudadComuna")
                 </div>
             </div>
@@ -307,7 +307,7 @@
             type: "POST",
             success: function (data) {
                 var options = "";
-                options += ' <option value="">-- Seleccione Nivel -- </option>';
+                options += ' <option value="">-- Seleccione -- </option>';
                 $.each(data, function (index, value) {
 
                     options += '<option value="' + value.id + '">' + value.nombre + '</option>';
@@ -341,7 +341,7 @@
                     options += '<option value="' + value.id + '">' + value.nombre + '</option>';
                 });
                 $("#PaisContainer-DropdownID").html(options);
-                $("#RegionContainer-DropdownID").html('<option value="">--Seleccione Pais/Region--</option>');
+                $("#RegionContainer-DropdownID").html('<option value="">--Seleccione--</option>');
             },
             error: function () {
             }

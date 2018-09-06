@@ -49,7 +49,10 @@
             </div>
 
         </div>
-        <div class="text-danger col-md-offset-2 ">@ViewData["Mensaje"]</div><br />
+        @if (ViewData["Mensaje"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">@ViewData["Mensaje"]</div><br />
+        }
         <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Si el cargo es deportista se eliminaran todos los gastos que tiene asociado.')">Guardar</button>

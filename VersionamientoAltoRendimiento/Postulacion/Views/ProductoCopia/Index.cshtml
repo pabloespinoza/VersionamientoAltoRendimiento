@@ -291,8 +291,8 @@
                                     @Html.DisplayFor(modelItem => item.prdNombre)
                                 </th>
                                 @*<th>
-                                    @Html.DisplayFor(modelItem => item.Producto_Nivel.Nivel.nivNombre)
-                                </th>*@
+                                        @Html.DisplayFor(modelItem => item.Producto_Nivel.Nivel.nivNombre)
+                                    </th>*@
                                 <th>
                                     @if (item.idCiudad == 2)
                                     {
@@ -304,15 +304,15 @@
                                     }
                                 </th>
                                 @*<th>
-                                    @if (item.idCiudad == 2)
-                                    {
-                                        @Html.DisplayFor(modelItem => item.Comuna.comNombre)
-                                    }
-                                    else
-                                    {
-                                        @Html.DisplayFor(modelItem => item.Ciudad.ciuNombre)
-                                    }
-                                </th>*@
+                                        @if (item.idCiudad == 2)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Comuna.comNombre)
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Ciudad.ciuNombre)
+                                        }
+                                    </th>*@
                                 <th>
                                     @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.prdMesDesde)
                                 </th>
@@ -344,9 +344,9 @@
 
                                 if (contador == 0)
                                 {
-                                    if (ViewBag.Solicitud != null)
+                                    foreach (var sc in ViewBag.Solicitud)
                                     {
-                                        foreach (var sc in ViewBag.Solicitud)
+                                        if (sc.idProducto == item.idProducto)
                                         {
                                             @*Direcciona al Producto*@
                                             @Html.Raw(@Html.ActionLink("[replacetext]", "RedireccionaEdicion", new { idProducto = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Ir a Producto' src=\"../Images/List.png\" ... />"))

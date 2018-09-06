@@ -21,10 +21,16 @@
                 @Html.Hidden("tipoGasto", TempData["idTipoGasto"])
                 @Html.Hidden("beneficiarioGP", TempData["idBeneficiarioGastoPersonal"])
                 @Html.Hidden("pendientes", TempData["pendientes"])
+
+                @if (ViewData["Mensaje"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissable">@ViewData["Mensaje"]</div><br />
+                }
+
                 <div class="form-group">
                     <label for="inputEmail3" class="col-md-3 control-label">Recinto</label>
                     <div class="col-md-8">
-                        @Html.DropDownList("idRecinto", null, String.Empty, new { @id = "Recintos-DropdownID", @class = "form-control" })
+                        @Html.DropDownList("idRecinto", (SelectList)ViewBag.idRecinto, "--Seleccione--", new { @id = "Recintos-DropdownID", @class = "form-control" })
 
                         @Html.ValidationMessageFor(model => model.idRecinto)
                     </div>
@@ -85,7 +91,7 @@
 <script>
     
     $("#divCoords").hide();
-    var id = @Model.idGeolocalizacion.ToString();
+    var id = '@Model.idGeolocalizacion.ToString()';
     var URL_PATH = '@Url.Content("~")';
     var url = URL_PATH + "Geolocalizacion/ListadoBeneficiarios?id=";  
     $("#frameHorario").attr('src', url + id);
