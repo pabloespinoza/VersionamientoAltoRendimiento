@@ -355,7 +355,7 @@
                             <td>@row.NombreUsuario</td>
                             <td>@row.TipoDocumento</td>
                             <td>
-                                @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { idProyecto = row.IdProyecto, idDocumento = row.IdDocumento }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Descargar Documento" }).ToHtmlString().Replace("[replacetext]", ""))
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumento", new { idProyecto = row.IdProyecto, idDocumento = row.IdDocumento, docSolicitudCambio = row.docSolicitudCambio }, new { @class = "fa fa-file-o  fa-lg", @data_toggle = "tooltip", @title = "Descargar Documento" }).ToHtmlString().Replace("[replacetext]", ""))
                             </td>
 
 

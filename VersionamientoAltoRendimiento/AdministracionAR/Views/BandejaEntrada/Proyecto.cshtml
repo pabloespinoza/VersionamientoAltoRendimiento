@@ -110,7 +110,7 @@
                     <td>@row.Estado (@row.FechaEstado)</td>
 
                     <td style="text-align: left;text-align: right;text-align: center;vertical-align: middle">
-                        @if (row.IdWorkFlow == 11 || row.IdWorkFlow == 12)
+                        @if (row.IdWorkFlow == 11 || row.IdWorkFlow == 12 || row.IdWorkFlow == 14)
                         {
                             @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = row.IdProyecto, Idproyectoversion = row.IdProyectoVersion }, new { @class = "fa fa-eye  fa-lg", @data_toggle = "tooltip", @title = "Ver Proyecto" }).ToHtmlString().Replace("[replacetext]", ""))
                         }

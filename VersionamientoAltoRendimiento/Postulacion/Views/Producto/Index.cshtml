@@ -150,7 +150,7 @@
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
                                     }
                                     @*Parte agregada por la Solicitud de Cambio*@
-                                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
+                                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado)
                                     {
                                         if (ViewBag.Solicitud != null)
                                         {
