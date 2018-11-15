@@ -29,7 +29,7 @@
     <div class="col-md-12">
         <div class="text-right">
 
-            @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
+            @if (ViewBag.Solicitud != null && ViewBag.Solicitud.Count > 0)
             {
                 @Html.ActionLink("Volver", "Index", "ProductoCopia", new { idProyecto = TempData["IdProyecto"] }, new { id = "btnVolver", @class = "btn btn-sm btn-info pull-left", @style = "color:White" })
             }
@@ -140,27 +140,22 @@
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "URLGastoAdministracion", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Gastos en Bienes y Servicios' src=\"../Images/Gasto_Administrativo.png\" ... />"))
                                     }
                                 }
-                                @*@if (item.prdEstado == 4)
-                                    {
-                                        <a href='@Url.Action("SolicitudCambio", "Home")' data-toggle="tooltip" title="Solicitud de Cambio"><img src='@Url.Content("~/Images/Solicitud_Cambio.png")' /></a>
-
-                                    }*@@if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && item.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
+                                @if ((ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Ingresada && item.Proyecto.estadoIngresado == 2) || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Incompleto || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.Objetada)
                                     {
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idProducto }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../Images/Trash.png\" ... />"))
                                     }
                                     @*Parte agregada por la Solicitud de Cambio*@
-                                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado)
-                                    {
-                                        if (ViewBag.Solicitud != null)
+                                        @*@if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado)
+                                            {*@
+                                        @if (ViewBag.Solicitud != null)
                                         {
                                             foreach (var sc in ViewBag.Solicitud)
                                             {
                                                 if (sc.Producto_Copia.idProducto == item.idProducto && (sc.scaPendiente == null || sc.scaPendiente == false))
                                                 {
                                                     if (item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 1 && item.Organizacion_Linea_Tipo_Producto.Tipo_Producto.idTipoProducto != 2)
-                                                    {
-                                                        @Html.Raw(@Html.ActionLink("[replacetext]", "URLCompetencias", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' style='width: 13px;' title='Competencias' src=\"../Images/loc-marker.png\" ... />"))
+                                                    {@Html.Raw(@Html.ActionLink("[replacetext]", "URLCompetencias", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' style='width: 13px;' title='Competencias' src=\"../Images/loc-marker.png\" ... />"))
                                                     }
 
                                                     @Html.Raw(@Html.ActionLink("[replacetext]", "URLAsignarBeneficiarios", new { id = item.idProducto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Asignación Beneficiario' src=\"../Images/Persona.png\" ... />"))
@@ -174,9 +169,9 @@
                                                 }
                                             }
                                         }
-                                    }
-                                </td>
-                            </tr>
+                                        @*  }*@
+                                    </td>
+                                </tr>
                     }
                 </tbody>
 

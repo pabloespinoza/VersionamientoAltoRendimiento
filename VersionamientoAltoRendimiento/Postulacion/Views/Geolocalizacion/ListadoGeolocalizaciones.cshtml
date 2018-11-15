@@ -56,11 +56,18 @@
                 @Html.Raw("&nbsp;&nbsp;")
                 @Html.ActionLink("Nueva Geolocalización", "CreateListado", "Geolocalizacion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
             }
-            else if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.Producto.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+            else if (@ViewBag.Solicitud != null)
             {
-                @Html.ActionLink("Nuevo Recinto", "CreateRecinto", "Geolocalizacion", new { idProducto = TempData["idProducto"] }, new { data_modal = "", id = "btnCreateRecinto", @class = "btn btn-sm btn-success text-right", @style = "color:White" })
-                @Html.Raw("&nbsp;&nbsp;")
-                @Html.ActionLink("Nueva Geolocalización", "CreateListado", "Geolocalizacion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                if (/*(@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && */(@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                {
+                    @*Html.ActionLink("Nuevo Recinto", "CreateRecinto", "Recinto", new { idProducto = TempData["idProducto"] }, new { data_modal = "", id = "btnCreateRecinto", @class = "btn btn-sm btn-success text-right", @style = "color:White" })*@
+                    @Html.Raw("&nbsp;&nbsp;")
+                    @Html.ActionLink("Nueva Geolocalización", "CreateListado", "Geolocalizacion", new { id = TempData["idProducto"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                }
+                else
+                {
+                    <br /> <br />
+                }
             }
             else
             {
@@ -136,7 +143,7 @@
                             }
                             @if (@ViewBag.Solicitud != null)
                             {
-                                if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC && @ViewBag.Solicitud.scaPendiente == null && @ViewBag.Producto.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                if (/*(@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && */(@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && item.IdProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
                                 {
                                     <a href='@Url.Action("ListadoEdit", "Geolocalizacion", new { id = item.idGeolocalizacion })' data-t data-toggle="tooltip" title="Editar"><img width="20" src='@Url.Content("~/Images/Edit.png")' /></a>
                                     @*@Html.Raw(@Html.ActionLink("[replacetext]", "ListadoEdit", new { id = item.idGeolocalizacion }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../Images/Edit.png\" ... />"))*@

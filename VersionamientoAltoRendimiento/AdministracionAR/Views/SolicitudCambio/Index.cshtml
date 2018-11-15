@@ -27,6 +27,7 @@
 <table class="table table-condensed table-bordered table-striped table-hover">
     <thead>
         <tr>
+            <th>N° Producto</th>
             <th>Nombre Proyecto</th>
             <th>Nombre Producto</th>
             @*<th>Tipo Solicitud</th>
@@ -40,6 +41,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto_Copia.Producto.prdSecuencia)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Proyecto.proNombreProyecto)
                 </td>

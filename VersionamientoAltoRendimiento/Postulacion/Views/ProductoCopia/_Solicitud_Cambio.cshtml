@@ -59,7 +59,7 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
+        <button type="button" id="btnCancelarModal" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">Cancelar</button>
         <button id="btnGuardar" type="submit" class="btn btn-sm btn-success ">Guardar</button>
     </div>
 
@@ -80,6 +80,8 @@
 </script>
 
 <script type="text/javascript">
+    var codError = "@TempData["codError"]";
+
     $(document).ready(function () {
 
         $('#form-GuardarSolicitudCambio').validate({
@@ -146,6 +148,12 @@
                 }
             });
 
+        });
+
+        $('#myModal').on('shown.bs.modal', function () {
+            if (codError == "-1") {
+                $("#myModal").modal("hide");
+            }
         });
     });
 

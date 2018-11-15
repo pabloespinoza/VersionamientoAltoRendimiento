@@ -44,7 +44,7 @@
 </div>
 
 <div class="row">
-    <!-- <div class="col-md-12">
+    @* <div class="col-md-12">
          <span>Cuadro resumen presupuesto organización</span>
          <table class="table table-condensed table-bordered table-hover" id="tablaPresupuesto">
              <tbody>
@@ -74,14 +74,14 @@
                          Saldo Vigente
                      </td>
                      <td style="text-align:right;">
-                         @*@String.Format("{0:C0}", @Model.Sum(modelItem => modelItem.Presupuesto))*@
+                         @String.Format("{0:C0}", @Model.Sum(modelItem => modelItem.Presupuesto))
                          @String.Format("{0:C0}", ViewBag.acumuladoGastoxProyecto)
                      </td>
                  </tr>
              </tbody>
          </table>
      </div>
-     <br />-->
+     <br />*@
     <div class="col-md-12">
         <div class="panel panel-default">
             <!-- Default panel contents -->
@@ -97,9 +97,9 @@
                                 @Html.TextBoxFor(model => model.First().FolioProyecto, new { @class = "form-control", @maxlength = "10" })
                                 @Html.ValidationMessage("FolioProyecto", new { @class = "text-danger" })
                             </div>
-                            @Html.LabelFor(model => model.First().IdEstado, "Estado", new { @class = "control-label col-md-1 col-lg-1" })
-                            <div class="col-md-5 col-lg-3">
-                                @Html.DropDownListFor(model => model.First().IdEstado, (SelectList)ViewBag.SelectListEstados, new { @class = "form-control" })
+                            @Html.LabelFor(model => model.First().IdEstadoProyecto, "Estado Proyecto", new { @class = "control-label col-md-2 col-lg-2" })
+                            <div class="col-md-4 col-lg-2">
+                                @Html.DropDownListFor(model => model.First().IdEstadoProyecto, (SelectList)ViewBag.SelectListEstadosProyecto, new { @class = "form-control" })
                                 @Html.ValidationMessage("IdEstado", new { @class = "text-danger" })
                             </div>
                             @Html.LabelFor(model => model.First().IdConcurso, "Concurso", new { @class = "control-label col-md-2 col-lg-1" })
@@ -108,10 +108,17 @@
                                 @Html.ValidationMessage("IdConcurso", new { @class = "text-danger" })
                             </div>
 
-                            @Html.LabelFor(model => model.First().IdLinea, "Línea", new { @class = "control-label col-md-1 col-lg-1" })
-                            <div class="col-md-5 col-lg-2">
+                            @Html.LabelFor(model => model.First().IdLinea, "Línea", new { @class = "control-label col-md-2 col-lg-1" })
+                            <div class="col-md-4 col-lg-2">
                                 @Html.DropDownListFor(model => model.First().IdLinea, (SelectList)ViewBag.SelectListLineas, "--Seleccione--", new { @class = "form-control" })
                                 @Html.ValidationMessage("IdLinea", new { @class = "text-danger" })
+                            </div>
+                            <div id="dvEstadoProducto">
+                                @Html.LabelFor(model => model.First().IdEstadoProducto, "Estado Producto", new { @class = "control-label col-md-2 col-lg-2 col-lg-offset-3" })
+                                <div class="col-md-4 col-lg-2">
+                                    @Html.DropDownListFor(model => model.First().IdEstadoProducto, (SelectList)ViewBag.SelectListEstadosProducto, new { @class = "form-control" })
+                                    @Html.ValidationMessage("IdEstadoProducto", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +171,7 @@
                 addEventClickDataModal();
             });
 
-
+            habilitarEstadoProducto($("#IdEstadoProyecto option:selected").val());
 
         });
     </script>
@@ -268,7 +275,7 @@
                                 {
                                     @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
                                 }
-                                if (codWorkflow == (int)EnumEstados.AprobadoSC || codWorkflow == (int)EnumEstados.AprobadoSCRevision || codWorkflow == (int)EnumEstados.AprobadoSCObjetado)
+                                @*if (codWorkflow == (int)EnumEstados.AprobadoSC || codWorkflow == (int)EnumEstados.AprobadoSCRevision || codWorkflow == (int)EnumEstados.AprobadoSCObjetado)
                                 {
                                     int cont = 0;
                                     foreach (var itemSC in ViewBag.Solicitud)
@@ -283,7 +290,7 @@
                                         @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "ProductoCopia", new { idProyecto = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Solicitud de Cambio' src=\"../Images/Solicitud_Cambio.png\" ... />"))
                                         //@Html.Raw(@Html.ActionLink("[replacetext]", "URLVerificaProyecto", new { id = item.idProyecto }, null).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Verificar y Postular' src=\"../Images/Proyecto.png\" ... />"))
                                     }
-                                }
+                                }*@
                             }
                                     }
 
@@ -357,6 +364,18 @@
             }
             });
         });
+
+        $("#IdEstadoProyecto").change(function () {
+            habilitarEstadoProducto($(this).val());
+        })
+
+        function habilitarEstadoProducto(estadoProyecto) {
+            if (estadoProyecto == "7") {
+                $("#dvEstadoProducto").show();
+            } else {
+                $("#dvEstadoProducto").hide();
+            }
+        }
     </script>
 
     <script type="text/javascript">

@@ -110,14 +110,14 @@
                     <td>@row.Estado (@row.FechaEstado)</td>
 
                     <td style="text-align: left;text-align: right;text-align: center;vertical-align: middle">
-                        @if (row.IdWorkFlow == 11 || row.IdWorkFlow == 12 || row.IdWorkFlow == 14)
+                        @*@if (row.IdWorkFlow == 11 || row.IdWorkFlow == 12 || row.IdWorkFlow == 14)
                         {
                             @Html.Raw(@Html.ActionLink("[replacetext]", "DescargarDocumentoHistorialProyecto", new { idProyecto = row.IdProyecto, Idproyectoversion = row.IdProyectoVersion }, new { @class = "fa fa-eye  fa-lg", @data_toggle = "tooltip", @title = "Ver Proyecto" }).ToHtmlString().Replace("[replacetext]", ""))
                         }
                         else
-                        {
+                        {*@
                             <a href="#" onclick="VerProyecto(@row.IdProyecto)" data_toggle="tooltip" title="Ver Proyecto" class="fa fa-eye fa-lg" @((@AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnVerProyecto == false) ? "display:none" : "display:block")></a>
-                        }
+                        @*  }*@
                         @Html.Raw(@Html.ActionLink("[replacetext]", "HistorialCambiosProyecto", new { CodigoProyecto = @row.IdProyecto, orgNombre = @row.Federacion }, new { @class = "fa fa-calendar-check-o fa-lg", @data_toggle = "tooltip", @title = "Historial de estados del proyecto", @style = @AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnHistoriaCambiosProyecto == false ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", ""))
                         @{switch (Convert.ToUInt32(row.IdWorkFlow))
                         {
@@ -197,23 +197,23 @@
                                 case 12:
 
                                 @*Html.Raw(@Html.ActionLink("[replacetext]", "HistorialCambio", new { CodigoProyecto = @row.IdProyecto }, new { @class = "fa fa-calendar fa-lg", @data_toggle = "tooltip", @title = "Historial de Cambios", @style = @AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnHistoriaEstado == false ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", ""))*@
-                                if (Model.getSolicitudes().Count() > 0)
-                                {
-                                    foreach (var item0 in Model.getSolicitudes())
-                                    {
-                                        if (item0.idProyecto == row.IdProyecto && item0.idProyecto != proy && item0.scaPendiente == true)
-                                        {
-                                            @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "SolicitudCambio", new { IdProyecto = @row.IdProyecto }, new { @class = "fa fa-code-fork fa-lg", @data_toggle = "tooltip", @title = "Solicitud de Cambio", @style = @AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnSolicituddeCambio == false ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", ""))
-                                            proy = (decimal)item0.idProyecto;
-                                        }
+                                //if (Model.getSolicitudes().Count() > 0)
+                                //{
+                                //    foreach (var item0 in Model.getSolicitudes())
+                                //    {
+                                //        if (item0.idProyecto == row.IdProyecto && item0.idProyecto != proy && item0.scaPendiente == true)
+                                //        {
+                                @Html.Raw(@Html.ActionLink("[replacetext]", "Index", "SolicitudCambio", new { IdProyecto = @row.IdProyecto }, new { @class = "fa fa-code-fork fa-lg", @data_toggle = "tooltip", @title = "Solicitud de Cambio", @style = @AltoRendimiento.Administracion.Util.SessionIND.Current.BandejaEntrada.btnSolicituddeCambio == false ? "display:none" : "display:block" }).ToHtmlString().Replace("[replacetext]", ""))
+                                //proy = (decimal)item0.idProyecto;
+                                @*}
 
-                                        if (item0.idProyecto == row.IdProyecto && item0.scaPendiente == null && item0.idProyecto != proyIncompleto)
-                                        {
-                                            <h5>Solicitud en Construcción</h5>
-                                            proyIncompleto = (decimal)item0.idProyecto;
+                                            if (item0.idProyecto == row.IdProyecto && item0.scaPendiente == null && item0.idProyecto != proyIncompleto)
+                                            {
+                                                <h5>Solicitud en Construcción</h5>
+                                                proyIncompleto = (decimal)item0.idProyecto;
+                                            }
                                         }
-                                    }
-                                }
+                                    }*@
                                 break;
                                 case 13:
 

@@ -75,9 +75,16 @@
                 @Html.ActionLink("Nuevo", "Create", "GeolocalizacionHorario", new { id = TempData["idProducto"], idGeo = TempData["idGeo"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
 
             }
-            else if ((@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+            else if (@ViewBag.Solicitud != null)
             {
-                @Html.ActionLink("Nuevo", "Create", "GeolocalizacionHorario", new { id = TempData["idProducto"], idGeo = TempData["idGeo"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                if (/*(@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && */(@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                {
+                    @Html.ActionLink("Nuevo", "Create", "GeolocalizacionHorario", new { id = TempData["idProducto"], idGeo = TempData["idGeo"] }, new { data_modal = "", id = "btnCreate", @class = "btn btn-sm btn-primary text-right", @style = "color:White" })
+                }
+                else
+                {
+                    <br /> <br />
+                }
             }
             else
             {
@@ -170,11 +177,14 @@
                                 @Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../../Images/Trash.png\" ... />"))
 
                             }
-                            else if ((@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && (@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && @ViewBag.ProductoSC.idProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                            else if (@ViewBag.Solicitud != null)
                             {
-                                @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../../Images/Edit.png\" ... />"))
-                                //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
-                                @*@Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../../Images/Trash.png\" ... />"))*@
+                                if (/*(@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC || @ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSCObjetado) && */(@ViewBag.Solicitud.scaPendiente == null || @ViewBag.Solicitud.scaPendiente == false) && item.Geolocalizacion.IdProducto == @ViewBag.Solicitud.Producto_Copia.idProducto)
+                                {
+                                    @Html.Raw(@Html.ActionLink("[replacetext]", "Edit", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Editar' src=\"../../Images/Edit.png\" ... />"))
+                                    //TODO: Se comentan estas lineas por regla que evita que se elimine cualquier objeto del producto. Todo para mantener la integridad
+                                    @*@Html.Raw(@Html.ActionLink("[replacetext]", "Delete", new { id = item.idGeolocalizacionHorario }, new { data_modal = "" }).ToHtmlString().Replace("[replacetext]", "<img data-toggle='tooltip' title='Eliminar' src=\"../../Images/Trash.png\" ... />"))*@
+                                }
                             }
                         </td>
                     </tr>

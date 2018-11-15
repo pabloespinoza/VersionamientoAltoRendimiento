@@ -100,14 +100,7 @@
                 <div class="col-md-8">
                     @*Pablo Espinoza 25-04-2016 - Solicitud de Cambio: Fecha inicio no puede ser modificada
                         Pablo Espinoza 12-07-2017 - Solicitud de Cambio: Se habilita mes inicio para que se permita modificarla del mes en curso en adelante.*@
-                    @if (@ViewBag.Proyecto.idWorkflow == (int)EnumEstados.AprobadoSC)
-                    {
-                        @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control" })
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control" })
-                    }
+                    @Html.DropDownListFor(model => model.prdMesDesde, (IEnumerable<SelectListItem>)ViewBag.MesesInicio, "--Seleccione--", new { @id = "idFecDesde", @class = "form-control" })
                     @*Pablo Espinoza 25-04-2016 - Solicitud de Cambio: Fecha inicio no puede ser modificada*@
                     @Html.ValidationMessageFor(model => model.prdMesDesde)
                 </div>

@@ -1,4 +1,4 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="ctrMensaje, App_Web_yqn2h2ia" %>
+﻿<%@ control language="C#" autoeventwireup="true" inherits="ctrMensaje, App_Web_at2t1iws" %>
 
 <div id="divInformacion" runat="server" CssClass="form-control input-sm">
     <div class="alert alert-info">
