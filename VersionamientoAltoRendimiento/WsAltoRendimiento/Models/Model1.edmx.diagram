@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="95dee0aca52a478eb1d13eededfaea72" Name="Diagram1">
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Producto" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Proyecto" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Solicitud_Cambio" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Proyecto" ManuallyRouted="false" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Solicitud_Cambio_Proyecto" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Beneficiario" Width="1.5" PointX="8.25" PointY="17.25" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Beneficiario_Gasto_Administracion" Width="1.5" PointX="12.75" PointY="6.5" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Beneficiario_Gasto_Personal" Width="1.5" PointX="15.75" PointY="6.5" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Beneficiario_Producto_Cargo" Width="1.5" PointX="10.5" PointY="7.125" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Ciudad" Width="1.5" PointX="6" PointY="27.625" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Comuna" Width="1.5" PointX="6" PointY="31.375" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Cuenta" Width="1.5" PointX="6" PointY="35.25" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Estado_Proyecto" Width="1.5" PointX="10.625" PointY="17.25" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Geolocalizacion" Width="1.5" PointX="10.5" PointY="22.125" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Geolocalizacion_Gasto_Administracion" Width="1.5" PointX="15" PointY="14.625" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Geolocalizacion_Gasto_Personal" Width="1.5" PointX="18" PointY="14.625" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Linea" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Linea_Cuenta" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Nivel" Width="1.5" PointX="6" PointY="24" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Organizacion" Width="1.5" PointX="3.75" PointY="4" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Organizacion_Linea" Width="1.5" PointX="6" PointY="4.5" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Pais" Width="1.5" PointX="3.75" PointY="27.75" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Pais_Region" Width="1.5" PointX="9" PointY="27.625" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Producto_Nivel" Width="1.5" PointX="6" PointY="16.125" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Region" Width="1.5" PointX="6.75" PointY="40.75" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Tipo_Gasto_Administracion" Width="1.5" PointX="10.5" PointY="13.125" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Tipo_Gasto_Personal" Width="1.5" PointX="13.5" PointY="19.25" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Tipo_Producto" Width="1.5" PointX="6" PointY="20.5" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Organizacion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Producto_Beneficiario" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Administracion_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Administracion_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Administracion_Tipo_Gasto_Administracion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Gasto_Administracion_Beneficiario_Gasto_Administracion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Personal_Beneficiario_Producto_Cargo" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Personal_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Gasto_Personal_Tipo_Gasto_Personal" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Beneficiario_Gasto_Personal_Beneficiario_Gasto_Personal" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Producto_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Ciudad_Pais" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Ciudad" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Comuna" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Linea_Cuenta_Cuenta" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Beneficiario_Gasto_Personal_Geolocalizacion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Gasto_Administracion_Geolocalizacion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Linea_Cuenta_Linea" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Organizacion_Linea_Linea" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Nivel_Nivel" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Organizacion_Linea_Organizacion" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Proyecto_Organizacion_Linea" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Pais_Region_Pais" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Pais_Region_Region" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Producto_Nivel" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Nivel_Tipo_Producto" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Cargo" Width="1.5" PointX="8.375" PointY="1" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Beneficiario_Producto_Cargo" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Workflow" Width="1.5" PointX="12.875" PointY="23.25" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Workflow_EstadoProyecto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Proyecto_Workflow" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Organizacion_Linea_Tipo_Producto" Width="1.5" PointX="8.25" PointY="12.375" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Organizacion_Linea_Tipo_Producto_Organizacion_Linea" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Organizacion_Linea_Tipo_Producto_Tipo_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Producto_Organizacion_Linea_Tipo_Producto" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Competencia" Width="1.5" PointX="8.25" PointY="5" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Competencia_Producto" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Competencia_Proyecto" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Provincia" Width="1.5" PointX="9" PointY="40.75" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Comuna_Provincia" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Provincia_Region" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Recinto" Width="1.5" PointX="10.375" PointY="1" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Geolocalizacion_Recintos" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Concurso" Width="1.5" PointX="12.375" PointY="1" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Concurso_categoria" Width="1.5" PointX="14.625" PointY="1.25" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Concurso_categoria_Concurso" />
+        <AssociationConnector Association="QA_Alto_RendimientoModel.FK_Organizacion_Linea_Concurso_categoria" />
+        <EntityTypeShape EntityType="QA_Alto_RendimientoModel.Hda_Movimiento" Width="1.5" PointX="5.375" PointY="9.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
